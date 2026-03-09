@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrackWeave — The Social Network for Music Lovers</title>
+
+  <!-- Fraunces: warm optical-size serif for headings -->
+  <!-- Instrument Sans: humanist, legible, airy for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── DESIGN TOKENS ───────────────────────────────────────── */
+    :root {
+      --ink:         #111820;
+      --ink-soft:    #3b4a59;
+      --ink-faint:   #7a8e9e;
+      --paper:       #f8f5f1;
+      --paper-warm:  #eee9e1;
+      --rule:        #ddd7cf;
+      --rule-light:  #ece7df;
+      --blue:        #2563eb;
+      --blue-mid:    #4479f0;
+      --blue-pale:   #dbeafe;
+      --blue-ghost:  #eff6ff;
+      --amber:       #f59e0b;
+      --amber-dk:    #d97706;
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+    }
+
+    /* ─── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink-soft);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--paper); }
+    ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
+
+    /* ─── UTILITY ─────────────────────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-ghost);
+      border: 1px solid var(--blue-pale);
+      padding: 0.22rem 0.7rem;
+      border-radius: 99px;
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.875rem; font-weight: 500;
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 1.3rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .btn-solid {
+      background: var(--blue); color: #fff;
+      box-shadow: 0 1px 3px rgba(37,99,235,.25), 0 4px 14px rgba(37,99,235,.15);
+    }
+    .btn-solid:hover { background: var(--blue-mid); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(37,99,235,.3), 0 8px 24px rgba(37,99,235,.18); }
+
+    .btn-ghost {
+      background: transparent; color: var(--ink-soft);
+      border: 1.5px solid var(--rule);
+    }
+    .btn-ghost:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-ghost); }
+
+    .btn-lg { padding: 0.8rem 1.7rem; font-size: 0.95rem; }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 900;
+      height: 62px;
+      background: rgba(248,245,241,0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center;
+    }
+
+    .nav-inner {
+      display: flex; align-items: center; gap: 1.5rem;
+      width: 100%; max-width: 1100px;
+      margin: 0 auto; padding: 0 2rem;
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .nav-mark {
+      width: 31px; height: 31px;
+      background: var(--blue);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .nav-brand span {
+      font-family: 'Fraunces', serif;
+      font-weight: 600; font-size: 1.05rem;
+      color: var(--ink); letter-spacing: -0.02em;
+    }
+
+    /* Search */
+    .nav-search { flex: 1; max-width: 390px; position: relative; }
+
+    .nav-search input {
+      width: 100%;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.875rem;
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius-sm);
+      padding: 0.52rem 1rem 0.52rem 2.35rem;
+      color: var(--ink); outline: none;
+      transition: border-color .18s, box-shadow .18s;
+    }
+    .nav-search input::placeholder { color: var(--ink-faint); }
+    .nav-search input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+
+    .s-icon {
+      position: absolute; left: 0.72rem; top: 50%;
+      transform: translateY(-50%); color: var(--ink-faint);
+      display: flex; pointer-events: none;
+    }
+
+    /* Search dropdown */
+    .s-drop {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 40px rgba(17,24,32,.12);
+      overflow: hidden; z-index: 999;
+      max-height: 380px; overflow-y: auto;
+    }
+    .s-drop.hidden { display: none; }
+
+    .nav-end { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+
+    .nav-end .lnk {
+      font-size: 0.875rem; color: var(--ink-faint);
+      transition: color .15s;
+    }
+    .nav-end .lnk:hover { color: var(--ink); }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero {
+      padding: 6.5rem 2rem 4.5rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -140px; right: -160px;
+      width: 680px; height: 680px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.07) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4.5rem; align-items: center;
+    }
+
+    /* Left */
+    .hero-text .eyebrow { margin-bottom: 1.4rem; }
+
+    .hero-text h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 4.2vw, 3.7rem);
+      line-height: 1.07; letter-spacing: -0.025em;
+      color: var(--ink); margin-bottom: 1.15rem;
+    }
+
+    .hero-text h1 em { font-style: italic; color: var(--blue); }
+
+    .hero-text p {
+      font-size: 1.02rem; font-weight: 300;
+      color: var(--ink-soft); max-width: 420px;
+      line-height: 1.75; margin-bottom: 2rem;
+    }
+
+    .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    .hero-proof {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-top: 2rem;
+      font-size: 0.8rem; color: var(--ink-faint);
+    }
+
+    .av-stack { display: flex; }
+    .av-stack .av {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--paper);
+      margin-left: -7px;
+    }
+    .av-stack .av:first-child { margin-left: 0; }
+
+    /* Right: graph card */
+    .graph-card {
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.4rem 1.2rem;
+      box-shadow: 0 2px 8px rgba(17,24,32,.05), 0 16px 48px rgba(17,24,32,.07);
+      position: relative;
+    }
+
+    .gc-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.9rem; gap: 0.75rem;
+    }
+
+    .gc-title {
+      font-family: 'Fraunces', serif;
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .gc-sub { font-size: 0.72rem; color: var(--ink-faint); margin-top: 0.15rem; }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 0.6rem; flex-shrink: 0; }
+    .leg-item {
+      display: flex; align-items: center; gap: 0.28rem;
+      font-size: 0.68rem; color: var(--ink-faint);
+    }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    #hero-svg { width: 100%; height: 290px; display: block; }
+
+    /* floating chips */
+    .chip {
+      position: absolute;
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-sm);
+      padding: 0.38rem 0.72rem;
+      font-size: 0.74rem; color: var(--ink-soft);
+      box-shadow: 0 4px 18px rgba(17,24,32,.1);
+      white-space: nowrap; pointer-events: none;
+    }
+    .chip strong { display: block; font-size: 0.7rem; font-weight: 600; color: var(--ink); margin-bottom: 0.08rem; }
+    .chip-a { bottom: -1rem; left: -1rem; }
+    .chip-b { top:  -0.7rem; right: -0.9rem; }
+
+    /* ─── STATS ───────────────────────────────────────────────── */
+    .stats-row {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 2.4rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: 860px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem; text-align: center;
+    }
+
+    .sv { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 500; color: var(--ink); letter-spacing: -0.03em; display: block; }
+    .sl { font-size: 0.77rem; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.07em; }
+
+    /* ─── SECTION ─────────────────────────────────────────────── */
+    .section { padding: 5.5rem 2rem; }
+
+    .sec-label { font-size: 0.71rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 0.55rem; }
+
+    .sec-h {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+      font-weight: 400; color: var(--ink);
+      letter-spacing: -0.025em; line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+
+    .sec-p { font-size: 0.98rem; font-weight: 300; color: var(--ink-soft); max-width: 490px; line-height: 1.72; }
+
+    /* ─── HOW ─────────────────────────────────────────────────── */
+    .how-wrap { background: #fff; }
+    .how-hd { text-align: center; margin-bottom: 3.5rem; }
+    .how-hd .sec-p { margin: 0 auto; }
+
+    .how-steps {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid var(--rule);
+    }
+
+    .how-step {
+      background: #fff; padding: 2.3rem 1.9rem;
+      transition: background .18s;
+    }
+    .how-step:hover { background: var(--blue-ghost); }
+
+    .step-n {
+      font-family: 'Fraunces', serif;
+      font-size: 2.7rem; font-weight: 300;
+      color: var(--rule-light); line-height: 1;
+      margin-bottom: 1.1rem; letter-spacing: -0.04em;
+    }
+
+    .how-step h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 500;
+      color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.01em;
+    }
+
+    .how-step p { font-size: 0.89rem; font-weight: 300; color: var(--ink-soft); line-height: 1.68; }
+
+    .step-badge {
+      display: inline-block; margin-top: 1.1rem;
+      font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue);
+    }
+
+    /* ─── CAROUSEL ────────────────────────────────────────────── */
+    .car-wrap {
+      overflow: hidden; padding: 0.5rem 0;
+      background: var(--paper);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .car-track {
+      display: flex; gap: 1rem;
+      animation: drift 36s linear infinite;
+      width: max-content;
+    }
+    .car-track:hover { animation-play-state: paused; }
+
+    .c-tile {
+      width: 168px; height: 168px;
+      border-radius: var(--radius-sm); flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,.05);
+    }
+
+    /* ─── FEATURES ────────────────────────────────────────────── */
+    .feat-wrap { background: var(--paper-warm); }
+
+    .feat-grid {
+      max-width: 1100px; margin: 3rem auto 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    .f-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-md); padding: 1.9rem;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .f-card:hover { border-color: var(--blue-pale); box-shadow: 0 6px 28px rgba(17,24,32,.08); transform: translateY(-2px); }
+
+    .f-card.wide { grid-column: span 2; }
+    .f-wide-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+
+    .f-icon {
+      width: 40px; height: 40px;
+      background: var(--blue-ghost); border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue); margin-bottom: 1rem;
+    }
+
+    .f-card h3 { font-family: 'Fraunces', serif; font-size: 1.07rem; font-weight: 500; color: var(--ink); margin-bottom: 0.45rem; letter-spacing: -0.01em; }
+    .f-card p  { font-size: 0.88rem; font-weight: 300; color: var(--ink-soft); line-height: 1.68; }
+
+    /* inline feature graph */
+    .f-graph-box {
+      background: var(--blue-ghost); border: 1.5px solid var(--blue-pale);
+      border-radius: var(--radius-md); padding: 1.3rem; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ─── PULLQUOTE ───────────────────────────────────────────── */
+    .pq {
+      background: #fff;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 5rem 2rem; text-align: center;
+    }
+
+    .pq blockquote {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.35rem, 2.7vw, 1.95rem);
+      font-weight: 300; font-style: italic;
+      color: var(--ink); max-width: 700px;
+      margin: 0 auto 1.1rem; line-height: 1.4; letter-spacing: -0.015em;
+    }
+    .pq blockquote em { font-style: normal; color: var(--blue); }
+    .pq cite { font-size: 0.79rem; color: var(--ink-faint); font-style: normal; letter-spacing: 0.04em; }
+
+    /* ─── CTA ─────────────────────────────────────────────────── */
+    .cta-wrap {
+      background: var(--ink); padding: 7rem 2rem; text-align: center; position: relative; overflow: hidden;
+    }
+
+    .cta-wrap::before {
+      content: ''; position: absolute;
+      top: -180px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 460px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .cta-inner { position: relative; z-index: 1; }
+
+    .cta-wrap h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.9rem, 3.6vw, 3rem);
+      font-weight: 300; font-style: italic;
+      color: #fff; letter-spacing: -0.025em; margin-bottom: 0.85rem;
+    }
+
+    .cta-wrap p {
+      font-size: 0.98rem; font-weight: 300;
+      color: rgba(255,255,255,.5);
+      max-width: 400px; margin: 0 auto 2.2rem; line-height: 1.72;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(255,255,255,.07);
+      padding: 3.5rem 2rem 2rem;
+      color: rgba(255,255,255,.37);
+    }
+
+    .foot-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .fb-wm { display: flex; align-items: center; gap: 0.48rem; margin-bottom: 0.7rem; }
+    .fb-wm .fm { width: 26px; height: 26px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .fb-wm span { font-family: 'Fraunces', serif; font-size: 0.98rem; font-weight: 500; color: rgba(255,255,255,.82); }
+    .foot-brand p { font-size: 0.82rem; line-height: 1.65; }
+
+    .f-socials { display: flex; gap: 0.45rem; margin-top: 1rem; }
+    .f-socials a {
+      width: 29px; height: 29px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.35);
+      transition: border-color .18s, color .18s;
+    }
+    .f-socials a:hover { border-color: var(--blue); color: var(--blue-mid); }
+
+    .foot-col h5 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,.48); margin-bottom: 1rem; }
+    .foot-col a { display: block; font-size: 0.83rem; color: rgba(255,255,255,.32); margin-bottom: 0.48rem; transition: color .18s; }
+    .foot-col a:hover { color: rgba(255,255,255,.78); }
+
+    .foot-bottom {
+      max-width: 1100px; margin: 1.8rem auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.77rem; flex-wrap: wrap; gap: 1rem;
+    }
+
+    .foot-bottom a { color: rgba(255,255,255,.28); margin-left: 1rem; transition: color .18s; }
+    .foot-bottom a:hover { color: rgba(255,255,255,.62); }
+
+    /* ─── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-text p { max-width: 100%; }
+      .how-steps { grid-template-columns: 1fr; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .f-card.wide { grid-column: span 1; }
+      .f-wide-body { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .foot-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 560px) {
+      .nav-search { display: none; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .foot-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7.0"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+
+    <div class="nav-search">
+      <span class="s-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </span>
+      <input type="text" id="searchInput" placeholder="Search artists, albums…" autocomplete="off" />
+      <div id="searchResults" class="s-drop hidden"></div>
+    </div>
+
+    <div class="nav-end">
+      <a href="/support.html" class="lnk">Support</a>
+      <a href="/about.html"   class="lnk">About</a>
+      <a href="/login.html"    class="btn btn-ghost" style="padding:.48rem 1rem;font-size:.85rem;">Log In</a>
+      <a href="/register.html" class="btn btn-solid" style="padding:.48rem 1rem;font-size:.85rem;">Get Started</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- Copy -->
+    <div class="hero-text">
+      <div class="eyebrow">
+        <span class="pill">Graph-Based NLP · Music Intelligence</span>
+      </div>
+      <h1>Discover the hidden<br><em>connections</em> in<br>every discography</h1>
+      <p>
+        TrackWeave maps the relationships between songs, albums, and artists using graph-based natural language processing — surfacing patterns in discographies that no streaming algorithm can reveal.
+      </p>
+      <div class="hero-cta">
+        <a href="/register.html" class="btn btn-solid btn-lg">Start Exploring</a>
+        <a href="#how-it-works"  class="btn btn-ghost btn-lg">How It Works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="av-stack">
+          <div class="av" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
+          <div class="av" style="background:linear-gradient(135deg,#93c5fd,#60a5fa)"></div>
+          <div class="av" style="background:linear-gradient(135deg,#60a5fa,#3b82f6)"></div>
+          <div class="av" style="background:linear-gradient(135deg,#3b82f6,#2563eb)"></div>
+        </div>
+        <span>Joined by thousands of curious music listeners</span>
+      </div>
+    </div>
+
+    <!-- Graph card -->
+    <div style="position:relative;">
+      <div class="graph-card">
+        <div class="gc-head">
+          <div>
+            <div class="gc-title">Discography Graph</div>
+            <div class="gc-sub">Songs as nodes · Albums as color groups</div>
+          </div>
+          <div class="legend" id="graph-legend"></div>
+        </div>
+        <svg id="hero-svg" viewBox="0 0 420 290"></svg>
+      </div>
+      <div class="chip chip-a"><strong>Lyrical Theme</strong>Loss · Identity · Time</div>
+      <div class="chip chip-b"><strong>92% similarity</strong>Track → Track link</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-row reveal">
+  <div class="stats-inner">
+    <div><span class="sv">2.4 M</span><span class="sl">Songs Analyzed</span></div>
+    <div><span class="sv">180 K</span><span class="sl">Artists Mapped</span></div>
+    <div><span class="sv">9.1 M</span><span class="sl">Graph Edges</span></div>
+    <div><span class="sv">42 K</span><span class="sl">Active Users</span></div>
+  </div>
+</div>
+
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section how-wrap" id="how-it-works">
+  <div class="container">
+    <div class="how-hd reveal">
+      <span class="sec-label">The Method</span>
+      <h2 class="sec-h">How TrackWeave works</h2>
+      <p class="sec-p">
+        We treat every discography as a living knowledge graph. Natural language processing extracts lyrical themes, sonic references, and narrative arcs — then draws edges between songs to reveal a richer musical story.
+      </p>
+    </div>
+
+    <div class="how-steps reveal">
+      <div class="how-step">
+        <div class="step-n">01</div>
+        <h3>Ingest &amp; Parse</h3>
+        <p>Lyrics, metadata, and audio features are ingested for every track. Our NLP pipeline tokenizes, embeds, and extracts semantic entities — themes, emotions, and motifs — from raw text.</p>
+        <span class="step-badge">NLP Extraction</span>
+      </div>
+      <div class="how-step">
+        <div class="step-n">02</div>
+        <h3>Build the Graph</h3>
+        <p>Each song becomes a node. Edges form between tracks that share lyrical themes, referenced artists, sonic similarities, or narrative continuity — assembling a rich relational network per artist.</p>
+        <span class="step-badge">Graph Construction</span>
+      </div>
+      <div class="how-step">
+        <div class="step-n">03</div>
+        <h3>Explore &amp; Share</h3>
+        <p>Browse interactive graph visualizations of any artist's discography, read community-sourced annotations, and share your own insights about the patterns you uncover.</p>
+        <span class="step-badge">Social Layer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CAROUSEL ═══ -->
+<div class="car-wrap">
+  <div class="car-track">
+    <div class="c-tile" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#0f2744,#1d4ed8)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#93c5fd)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)"></div>
+    <!-- dupe for seamless loop -->
+    <div class="c-tile" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#0f2744,#1d4ed8)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#93c5fd)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
+    <div class="c-tile" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)"></div>
+  </div>
+</div>
+
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section feat-wrap">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Features</span>
+      <h2 class="sec-h">Everything you need to<br>go deeper into music</h2>
+      <p class="sec-p">From graph visualizations to community-driven annotations, TrackWeave gives you tools that streaming platforms were never designed to provide.</p>
+    </div>
+
+    <div class="feat-grid reveal">
+
+      <!-- Wide: Graph Explorer -->
+      <div class="f-card wide">
+        <div class="f-wide-body">
+          <div>
+            <div class="f-icon">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <line x1="7" y1="12" x2="10.5" y2="12"/>
+                <line x1="13.5" y1="12" x2="17" y2="6.5"/>
+                <line x1="13.5" y1="12" x2="17" y2="17.5"/>
+              </svg>
+            </div>
+            <h3>Interactive Discography Graphs</h3>
+            <p style="margin-bottom:1rem;">
+              Visualize any artist's entire body of work as an interactive knowledge graph. Zoom into thematic clusters, trace how lyrical motifs evolve across albums, and follow the threads connecting early work to later output. No other platform shows you a discography this way.
+            </p>
+            <a href="/register.html" class="btn btn-solid" style="font-size:.84rem;padding:.58rem 1.15rem;">Explore a graph →</a>
+          </div>
+          <div class="f-graph-box">
+            <svg viewBox="0 0 280 170" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <g stroke="#bfdbfe" stroke-width="1">
+                <line x1="140" y1="85" x2="55"  y2="42"/>
+                <line x1="140" y1="85" x2="225" y2="42"/>
+                <line x1="140" y1="85" x2="225" y2="128"/>
+                <line x1="140" y1="85" x2="55"  y2="128"/>
+                <line x1="55"  y1="42" x2="55"  y2="128"/>
+                <line x1="225" y1="42" x2="225" y2="128"/>
+                <line x1="55"  y1="42" x2="100" y2="18"/>
+                <line x1="225" y1="42" x2="180" y2="18"/>
+                <line x1="55"  y1="128" x2="100" y2="152"/>
+                <line x1="225" y1="128" x2="180" y2="152"/>
+              </g>
+              <!-- Album A: blue -->
+              <circle cx="55"  cy="42"  r="7" fill="#2563eb" opacity="0.88"/>
+              <circle cx="55"  cy="128" r="7" fill="#2563eb" opacity="0.88"/>
+              <circle cx="100" cy="18"  r="5" fill="#2563eb" opacity="0.62"/>
+              <circle cx="100" cy="152" r="5" fill="#2563eb" opacity="0.62"/>
+              <!-- Album B: violet -->
+              <circle cx="225" cy="42"  r="7" fill="#7c3aed" opacity="0.88"/>
+              <circle cx="225" cy="128" r="7" fill="#7c3aed" opacity="0.88"/>
+              <circle cx="180" cy="18"  r="5" fill="#7c3aed" opacity="0.62"/>
+              <circle cx="180" cy="152" r="5" fill="#7c3aed" opacity="0.62"/>
+              <!-- Centre hub -->
+              <circle cx="140" cy="85" r="11" fill="#2563eb" opacity="0.1"/>
+              <circle cx="140" cy="85" r="6"  fill="#2563eb"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Log & Rate -->
+      <div class="f-card">
+        <div class="f-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <h3>Log, Rate &amp; Review</h3>
+        <p>Keep a permanent record of every album you've listened to, complete with star ratings and personal reviews. Your listening history becomes a searchable archive — a diary of your taste over time.</p>
+      </div>
+
+      <!-- NLP Insights -->
+      <div class="f-card">
+        <div class="f-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>NLP-Powered Lyric Insights</h3>
+        <p>Our language models surface thematic patterns across an artist's catalogue — recurring symbols, narrative arcs, and conceptual threads — so you can appreciate music at a significantly deeper level.</p>
+      </div>
+
+      <!-- Community -->
+      <div class="f-card">
+        <div class="f-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Community &amp; Social Feed</h3>
+        <p>Follow listeners whose taste you admire. See what albums your network is exploring, react to reviews, and share curated insights about the music that moves you most.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ PULLQUOTE ═══ -->
+<div class="pq reveal">
+  <blockquote>
+    "Music is not merely a collection of songs — it is a <em>living graph</em> of ideas, emotions, and stories that echo across an artist's entire lifetime."
+  </blockquote>
+  <cite>— The TrackWeave Manifesto</cite>
+</div>
+
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-wrap reveal">
+  <div class="cta-inner">
+    <span class="sec-label" style="color:rgba(255,255,255,.42);display:block;margin-bottom:.55rem;">Ready to begin?</span>
+    <h2>Your music has a story.<br>We help you read it.</h2>
+    <p>Sign up for free and start mapping your listening history into something meaningful.</p>
+    <a href="/register.html" class="btn btn-solid btn-lg" style="font-size:.98rem;padding:.85rem 1.9rem;">Create your free account</a>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="fb-wm">
+        <div class="fm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+            <circle cx="12" cy="12" r="2.1" fill="white"/>
+            <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+            <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+            <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="11.4" x2="17"   y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="12.7" x2="17"   y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+          </svg>
+        </div>
+        <span>TrackWeave</span>
+      </div>
+      <p>A graph-based music intelligence platform connecting songs, albums, and artists through NLP analysis.</p>
+      <div class="f-socials">
+        <a href="#" aria-label="X">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="foot-col">
+      <h5>Product</h5>
+      <a href="#">Features</a>
+      <a href="#">Graph Explorer</a>
+      <a href="#">NLP Insights</a>
+      <a href="#">Pricing</a>
+      <a href="#">Changelog</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Community</h5>
+      <a href="#">Discover</a>
+      <a href="#">Reviews</a>
+      <a href="#">Following</a>
+      <a href="#">Forums</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Company</h5>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+      <a href="#">API</a>
+      <a href="/support.html">Support</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <span>© 2026 TrackWeave. All rights reserved.</span>
+    <div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* ─── HERO GRAPH ─────────────────────────────────────────── */
+(function () {
+  const svg = document.getElementById('hero-svg');
+
+  // Albums: name, colour, list of song nodes
+  const albums = [
+    {
+      name: 'Album I',
+      fill: '#2563eb', stroke: '#1d4ed8',
+      songs: [
+        { id: 'a1', cx: 138, cy: 112 },
+        { id: 'a2', cx: 182, cy: 162 },
+        { id: 'a3', cx:  96, cy: 178 },
+        { id: 'a4', cx:  80, cy: 122 },
+      ],
+    },
+    {
+      name: 'Album II',
+      fill: '#7c3aed', stroke: '#6d28d9',
+      songs: [
+        { id: 'b1', cx: 278, cy:  88 },
+        { id: 'b2', cx: 338, cy: 118 },
+        { id: 'b3', cx: 325, cy: 178 },
+        { id: 'b4', cx: 260, cy: 160 },
+      ],
+    },
+    {
+      name: 'Album III',
+      fill: '#0891b2', stroke: '#0e7490',
+      songs: [
+        { id: 'c1', cx: 192, cy:  58 },
+        { id: 'c2', cx: 242, cy:  44 },
+        { id: 'c3', cx: 218, cy: 218 },
+        { id: 'c4', cx: 162, cy: 234 },
+      ],
+    },
+  ];
+
+  // Artist node — top-left, separate
+  const artist = { cx: 44, cy: 40 };
+
+  // Edges between song nodes (cross and intra-album)
+  const edges = [
+    ['a1','b1'], ['a1','c1'], ['a2','c3'], ['a2','b4'],
+    ['a3','c4'], ['a4','c1'], ['b2','c2'], ['b3','c3'],
+    ['b4','c1'], ['b1','c2'], ['a3','a4'], ['b1','b2'],
+    ['a1','a2'], ['c1','c2'],
+  ];
+
+  // Dashed edges: artist → one representative song per album
+  const artistEdges = ['a1', 'b1', 'c1'];
+
+  // Build lookup
+  const map = {};
+  albums.forEach(al => al.songs.forEach(s => { map[s.id] = { ...s, fill: al.fill, stroke: al.stroke }; }));
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs) => {
+    const e = document.createElementNS(ns, tag);
+    Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+    return e;
+  };
+
+  // ── edge layer ──
+  const eg = el('g', { stroke: '#c7d2fe', 'stroke-width': '1.1', opacity: '0.65' });
+  edges.forEach(([a, b]) => {
+    const na = map[a], nb = map[b]; if (!na || !nb) return;
+    eg.appendChild(el('line', { x1: na.cx, y1: na.cy, x2: nb.cx, y2: nb.cy }));
+  });
+  svg.appendChild(eg);
+
+  // ── artist dashed edges ──
+  const ag = el('g', { stroke: '#94a3b8', 'stroke-width': '1', 'stroke-dasharray': '4 3', opacity: '0.55' });
+  artistEdges.forEach(sid => {
+    const n = map[sid]; if (!n) return;
+    ag.appendChild(el('line', { x1: artist.cx, y1: artist.cy, x2: n.cx, y2: n.cy }));
+  });
+  svg.appendChild(ag);
+
+  // ── song nodes ──
+  albums.forEach(al => {
+    const g = el('g', {});
+    al.songs.forEach(s => {
+      const halo = el('circle', { cx: s.cx, cy: s.cy, r: '11', fill: al.fill, opacity: '0.11' });
+      g.appendChild(halo);
+
+      const c = el('circle', { cx: s.cx, cy: s.cy, r: '6', fill: al.fill, stroke: al.stroke, 'stroke-width': '1.5' });
+      c.style.cursor = 'pointer';
+      c.style.transition = 'r .15s';
+
+      const t = document.createElementNS(ns, 'title');
+      t.textContent = `${al.name}`;
+      c.appendChild(t);
+
+      c.addEventListener('mouseenter', () => { c.setAttribute('r', '8.5'); halo.setAttribute('r', '14'); });
+      c.addEventListener('mouseleave', () => { c.setAttribute('r', '6');   halo.setAttribute('r', '11'); });
+      g.appendChild(c);
+    });
+    svg.appendChild(g);
+  });
+
+  // ── artist node (diamond, top-left) ──
+  const artG = el('g', {});
+
+  const halo = el('circle', { cx: artist.cx, cy: artist.cy, r: '18', fill: '#f59e0b', opacity: '0.09' });
+  artG.appendChild(halo);
+
+  const d = 12;
+  const diamond = el('polygon', {
+    points: `${artist.cx},${artist.cy - d} ${artist.cx + d},${artist.cy} ${artist.cx},${artist.cy + d} ${artist.cx - d},${artist.cy}`,
+    fill: '#f59e0b', stroke: '#d97706', 'stroke-width': '1.5',
+  });
+  artG.appendChild(diamond);
+
+  const lbl = el('text', {
+    x: artist.cx, y: artist.cy + d + 14,
+    'text-anchor': 'middle', 'font-size': '9',
+    'font-family': 'Instrument Sans, sans-serif',
+    fill: '#92400e', 'font-weight': '600',
+  });
+  lbl.textContent = 'Artist';
+  artG.appendChild(lbl);
+
+  svg.appendChild(artG);
+
+  // ── legend ──
+  const legendEl = document.getElementById('graph-legend');
+  albums.forEach(al => {
+    const item = document.createElement('div');
+    item.className = 'leg-item';
+    item.innerHTML = `<span class="leg-dot" style="background:${al.fill}"></span>${al.name}`;
+    legendEl.appendChild(item);
+  });
+  // artist legend entry
+  const artEntry = document.createElement('div');
+  artEntry.className = 'leg-item';
+  artEntry.innerHTML = `<span class="leg-dot" style="background:#f59e0b;border-radius:2px;transform:rotate(45deg);display:inline-block;"></span>Artist`;
+  legendEl.appendChild(artEntry);
+})();
+
+
+/* ─── SCROLL REVEAL ──────────────────────────────────────── */
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+
+/* ─── SEARCH ─────────────────────────────────────────────── */
+const PROXY = 'https://corsproxy.io/?';
+const BASE  = 'https://api.deezer.com';
+const inp   = document.getElementById('searchInput');
+const drop  = document.getElementById('searchResults');
+let timer;
+
+function search(q) {
+  clearTimeout(timer);
+  if (!q.trim()) { drop.classList.add('hidden'); return; }
+  drop.innerHTML = `<div style="padding:1rem;text-align:center;color:#7a8e9e;font-size:.84rem;">Searching…</div>`;
+  drop.classList.remove('hidden');
+  timer = setTimeout(async () => {
+    try {
+      const [ar, al] = await Promise.all([
+        fetch(`${PROXY}${encodeURIComponent(`${BASE}/search/artist?q=${encodeURIComponent(q)}&limit=4`)}`).then(r=>r.json()),
+        fetch(`${PROXY}${encodeURIComponent(`${BASE}/search/album?q=${encodeURIComponent(q)}&limit=4`)}`).then(r=>r.json()),
+      ]);
+      render(ar?.data||[], al?.data||[]);
+    } catch {
+      drop.innerHTML = `<div style="padding:1rem;color:#ef4444;font-size:.84rem;">Search failed — please try again.</div>`;
+    }
+  }, 280);
+}
+
+function row(img, title, sub, link, round) {
+  return `<a href="${link||'#'}" target="_blank" style="display:flex;align-items:center;gap:.68rem;padding:.58rem 1rem;border-bottom:1px solid #ddd7cf;transition:background .14s;" onmouseover="this.style.background='#eff6ff'" onmouseout="this.style.background='transparent'">
+    <div style="width:33px;height:33px;border-radius:${round?'50%':'7px'};overflow:hidden;flex-shrink:0;background:#dbeafe;display:flex;align-items:center;justify-content:center;">
+      ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" crossorigin="anonymous"/>` :
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`}
+    </div>
+    <div style="min-width:0;">
+      <div style="color:#111820;font-size:.86rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${title}</div>
+      <div style="color:#7a8e9e;font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${sub}</div>
+    </div>
+  </a>`;
+}
+
+function secHead(label) {
+  return `<div style="padding:.38rem 1rem .2rem;font-size:.67rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#7a8e9e;border-bottom:1px solid #ddd7cf;">${label}</div>`;
+}
+
+function render(artists, albums) {
+  if (!artists.length && !albums.length) {
+    drop.innerHTML = `<div style="padding:1.2rem;text-align:center;color:#7a8e9e;font-size:.84rem;">No results found.</div>`;
+    return;
+  }
+  let h = '';
+  if (artists.length) { h += secHead('Artists'); artists.forEach(a => h += row(a.picture_medium, a.name, `${(a.nb_fan||0).toLocaleString()} fans · ${a.nb_album||0} albums`, a.link, true)); }
+  if (albums.length)  { h += secHead('Albums');  albums.forEach(a  => h += row(a.cover_medium,   a.title, a.artist?.name||'Unknown Artist', a.link, false)); }
+  drop.innerHTML = h;
+  drop.classList.remove('hidden');
+}
+
+inp.addEventListener('input',  e => search(e.target.value));
+inp.addEventListener('focus',  e => { if (e.target.value.trim()) search(e.target.value); });
+document.addEventListener('click', e => { if (!inp.contains(e.target) && !drop.contains(e.target)) drop.classList.add('hidden'); });
+inp.addEventListener('keydown', e => { if (e.key === 'Escape') { drop.classList.add('hidden'); inp.blur(); } });
+</script>
+</body>
+</html>
