@@ -1,0 +1,365 @@
+/* ═══════════════════════════════════════════════════════════════
+   TrackWeave — About Page Styles
+   Requires: trackweave-base.css
+   ═══════════════════════════════════════════════════════════════ */
+
+
+/* ─── PAGE HERO ──────────────────────────────────────────────── */
+.page-hero {
+  background: var(--paper-warm);
+  border-bottom: 1px solid var(--rule);
+  padding: 5.5rem 2rem 4.5rem;
+  position: relative; overflow: hidden;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute; top: -100px; right: -120px;
+  width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,.06) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.page-hero::after {
+  content: '';
+  position: absolute; bottom: -80px; left: -80px;
+  width: 360px; height: 360px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,158,11,.05) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.page-hero-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center; position: relative; z-index: 1;
+}
+
+.page-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 400; font-style: italic;
+  font-size: clamp(2.8rem, 4.5vw, 4rem);
+  color: var(--ink); line-height: 1.07;
+  letter-spacing: -0.03em; margin-bottom: 1.2rem;
+}
+
+.page-hero h1 em { font-style: normal; color: var(--blue); }
+
+.page-hero p {
+  font-size: 1.05rem; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.75;
+  max-width: 440px;
+}
+
+.hero-graph-deco { display: flex; align-items: center; justify-content: center; }
+
+
+/* ─── MISSION ────────────────────────────────────────────────── */
+.mission {
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  padding: 5.5rem 2rem;
+}
+
+.mission-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 2fr;
+  gap: 5rem; align-items: start;
+}
+
+.mission-sticky { position: sticky; top: 80px; }
+
+.mission-body p {
+  font-size: 1.05rem; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.8;
+  margin-bottom: 1.4rem;
+}
+.mission-body p:last-child { margin-bottom: 0; }
+.mission-body p strong { color: var(--ink); font-weight: 500; }
+
+.mission-body blockquote {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem; font-weight: 300; font-style: italic;
+  color: var(--ink); letter-spacing: -0.015em;
+  line-height: 1.45; border-left: 3px solid var(--blue);
+  padding-left: 1.4rem; margin: 2.2rem 0;
+}
+
+
+/* ─── HOW IT WORKS (deep) ────────────────────────────────────── */
+.deep-section { padding: 5.5rem 2rem; }
+.deep-section.alt { background: var(--paper-warm); }
+.deep-inner { max-width: 1100px; margin: 0 auto; }
+.deep-header { margin-bottom: 3rem; }
+
+/* Pipeline steps */
+.pipeline {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border-radius: var(--r-lg); overflow: hidden;
+  border: 1px solid var(--rule);
+}
+
+.pipe-step {
+  background: #fff; padding: 2rem 1.6rem;
+  transition: background .18s; position: relative;
+}
+.pipe-step:hover { background: var(--blue-ghost); }
+
+.pipe-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2.4rem; font-weight: 300;
+  color: var(--rule-light); line-height: 1;
+  margin-bottom: 1rem; letter-spacing: -0.04em;
+}
+
+.pipe-icon {
+  width: 38px; height: 38px;
+  background: var(--blue-ghost); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue); margin-bottom: 1rem;
+}
+
+.pipe-step h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.45rem; letter-spacing: -0.01em;
+}
+
+.pipe-step p { font-size: 0.86rem; font-weight: 300; color: var(--ink-soft); line-height: 1.65; }
+
+.pipe-badge {
+  display: inline-block; margin-top: 1rem;
+  font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue);
+}
+
+.pipe-step::after {
+  content: '→';
+  position: absolute; right: -12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem; color: var(--rule); z-index: 2;
+}
+.pipe-step:last-child::after { display: none; }
+
+
+/* ─── GRAPH EXPLAINER ────────────────────────────────────────── */
+.graph-explainer {
+  max-width: 1100px; margin: 3.5rem auto 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2rem; align-items: center;
+}
+
+.graph-explainer-visual {
+  background: #fff; border: 1.5px solid var(--rule);
+  border-radius: var(--r-lg); padding: 2rem;
+  box-shadow: 0 2px 8px rgba(17,24,32,.04), 0 12px 36px rgba(17,24,32,.06);
+}
+
+.graph-explainer-text h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem; font-weight: 400;
+  color: var(--ink); letter-spacing: -0.02em;
+  margin-bottom: 0.85rem; line-height: 1.2;
+}
+
+.graph-explainer-text p {
+  font-size: 0.95rem; font-weight: 300;
+  color: var(--ink-soft); line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.graph-explainer-text p:last-child { margin-bottom: 0; }
+
+.node-legend { margin-top: 1.4rem; display: flex; flex-direction: column; gap: 0.55rem; }
+.nleg-item { display: flex; align-items: center; gap: 0.65rem; font-size: 0.85rem; color: var(--ink-soft); }
+.nleg-shape { flex-shrink: 0; }
+
+
+/* ─── TEAM ───────────────────────────────────────────────────── */
+.team-section {
+  padding: 5.5rem 2rem;
+  background: #fff; border-top: 1px solid var(--rule);
+}
+
+.team-grid {
+  max-width: 1100px; margin: 3rem auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.team-card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-md); padding: 1.9rem;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.team-card:hover {
+  border-color: var(--blue-pale);
+  box-shadow: 0 6px 28px rgba(17,24,32,.08);
+  transform: translateY(-2px);
+}
+
+.team-avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  margin-bottom: 1.1rem; display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem; font-weight: 500;
+  color: #fff; flex-shrink: 0;
+}
+
+.team-card h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--ink); letter-spacing: -0.01em; margin-bottom: 0.2rem;
+}
+
+.team-card .role {
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 0.8rem;
+}
+
+.team-card p { font-size: 0.875rem; font-weight: 300; color: var(--ink-soft); line-height: 1.68; }
+
+
+/* ─── VALUES ─────────────────────────────────────────────────── */
+.values-section {
+  padding: 5.5rem 2rem;
+  background: var(--paper-warm);
+  border-top: 1px solid var(--rule);
+}
+
+.values-grid {
+  max-width: 1100px; margin: 3rem auto 0;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+.val-card {
+  background: #fff; border: 1.5px solid var(--rule);
+  border-radius: var(--r-md); padding: 1.8rem;
+  display: flex; gap: 1.2rem;
+  transition: border-color .2s;
+}
+.val-card:hover { border-color: var(--blue-pale); }
+
+.val-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem; font-weight: 300;
+  color: var(--rule); letter-spacing: -0.04em;
+  line-height: 1; flex-shrink: 0; padding-top: 0.1rem; min-width: 2rem;
+}
+
+.val-card h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.4rem; letter-spacing: -0.01em;
+}
+
+.val-card p { font-size: 0.875rem; font-weight: 300; color: var(--ink-soft); line-height: 1.68; }
+
+
+/* ─── TECH STACK ─────────────────────────────────────────────── */
+.tech-section {
+  padding: 5.5rem 2rem;
+  background: #fff; border-top: 1px solid var(--rule);
+}
+
+.tech-grid {
+  max-width: 1100px; margin: 3rem auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.tech-group h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 1rem; letter-spacing: -0.01em;
+  padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule);
+}
+
+.tech-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 0; border-bottom: 1px solid var(--rule-light);
+}
+.tech-item:last-child { border-bottom: none; }
+
+.tech-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+.tech-item span { font-size: 0.875rem; color: var(--ink-soft); }
+
+.tech-item .tech-badge {
+  margin-left: auto;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-ghost);
+  padding: 0.15rem 0.45rem; border-radius: 4px;
+}
+
+
+/* ─── TIMELINE ───────────────────────────────────────────────── */
+.timeline-section {
+  padding: 5.5rem 2rem;
+  background: var(--paper-warm); border-top: 1px solid var(--rule);
+}
+
+.timeline {
+  max-width: 680px; margin: 3rem auto 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute; left: 0; top: 6px; bottom: 6px;
+  width: 1.5px; background: var(--rule);
+}
+
+.tl-item {
+  padding-left: 2rem; margin-bottom: 2.5rem;
+  position: relative;
+}
+.tl-item:last-child { margin-bottom: 0; }
+
+.tl-item::before {
+  content: '';
+  position: absolute; left: -5px; top: 6px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--paper-warm); border: 2px solid var(--rule);
+  transition: border-color .2s, background .2s;
+}
+.tl-item:hover::before { border-color: var(--blue); background: var(--blue-ghost); }
+
+.tl-date {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 0.35rem;
+}
+
+.tl-item h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.35rem; letter-spacing: -0.01em;
+}
+
+.tl-item p { font-size: 0.875rem; font-weight: 300; color: var(--ink-soft); line-height: 1.65; }
+
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .page-hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-graph-deco { display: none; }
+  .mission-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .mission-sticky { position: static; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .pipe-step::after { display: none; }
+  .graph-explainer { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  .pipeline { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: 1fr; }
+}
