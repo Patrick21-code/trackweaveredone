@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — TrackWeave</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/trackweave-base.css" />
+  <link rel="stylesheet" href="../styles/about-page.css" />
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/about.html" class="active">About</a>
+      <a href="/support.html">Support</a>
+    </nav>
+
+    <div class="nav-end">
+      <a href="/login.html"    class="btn btn-ghost" style="padding:.48rem 1rem;font-size:.85rem;">Log In</a>
+      <a href="/register.html" class="btn btn-solid" style="padding:.48rem 1rem;font-size:.85rem;">Get Started</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══ PAGE HERO ═══ -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div>
+      <div style="margin-bottom:1.4rem;"><span class="pill">Our Story</span></div>
+      <h1>Music has always<br>been about <em>connection</em></h1>
+      <p style="margin-top:1rem;">
+        TrackWeave was born from a simple question: what if you could see the invisible threads linking every song an artist has ever made? We built the tools to answer it.
+      </p>
+    </div>
+
+    <!-- Decorative graph -->
+    <div class="hero-graph-deco">
+      <svg viewBox="0 0 380 280" width="380" height="280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Edges -->
+        <g stroke="#dbeafe" stroke-width="1.2" opacity="0.8">
+          <line x1="190" y1="140" x2="80"  y2="70"/>
+          <line x1="190" y1="140" x2="300" y2="70"/>
+          <line x1="190" y1="140" x2="310" y2="200"/>
+          <line x1="190" y1="140" x2="75"  y2="205"/>
+          <line x1="190" y1="140" x2="190" y2="40"/>
+          <line x1="80"  y1="70"  x2="190" y2="40"/>
+          <line x1="300" y1="70"  x2="190" y2="40"/>
+          <line x1="80"  y1="70"  x2="75"  y2="205"/>
+          <line x1="300" y1="70"  x2="310" y2="200"/>
+          <line x1="310" y1="200" x2="260" y2="250"/>
+          <line x1="75"  y1="205" x2="135" y2="255"/>
+          <line x1="80"  y1="70"  x2="40"  y2="130"/>
+          <line x1="300" y1="70"  x2="340" y2="130"/>
+        </g>
+        <!-- Glow accent lines -->
+        <g stroke="#2563eb" stroke-width="1.5" opacity="0.3">
+          <line x1="190" y1="140" x2="80"  y2="70"/>
+          <line x1="190" y1="140" x2="300" y2="70"/>
+          <line x1="190" y1="140" x2="190" y2="40"/>
+        </g>
+        <!-- Album A: blue -->
+        <circle cx="80"  cy="70"  r="9"  fill="#2563eb" opacity="0.85"/>
+        <circle cx="75"  cy="205" r="9"  fill="#2563eb" opacity="0.85"/>
+        <circle cx="40"  cy="130" r="6"  fill="#2563eb" opacity="0.6"/>
+        <circle cx="135" cy="255" r="6"  fill="#2563eb" opacity="0.6"/>
+        <!-- Album B: violet -->
+        <circle cx="300" cy="70"  r="9"  fill="#7c3aed" opacity="0.85"/>
+        <circle cx="310" cy="200" r="9"  fill="#7c3aed" opacity="0.85"/>
+        <circle cx="340" cy="130" r="6"  fill="#7c3aed" opacity="0.6"/>
+        <circle cx="260" cy="250" r="6"  fill="#7c3aed" opacity="0.6"/>
+        <!-- Album C: cyan -->
+        <circle cx="190" cy="40"  r="7"  fill="#0891b2" opacity="0.85"/>
+        <!-- Center hub -->
+        <circle cx="190" cy="140" r="14" fill="#2563eb" opacity="0.1"/>
+        <circle cx="190" cy="140" r="8"  fill="#2563eb"/>
+        <!-- Artist: amber diamond, top-left -->
+        <circle cx="30" cy="35" r="16" fill="#f59e0b" opacity="0.08"/>
+        <polygon points="30,20 45,35 30,50 15,35" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+        <text x="30" y="63" text-anchor="middle" font-size="9" font-family="Instrument Sans, sans-serif" fill="#92400e" font-weight="600">Artist</text>
+        <!-- Dashed edges: artist → albums -->
+        <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3" opacity="0.5">
+          <line x1="45" y1="35" x2="75"  y2="64"/>
+          <line x1="45" y1="35" x2="182" y2="44"/>
+          <line x1="45" y1="35" x2="290" y2="66"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ MISSION ═══ -->
+<section class="mission">
+  <div class="mission-inner">
+
+    <!-- Left: sticky label -->
+    <div class="mission-sticky reveal">
+      <span class="sec-label">Our Mission</span>
+      <h2 class="sec-h" style="max-width:260px;">Why we built TrackWeave</h2>
+      <p class="sec-p" style="margin-top:0.5rem;max-width:260px;font-size:.9rem;">
+        We believe music is richer when you understand the conversation happening across an artist's life's work.
+      </p>
+    </div>
+
+    <!-- Right: body copy -->
+    <div class="mission-body reveal">
+      <p>
+        Streaming platforms are extraordinary at delivering music on demand — but they are fundamentally designed around the <strong>moment of listening</strong>, not the act of understanding. You press play, a song ends, another begins. The deeper architecture of a discography remains invisible.
+      </p>
+
+      <blockquote>
+        "An artist's body of work is a single, evolving argument — a conversation with themselves across time."
+      </blockquote>
+
+      <p>
+        TrackWeave was created to make that conversation legible. By applying <strong>graph-based natural language processing</strong> to lyrics, metadata, and audio features, we construct a relational map of every artist's catalogue — revealing how themes migrate between albums, how early obsessions resurface years later, and how songs that seem unrelated are, in fact, deeply connected.
+      </p>
+
+      <p>
+        We pair this analytical layer with a <strong>social platform</strong> built for listeners who want to go further: log every album, write honest reviews, follow people whose ears you trust, and contribute annotations to the shared graph of human musical understanding.
+      </p>
+
+      <p>
+        TrackWeave is not a replacement for how you listen. It is a lens that changes what you hear.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══ HOW IT WORKS (deep) ═══ -->
+<section class="deep-section">
+  <div class="deep-inner">
+    <div class="deep-header reveal">
+      <span class="sec-label">The Technology</span>
+      <h2 class="sec-h">From lyrics to graph</h2>
+      <p class="sec-p" style="max-width:520px;">
+        Our NLP pipeline processes a discography end-to-end — from raw text to an interactive, queryable knowledge graph — in four stages.
+      </p>
+    </div>
+
+    <div class="pipeline reveal">
+      <div class="pipe-step">
+        <div class="pipe-num">01</div>
+        <div class="pipe-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h4>Ingestion</h4>
+        <p>Lyrics, release metadata, audio features, and artist credits are collected and normalized across sources into a unified schema per track.</p>
+        <span class="pipe-badge">Data Layer</span>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">02</div>
+        <div class="pipe-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <h4>Semantic Extraction</h4>
+        <p>Each track's lyrics are tokenized and embedded using transformer-based models. Named entities, motifs, emotional valence, and thematic clusters are identified and scored.</p>
+        <span class="pipe-badge">NLP Core</span>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">03</div>
+        <div class="pipe-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="5"  cy="12" r="2"/>
+            <circle cx="19" cy="5"  r="2"/>
+            <circle cx="19" cy="19" r="2"/>
+            <circle cx="12" cy="12" r="1.5"/>
+            <line x1="7"    y1="12" x2="10.5" y2="12"/>
+            <line x1="13.5" y1="12" x2="17"   y2="6.5"/>
+            <line x1="13.5" y1="12" x2="17"   y2="17.5"/>
+          </svg>
+        </div>
+        <h4>Graph Construction</h4>
+        <p>Songs become nodes; weighted edges form between tracks sharing themes, sonic fingerprints, narrative arcs, or lyrical references. Albums become colour-coded subgraphs.</p>
+        <span class="pipe-badge">Graph Engine</span>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <div class="pipe-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h4>Visualisation</h4>
+        <p>The graph is rendered as an interactive canvas. Users can zoom, filter by album, inspect edge weights, and add community annotations to any node or connection.</p>
+        <span class="pipe-badge">Frontend</span>
+      </div>
+    </div>
+
+    <!-- Graph explainer -->
+    <div class="graph-explainer reveal" style="margin-top:3.5rem;">
+      <div class="graph-explainer-visual">
+        <div style="margin-bottom:0.75rem;">
+          <span style="font-family:'Fraunces',serif;font-size:0.85rem;font-weight:500;color:var(--ink);">Graph Anatomy</span>
+          <span style="font-size:0.72rem;color:var(--ink-faint);margin-left:0.5rem;">Hover nodes to inspect</span>
+        </div>
+        <svg viewBox="0 0 380 240" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background album zones -->
+          <ellipse cx="120" cy="140" rx="80" ry="65" fill="#eff6ff" opacity="0.6"/>
+          <ellipse cx="280" cy="120" rx="75" ry="60" fill="#f5f3ff" opacity="0.6"/>
+          <ellipse cx="200" cy="60"  rx="55" ry="38" fill="#ecfeff" opacity="0.6"/>
+
+          <!-- Album zone labels -->
+          <text x="62"  y="200" font-size="9" font-family="Instrument Sans" fill="#2563eb" opacity="0.6" font-weight="600">Album I</text>
+          <text x="250" y="182" font-size="9" font-family="Instrument Sans" fill="#7c3aed" opacity="0.6" font-weight="600">Album II</text>
+          <text x="178" y="30"  font-size="9" font-family="Instrument Sans" fill="#0891b2" opacity="0.6" font-weight="600">Album III</text>
+
+          <!-- Edges -->
+          <g stroke="#c7d2fe" stroke-width="1" opacity="0.7">
+            <line x1="190" y1="130" x2="100" y2="120"/>
+            <line x1="190" y1="130" x2="265" y2="100"/>
+            <line x1="190" y1="130" x2="295" y2="155"/>
+            <line x1="190" y1="130" x2="130" y2="165"/>
+            <line x1="190" y1="130" x2="195" y2="65"/>
+            <line x1="100" y1="120" x2="195" y2="65"/>
+            <line x1="265" y1="100" x2="195" y2="65"/>
+            <line x1="100" y1="120" x2="130" y2="165"/>
+            <line x1="265" y1="100" x2="295" y2="155"/>
+            <line x1="100" y1="120" x2="70"  y2="145"/>
+            <line x1="265" y1="100" x2="310" y2="80"/>
+          </g>
+
+          <!-- Strong edges (highlighted) -->
+          <g stroke="#2563eb" stroke-width="1.5" opacity="0.4">
+            <line x1="190" y1="130" x2="100" y2="120"/>
+            <line x1="190" y1="130" x2="265" y2="100"/>
+          </g>
+
+          <!-- Song nodes: Album I = blue -->
+          <circle cx="100" cy="120" r="8"  fill="#2563eb" opacity="0.85"/>
+          <circle cx="130" cy="165" r="7"  fill="#2563eb" opacity="0.75"/>
+          <circle cx="70"  cy="145" r="6"  fill="#2563eb" opacity="0.6"/>
+          <!-- Song nodes: Album II = violet -->
+          <circle cx="265" cy="100" r="8"  fill="#7c3aed" opacity="0.85"/>
+          <circle cx="295" cy="155" r="7"  fill="#7c3aed" opacity="0.75"/>
+          <circle cx="310" cy="80"  r="6"  fill="#7c3aed" opacity="0.6"/>
+          <!-- Song nodes: Album III = cyan -->
+          <circle cx="195" cy="65"  r="7"  fill="#0891b2" opacity="0.85"/>
+
+          <!-- Central hub -->
+          <circle cx="190" cy="130" r="13" fill="#2563eb" opacity="0.1"/>
+          <circle cx="190" cy="130" r="7"  fill="#2563eb"/>
+
+          <!-- Artist node -->
+          <circle cx="35" cy="35" r="14" fill="#f59e0b" opacity="0.08"/>
+          <polygon points="35,22 47,35 35,48 23,35" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+          <text x="35" y="60" text-anchor="middle" font-size="8" font-family="Instrument Sans" fill="#92400e" font-weight="600">Artist</text>
+
+          <!-- Dashed artist edges -->
+          <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="3.5 3" opacity="0.5">
+            <line x1="47" y1="35" x2="94"  y2="118"/>
+            <line x1="47" y1="35" x2="189" y2="66"/>
+            <line x1="47" y1="35" x2="257" y2="99"/>
+          </g>
+
+          <!-- Edge weight label -->
+          <rect x="144" y="117" width="44" height="16" rx="4" fill="white" opacity="0.9"/>
+          <text x="166" y="129" text-anchor="middle" font-size="8.5" font-family="Instrument Sans" fill="#2563eb" font-weight="600">0.87 sim</text>
+        </svg>
+      </div>
+
+      <div class="graph-explainer-text">
+        <h3>Every node tells a story,<br>every edge reveals one</h3>
+        <p>
+          In TrackWeave's graph model, <strong style="color:var(--ink);">songs are nodes</strong> and <strong style="color:var(--ink);">relationships are edges</strong>. The weight of each edge reflects the computed similarity between two tracks — derived from shared lyrical themes, emotional tone, sonic characteristics, and narrative structure.
+        </p>
+        <p>
+          Albums form natural colour-coded clusters, while cross-album edges expose the thematic evolution of an artist across their career. The artist node sits apart — a root from which all creative work extends.
+        </p>
+        <div class="node-legend">
+          <div class="nleg-item">
+            <span class="nleg-shape">
+              <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="8,1 15,8 8,15 1,8" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/></svg>
+            </span>
+            <span><strong style="color:var(--ink);">Diamond</strong> — Artist root node</span>
+          </div>
+          <div class="nleg-item">
+            <span class="nleg-shape"><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#2563eb"/></svg></span>
+            <span><strong style="color:var(--ink);">Circle (blue)</strong> — Song, Album I</span>
+          </div>
+          <div class="nleg-item">
+            <span class="nleg-shape"><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#7c3aed"/></svg></span>
+            <span><strong style="color:var(--ink);">Circle (violet)</strong> — Song, Album II</span>
+          </div>
+          <div class="nleg-item">
+            <span class="nleg-shape"><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#0891b2"/></svg></span>
+            <span><strong style="color:var(--ink);">Circle (cyan)</strong> — Song, Album III</span>
+          </div>
+          <div class="nleg-item">
+            <span class="nleg-shape"><svg width="16" height="16"><line x1="1" y1="8" x2="15" y2="8" stroke="#c7d2fe" stroke-width="1.5"/></svg></span>
+            <span><strong style="color:var(--ink);">Solid edge</strong> — Thematic similarity</span>
+          </div>
+          <div class="nleg-item">
+            <span class="nleg-shape"><svg width="16" height="16"><line x1="1" y1="8" x2="15" y2="8" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3 2.5"/></svg></span>
+            <span><strong style="color:var(--ink);">Dashed edge</strong> — Artist authorship</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ VALUES ═══ -->
+<section class="values-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">What We Believe</span>
+      <h2 class="sec-h">The principles behind<br>every decision we make</h2>
+    </div>
+
+    <div class="values-grid reveal">
+      <div class="val-card">
+        <span class="val-num">1</span>
+        <div>
+          <h4>Depth over virality</h4>
+          <p>We are not optimising for clicks, shares, or engagement streaks. We are building a space for listeners who want to slow down and truly understand the music they love. Every feature we ship is measured against this.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <span class="val-num">2</span>
+        <div>
+          <h4>The listener is the expert</h4>
+          <p>Our algorithms surface patterns — but human ears and human memory hold meanings that no model can fully capture. Community annotations are treated as first-class data, not decorations on top of automated output.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <span class="val-num">3</span>
+        <div>
+          <h4>Transparency in analysis</h4>
+          <p>When we say two songs are connected, we show you why — which themes overlapped, what the edge weight means, and what the underlying model found. We never reduce music to an opaque score.</p>
+        </div>
+      </div>
+
+      <div class="val-card">
+        <span class="val-num">4</span>
+        <div>
+          <h4>Privacy by design</h4>
+          <p>Your listening history, reviews, and ratings belong to you. We do not sell your data, we do not profile you for third-party advertising, and we provide full data export at any time, no questions asked.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ TECH STACK ═══ -->
+<section class="tech-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Under the Hood</span>
+      <h2 class="sec-h">Built on solid foundations</h2>
+      <p class="sec-p" style="max-width:500px;">
+        TrackWeave is built with tools chosen for reliability, performance, and transparency — not trend-following.
+      </p>
+    </div>
+
+    <div class="tech-grid reveal">
+      <div class="tech-group">
+        <h4>NLP &amp; Graph</h4>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#f59e0b;"></span>
+          <span>PyTorch Transformers</span>
+          <span class="tech-badge">Core</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#2563eb;"></span>
+          <span>NetworkX</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#7c3aed;"></span>
+          <span>spaCy</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#0891b2;"></span>
+          <span>FAISS (vector search)</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#16a34a;"></span>
+          <span>Sentence-Transformers</span>
+        </div>
+      </div>
+
+      <div class="tech-group">
+        <h4>Backend &amp; Data</h4>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#2563eb;"></span>
+          <span>FastAPI (Python)</span>
+          <span class="tech-badge">Core</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#16a34a;"></span>
+          <span>Neo4j (graph DB)</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#f59e0b;"></span>
+          <span>PostgreSQL</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#7c3aed;"></span>
+          <span>Redis (caching)</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#0891b2;"></span>
+          <span>Deezer API</span>
+        </div>
+      </div>
+
+      <div class="tech-group">
+        <h4>Frontend &amp; Infra</h4>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#f59e0b;"></span>
+          <span>React + D3.js</span>
+          <span class="tech-badge">Core</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#2563eb;"></span>
+          <span>Tailwind CSS</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#7c3aed;"></span>
+          <span>Vercel (hosting)</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#0891b2;"></span>
+          <span>AWS S3 (storage)</span>
+        </div>
+        <div class="tech-item">
+          <span class="tech-dot" style="background:#16a34a;"></span>
+          <span>GitHub Actions (CI)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ TEAM ═══ -->
+<section class="team-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">The Team</span>
+      <h2 class="sec-h">Built by people who care<br>deeply about music</h2>
+      <p class="sec-p" style="max-width:500px;">
+        TrackWeave is a small, focused team of engineers, researchers, and listeners united by a belief that music deserves better tools for understanding.
+      </p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);">A</div>
+        <h4>Ashley John Baguio</h4>
+        <div class="role">Contributor</div>
+        <p>Former ML engineer at a major streaming platform. Built the original NLP pipeline in a weekend — and never stopped improving it. Listens exclusively to jazz while coding.</p>
+      </div>
+
+      <div class="team-card reveal reveal-d1">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);">M</div>
+        <h4>Michaella Francine Crema</h4>
+        <div class="role">Contributor</div>
+        <p>PhD in computational linguistics. Designed the graph construction model and the semantic similarity scoring system. Has a ranked list of every Radiohead album she updates annually.</p>
+      </div>
+
+
+      <div class="team-card reveal">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#15803d,#16a34a);">S</div>
+        <h4>Sid Alexis Serrano</h4>
+        <div class="role">Contributor</div>
+        <p>Keeps the graph database running at scale. Wrote the ingestion pipeline that processes tens of thousands of tracks daily. Collects vinyl records and corrects their Wikipedia pages.</p>
+      </div>
+
+      <div class="team-card reveal reveal-d1">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#b45309,#d97706);">P</div>
+        <h4>Patrick Danielle Tomas</h4>
+        <div class="role">Contributor</div>
+        <p>Responsible for the interactive graph canvas. Previously built data visualisations for a science museum. Has opinions about force-directed graph layouts that could fill a book.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ TIMELINE ═══ -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:0;">
+      <span class="sec-label">Milestones</span>
+      <h2 class="sec-h">How we got here</h2>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-date">September 2023</span>
+        <h4>The idea</h4>
+        <p>Alex and Soo-Yeon sketch the first version of the graph model on a whiteboard at a hackathon. They win third place. They disagree with the judges to this day.</p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-date">January 2024</span>
+        <h4>First prototype</h4>
+        <p>A working NLP pipeline processes the complete discography of three artists and produces its first graph. Edge weights are rough, but the patterns are immediately visible and surprising.</p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-date">April 2024</span>
+        <h4>Team grows</h4>
+        <p>Marcus, Lena, Jonas, and Clara join. The product goes from a research demo to a product with a design language, a social layer, and a proper backend.</p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-date">October 2024</span>
+        <h4>Private beta</h4>
+        <p>Five hundred listeners join the private beta. They log over 12,000 albums in the first month and write annotations that meaningfully improve the graph model's accuracy.</p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-date">March 2025</span>
+        <h4>Public launch</h4>
+        <p>TrackWeave opens to everyone. The catalogue grows to over 180,000 artists and 2.4 million songs. The graph now contains more than 9 million edges.</p>
+      </div>
+
+      <div class="tl-item">
+        <span class="tl-date">Now</span>
+        <h4>Still building</h4>
+        <p>We are actively expanding the NLP model, improving the visualisation engine, and working closely with our community to make the graph smarter with every annotation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-wrap reveal">
+  <div class="cta-inner">
+    <span class="sec-label" style="color:rgba(255,255,255,.42);display:block;margin-bottom:.55rem;">Join us</span>
+    <h2>Start exploring the music<br>you thought you knew.</h2>
+    <p>Create a free account and discover what the graph reveals about your favourite artists.</p>
+    <div class="cta-btns">
+      <a href="/register.html" class="btn btn-solid btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;">Create free account</a>
+      <a href="/index.html"    class="btn btn-ghost btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.6);"
+         onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.35)';this.style.color='rgba(255,255,255,.9)'"
+         onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,.18)';this.style.color='rgba(255,255,255,.6)'">
+        Back to Home
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="fb-wm">
+        <div class="fm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+            <circle cx="12" cy="12" r="2.1" fill="white"/>
+            <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+            <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+            <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="11.4" x2="17"   y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="12.7" x2="17"   y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+          </svg>
+        </div>
+        <span>TrackWeave</span>
+      </div>
+      <p>A graph-based music intelligence platform connecting songs, albums, and artists through NLP analysis.</p>
+      <div class="f-socials">
+        <a href="#" aria-label="X">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="foot-col">
+      <h5>Product</h5>
+      <a href="#">Features</a>
+      <a href="#">Graph Explorer</a>
+      <a href="#">NLP Insights</a>
+      <a href="#">Pricing</a>
+      <a href="#">Changelog</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Community</h5>
+      <a href="#">Discover</a>
+      <a href="#">Reviews</a>
+      <a href="#">Following</a>
+      <a href="#">Forums</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Company</h5>
+      <a href="/about.html">About</a>
+      <a href="#">Blog</a>
+      <a href="#">API</a>
+      <a href="/support.html">Support</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <span>© 2026 TrackWeave. All rights reserved.</span>
+    <div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══ SCROLL REVEAL ═══ -->
+<script>
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
