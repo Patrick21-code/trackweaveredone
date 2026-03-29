@@ -356,3 +356,44 @@ body {
 @media (max-width: 440px) {
   .field-row { grid-template-columns: 1fr; }
 }
+
+/* ─── AUTH FEEDBACK STATES ───────────────────────────────────── */
+ 
+/* Error banner — shown when sign-in fails */
+.auth-error {
+  display: block;
+  background: var(--red-ghost);
+  border: 1px solid #fecaca;
+  color: var(--red);
+  font-size: 0.8125rem;
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+ 
+/* Social button loading state — shown while OAuth popup is pending */
+.btn-social.loading {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn-social.loading::after {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-left: 8px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+ 
+/* Disabled social button (e.g. Facebook coming soon) */
+.btn-social:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
