@@ -149,7 +149,6 @@
           username:           document.getElementById("ob-username").value.trim(),
           displayName:        `${document.getElementById("ob-first").value.trim()} ${document.getElementById("ob-last").value.trim()}`,
           dateOfBirth:        document.getElementById("ob-dob").value,
-          country:            document.getElementById("ob-country").value,
           bio:                document.getElementById("ob-bio").value.trim(),
           favoriteGenres:     selectedGenres,
           onboardingComplete: true,
@@ -191,6 +190,8 @@
       padding: 3rem 1.5rem;
       position: relative; overflow: hidden;
     }
+
+    /* Decorative blobs */
     .ob-page::before {
       content: '';
       position: absolute; top: -180px; right: -120px;
@@ -206,15 +207,38 @@
       pointer-events: none;
     }
 
+    /* Subtle dot-grid texture */
+    .ob-page-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(circle, rgba(17,24,32,.055) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
     /* ── Card ── */
     .ob-card {
       width: 100%; max-width: 560px;
       background: #fff;
       border: 1.5px solid var(--rule);
       border-radius: var(--r-lg);
-      box-shadow: 0 4px 16px rgba(17,24,32,.06), 0 20px 60px rgba(17,24,32,.07);
+      box-shadow: 0 4px 16px rgba(17,24,32,.06), 0 24px 64px rgba(17,24,32,.08);
       padding: 2.8rem 2.6rem;
       position: relative; z-index: 1;
+      /* Subtle entry animation */
+      animation: card-rise .45s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes card-rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Thin accent bar at top of card */
+    .ob-card::before {
+      content: '';
+      position: absolute; top: 0; left: 2rem; right: 2rem; height: 2.5px;
+      background: linear-gradient(90deg, var(--blue) 0%, rgba(37,99,235,.15) 100%);
+      border-radius: 0 0 99px 99px;
     }
 
     /* ── Progress bar ── */
@@ -224,9 +248,9 @@
       border-radius: 99px; margin-bottom: 1rem; overflow: hidden;
     }
     #prog-bar-fill {
-      height: 100%; background: var(--blue);
+      height: 100%; background: linear-gradient(90deg, var(--blue), #60a5fa);
       border-radius: 99px;
-      transition: width .4s cubic-bezier(.4,0,.2,1);
+      transition: width .45s cubic-bezier(.4,0,.2,1);
       width: 0%;
     }
     .prog-steps { display: flex; justify-content: space-between; }
@@ -253,6 +277,14 @@
       border-color: var(--green); background: var(--green);
       color: #fff;
     }
+    /* Checkmark for completed steps */
+    .prog-step.done .prog-dot::after {
+      content: '';
+      display: block; width: 10px; height: 6px;
+      border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+    .prog-step.done .prog-dot { font-size: 0; }
 
     /* ── Step heading ── */
     .ob-step-head { margin-bottom: 1.8rem; }
@@ -275,7 +307,14 @@
 
     /* ── Step panels ── */
     .ob-step { display: none; }
-    .ob-step.active { display: block; }
+    .ob-step.active {
+      display: block;
+      animation: step-in .28s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes step-in {
+      from { opacity: 0; transform: translateX(10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
 
     /* ── Fields ── */
     .ob-field { display: flex; flex-direction: column; gap: 0.32rem; margin-bottom: 1rem; }
@@ -295,7 +334,7 @@
       background: #fff; border: 1.5px solid var(--rule);
       border-radius: var(--r-sm);
       padding: 0.68rem 0.9rem; outline: none; width: 100%;
-      transition: border-color .18s, box-shadow .18s;
+      transition: border-color .18s, box-shadow .18s, background .18s;
     }
     .ob-field input::placeholder,
     .ob-field textarea::placeholder { color: var(--ink-faint); font-weight: 300; }
@@ -304,8 +343,19 @@
     .ob-field textarea:focus {
       border-color: var(--blue);
       box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+      background: #fafcff;
     }
     .ob-field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+    /* Input with icon prefix */
+    .ob-field .input-wrap { position: relative; }
+    .ob-field .input-wrap .input-icon {
+      position: absolute; left: 0.85rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-faint); pointer-events: none;
+      display: flex; align-items: center;
+    }
+    .ob-field .input-wrap input { padding-left: 2.4rem; }
 
     .field-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
@@ -329,6 +379,10 @@
       color: #fff;
       box-shadow: 0 2px 8px rgba(37,99,235,.25);
     }
+    .genre-chip.selected::before {
+      content: '✓ ';
+      font-size: 0.75rem;
+    }
 
     /* ── Error banner ── */
     .ob-error {
@@ -340,6 +394,14 @@
       border-radius: var(--r-sm);
       padding: 10px 14px;
       margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .ob-error::before {
+      content: '';
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E");
+      background-size: contain; background-repeat: no-repeat;
     }
 
     /* ── Nav buttons ── */
@@ -355,10 +417,10 @@
       border: 1.5px solid var(--rule);
       background: #fff; color: var(--ink-soft);
       cursor: pointer; transition: all .18s;
-      display: none;
+      display: none; align-items: center; gap: 0.4rem;
     }
-    .btn-ob-back:hover { border-color: var(--ink-faint); color: var(--ink); }
-    .btn-ob-back.visible { display: block; }
+    .btn-ob-back:hover { border-color: var(--ink-faint); color: var(--ink); background: var(--paper-warm); }
+    .btn-ob-back.visible { display: flex; }
     .btn-ob-next,
     .btn-ob-finish {
       flex: 1;
@@ -386,6 +448,46 @@
       margin-left: 0.3rem; font-style: italic;
     }
 
+    /* ── Nav close button ── */
+    .nav-close-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: var(--r-sm);
+      border: 1.5px solid var(--rule);
+      background: transparent; color: var(--ink-faint);
+      cursor: pointer; transition: all .18s;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .nav-close-btn:hover {
+      border-color: var(--ink-faint); color: var(--ink);
+      background: var(--paper-warm);
+    }
+    .nav-close-btn svg { display: block; }
+
+    /* ── Nav context label ── */
+    .nav-context {
+      font-size: 0.78rem; font-weight: 400;
+      color: var(--ink-faint); letter-spacing: 0.01em;
+    }
+
+    /* ── Step 2 privacy note ── */
+    .privacy-note {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      background: var(--blue-ghost); border: 1px solid var(--blue-pale);
+      border-radius: var(--r-sm); padding: 0.7rem 0.9rem;
+      margin-top: 0.5rem;
+      font-size: 0.78rem; color: var(--ink-soft); line-height: 1.5;
+    }
+    .privacy-note svg { flex-shrink: 0; margin-top: 1px; color: var(--blue); }
+
+    /* ── Genre count hint ── */
+    .genre-hint {
+      font-size: 0.75rem; color: var(--ink-faint);
+      margin-bottom: 0.8rem;
+    }
+    .genre-hint span {
+      font-weight: 600; color: var(--blue);
+    }
+
     @media (max-width: 600px) {
       .ob-card { padding: 2rem 1.4rem; }
       .field-row-2 { grid-template-columns: 1fr; }
@@ -411,11 +513,24 @@
       </div>
       <span>TrackWeave</span>
     </a>
+
+    <span class="nav-context">Account setup</span>
+
+    <div class="nav-end">
+      <a href="./login.html" class="nav-close-btn" title="Exit setup and return to login" aria-label="Exit setup">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6"  y1="6" x2="18" y2="18"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </header>
 
 <!-- ═══ ONBOARDING ═══ -->
 <div class="ob-page">
+  <div class="ob-page-bg"></div>
+
   <div class="ob-card" id="ob-shell" hidden>
 
     <!-- Progress -->
@@ -461,7 +576,15 @@
 
       <div class="ob-field">
         <label for="ob-username">Username</label>
-        <input type="text" id="ob-username" placeholder="ashleyrivera" autocomplete="username" />
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </span>
+          <input type="text" id="ob-username" placeholder="ashleyrivera" autocomplete="username" />
+        </div>
         <span class="hint">Letters, numbers, and underscores only. Min. 3 characters.</span>
       </div>
 
@@ -476,7 +599,7 @@
       <div class="ob-step-head">
         <span class="ob-eyebrow">Step 2 of 3 · Details</span>
         <h2 class="ob-title">A few more<br><em>details</em></h2>
-        <p class="ob-subtitle">Your date of birth is used to verify your age. It is never shown publicly.</p>
+        <p class="ob-subtitle">Just one quick thing before we get to the good part.</p>
       </div>
 
       <div class="ob-field">
@@ -485,26 +608,12 @@
         <span class="hint">You must be at least 13 years old to use TrackWeave.</span>
       </div>
 
-      <div class="ob-field">
-        <label for="ob-country">Country <span class="optional">optional</span></label>
-        <select id="ob-country">
-          <option value="">Select your country…</option>
-          <option value="PH">Philippines</option>
-          <option value="US">United States</option>
-          <option value="GB">United Kingdom</option>
-          <option value="AU">Australia</option>
-          <option value="CA">Canada</option>
-          <option value="JP">Japan</option>
-          <option value="KR">South Korea</option>
-          <option value="DE">Germany</option>
-          <option value="FR">France</option>
-          <option value="BR">Brazil</option>
-          <option value="MX">Mexico</option>
-          <option value="IN">India</option>
-          <option value="NG">Nigeria</option>
-          <option value="ID">Indonesia</option>
-          <option value="OTHER">Other</option>
-        </select>
+      <div class="privacy-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        Your date of birth is used only to verify your age and is never shown publicly.
       </div>
     </div>
 
@@ -515,6 +624,8 @@
         <h2 class="ob-title">What do you<br><em>listen to?</em></h2>
         <p class="ob-subtitle">Select your favourite genres. We'll use these to personalise your graph recommendations.</p>
       </div>
+
+      <p class="genre-hint">Pick as many as you like — select at least <span>one</span> to continue.</p>
 
       <div class="genre-grid">
         <div class="genre-chip" data-genre="Alternative">Alternative</div>
@@ -540,7 +651,13 @@
 
     <!-- Nav buttons -->
     <div class="ob-nav">
-      <button class="btn-ob-back" id="btn-back" type="button">← Back</button>
+      <button class="btn-ob-back" id="btn-back" type="button">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back
+      </button>
       <button class="btn-ob-next" id="btn-next" type="button">
         Continue
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -574,6 +691,18 @@
   });
   const shell = document.getElementById("ob-shell");
   observer.observe(shell, { attributes: true, childList: true, subtree: true });
+
+  // Live genre count update
+  document.addEventListener("DOMContentLoaded", () => {
+    const chips = document.querySelectorAll(".genre-chip");
+    const hint  = document.querySelector(".genre-hint span");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        const count = document.querySelectorAll(".genre-chip.selected").length;
+        if (hint) hint.textContent = count > 0 ? `${count} selected` : "one";
+      });
+    });
+  });
 </script>
 
 </body>
