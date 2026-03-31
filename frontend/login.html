@@ -12,19 +12,15 @@
   <link rel="stylesheet" href="../styles/trackweave-base.css" />
   <link rel="stylesheet" href="../styles/auth-page.css" />
 
-  <!-- ─── PASTE YOUR firebaseConfig HERE (Step 2 of setup guide) ─── -->
   <script type="module">
-    import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
-                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, FacebookAuthProvider,
+             signInWithPopup, signOut, onAuthStateChanged }
+                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
-                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // ── 1. YOUR CONFIG ──────────────────────────────────────────────
-    // Replace every value below with the ones from your Firebase project.
-    // NEVER commit real API keys to a public repository.
-    // These web API keys are safe to expose in client-side code;
-    // your Firestore Security Rules are what protect your data.
+    // ── 1. CONFIG ────────────────────────────────────────────────────
     const firebaseConfig = {
       apiKey:            "AIzaSyBIEvBzIOtBFJpCxqM2onqFbK6Nw82AYp4",
       authDomain:        "trackweave-26cad.firebaseapp.com",
@@ -34,60 +30,92 @@
       appId:             "1:906996721432:web:483313759725eb2022a06d"
     };
 
-    // ── 2. INIT ─────────────────────────────────────────────────────
-    const app      = initializeApp(firebaseConfig);
-    const auth     = getAuth(app);
-    const db       = getFirestore(app);
-    const provider = new GoogleAuthProvider();
+    // ── 2. INIT ──────────────────────────────────────────────────────
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
 
-    // Request the user's profile and email scopes (default, but explicit is better)
-    provider.addScope("profile");
-    provider.addScope("email");
+    const googleProvider   = new GoogleAuthProvider();
+    googleProvider.addScope("profile");
+    googleProvider.addScope("email");
 
-    // ── 3. REDIRECT ALREADY-SIGNED-IN USERS ─────────────────────────
-    // If a valid session already exists, skip the login page entirely.
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.href = "./dashboard.html"; // ← change to your app's main page
+    const facebookProvider = new FacebookAuthProvider();
+    facebookProvider.addScope("email");
+    facebookProvider.addScope("public_profile");
+
+    // ── 3. SHOW NOTICE FROM REGISTER PAGE ───────────────────────────
+    // The register page appends ?notice=registered or ?notice=already-registered
+    // to the URL so we can greet the user with a contextual message.
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const notice = params.get("notice");
+
+      if (notice === "registered") {
+        showNotice("Account created! You can now log in below.");
+      } else if (notice === "already-registered") {
+        showNotice("You already have an account. Log in below to continue.");
+      }
+
+      // Clean the URL so the notice doesn't persist on refresh
+      if (notice) {
+        window.history.replaceState({}, "", window.location.pathname);
       }
     });
 
-    // ── 4. UPSERT USER DOCUMENT IN FIRESTORE ────────────────────────
-    // Called after every successful sign-in.
-    // Uses setDoc with merge:true so existing profile data is never overwritten.
-    async function upsertUserDocument(user) {
-      const userRef  = doc(db, "users", user.uid);
-      const snapshot = await getDoc(userRef);
+    // ── 4. REDIRECT ALREADY-SIGNED-IN USERS ─────────────────────────
+    // If a session already exists, check Firestore and route correctly.
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return; // not signed in — show the form
 
-      if (!snapshot.exists()) {
-        // First-ever sign-in: create a new document
-        await setDoc(userRef, {
-          uid:         user.uid,
-          email:       user.email,
-          displayName: user.displayName ?? "",
-          photoURL:    user.photoURL    ?? "",
-          provider:    "google",
-          createdAt:   serverTimestamp(),
-          lastLoginAt: serverTimestamp(),
-        });
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists() && snap.data().registered) {
+        // Registered user with active session — route them forward
+        window.location.href = "./onboarding.html";
       } else {
-        // Returning user: only update the last-login timestamp
-        await setDoc(userRef, { lastLoginAt: serverTimestamp() }, { merge: true });
+        // Session exists but no registered document — sign them out
+        // so they can't bypass the register step
+        await signOut(auth);
       }
+    });
+
+    // ── 5. UPDATE LAST LOGIN TIMESTAMP ──────────────────────────────
+    async function updateLastLogin(uid) {
+      await setDoc(
+        doc(db, "users", uid),
+        { lastLoginAt: serverTimestamp() },
+        { merge: true }
+      );
     }
 
-    // ── 5. GOOGLE SIGN-IN HANDLER ────────────────────────────────────
-    async function handleGoogleSignIn() {
-      const btn = document.getElementById("btn-google");
+    // ── 6. SHARED SOCIAL SIGN-IN HANDLER ────────────────────────────
+    // After a successful sign-in, checks Firestore for a registered
+    // document. If found → proceed. If not found → sign them out and
+    // show an error directing them to register first.
+    async function handleSocialSignIn(provider, providerName, btnId) {
+      const btn = document.getElementById(btnId);
       setButtonState(btn, true);
-      hideError();
+      hideMessages();
 
       try {
         const result = await signInWithPopup(auth, provider);
-        await upsertUserDocument(result.user);
-        window.location.href = "./dashboard.html"; // ← same destination as above
+        const snap   = await getDoc(doc(db, "users", result.user.uid));
+
+        if (!snap.exists() || !snap.data().registered) {
+          // No registered account found — reject and explain
+          await signOut(auth);
+          showError(
+            "No account found. Please register first before logging in.",
+            true // show register link
+          );
+          setButtonState(btn, false);
+          return;
+        }
+
+        // Valid registered account — update timestamp and proceed
+        await updateLastLogin(result.user.uid);
+        window.location.href = "./onboarding.html";
+
       } catch (err) {
-        // user_cancelled: popup closed by the user — not an error worth showing
         if (err.code === "auth/popup-closed-by-user" ||
             err.code === "auth/cancelled-popup-request") {
           setButtonState(btn, false);
@@ -95,13 +123,11 @@
         }
         showError(friendlyError(err.code));
         setButtonState(btn, false);
-        console.error("[TrackWeave] Google sign-in error:", err.code, err.message);
+        console.error(`[TrackWeave] ${providerName} sign-in error:`, err.code, err.message);
       }
     }
 
-    // ── 6. EMAIL CONTINUE HANDLER ────────────────────────────────────
-    // Validates the email field then redirects to the email+password step.
-    // Wire this up to your email/password flow in a future step.
+    // ── 7. EMAIL CONTINUE HANDLER ────────────────────────────────────
     function handleEmailContinue() {
       const emailInput = document.getElementById("login-email");
       const email      = emailInput.value.trim();
@@ -112,44 +138,65 @@
         return;
       }
 
-      hideError();
-      // TODO (Phase 2): pass email to your email+password sign-in step
-      // e.g. window.location.href = `./login-password.html?email=${encodeURIComponent(email)}`;
-      alert(`Email auth coming soon!\n\nFor now, please use "Continue with Google".`);
+      hideMessages();
+      // TODO (Phase 3): wire up email+password sign-in
+      alert(`Email auth coming soon!\n\nFor now, please use Google or Facebook.`);
     }
 
-    // ── 7. HELPERS ───────────────────────────────────────────────────
+    // ── 8. HELPERS ───────────────────────────────────────────────────
     function setButtonState(btn, loading) {
       btn.disabled = loading;
       btn.classList.toggle("loading", loading);
     }
 
-    function showError(message) {
-      const box = document.getElementById("auth-error");
+    function showError(message, showRegisterLink = false) {
+      const box  = document.getElementById("auth-error");
+      const link = document.getElementById("auth-error-link");
+      box.childNodes[0].textContent = message + " ";
+      link.hidden = !showRegisterLink;
+      box.hidden  = false;
+    }
+
+    function showNotice(message) {
+      const box = document.getElementById("auth-notice");
       box.textContent = message;
       box.hidden = false;
     }
 
-    function hideError() {
-      const box = document.getElementById("auth-error");
-      box.hidden = true;
+    function hideMessages() {
+      document.getElementById("auth-error").hidden  = true;
+      document.getElementById("auth-notice").hidden = true;
     }
 
     function friendlyError(code) {
       const map = {
-        "auth/network-request-failed": "Network error — check your connection and try again.",
-        "auth/too-many-requests":       "Too many attempts. Please wait a moment and try again.",
-        "auth/user-disabled":           "This account has been disabled. Contact support.",
-        "auth/popup-blocked":           "Pop-up was blocked by your browser. Please allow pop-ups for this site.",
-        "auth/internal-error":          "Something went wrong on our end. Please try again.",
+        "auth/unauthorized-domain":
+          "This domain isn't authorized for sign-in. Check Firebase settings.",
+        "auth/account-exists-with-different-credential":
+          "An account already exists with this email using a different sign-in method.",
+        "auth/network-request-failed":
+          "Network error — check your connection and try again.",
+        "auth/too-many-requests":
+          "Too many attempts. Please wait a moment and try again.",
+        "auth/user-disabled":
+          "This account has been disabled. Contact support.",
+        "auth/popup-blocked":
+          "Pop-up was blocked by your browser. Please allow pop-ups for this site.",
+        "auth/internal-error":
+          "Something went wrong on our end. Please try again.",
       };
       return map[code] ?? "An unexpected error occurred. Please try again.";
     }
 
-    // ── 8. ATTACH EVENT LISTENERS AFTER DOM IS READY ────────────────
+    // ── 9. ATTACH EVENT LISTENERS ────────────────────────────────────
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("btn-google")
-              .addEventListener("click", handleGoogleSignIn);
+              .addEventListener("click", () =>
+                handleSocialSignIn(googleProvider, "google", "btn-google"));
+
+      document.getElementById("btn-facebook")
+              .addEventListener("click", () =>
+                handleSocialSignIn(facebookProvider, "facebook", "btn-facebook"));
 
       document.getElementById("btn-continue")
               .addEventListener("click", handleEmailContinue);
@@ -161,6 +208,19 @@
     });
   </script>
 
+  <style>
+    /* Success notice banner */
+    .auth-notice {
+      display: block;
+      background: var(--green-ghost);
+      border: 1px solid var(--green-pale);
+      color: var(--green);
+      font-size: 0.8125rem;
+      border-radius: var(--r-sm);
+      padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+  </style>
 
 </head>
 <body>
@@ -260,11 +320,20 @@
       <div class="form-header">
         <span class="form-eyebrow">Welcome back</span>
         <h1 class="form-title">Log in to<br><em>TrackWeave</em></h1>
-        <p class="form-subtitle">Enter your email to continue to your account.</p>
+        <p class="form-subtitle">Use the same method you registered with.</p>
       </div>
 
-      <!-- Error banner (hidden until needed) -->
-      <span id="auth-error" class="auth-error" hidden></span>
+      <!-- Notice banner (shown after successful registration) -->
+      <span id="auth-notice" class="auth-notice" hidden></span>
+
+      <!-- Error banner -->
+      <span id="auth-error" class="auth-error" hidden>
+        <!-- message text node filled by JS -->
+        <a id="auth-error-link" href="./register.html" hidden
+           style="color:inherit;font-weight:600;text-decoration:underline;">
+          Register here →
+        </a>
+      </span>
 
       <!-- Email + Continue -->
       <div class="email-block">
@@ -295,7 +364,7 @@
 
       <!-- Social buttons -->
       <div class="social-btns">
-        <!-- Google — wired to Firebase via id="btn-google" -->
+
         <button class="btn-social" type="button" id="btn-google">
           <span class="social-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -308,8 +377,7 @@
           Continue with Google
         </button>
 
-        <!-- Facebook — will be wired in Phase 2 -->
-        <button class="btn-social" type="button" disabled title="Coming soon">
+        <button class="btn-social" type="button" id="btn-facebook">
           <span class="social-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
               <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
@@ -317,6 +385,7 @@
           </span>
           Continue with Facebook
         </button>
+
       </div>
 
       <!-- Sign up link -->
