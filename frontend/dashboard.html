@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — TrackWeave</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/trackweave-base.css" />
+
+  <script type="module">
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut }
+                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc }
+                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyBIEvBzIOtBFJpCxqM2onqFbK6Nw82AYp4",
+      authDomain:        "trackweave-26cad.firebaseapp.com",
+      projectId:         "trackweave-26cad",
+      storageBucket:     "trackweave-26cad.firebasestorage.app",
+      messagingSenderId: "906996721432",
+      appId:             "1:906996721432:web:483313759725eb2022a06d"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // ── GUARD: must be signed in AND onboarding complete ────────────
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "./login.html";
+        return;
+      }
+
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const data = snap.exists() ? snap.data() : {};
+
+      // If onboarding not done, send them to complete it
+      if (!data.onboardingComplete) {
+        window.location.href = "./onboarding.html";
+        return;
+      }
+
+      // Populate UI
+      const displayName = data.firstName
+        ? `${data.firstName} ${data.lastName ?? ""}`.trim()
+        : (user.displayName ?? "Listener");
+
+      const username  = data.username    ?? "";
+      const photoURL  = user.photoURL    ?? "";
+      const genres    = data.favoriteGenres ?? [];
+      const bio       = data.bio         ?? "";
+
+      document.getElementById("dash-name").textContent    = `Welcome back, ${displayName.split(" ")[0]}.`;
+      document.getElementById("dash-username").textContent = username ? `@${username}` : "";
+      document.getElementById("dash-bio").textContent      = bio || "No bio yet.";
+
+      // Avatar
+      const av = document.getElementById("dash-avatar");
+      if (photoURL) {
+        av.innerHTML = `<img src="${photoURL}" alt="${displayName}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+      } else {
+        av.textContent = displayName.charAt(0).toUpperCase();
+      }
+
+      // Genres
+      const genreWrap = document.getElementById("dash-genres");
+      if (genres.length) {
+        genreWrap.innerHTML = genres.map(g =>
+          `<span class="genre-tag">${g}</span>`
+        ).join("");
+      } else {
+        genreWrap.innerHTML = `<span style="color:var(--ink-faint);font-size:.82rem;">No genres selected yet.</span>`;
+      }
+
+      // Show the dashboard
+      document.getElementById("dash-shell").hidden = false;
+
+      // Sign-out button
+      document.getElementById("btn-signout").addEventListener("click", async () => {
+        await signOut(auth);
+        window.location.href = "./login.html";
+      });
+    });
+  </script>
+
+  <style>
+    html, body { height: 100%; }
+    body { min-height: 100%; background: var(--paper); display: flex; flex-direction: column; }
+
+    /* ── Dash nav override — show user controls ── */
+    .dash-nav-user {
+      display: flex; align-items: center; gap: 0.75rem; margin-left: auto;
+    }
+    .dash-av {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-size: 0.9rem; font-weight: 500;
+      flex-shrink: 0; overflow: hidden;
+    }
+    .btn-signout {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 0.82rem; font-weight: 500;
+      padding: 0.42rem 0.9rem; border-radius: var(--r-sm);
+      border: 1.5px solid var(--rule);
+      background: #fff; color: var(--ink-soft);
+      cursor: pointer; transition: all .18s;
+    }
+    .btn-signout:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── Main layout ── */
+    .dash-main {
+      flex: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 2.5rem 2rem; width: 100%;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 1.8rem; align-items: start;
+    }
+
+    /* ── Sidebar ── */
+    .dash-sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .profile-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--r-md); padding: 1.6rem;
+      text-align: center;
+    }
+    .profile-av-wrap {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #7c3aed);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 500;
+      color: #fff; margin: 0 auto 1rem; overflow: hidden;
+    }
+    .profile-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem; font-weight: 500;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    #dash-username { font-size: 0.8rem; color: var(--ink-faint); display: block; margin-top: 0.18rem; }
+    #dash-bio      { font-size: 0.83rem; color: var(--ink-soft); line-height: 1.6; margin-top: 0.75rem; font-weight: 300; }
+
+    .genre-row { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+    .genre-tag {
+      font-size: 0.71rem; font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem; border-radius: 99px;
+      background: var(--blue-ghost); color: var(--blue);
+      border: 1px solid var(--blue-pale);
+    }
+
+    /* ── Sidebar nav ── */
+    .side-nav {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--r-md); overflow: hidden;
+    }
+    .side-nav-item {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.82rem 1.2rem;
+      font-size: 0.875rem; font-weight: 500; color: var(--ink-soft);
+      border-bottom: 1px solid var(--rule-light);
+      cursor: pointer; transition: all .16s;
+      text-decoration: none;
+    }
+    .side-nav-item:last-child { border-bottom: none; }
+    .side-nav-item:hover { background: var(--blue-ghost); color: var(--blue); }
+    .side-nav-item.active { background: var(--blue-ghost); color: var(--blue); border-left: 2.5px solid var(--blue); }
+    .side-nav-item svg { flex-shrink: 0; opacity: 0.65; }
+    .side-nav-item.active svg { opacity: 1; }
+
+    /* ── Main content area ── */
+    .dash-content { display: flex; flex-direction: column; gap: 1.4rem; }
+
+    .dash-welcome {
+      background: var(--ink); border-radius: var(--r-md);
+      padding: 2rem 2.2rem; position: relative; overflow: hidden;
+    }
+    .dash-welcome::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.3) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .dash-welcome::after {
+      content: '';
+      position: absolute; bottom: -60px; left: 20%;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #dash-name {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+      font-weight: 300; font-style: italic;
+      color: #fff; letter-spacing: -0.02em;
+      margin-bottom: 0.5rem; position: relative; z-index: 1;
+    }
+    .dash-welcome p {
+      font-size: 0.875rem; font-weight: 300;
+      color: rgba(255,255,255,.5); line-height: 1.65;
+      max-width: 480px; position: relative; z-index: 1;
+    }
+
+    /* ── Stat cards ── */
+    .stat-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .stat-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--r-md); padding: 1.3rem 1.4rem;
+      transition: box-shadow .18s, transform .18s;
+    }
+    .stat-card:hover { box-shadow: 0 4px 20px rgba(17,24,32,.08); transform: translateY(-1px); }
+    .stat-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--blue-ghost); color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.8rem;
+    }
+    .stat-val {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem; font-weight: 500;
+      color: var(--ink); letter-spacing: -0.03em;
+      display: block;
+    }
+    .stat-lbl { font-size: 0.78rem; color: var(--ink-faint); letter-spacing: 0.02em; }
+
+    /* ── Activity / placeholder sections ── */
+    .dash-section {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--r-md); padding: 1.6rem 1.8rem;
+    }
+    .dash-section-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .dash-section-head h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem; font-weight: 500;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .dash-section-head a {
+      font-size: 0.78rem; color: var(--blue); font-weight: 500;
+      text-decoration: underline; text-decoration-color: var(--blue-pale);
+      text-underline-offset: 2px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 2.5rem 1rem;
+      border: 1.5px dashed var(--rule);
+      border-radius: var(--r-sm);
+    }
+    .empty-state svg { color: var(--ink-faint); opacity: 0.35; margin-bottom: 0.75rem; }
+    .empty-state p { font-size: 0.875rem; color: var(--ink-faint); font-weight: 300; line-height: 1.6; }
+    .empty-state .btn { margin-top: 1rem; font-size: 0.82rem; padding: 0.52rem 1rem; }
+
+    /* ── Graph preview mini ── */
+    .graph-preview {
+      background: var(--blue-ghost);
+      border: 1.5px solid var(--blue-pale);
+      border-radius: var(--r-sm); padding: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 160px;
+    }
+
+    @media (max-width: 860px) {
+      .dash-main { grid-template-columns: 1fr; }
+      .stat-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .stat-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="./index.html" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+    <div class="dash-nav-user">
+      <div class="dash-av" id="dash-avatar">?</div>
+      <button class="btn-signout" id="btn-signout" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ DASHBOARD ═══ -->
+<main id="dash-shell" hidden>
+  <div class="dash-main">
+
+    <!-- ── Sidebar ── -->
+    <aside class="dash-sidebar">
+
+      <!-- Profile card -->
+      <div class="profile-card">
+        <div class="profile-av-wrap" id="dash-avatar-large">?</div>
+        <div class="profile-name" id="dash-display-name">—</div>
+        <span id="dash-username"></span>
+        <p id="dash-bio"></p>
+        <div class="genre-row" id="dash-genres"></div>
+      </div>
+
+      <!-- Nav -->
+      <nav class="side-nav">
+        <a class="side-nav-item active" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          Dashboard
+        </a>
+        <a class="side-nav-item" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
+            <line x1="7" y1="12" x2="17" y2="6.5"/><line x1="7" y1="12" x2="17" y2="17.5"/>
+          </svg>
+          Graph Explorer
+        </a>
+        <a class="side-nav-item" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          My Reviews
+        </a>
+        <a class="side-nav-item" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          Following
+        </a>
+        <a class="side-nav-item" href="#">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          My Profile
+        </a>
+      </nav>
+
+    </aside>
+
+    <!-- ── Main content ── -->
+    <div class="dash-content">
+
+      <!-- Welcome banner -->
+      <div class="dash-welcome">
+        <div id="dash-name">Welcome back.</div>
+        <p>Your listening graph is ready. Start by exploring an artist's discography or logging an album you've heard recently.</p>
+      </div>
+
+      <!-- Stat cards -->
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+          </div>
+          <span class="stat-val">0</span>
+          <span class="stat-lbl">Albums Logged</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/>
+              <line x1="7" y1="12" x2="17" y2="6.5"/><line x1="7" y1="12" x2="17" y2="17.5"/>
+            </svg>
+          </div>
+          <span class="stat-val">0</span>
+          <span class="stat-lbl">Graphs Explored</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+            </svg>
+          </div>
+          <span class="stat-val">0</span>
+          <span class="stat-lbl">Following</span>
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div class="dash-section">
+        <div class="dash-section-head">
+          <h3>Recent Activity</h3>
+          <a href="#">View all</a>
+        </div>
+        <div class="empty-state">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto;">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          <p>No activity yet. Log your first album or explore a discography graph to get started.</p>
+          <a href="#" class="btn btn-solid">Explore a graph →</a>
+        </div>
+      </div>
+
+      <!-- Graph explorer teaser -->
+      <div class="dash-section">
+        <div class="dash-section-head">
+          <h3>Discography Graph</h3>
+          <a href="#">Open explorer</a>
+        </div>
+        <div class="graph-preview">
+          <svg viewBox="0 0 320 160" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#bfdbfe" stroke-width="1.1" opacity="0.8">
+              <line x1="160" y1="80" x2="72"  y2="42"/>
+              <line x1="160" y1="80" x2="248" y2="42"/>
+              <line x1="160" y1="80" x2="248" y2="118"/>
+              <line x1="160" y1="80" x2="72"  y2="118"/>
+              <line x1="72"  y1="42" x2="72"  y2="118"/>
+              <line x1="248" y1="42" x2="248" y2="118"/>
+              <line x1="72"  y1="42" x2="116" y2="18"/>
+              <line x1="248" y1="42" x2="204" y2="18"/>
+              <line x1="72"  y1="118" x2="116" y2="142"/>
+              <line x1="248" y1="118" x2="204" y2="142"/>
+            </g>
+            <circle cx="72"  cy="42"  r="7" fill="#2563eb" opacity="0.88"/>
+            <circle cx="72"  cy="118" r="7" fill="#2563eb" opacity="0.88"/>
+            <circle cx="116" cy="18"  r="5" fill="#2563eb" opacity="0.55"/>
+            <circle cx="116" cy="142" r="5" fill="#2563eb" opacity="0.55"/>
+            <circle cx="248" cy="42"  r="7" fill="#7c3aed" opacity="0.88"/>
+            <circle cx="248" cy="118" r="7" fill="#7c3aed" opacity="0.88"/>
+            <circle cx="204" cy="18"  r="5" fill="#7c3aed" opacity="0.55"/>
+            <circle cx="204" cy="142" r="5" fill="#7c3aed" opacity="0.55"/>
+            <circle cx="160" cy="80" r="13" fill="#2563eb" opacity="0.08"/>
+            <circle cx="160" cy="80" r="7"  fill="#2563eb"/>
+            <text x="160" y="105" text-anchor="middle" font-size="9" font-family="Instrument Sans, sans-serif" fill="#2563eb" opacity="0.55">Start exploring</text>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+  // Mirror the small nav avatar to the sidebar large avatar
+  const authObserver = new MutationObserver(() => {
+    const small = document.getElementById("dash-avatar");
+    const large = document.getElementById("dash-avatar-large");
+    const nameEl = document.getElementById("dash-name");
+    const nameSmall = document.getElementById("dash-display-name");
+
+    if (small && large) large.innerHTML = small.innerHTML;
+    if (nameEl && nameSmall) {
+      // Extract first name from "Welcome back, X."
+      const match = nameEl.textContent.match(/Welcome back, (.+)\./);
+      if (match) nameSmall.textContent = match[1];
+    }
+  });
+  authObserver.observe(document.getElementById("dash-shell"), { childList: true, subtree: true });
+</script>
+
+</body>
+</html>
