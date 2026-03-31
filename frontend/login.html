@@ -11,6 +11,157 @@
 
   <link rel="stylesheet" href="../styles/trackweave-base.css" />
   <link rel="stylesheet" href="../styles/auth-page.css" />
+
+  <!-- ─── PASTE YOUR firebaseConfig HERE (Step 2 of setup guide) ─── -->
+  <script type="module">
+    import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
+                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // ── 1. YOUR CONFIG ──────────────────────────────────────────────
+    // Replace every value below with the ones from your Firebase project.
+    // NEVER commit real API keys to a public repository.
+    // These web API keys are safe to expose in client-side code;
+    // your Firestore Security Rules are what protect your data.
+    const firebaseConfig = {
+      apiKey:            "AIzaSyBIEvBzIOtBFJpCxqM2onqFbK6Nw82AYp4",
+      authDomain:        "trackweave-26cad.firebaseapp.com",
+      projectId:         "trackweave-26cad",
+      storageBucket:     "trackweave-26cad.firebasestorage.app",
+      messagingSenderId: "906996721432",
+      appId:             "1:906996721432:web:483313759725eb2022a06d"
+    };
+
+    // ── 2. INIT ─────────────────────────────────────────────────────
+    const app      = initializeApp(firebaseConfig);
+    const auth     = getAuth(app);
+    const db       = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // Request the user's profile and email scopes (default, but explicit is better)
+    provider.addScope("profile");
+    provider.addScope("email");
+
+    // ── 3. REDIRECT ALREADY-SIGNED-IN USERS ─────────────────────────
+    // If a valid session already exists, skip the login page entirely.
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "./dashboard.html"; // ← change to your app's main page
+      }
+    });
+
+    // ── 4. UPSERT USER DOCUMENT IN FIRESTORE ────────────────────────
+    // Called after every successful sign-in.
+    // Uses setDoc with merge:true so existing profile data is never overwritten.
+    async function upsertUserDocument(user) {
+      const userRef  = doc(db, "users", user.uid);
+      const snapshot = await getDoc(userRef);
+
+      if (!snapshot.exists()) {
+        // First-ever sign-in: create a new document
+        await setDoc(userRef, {
+          uid:         user.uid,
+          email:       user.email,
+          displayName: user.displayName ?? "",
+          photoURL:    user.photoURL    ?? "",
+          provider:    "google",
+          createdAt:   serverTimestamp(),
+          lastLoginAt: serverTimestamp(),
+        });
+      } else {
+        // Returning user: only update the last-login timestamp
+        await setDoc(userRef, { lastLoginAt: serverTimestamp() }, { merge: true });
+      }
+    }
+
+    // ── 5. GOOGLE SIGN-IN HANDLER ────────────────────────────────────
+    async function handleGoogleSignIn() {
+      const btn = document.getElementById("btn-google");
+      setButtonState(btn, true);
+      hideError();
+
+      try {
+        const result = await signInWithPopup(auth, provider);
+        await upsertUserDocument(result.user);
+        window.location.href = "./dashboard.html"; // ← same destination as above
+      } catch (err) {
+        // user_cancelled: popup closed by the user — not an error worth showing
+        if (err.code === "auth/popup-closed-by-user" ||
+            err.code === "auth/cancelled-popup-request") {
+          setButtonState(btn, false);
+          return;
+        }
+        showError(friendlyError(err.code));
+        setButtonState(btn, false);
+        console.error("[TrackWeave] Google sign-in error:", err.code, err.message);
+      }
+    }
+
+    // ── 6. EMAIL CONTINUE HANDLER ────────────────────────────────────
+    // Validates the email field then redirects to the email+password step.
+    // Wire this up to your email/password flow in a future step.
+    function handleEmailContinue() {
+      const emailInput = document.getElementById("login-email");
+      const email      = emailInput.value.trim();
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailInput.focus();
+        showError("Please enter a valid email address.");
+        return;
+      }
+
+      hideError();
+      // TODO (Phase 2): pass email to your email+password sign-in step
+      // e.g. window.location.href = `./login-password.html?email=${encodeURIComponent(email)}`;
+      alert(`Email auth coming soon!\n\nFor now, please use "Continue with Google".`);
+    }
+
+    // ── 7. HELPERS ───────────────────────────────────────────────────
+    function setButtonState(btn, loading) {
+      btn.disabled = loading;
+      btn.classList.toggle("loading", loading);
+    }
+
+    function showError(message) {
+      const box = document.getElementById("auth-error");
+      box.textContent = message;
+      box.hidden = false;
+    }
+
+    function hideError() {
+      const box = document.getElementById("auth-error");
+      box.hidden = true;
+    }
+
+    function friendlyError(code) {
+      const map = {
+        "auth/network-request-failed": "Network error — check your connection and try again.",
+        "auth/too-many-requests":       "Too many attempts. Please wait a moment and try again.",
+        "auth/user-disabled":           "This account has been disabled. Contact support.",
+        "auth/popup-blocked":           "Pop-up was blocked by your browser. Please allow pop-ups for this site.",
+        "auth/internal-error":          "Something went wrong on our end. Please try again.",
+      };
+      return map[code] ?? "An unexpected error occurred. Please try again.";
+    }
+
+    // ── 8. ATTACH EVENT LISTENERS AFTER DOM IS READY ────────────────
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("btn-google")
+              .addEventListener("click", handleGoogleSignIn);
+
+      document.getElementById("btn-continue")
+              .addEventListener("click", handleEmailContinue);
+
+      document.getElementById("login-email")
+              .addEventListener("keydown", (e) => {
+                if (e.key === "Enter") handleEmailContinue();
+              });
+    });
+  </script>
+
+
 </head>
 <body>
 
@@ -112,6 +263,9 @@
         <p class="form-subtitle">Enter your email to continue to your account.</p>
       </div>
 
+      <!-- Error banner (hidden until needed) -->
+      <span id="auth-error" class="auth-error" hidden></span>
+
       <!-- Email + Continue -->
       <div class="email-block">
         <div class="field">
@@ -123,7 +277,7 @@
             autocomplete="email"
           />
         </div>
-        <button class="btn-continue" type="button">
+        <button class="btn-continue" type="button" id="btn-continue">
           Continue
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="5" y1="12" x2="19" y2="12"/>
@@ -141,7 +295,8 @@
 
       <!-- Social buttons -->
       <div class="social-btns">
-        <button class="btn-social" type="button">
+        <!-- Google — wired to Firebase via id="btn-google" -->
+        <button class="btn-social" type="button" id="btn-google">
           <span class="social-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -153,7 +308,8 @@
           Continue with Google
         </button>
 
-        <button class="btn-social" type="button">
+        <!-- Facebook — will be wired in Phase 2 -->
+        <button class="btn-social" type="button" disabled title="Coming soon">
           <span class="social-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
               <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.887v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
@@ -165,7 +321,7 @@
 
       <!-- Sign up link -->
       <p class="signup-row">
-        Don't have an account? <a href="/register.html">Sign up</a>
+        Don't have an account? <a href="./register.html">Sign up</a>
       </p>
 
       <!-- Trust badges -->
