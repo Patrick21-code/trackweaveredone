@@ -14,6 +14,267 @@
   <!-- Dashboard-specific styles -->
   <link rel="stylesheet" href="../styles/dashboard-page.css" />
 
+  <style>
+    /* ══════════════════════════════════════════════════════════════
+       DASHBOARD INLINE OVERRIDES
+       These rules correct and extend dashboard-page.css.
+       They are scoped precisely so nothing in the base design breaks.
+    ══════════════════════════════════════════════════════════════ */
+
+    /* ── 1. Nav — fixed, always on top ───────────────────────────── */
+    .nav {
+      position: fixed !important;
+      top: 0; left: 0; right: 0;
+      z-index: 9000 !important;
+    }
+    /* Push shell content below fixed nav */
+    #dash-shell { padding-top: 72px; }
+
+    /* ── 2. Scroll lock ───────────────────────────────────────────── */
+    body.overlay-open { overflow: hidden; }
+
+    /* ══════════════════════════════════════════════════════════════
+       ARTIST CARDS — correct sizing, colour & circular frames
+    ══════════════════════════════════════════════════════════════ */
+
+    /* Card layout — flex column, centred */
+    .artist-card {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-decoration: none;
+      cursor: pointer;
+      /* Remove any background the CSS file added so hover is intentional */
+      background: transparent !important;
+    }
+
+    /* Image wrapper — square, circular, sized to match skeleton (.sk-img) */
+    /* The skeleton card is flex: 0 0 calc(16.666% - 0.72rem) with padding 0.9rem,
+       so the image takes the full inner width minus padding.
+       We mirror that by removing card padding and letting the wrapper fill width. */
+    .artist-card { padding: 0.6rem 0.5rem 0.8rem !important; }
+
+    .artist-img-wrap {
+      width: 100% !important;
+      aspect-ratio: 1 !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+      position: relative !important;
+      flex-shrink: 0 !important;
+      margin-bottom: 0.75rem !important;
+      background: #e8e4df;
+      box-shadow: 0 2px 12px rgba(17,24,32,0.08);
+      transition: box-shadow 0.28s, transform 0.28s;
+    }
+    .artist-card:hover .artist-img-wrap {
+      box-shadow: 0 8px 28px rgba(17,24,32,0.18);
+      transform: scale(1.05);
+    }
+
+    /* Image background container — fills the circle */
+    .artist-img-bg {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* The actual <img> — cover-fit, circular */
+    .artist-img-bg img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center top !important;
+      display: block !important;
+      border-radius: 50% !important;
+    }
+
+    /* Shimmer while image loads */
+    .artist-img-bg.loading {
+      background: linear-gradient(
+        90deg,
+        #ede9e4 25%,
+        #d8d3cd 50%,
+        #ede9e4 75%
+      ) !important;
+      background-size: 200% 100% !important;
+      animation: tw-shimmer 1.4s infinite linear !important;
+    }
+    @keyframes tw-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Music-note placeholder — shown when no image is available */
+    .artist-img-placeholder {
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 50% !important;
+    }
+    .artist-img-placeholder svg {
+      width: 36% !important;
+      height: 36% !important;
+      opacity: 0.7 !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* ── Artist text labels — dark readable colours ───────────────── */
+    /* Use explicit hex so we don't depend on CSS vars that may not exist */
+    .artist-name {
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      color: #1a1a1a !important;       /* solid dark — readable on white bg */
+      text-align: center !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.15rem !important;
+      transition: color 0.15s !important;
+    }
+    .artist-card:hover .artist-name { color: #2563eb !important; }
+
+    .artist-sub {
+      font-size: 0.7rem !important;
+      color: #6b7280 !important;       /* mid-grey — accessible on white */
+      text-align: center !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+    }
+
+    /* ══════════════════════════════════════════════════════════════
+       SEE ALL OVERLAY — white background, 5-per-row, consistent cards
+    ══════════════════════════════════════════════════════════════ */
+
+    .see-all-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 8000 !important;
+      background: #ffffff !important;  /* white background as requested */
+      display: flex !important;
+      flex-direction: column !important;
+      padding-top: var(--nav-height, 72px) !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1) !important;
+      overflow: hidden !important;
+    }
+    .see-all-overlay.open {
+      transform: translateX(0) !important;
+    }
+
+    /* Top-bar — matches nav aesthetic, light theme */
+    .see-all-topbar {
+      display: flex !important;
+      align-items: center !important;
+      gap: 1rem !important;
+      padding: 0 2.5rem !important;
+      height: 60px !important;
+      flex-shrink: 0 !important;
+      border-bottom: 1px solid #e5e7eb !important;
+      background: rgba(255,255,255,0.97) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+    }
+    .see-all-back {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.4rem !important;
+      font-size: 0.82rem !important;
+      font-weight: 500 !important;
+      color: #374151 !important;
+      cursor: pointer !important;
+      border: 1.5px solid #d1d5db !important;
+      background: none !important;
+      border-radius: 99px !important;
+      padding: 0.38rem 0.85rem 0.38rem 0.65rem !important;
+      font-family: inherit !important;
+      transition: border-color 0.16s, color 0.16s, background 0.16s !important;
+    }
+    .see-all-back:hover {
+      border-color: #111827 !important;
+      color: #111827 !important;
+      background: #f9fafb !important;
+    }
+    .see-all-back svg { color: #6b7280 !important; }
+    .see-all-back:hover svg { color: #111827 !important; }
+
+    .see-all-genre-title {
+      font-family: 'Fraunces', serif !important;
+      font-size: 1.2rem !important;
+      font-weight: 500 !important;
+      color: #111827 !important;
+      letter-spacing: -0.02em !important;
+      flex: 1 !important;
+    }
+    .see-all-count {
+      font-size: 0.78rem !important;
+      color: #6b7280 !important;
+      background: #f3f4f6 !important;
+      border: 1px solid #e5e7eb !important;
+      border-radius: 99px !important;
+      padding: 0.22rem 0.7rem !important;
+    }
+
+    /* Scrollable body */
+    .see-all-body {
+      flex: 1 !important;
+      overflow-y: auto !important;
+      padding: 2rem 2.5rem 3rem !important;
+      background: #ffffff !important;
+    }
+
+    /* Grid — exactly 5 columns, consistent with carousel card sizing */
+    .see-all-grid {
+      display: grid !important;
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 1.8rem 1.2rem !important;
+      max-width: 860px !important;   /* keeps cards from getting too wide on large screens */
+      margin: 0 auto !important;
+    }
+
+    /* Grid cards — same dimensions and circular style as carousel */
+    .see-all-grid .artist-card {
+      flex: unset !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      width: 100% !important;
+      /* Light card surface for definition on white bg */
+      background: #f9fafb !important;
+      border: 1px solid #e5e7eb !important;
+      border-radius: 14px !important;
+      padding: 1rem 0.75rem 0.9rem !important;
+      transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s !important;
+    }
+    .see-all-grid .artist-card:hover {
+      background: #ffffff !important;
+      box-shadow: 0 8px 28px rgba(17,24,32,0.12) !important;
+      transform: translateY(-3px) !important;
+      border-color: #d1d5db !important;
+    }
+    /* Text colours are the same dark tokens — already set globally above */
+
+    /* Responsive: 3-col on tablet, 2-col on mobile */
+    @media (max-width: 700px) {
+      .see-all-grid { grid-template-columns: repeat(3, 1fr) !important; max-width: none !important; }
+      .see-all-topbar { padding: 0 1.2rem !important; }
+      .see-all-body { padding: 1.2rem !important; }
+    }
+    @media (max-width: 420px) {
+      .see-all-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+  </style>
+
   <script type="module">
     import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut }
@@ -56,22 +317,23 @@
       "OPM":          "opm",
     };
 
-    // ── Well-known MBID overrides for guaranteed cover art ────────
-    // These are fallback artist MBIDs with known rich release histories.
-    // Only used as absolute last resort.
-    const GENRE_SEED_MBIDS = {
-      "Rock":        ["b10bbbfc-cf9e-42e0-be17-e2c3e1d2600d", // The Beatles
-                      "9c9f1380-2516-4fc9-a3e6-f9f61941d090", // Radiohead
-                      "a74b1b7f-71a5-4011-9441-d0b5e4122711"], // Radiohead alt
-      "Pop":         ["cc197bad-dc9c-440d-a5b5-d52ba2e14234", // Coldplay
-                      "f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387"], // Daft Punk
-      "Hip-Hop":     ["164f0d73-1234-4e2c-8743-d77bf2191051", // Kendrick
-                      "13195964-ba47-4d33-91d9-05c8a80bcbff"], // DOOM
-      "Electronic":  ["f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387", // Daft Punk
-                      "8538e728-ca0b-4321-b7e5-cff6565dd4c0"],
-      "Jazz":        ["17188607-b61e-4f53-9a42-b7d7f42b4cc9"],
-      "Classical":   ["b972f589-fb0e-474e-b64a-803b0364fa75"],
-    };
+    // ── Session cache — survives page interactions, clears on tab close ──
+    // Key: "tw_artists_<genre>", Value: JSON-stringified artist array
+    const CACHE_PREFIX = "tw_artists_";
+    const CACHE_TTL_MS = 30 * 60 * 1000; // 30 min
+
+    function cacheGet(genre) {
+      try {
+        const raw = sessionStorage.getItem(CACHE_PREFIX + genre);
+        if (!raw) return null;
+        const { ts, data } = JSON.parse(raw);
+        if (Date.now() - ts > CACHE_TTL_MS) { sessionStorage.removeItem(CACHE_PREFIX + genre); return null; }
+        return data;
+      } catch { return null; }
+    }
+    function cacheSet(genre, data) {
+      try { sessionStorage.setItem(CACHE_PREFIX + genre, JSON.stringify({ ts: Date.now(), data })); } catch { /* storage full */ }
+    }
 
     // ── Global deduplicate set ────────────────────────────────────
     const usedArtistIds = new Set();
@@ -83,7 +345,8 @@
       const wait = Math.max(0, 1050 - (now - _lastMbReq));
       if (wait > 0) await new Promise(r => setTimeout(r, wait));
       _lastMbReq = Date.now();
-      return fetch(url, { headers: { "User-Agent": "TrackWeave/1.0 (hello@trackweave.app)" } });
+      const res = await fetch(url, { headers: { "User-Agent": "TrackWeave/1.0 (hello@trackweave.app)" } });
+      return res;
     }
 
     // ── Auth guard ────────────────────────────────────────────────
@@ -107,8 +370,20 @@
       const genreChipWrap = document.getElementById("hero-genres");
       if (genres.length && genreChipWrap) {
         genreChipWrap.innerHTML = genres
-          .map(g => `<span class="hero-genre-chip">${escHtml(g)}</span>`)
+          .map(g => `<span class="hero-genre-chip" data-genre="${escHtml(g)}">${escHtml(g)}</span>`)
           .join("");
+        genreChipWrap.querySelectorAll(".hero-genre-chip").forEach(chip => {
+          chip.addEventListener("click", () => {
+            const genre = chip.dataset.genre;
+            const blockId = "c-" + genre.toLowerCase().replace(/[\s&]/g,"-").replace(/[^a-z0-9-]/g,"");
+            const target = document.getElementById(blockId);
+            if (target) {
+              const navH = document.querySelector(".nav")?.offsetHeight ?? 72;
+              const y = target.getBoundingClientRect().top + window.scrollY - navH - 24;
+              window.scrollTo({ top: y, behavior: "smooth" });
+            }
+          });
+        });
       }
 
       // ── Avatar ────────────────────────────────────────────────
@@ -142,38 +417,91 @@
       }
     });
 
-    // ── Build all carousels (genres in sequence to respect rate limit) ──
+    // ── Build all carousels — skeletons shown immediately ──────────────
     async function buildCarousels(genres) {
       const section = document.getElementById("artists-section");
-      // Remove skeleton
       section.innerHTML = "";
 
-      // Add eyebrow
       const eyebrow = document.createElement("p");
       eyebrow.className = "section-eyebrow";
       eyebrow.textContent = "Based on your taste";
       section.appendChild(eyebrow);
 
-      // Build sequentially (MusicBrainz rate-limit friendly)
-      for (let i = 0; i < genres.length; i++) {
-        const genre = genres[i];
+      // 1. Render all skeleton blocks immediately
+      const skeletonBlocks = {};
+      genres.forEach(genre => {
+        const blockId = "c-" + genre.toLowerCase().replace(/[\s&]/g,"-").replace(/[^a-z0-9-]/g,"");
+        const sk = document.createElement("div");
+        sk.className = "genre-carousel-block skeleton-block";
+        sk.id = `sk-${blockId}`;
+        sk.innerHTML = `
+          <div class="genre-carousel-header">
+            <div class="sk-title-bar"></div>
+          </div>
+          <div class="carousel-skeleton">
+            ${Array(6).fill(0).map(() => `
+              <div class="sk-card">
+                <div class="sk-img" style="border-radius:50%"></div>
+                <div class="sk-line"></div>
+                <div class="sk-line short"></div>
+              </div>`).join("")}
+          </div>`;
+        section.appendChild(sk);
+        skeletonBlocks[genre] = sk;
+      });
+
+      const creditEl = document.createElement("p");
+      creditEl.className = "api-credit";
+      creditEl.innerHTML = `Artist data via <a href="https://musicbrainz.org" target="_blank" rel="noopener">MusicBrainz</a> &amp; <a href="https://coverartarchive.org" target="_blank" rel="noopener">Cover Art Archive</a>`;
+      section.appendChild(creditEl);
+
+      // 2. Fetch genres — check cache first, then API.
+      //    Cached genres resolve instantly (no stagger needed).
+      //    Uncached genres are staggered to respect MB rate limit.
+      let mbSlot = 0; // MB API slot counter for uncached genres
+      const STAGGER_MS = 1100;
+
+      const promises = genres.map(async (genre) => {
+        // Check cache first — no rate-limit delay needed
+        const cached = cacheGet(genre);
+        if (cached) {
+          try {
+            // Re-mark used IDs from cache
+            cached.forEach(a => usedArtistIds.add(a.id));
+            return { genre, artists: cached };
+          } catch { /* fall through to API */ }
+        }
+
+        // Not cached — assign an MB slot and wait
+        const mySlot = mbSlot++;
+        if (mySlot > 0) await new Promise(r => setTimeout(r, mySlot * STAGGER_MS));
+
         try {
-          const { artists } = await fetchArtistsForGenre(genre);
-          if (!artists.length) continue;
-          const block = buildCarouselBlock(genre, artists);
-          block.style.animationDelay = `${i * 0.08}s`;
-          section.appendChild(block);
+          const result = await fetchArtistsForGenre(genre);
+          if (result.artists.length) cacheSet(genre, result.artists);
+          return result;
         } catch (e) {
           console.warn(`[TrackWeave] Skipped genre "${genre}":`, e);
+          return { genre, artists: [] };
         }
-      }
+      });
 
-      section.insertAdjacentHTML("beforeend",
-        `<p class="api-credit">Artist data via <a href="https://musicbrainz.org" target="_blank" rel="noopener">MusicBrainz</a> &amp; <a href="https://coverartarchive.org" target="_blank" rel="noopener">Cover Art Archive</a></p>`
-      );
+      // As each promise resolves, swap its skeleton for the real block
+      promises.forEach(async (p, i) => {
+        const { genre, artists } = await p;
+        const sk = skeletonBlocks[genre];
+        if (!artists.length) { sk?.remove(); return; }
+        const block = buildCarouselBlock(genre, artists);
+        if (sk) {
+          section.insertBefore(block, sk);
+          sk.remove();
+        } else {
+          section.insertBefore(block, creditEl);
+        }
+      });
     }
 
-    // ── Fetch artists for a genre ─────────────────────────────────
+    // ── Fetch artists for a genre ─────────────────────────────────────
     async function fetchArtistsForGenre(genre) {
       const tag = GENRE_MB_MAP[genre] ?? genre.toLowerCase();
       const url = `https://musicbrainz.org/ws/2/artist?query=tag:(${encodeURIComponent(tag)})&limit=30&fmt=json`;
@@ -184,94 +512,114 @@
       const json = await res.json();
       let allArtists = (json.artists ?? []).filter(a => a.id && a.name);
 
-      // Deduplicate globally
-      const fresh = allArtists.filter(a => !usedArtistIds.has(a.id));
+      const fresh  = allArtists.filter(a => !usedArtistIds.has(a.id));
       const chosen = fresh.slice(0, 14);
       chosen.forEach(a => usedArtistIds.add(a.id));
 
-      // Enrich: fetch cover art per artist (in batches of 4, non-blocking)
+      // Enrich images
       const enriched = await enrichBatch(chosen);
       return { genre, artists: enriched };
     }
 
-    // ── Enrich a batch of artists with cover images ───────────────
+    // ── Enrich artists with cover art — optimised pipeline ───────────
+    // Strategy:
+    //   1. For each artist, fire the MB release-group fetch (rate-limited).
+    //   2. Collect all candidate release-group IDs.
+    //   3. Probe CAA for ALL artists in parallel (CAA has no strict limit).
+    //   4. First successful CAA URL wins for each artist.
     async function enrichBatch(artists) {
-      // Process 4 at a time to stay under rate limits
-      const results = [];
-      for (let i = 0; i < artists.length; i += 4) {
-        const batch = artists.slice(i, i + 4);
-        const enriched = await Promise.all(batch.map(a => enrichArtist(a)));
-        results.push(...enriched);
+      // Step 1+2: gather release group IDs (MB is rate-limited, do sequentially)
+      const candidateMap = new Map(); // artistId → string[]
+
+      for (const artist of artists) {
+        try {
+          // Try album-type first
+          const rgRes = await mbFetch(
+            `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&type=album&limit=6&fmt=json`
+          );
+          if (rgRes.ok) {
+            const j = await rgRes.json();
+            const ids = (j["release-groups"] ?? [])
+              .filter(rg => rg["primary-type"] === "Album")
+              .slice(0, 5).map(rg => rg.id);
+            if (ids.length) { candidateMap.set(artist.id, ids); continue; }
+          }
+        } catch { /* fall through */ }
+
+        try {
+          // Fallback: any release group
+          const rgRes2 = await mbFetch(
+            `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&limit=6&fmt=json`
+          );
+          if (rgRes2.ok) {
+            const j2 = await rgRes2.json();
+            const ids2 = (j2["release-groups"] ?? []).slice(0, 5).map(rg => rg.id);
+            if (ids2.length) candidateMap.set(artist.id, ids2);
+          }
+        } catch { /* no ids found */ }
       }
-      return results;
-    }
 
-    // ── Multi-strategy image fetch for a single artist ────────────
-    async function enrichArtist(artist) {
-      // Strategy 1: release-groups of type "Album"
-      try {
-        const rgRes = await mbFetch(
-          `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&type=album&limit=8&fmt=json`
+      // Step 3: Probe CAA for all artists concurrently (no rate limit on CAA)
+      await Promise.all(artists.map(async (artist) => {
+        const rgIds = candidateMap.get(artist.id) ?? [];
+        // Try all release groups in parallel, take first success
+        const results = await Promise.allSettled(
+          rgIds.map(rgId => checkCoverArt(rgId))
         );
-        if (rgRes.ok) {
-          const rgJson = await rgRes.json();
-          const groups = (rgJson["release-groups"] ?? [])
-            .filter(rg => rg["primary-type"] === "Album");
-
-          for (const rg of groups) {
-            const url = await checkCoverArt(rg.id);
-            if (url) { artist._coverUrl = url; return artist; }
+        for (const r of results) {
+          if (r.status === "fulfilled" && r.value) {
+            artist._coverUrl = r.value;
+            break;
           }
         }
-      } catch { /* continue to next strategy */ }
+      }));
 
-      // Strategy 2: any release (Singles, EPs, etc.)
-      try {
-        const rgRes2 = await mbFetch(
-          `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&limit=10&fmt=json`
-        );
-        if (rgRes2.ok) {
-          const rgJson2 = await rgRes2.json();
-          const allGroups = rgJson2["release-groups"] ?? [];
-
-          for (const rg of allGroups) {
-            const url = await checkCoverArt(rg.id);
-            if (url) { artist._coverUrl = url; return artist; }
-          }
-        }
-      } catch { /* fallback to gradient */ }
-
-      // No image found — gradient initials will render
-      return artist;
+      return artists;
     }
 
-    // ── Probe Cover Art Archive for a release-group ───────────────
+    // ── Probe Cover Art Archive for a release-group ───────────────────
+    // Uses the CAA JSON API which is CORS-friendly and returns thumbnail URLs.
+    // Falls back to a direct GET on the CDN URL if the JSON API returns nothing.
     async function checkCoverArt(releaseGroupId) {
       try {
-        // CAA returns 307 redirect for valid entries
-        const caRes = await fetch(
-          `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`,
-          { method: "HEAD", redirect: "manual" }
+        // 1. CAA JSON API — most reliable, explicit CORS support
+        const apiRes = await fetch(
+          `https://coverartarchive.org/release-group/${releaseGroupId}`,
+          { headers: { "Accept": "application/json" } }
         );
-        if (caRes.ok || caRes.status === 307 || caRes.type === "opaqueredirect") {
-          return `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
+        if (apiRes.ok) {
+          const json = await apiRes.json();
+          const images = json.images ?? [];
+          const front  = images.find(img => img.front) ?? images[0];
+          if (front) {
+            return front.thumbnails?.["250"] ?? front.thumbnails?.small ?? front.image ?? null;
+          }
         }
+      } catch { /* fall through */ }
+
+      try {
+        // 2. Direct CDN fallback via GET (HEAD is unreliable cross-origin)
+        const directUrl = `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
+        const directRes = await fetch(directUrl);
+        if (directRes.ok) return directUrl;
       } catch { /* silent */ }
+
       return null;
     }
 
-    // ── Build carousel DOM block ───────────────────────────────────
+    // ── Build carousel DOM block ──────────────────────────────────────
     function buildCarouselBlock(genre, artists) {
       const blockId = `c-${genre.toLowerCase().replace(/[\s&]/g,"-").replace(/[^a-z0-9-]/g,"")}`;
       const block   = document.createElement("div");
       block.className = "genre-carousel-block";
+      block.id = blockId;
 
       block.innerHTML = `
         <div class="genre-carousel-header">
           <h3>${escHtml(genre)}</h3>
-          <a class="see-all" href="#" tabindex="0">See all
+          <button class="see-all" type="button" data-genre="${escHtml(genre)}" tabindex="0">See all
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </a>
+          </button>
         </div>
         <div class="carousel-wrapper">
           <div class="carousel-fade-left"></div>
@@ -298,7 +646,7 @@
       const fadeRight = block.querySelector(".carousel-fade-right");
 
       let idx = 0;
-      const GAP = 14; // matches 0.85rem gap in CSS
+      const GAP = 14;
       const totalItems = artists.length;
 
       const visibleCount = () => {
@@ -316,11 +664,11 @@
       };
 
       const slide = () => {
-        const vc       = visibleCount();
-        const maxIdx   = Math.max(0, totalItems - vc);
-        idx            = Math.min(idx, maxIdx);
-        const cardEl   = track.querySelector(".artist-card");
-        const cardW    = cardEl ? cardEl.offsetWidth : 0;
+        const vc     = visibleCount();
+        const maxIdx = Math.max(0, totalItems - vc);
+        idx          = Math.min(idx, maxIdx);
+        const cardEl = track.querySelector(".artist-card");
+        const cardW  = cardEl ? cardEl.offsetWidth : 0;
         track.style.transform = `translateX(-${idx * (cardW + GAP)}px)`;
         prevBtn.disabled = idx === 0;
         nextBtn.disabled = idx >= maxIdx;
@@ -334,44 +682,52 @@
       ro.observe(wrapper);
       requestAnimationFrame(slide);
 
+      block.querySelector(".see-all").addEventListener("click", (e) => {
+        e.preventDefault();
+        openSeeAllOverlay(genre, artists);
+      });
+
       return block;
     }
 
-    // ── Artist card HTML ───────────────────────────────────────────
+    // ── Artist card HTML — circular frame, no initials fallback ─────────
     function artistCardHTML(artist, index) {
       const hue  = Math.abs(hashStr(artist.name)) % 360;
-      const hue2 = (hue + 50) % 360;
+      const hue2 = (hue + 55) % 360;
       const sat  = 58 + (Math.abs(hashStr(artist.name + "s")) % 18);
       const mbUrl = `https://musicbrainz.org/artist/${escHtml(artist.id)}`;
 
-      // Sub-label: formed year + country
       const year    = artist["life-span"]?.begin?.slice(0, 4) ?? "";
       const country = artist.country ?? "";
       const sub     = [year, country].filter(Boolean).join(" · ") || "Artist";
 
+      const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
+
       let imgHtml;
       if (artist._coverUrl) {
-        // Has real image — render it; fall back to gradient on error
+        // Has cover art — show image, on error fall back to music-note icon (not initials)
         imgHtml = `
-          <div class="artist-img-bg" id="bg-${escHtml(artist.id)}">
+          <div class="artist-img-bg loading" id="bg-${escHtml(artist.id)}" ${gradStyle}>
             <img
               src="${escHtml(artist._coverUrl)}"
               alt="${escHtml(artist.name)}"
               loading="lazy"
+              decoding="async"
+              onload="this.parentElement.classList.remove('loading')"
               onerror="
                 var bg=document.getElementById('bg-${escHtml(artist.id)}');
                 if(bg){
-                  bg.style.background='linear-gradient(135deg,hsl(${hue},${sat}%,54%),hsl(${hue2},${sat - 8}%,38%))';\
-                  bg.innerHTML='<span class=\\'artist-initials\\'>${escHtml(initials(artist.name))}</span>';
+                  bg.classList.remove('loading');
+                  bg.innerHTML=musicNoteIcon();
                 }
               "
             />
           </div>`;
       } else {
-        // No image from API — rich gradient with initials
+        // No cover art — show music-note icon on gradient (never initials)
         imgHtml = `
-          <div class="artist-img-bg" style="background:linear-gradient(135deg,hsl(${hue},${sat}%,54%),hsl(${hue2},${sat - 8}%,38%))">
-            <span class="artist-initials">${escHtml(initials(artist.name))}</span>
+          <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
+            ${musicNoteIconSVG()}
           </div>`;
       }
 
@@ -387,14 +743,90 @@
         </a>`;
     }
 
-    // ── Helpers ───────────────────────────────────────────────────
+    // ── Music note SVG icon for placeholder ──────────────────────────
+    function musicNoteIconSVG() {
+      return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:38%;height:38%;opacity:0.75;">
+        <path d="M9 18V5l12-2v13" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6" cy="18" r="3" stroke="white" stroke-width="1.8"/>
+        <circle cx="18" cy="16" r="3" stroke="white" stroke-width="1.8"/>
+      </svg>`;
+    }
+
+    // Exposed to inline onerror handlers
+    window.musicNoteIcon = () => {
+      const wrap = document.createElement("div");
+      wrap.className = "artist-img-placeholder";
+      wrap.innerHTML = musicNoteIconSVG();
+      return wrap.outerHTML;
+    };
+
+    // ── See All Overlay ───────────────────────────────────────────────
+    function openSeeAllOverlay(genre, artists) {
+      const overlay = document.getElementById("see-all-overlay");
+      if (!overlay) return;
+
+      overlay.querySelector(".see-all-genre-title").textContent = genre;
+      overlay.querySelector(".see-all-count").textContent = `${artists.length} artists`;
+
+      const grid = overlay.querySelector(".see-all-grid");
+      grid.innerHTML = "";
+
+      artists.forEach((artist, i) => {
+        const hue  = Math.abs(hashStr(artist.name)) % 360;
+        const hue2 = (hue + 55) % 360;
+        const sat  = 58 + (Math.abs(hashStr(artist.name + "s")) % 18);
+        const mbUrl = `https://musicbrainz.org/artist/${escHtml(artist.id)}`;
+        const year    = artist["life-span"]?.begin?.slice(0, 4) ?? "";
+        const country = artist.country ?? "";
+        const badge   = [year, country].filter(Boolean).join(" · ") || "Artist";
+        const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
+
+        // Same image logic as carousel — circular, no initials
+        let imgHtml;
+        if (artist._coverUrl) {
+          imgHtml = `
+            <div class="artist-img-bg loading" id="gbg-${escHtml(artist.id)}" style="${gradStyle}">
+              <img src="${escHtml(artist._coverUrl)}" alt="${escHtml(artist.name)}" loading="lazy" decoding="async"
+                onload="this.parentElement.classList.remove('loading')"
+                onerror="var b=document.getElementById('gbg-${escHtml(artist.id)}');if(b){b.classList.remove('loading');b.innerHTML=musicNoteIcon();}" />
+            </div>`;
+        } else {
+          imgHtml = `
+            <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
+              ${musicNoteIconSVG()}
+            </div>`;
+        }
+
+        const card = document.createElement("a");
+        card.className = "artist-card";
+        card.href = mbUrl;
+        card.target = "_blank";
+        card.rel = "noopener";
+        card.setAttribute("aria-label", `View ${artist.name} on MusicBrainz`);
+        card.style.animationDelay = `${i * 0.025}s`;
+        card.innerHTML = `
+          <div class="artist-img-wrap">${imgHtml}</div>
+          <div class="artist-name">${escHtml(artist.name)}</div>
+          <div class="artist-sub">${escHtml(badge)}</div>`;
+        grid.appendChild(card);
+      });
+
+      overlay.classList.add("open");
+      document.body.classList.add("overlay-open");
+    }
+
+    function closeSeeAllOverlay() {
+      const overlay = document.getElementById("see-all-overlay");
+      if (!overlay) return;
+      overlay.classList.remove("open");
+      document.body.classList.remove("overlay-open");
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────
     function hashStr(s) {
       let h = 0;
       for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
       return h;
-    }
-    function initials(name) {
-      return name.split(/\s+/).slice(0, 2).map(w => w[0]?.toUpperCase() ?? "").join("");
     }
     function escHtml(s) {
       return String(s)
@@ -408,7 +840,7 @@
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
+<!-- ═══ NAV (always rendered first, highest z-index) ═══ -->
 <header class="nav">
   <div class="nav-inner">
 
@@ -483,6 +915,21 @@
   </div>
 </header>
 
+<!-- ═══ SEE ALL OVERLAY (below nav in z-index, padded by nav height) ═══ -->
+<div class="see-all-overlay" id="see-all-overlay" role="dialog" aria-modal="true" aria-label="See all artists">
+  <div class="see-all-topbar">
+    <button class="see-all-back" id="see-all-back" type="button" aria-label="Close">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <span class="see-all-genre-title"></span>
+    <span class="see-all-count"></span>
+  </div>
+  <div class="see-all-body">
+    <div class="see-all-grid"></div>
+  </div>
+</div>
+
 <!-- ═══ DASHBOARD ═══ -->
 <div id="dash-shell" hidden>
 
@@ -500,46 +947,13 @@
   <!-- ── Main content ────────────────────────────────────────── -->
   <main>
     <div class="dash-main">
-
-      <!-- Artist carousels — built by JS, one per genre -->
-      <section class="artists-section" id="artists-section">
-
-        <!-- Initial skeleton (removed once first carousel renders) -->
-        <p class="section-eyebrow" id="skeleton-eyebrow">Based on your taste</p>
-
-        <div class="genre-carousel-block" id="initial-skeleton">
-          <div class="genre-carousel-header">
-            <div class="sk-line" style="width:110px;height:18px;border-radius:4px;"></div>
-          </div>
-          <div class="carousel-skeleton">
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-            <div class="sk-card"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line short"></div></div>
-          </div>
-        </div>
-
-      </section>
-
+      <section class="artists-section" id="artists-section"></section>
     </div>
   </main>
 
 </div><!-- /#dash-shell -->
 
 <script>
-  // ── Remove skeleton once real content appears ─────────────────
-  const _section = document.getElementById("artists-section");
-  new MutationObserver(() => {
-    const sk = document.getElementById("initial-skeleton");
-    const se = document.getElementById("skeleton-eyebrow");
-    if (sk && _section.querySelectorAll(".genre-carousel-block").length > 0) {
-      sk.remove();
-      if (se) se.remove();
-    }
-  }).observe(_section, { childList: true });
-
   // ── Avatar dropdown ───────────────────────────────────────────
   const _wrap = document.getElementById("nav-avatar-wrap");
   const _avBtn = document.getElementById("nav-avatar");
@@ -562,6 +976,17 @@
     }
   });
 
+  // ── See All overlay close ─────────────────────────────────────
+  function closeSeeAllOverlay() {
+    document.getElementById("see-all-overlay").classList.remove("open");
+    document.body.classList.remove("overlay-open");
+  }
+
+  document.getElementById("see-all-back")?.addEventListener("click", closeSeeAllOverlay);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeSeeAllOverlay();
+  });
+
   // ── Mirror avatar to dropdown mini-avatar ─────────────────────
   const _dropMini = document.getElementById("drop-av-mini");
   new MutationObserver(() => {
@@ -570,6 +995,17 @@
       _dropMini.style.background = _avBtn.style.background;
     }
   }).observe(_avBtn, { childList: true, subtree: true, characterData: true });
+
+  // ── Measure nav height for overlay offset ─────────────────────
+  // Update the CSS variable whenever the nav resizes
+  const navEl = document.querySelector(".nav");
+  function updateNavHeight() {
+    if (navEl) {
+      document.documentElement.style.setProperty("--nav-height", navEl.offsetHeight + "px");
+    }
+  }
+  updateNavHeight();
+  new ResizeObserver(updateNavHeight).observe(navEl);
 </script>
 
 </body>
