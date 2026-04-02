@@ -284,10 +284,12 @@ body.overlay-open { overflow: hidden; }
 /* ── Artist card — carousel ──────────────────────────────── */
 .artist-card {
   flex: 0 0 calc(16.666% - 0.72rem);
-  min-width: 108px; max-width: 130px;
+  min-width: 0;
   cursor: pointer; text-decoration: none;
   display: flex; flex-direction: column; align-items: center;
-  padding: 0.9rem; border-radius: var(--r-md); background: transparent;
+  /* Padding kept tight — image fills width, text sits below */
+  padding: 0.6rem 0.5rem 0.8rem;
+  border-radius: var(--r-md); background: transparent;
   transition: background .2s;
   animation: card-in .45s cubic-bezier(.22,1,.36,1) both;
 }
@@ -295,7 +297,7 @@ body.overlay-open { overflow: hidden; }
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.artist-card:hover { background: rgba(17,24,32,.05); }
+.artist-card:hover { background: rgba(17,24,32,.04); }
 
 /* ── Artist image — always circular ─────────────────────── */
 .artist-img-wrap {
@@ -374,16 +376,20 @@ body.overlay-open { overflow: hidden; }
 
 /* ── Artist text labels ───────────────────────────────────── */
 .artist-name {
-  font-size: 0.82rem; font-weight: 600; color: var(--ink);
+  font-size: 0.82rem; font-weight: 600;
+  /* Explicit dark colour — not a CSS variable that could resolve to white */
+  color: #1a1a1a;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin-bottom: 0.2rem; line-height: 1.3; text-align: center;
   max-width: 100%;
   transition: color .15s;
 }
-.artist-card:hover .artist-name { color: var(--blue); }
+.artist-card:hover .artist-name { color: #2563eb; }
 
 .artist-sub {
-  font-size: 0.72rem; color: var(--ink-faint); font-weight: 300;
+  font-size: 0.72rem;
+  color: #6b7280; /* accessible mid-grey on white/paper bg */
+  font-weight: 300;
   text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   max-width: 100%;
 }
@@ -464,99 +470,92 @@ body.overlay-open { overflow: hidden; }
 
 /* ════════════════════════════════════════════════════════════
    SEE ALL — SLIDE-IN OVERLAY
-   Sits at z-index 8000 (below nav's 9000) and is padded
-   by --nav-height so content is never under the navbar.
+   White background, 5-per-row grid, light topbar.
+   z-index 8000 keeps it firmly below the fixed nav (9000).
+   --nav-height is set dynamically by a JS ResizeObserver.
    ════════════════════════════════════════════════════════════ */
 .see-all-overlay {
   position: fixed;
   inset: 0;
-  z-index: 8000;                        /* below nav (9000) */
+  z-index: 8000;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
-  /* Pad top by nav height — measured dynamically and set via JS ResizeObserver */
+  background: #ffffff;
   padding-top: var(--nav-height, 72px);
-  /* Slide in from right */
   transform: translateX(100%);
   transition: transform .32s cubic-bezier(.22,1,.36,1);
   overflow: hidden;
 }
-.see-all-overlay.open {
-  transform: translateX(0);
-}
+.see-all-overlay.open { transform: translateX(0); }
 
-/* ── Top-bar — styled to match the nav aesthetic ─────────── */
+/* ── Top-bar ──────────────────────────────────────────────── */
 .see-all-topbar {
   display: flex; align-items: center; gap: 1rem;
   padding: 0 2.5rem; height: 60px; flex-shrink: 0;
-  border-bottom: 1px solid var(--rule);
-  background: rgba(248,245,241,.97);
+  border-bottom: 1px solid #e5e7eb;
+  background: rgba(255,255,255,.97);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
 .see-all-back {
   display: flex; align-items: center; gap: 0.4rem;
-  font-size: 0.82rem; font-weight: 500; color: var(--ink-soft);
-  cursor: pointer; border: 1.5px solid var(--rule); background: none;
+  font-size: 0.82rem; font-weight: 500; color: #374151;
+  cursor: pointer; border: 1.5px solid #d1d5db; background: none;
   border-radius: 99px; padding: 0.38rem 0.85rem 0.38rem 0.65rem;
   font-family: inherit;
   transition: border-color .16s, color .16s, background .16s;
 }
-.see-all-back:hover { border-color: var(--ink); color: var(--ink); background: var(--paper-warm); }
-.see-all-back svg { color: var(--ink-faint); transition: color .16s; }
-.see-all-back:hover svg { color: var(--ink); }
+.see-all-back:hover { border-color: #111827; color: #111827; background: #f9fafb; }
+.see-all-back svg { color: #6b7280; transition: color .16s; }
+.see-all-back:hover svg { color: #111827; }
 
 .see-all-genre-title {
-  font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 500;
-  color: var(--ink); letter-spacing: -0.02em; flex: 1;
+  font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 500;
+  color: #111827; letter-spacing: -0.02em; flex: 1;
 }
 .see-all-count {
-  font-size: 0.78rem; color: var(--ink-faint); font-weight: 400;
-  background: var(--paper-warm); border: 1px solid var(--rule);
+  font-size: 0.78rem; color: #6b7280; font-weight: 400;
+  background: #f3f4f6; border: 1px solid #e5e7eb;
   border-radius: 99px; padding: 0.22rem 0.7rem;
 }
 
-/* ── Scrollable content area ─────────────────────────────── */
-.see-all-body { flex: 1; overflow-y: auto; padding: 2rem 2.5rem 3rem; }
+/* ── Scrollable body ─────────────────────────────────────── */
+.see-all-body { flex: 1; overflow-y: auto; padding: 2rem 2.5rem 3rem; background: #fff; }
 
-/* ── Artist grid ─────────────────────────────────────────── */
+/* ── 5-column grid — fixed columns, centred, max-width so cards aren't too wide */
 .see-all-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 1.6rem 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.8rem 1.2rem;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
-/* Grid artist card — same shape as carousel card */
+/* Grid artist card */
 .see-all-grid .artist-card {
   flex: unset;
-  min-width: 0; max-width: none;
-  padding: 0.85rem 0.6rem;
-  border-radius: var(--r-md);
-  background: #fff;
-  border: 1px solid var(--rule-light);
-  box-shadow: 0 1px 4px rgba(17,24,32,.04);
+  min-width: 0; max-width: none; width: 100%;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1rem 0.75rem 0.9rem;
   display: flex; flex-direction: column; align-items: center;
   animation: card-in .38s cubic-bezier(.22,1,.36,1) both;
   transition: box-shadow .22s, transform .22s, border-color .22s, background .2s;
 }
 .see-all-grid .artist-card:hover {
-  background: #fff;
-  box-shadow: 0 8px 32px rgba(17,24,32,.13);
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(17,24,32,.12);
   transform: translateY(-3px);
-  border-color: var(--rule);
+  border-color: #d1d5db;
 }
-.see-all-grid .artist-card:hover .artist-img-wrap {
-  box-shadow: 0 12px 36px rgba(17,24,32,.2);
-  transform: scale(1.05);
-}
-/* Ensure name colour transition also works in the grid */
-.see-all-grid .artist-card:hover .artist-name { color: var(--blue); }
+.see-all-grid .artist-card:hover .artist-name { color: #2563eb; }
 
-/* Country / year badge on grid cards */
+/* Country / year badge */
 .artist-card-badge {
   display: inline-flex; align-items: center; gap: 0.25rem;
   font-size: 0.62rem; font-weight: 600; letter-spacing: 0.07em;
-  text-transform: uppercase; color: var(--blue);
-  background: var(--blue-ghost); border: 1px solid var(--blue-pale);
+  text-transform: uppercase; color: #2563eb;
+  background: #eff6ff; border: 1px solid #bfdbfe;
   border-radius: 99px; padding: 0.15rem 0.5rem; margin-top: 0.4rem;
   white-space: nowrap; overflow: hidden; max-width: 100%; text-overflow: ellipsis;
 }
@@ -573,7 +572,8 @@ body.overlay-open { overflow: hidden; }
   .sk-card     { flex: 0 0 calc(25% - 0.65rem); }
   .dash-main   { padding: 2.5rem 1.8rem 4rem; }
   .dash-hero   { padding: 3.2rem 1.8rem 3rem; }
-  .see-all-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+  /* 5-col grid shrinks to 3 on tablet */
+  .see-all-grid { grid-template-columns: repeat(3, 1fr); max-width: none; }
   .see-all-body { padding: 1.5rem 1.8rem 2.5rem; }
   .see-all-topbar { padding: 0 1.8rem; }
 }
@@ -585,7 +585,7 @@ body.overlay-open { overflow: hidden; }
   .dash-hero       { padding: 2.6rem 1.2rem 2.4rem; }
   .nav-inner       { padding: 0 1.4rem; }
   .carousel-fade-left, .carousel-fade-right { width: 50px; }
-  .see-all-grid    { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem 0.75rem; }
+  .see-all-grid    { grid-template-columns: repeat(3, 1fr); gap: 1rem 0.75rem; }
   .see-all-body    { padding: 1.2rem; }
   .see-all-topbar  { padding: 0 1.2rem; height: 54px; }
   .see-all-genre-title { font-size: 1.05rem; }
@@ -593,5 +593,5 @@ body.overlay-open { overflow: hidden; }
 @media (max-width: 420px) {
   .artist-card { flex: 0 0 calc(50% - 0.45rem); }
   .sk-card     { flex: 0 0 calc(50% - 0.45rem); }
-  .see-all-grid { grid-template-columns: repeat(3, 1fr); gap: 0.8rem 0.6rem; }
+  .see-all-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem 0.6rem; }
 }
