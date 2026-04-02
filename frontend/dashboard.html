@@ -15,206 +15,263 @@
   <link rel="stylesheet" href="../styles/dashboard-page.css" />
 
   <style>
-    /* ── CRITICAL FIXES ─────────────────────────────────────────────────
-       All rules here are scoped fixes that override or complement the
-       existing dashboard-page.css without breaking the base design.
-    ───────────────────────────────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════════
+       DASHBOARD INLINE OVERRIDES
+       These rules correct and extend dashboard-page.css.
+       They are scoped precisely so nothing in the base design breaks.
+    ══════════════════════════════════════════════════════════════ */
 
-    /* ── 1. Navbar always on top — never blocked by overlay ──────────── */
+    /* ── 1. Nav — fixed, always on top ───────────────────────────── */
     .nav {
       position: fixed !important;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 9000 !important; /* above overlay's 8000 */
+      top: 0; left: 0; right: 0;
+      z-index: 9000 !important;
     }
+    /* Push shell content below fixed nav */
+    #dash-shell { padding-top: 72px; }
 
-    /* ── 2. See All overlay — sits below navbar ───────────────────────── */
-    .see-all-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 8000; /* below nav's 9000 */
-      background: var(--bg, #0e0e11);
-      transform: translateX(100%);
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-      display: flex;
-      flex-direction: column;
-      /* Push content below the fixed nav */
-      padding-top: var(--nav-height, 64px);
-    }
-    .see-all-overlay.open {
-      transform: translateX(0);
-    }
+    /* ── 2. Scroll lock ───────────────────────────────────────────── */
+    body.overlay-open { overflow: hidden; }
 
-    /* ── 3. See All top-bar — styled consistently with nav ────────────── */
-    .see-all-topbar {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.75rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      background: var(--bg, #0e0e11);
-      flex-shrink: 0;
-    }
-    .see-all-back {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: none;
-      border: none;
-      color: var(--text-muted, #888);
-      font-family: inherit;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      padding: 0.35rem 0.6rem;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .see-all-back:hover {
-      background: rgba(255,255,255,0.07);
-      color: var(--text, #fff);
-    }
-    .see-all-genre-title {
-      font-family: 'Fraunces', serif;
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--text, #fff);
-    }
-    .see-all-count {
-      margin-left: auto;
-      font-size: 0.78rem;
-      color: var(--text-muted, #888);
-    }
+    /* ══════════════════════════════════════════════════════════════
+       ARTIST CARDS — correct sizing, colour & circular frames
+    ══════════════════════════════════════════════════════════════ */
 
-    /* ── 4. See All scrollable body ───────────────────────────────────── */
-    .see-all-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem 1.75rem 3rem;
-    }
-
-    /* ── 5. See All grid — same card style as carousel ────────────────── */
-    .see-all-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 1.5rem 1rem;
-    }
-
-    /* ── 6. Artist card — circular image frame everywhere ─────────────── */
-    .artist-img-wrap {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 50% !important; /* FORCE circular */
-      overflow: hidden;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .artist-img-bg {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .artist-img-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      border-radius: 50%;
-      display: block;
-    }
-
-    /* ── 7. No-image fallback: music note icon instead of initials ────── */
-    .artist-img-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-    }
-    .artist-img-placeholder svg {
-      width: 38%;
-      height: 38%;
-      opacity: 0.75;
-    }
-
-    /* Keep initials style for backward compat but make them nicer */
-    .artist-initials {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(1.1rem, 4cqw, 1.6rem);
-      color: rgba(255,255,255,0.92);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      text-align: center;
-      line-height: 1;
-    }
-
-    /* ── 8. Artist card consistent style ─────────────────────────────── */
+    /* Card layout — flex column, centred */
     .artist-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
       text-decoration: none;
       cursor: pointer;
-    }
-    .artist-name {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text, #fff);
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-    }
-    .artist-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted, #888);
-      text-align: center;
+      /* Remove any background the CSS file added so hover is intentional */
+      background: transparent !important;
     }
 
-    /* ── 9. Loading state for images — shimmer while fetching ─────────── */
+    /* Image wrapper — square, circular, sized to match skeleton (.sk-img) */
+    /* The skeleton card is flex: 0 0 calc(16.666% - 0.72rem) with padding 0.9rem,
+       so the image takes the full inner width minus padding.
+       We mirror that by removing card padding and letting the wrapper fill width. */
+    .artist-card { padding: 0.6rem 0.5rem 0.8rem !important; }
+
+    .artist-img-wrap {
+      width: 100% !important;
+      aspect-ratio: 1 !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+      position: relative !important;
+      flex-shrink: 0 !important;
+      margin-bottom: 0.75rem !important;
+      background: #e8e4df;
+      box-shadow: 0 2px 12px rgba(17,24,32,0.08);
+      transition: box-shadow 0.28s, transform 0.28s;
+    }
+    .artist-card:hover .artist-img-wrap {
+      box-shadow: 0 8px 28px rgba(17,24,32,0.18);
+      transform: scale(1.05);
+    }
+
+    /* Image background container — fills the circle */
+    .artist-img-bg {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* The actual <img> — cover-fit, circular */
+    .artist-img-bg img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      object-position: center top !important;
+      display: block !important;
+      border-radius: 50% !important;
+    }
+
+    /* Shimmer while image loads */
     .artist-img-bg.loading {
       background: linear-gradient(
         90deg,
-        rgba(255,255,255,0.04) 25%,
-        rgba(255,255,255,0.09) 50%,
-        rgba(255,255,255,0.04) 75%
-      );
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
+        #ede9e4 25%,
+        #d8d3cd 50%,
+        #ede9e4 75%
+      ) !important;
+      background-size: 200% 100% !important;
+      animation: tw-shimmer 1.4s infinite linear !important;
     }
-    @keyframes shimmer {
+    @keyframes tw-shimmer {
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
 
-    /* ── 10. Card hover polish ────────────────────────────────────────── */
-    .artist-card:hover .artist-img-wrap {
-      transform: scale(1.04);
-      transition: transform 0.2s ease;
+    /* Music-note placeholder — shown when no image is available */
+    .artist-img-placeholder {
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 50% !important;
     }
-    .artist-card:hover .artist-name {
-      color: var(--blue, #4f8ef7);
-      transition: color 0.15s;
+    .artist-img-placeholder svg {
+      width: 36% !important;
+      height: 36% !important;
+      opacity: 0.7 !important;
+      flex-shrink: 0 !important;
     }
 
-    /* ── 11. Carousel card min-width keeps circular shape ─────────────── */
-    .carousel-track .artist-card {
-      min-width: 108px;
-      max-width: 130px;
+    /* ── Artist text labels — dark readable colours ───────────────── */
+    /* Use explicit hex so we don't depend on CSS vars that may not exist */
+    .artist-name {
+      font-size: 0.8rem !important;
+      font-weight: 600 !important;
+      color: #1a1a1a !important;       /* solid dark — readable on white bg */
+      text-align: center !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.15rem !important;
+      transition: color 0.15s !important;
+    }
+    .artist-card:hover .artist-name { color: #2563eb !important; }
+
+    .artist-sub {
+      font-size: 0.7rem !important;
+      color: #6b7280 !important;       /* mid-grey — accessible on white */
+      text-align: center !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
     }
 
-    /* ── 12. Body scroll lock when overlay open ───────────────────────── */
-    body.overlay-open {
-      overflow: hidden;
+    /* ══════════════════════════════════════════════════════════════
+       SEE ALL OVERLAY — white background, 5-per-row, consistent cards
+    ══════════════════════════════════════════════════════════════ */
+
+    .see-all-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 8000 !important;
+      background: #ffffff !important;  /* white background as requested */
+      display: flex !important;
+      flex-direction: column !important;
+      padding-top: var(--nav-height, 72px) !important;
+      transform: translateX(100%) !important;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1) !important;
+      overflow: hidden !important;
+    }
+    .see-all-overlay.open {
+      transform: translateX(0) !important;
+    }
+
+    /* Top-bar — matches nav aesthetic, light theme */
+    .see-all-topbar {
+      display: flex !important;
+      align-items: center !important;
+      gap: 1rem !important;
+      padding: 0 2.5rem !important;
+      height: 60px !important;
+      flex-shrink: 0 !important;
+      border-bottom: 1px solid #e5e7eb !important;
+      background: rgba(255,255,255,0.97) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+    }
+    .see-all-back {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.4rem !important;
+      font-size: 0.82rem !important;
+      font-weight: 500 !important;
+      color: #374151 !important;
+      cursor: pointer !important;
+      border: 1.5px solid #d1d5db !important;
+      background: none !important;
+      border-radius: 99px !important;
+      padding: 0.38rem 0.85rem 0.38rem 0.65rem !important;
+      font-family: inherit !important;
+      transition: border-color 0.16s, color 0.16s, background 0.16s !important;
+    }
+    .see-all-back:hover {
+      border-color: #111827 !important;
+      color: #111827 !important;
+      background: #f9fafb !important;
+    }
+    .see-all-back svg { color: #6b7280 !important; }
+    .see-all-back:hover svg { color: #111827 !important; }
+
+    .see-all-genre-title {
+      font-family: 'Fraunces', serif !important;
+      font-size: 1.2rem !important;
+      font-weight: 500 !important;
+      color: #111827 !important;
+      letter-spacing: -0.02em !important;
+      flex: 1 !important;
+    }
+    .see-all-count {
+      font-size: 0.78rem !important;
+      color: #6b7280 !important;
+      background: #f3f4f6 !important;
+      border: 1px solid #e5e7eb !important;
+      border-radius: 99px !important;
+      padding: 0.22rem 0.7rem !important;
+    }
+
+    /* Scrollable body */
+    .see-all-body {
+      flex: 1 !important;
+      overflow-y: auto !important;
+      padding: 2rem 2.5rem 3rem !important;
+      background: #ffffff !important;
+    }
+
+    /* Grid — exactly 5 columns, consistent with carousel card sizing */
+    .see-all-grid {
+      display: grid !important;
+      grid-template-columns: repeat(5, 1fr) !important;
+      gap: 1.8rem 1.2rem !important;
+      max-width: 860px !important;   /* keeps cards from getting too wide on large screens */
+      margin: 0 auto !important;
+    }
+
+    /* Grid cards — same dimensions and circular style as carousel */
+    .see-all-grid .artist-card {
+      flex: unset !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      width: 100% !important;
+      /* Light card surface for definition on white bg */
+      background: #f9fafb !important;
+      border: 1px solid #e5e7eb !important;
+      border-radius: 14px !important;
+      padding: 1rem 0.75rem 0.9rem !important;
+      transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s !important;
+    }
+    .see-all-grid .artist-card:hover {
+      background: #ffffff !important;
+      box-shadow: 0 8px 28px rgba(17,24,32,0.12) !important;
+      transform: translateY(-3px) !important;
+      border-color: #d1d5db !important;
+    }
+    /* Text colours are the same dark tokens — already set globally above */
+
+    /* Responsive: 3-col on tablet, 2-col on mobile */
+    @media (max-width: 700px) {
+      .see-all-grid { grid-template-columns: repeat(3, 1fr) !important; max-width: none !important; }
+      .see-all-topbar { padding: 0 1.2rem !important; }
+      .see-all-body { padding: 1.2rem !important; }
+    }
+    @media (max-width: 420px) {
+      .see-all-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
   </style>
 
@@ -521,15 +578,32 @@
     }
 
     // ── Probe Cover Art Archive for a release-group ───────────────────
-    // Returns the image URL string, or null if not found.
+    // Uses the CAA JSON API which is CORS-friendly and returns thumbnail URLs.
+    // Falls back to a direct GET on the CDN URL if the JSON API returns nothing.
     async function checkCoverArt(releaseGroupId) {
       try {
-        const url = `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
-        // Use HEAD with redirect:follow — if it resolves, the image exists.
-        // We can't do redirect:"manual" cross-origin reliably, so follow instead.
-        const caRes = await fetch(url, { method: "HEAD" });
-        if (caRes.ok) return url;
+        // 1. CAA JSON API — most reliable, explicit CORS support
+        const apiRes = await fetch(
+          `https://coverartarchive.org/release-group/${releaseGroupId}`,
+          { headers: { "Accept": "application/json" } }
+        );
+        if (apiRes.ok) {
+          const json = await apiRes.json();
+          const images = json.images ?? [];
+          const front  = images.find(img => img.front) ?? images[0];
+          if (front) {
+            return front.thumbnails?.["250"] ?? front.thumbnails?.small ?? front.image ?? null;
+          }
+        }
+      } catch { /* fall through */ }
+
+      try {
+        // 2. Direct CDN fallback via GET (HEAD is unreliable cross-origin)
+        const directUrl = `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
+        const directRes = await fetch(directUrl);
+        if (directRes.ok) return directUrl;
       } catch { /* silent */ }
+
       return null;
     }
 
