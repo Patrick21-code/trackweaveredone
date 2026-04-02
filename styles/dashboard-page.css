@@ -10,7 +10,6 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--paper);
-  /* Prevent horizontal scroll bleed from overlays */
   overflow-x: hidden;
 }
 
@@ -24,7 +23,7 @@ body.overlay-open { overflow: hidden; }
   position: fixed;
   top: 0; left: 0; right: 0;
   height: 72px;
-  z-index: 9000; /* highest — sits above everything including the overlay */
+  z-index: 9000;
   background: rgba(248,245,241,0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -85,13 +84,13 @@ body.overlay-open { overflow: hidden; }
   box-shadow: 0 0 0 4px rgba(37,99,235,.18);
 }
 
-/* Dropdown — z-index above overlay to stay accessible */
+/* Dropdown */
 .nav-dropdown {
   position: absolute; top: calc(100% + 14px); right: 0;
   min-width: 240px; background: #fff;
   border: 1.5px solid var(--rule); border-radius: var(--r-md);
   box-shadow: 0 2px 8px rgba(17,24,32,.06), 0 8px 32px rgba(17,24,32,.1), 0 24px 64px rgba(17,24,32,.08);
-  z-index: 9100; /* above .nav itself so it renders in front */
+  z-index: 9100;
   overflow: hidden;
   opacity: 0; pointer-events: none;
   transform: translateY(-8px) scale(0.98);
@@ -186,7 +185,6 @@ body.overlay-open { overflow: hidden; }
 }
 .hero-genres { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.8rem; }
 
-/* Genre chips — clickable, scroll to genre section */
 .hero-genre-chip {
   font-size: 0.69rem; font-weight: 600; letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -229,7 +227,6 @@ body.overlay-open { overflow: hidden; }
   opacity: 0; transform: translateY(14px);
   animation: block-in .5s cubic-bezier(.22,1,.36,1) forwards;
 }
-/* Skeleton blocks: visible immediately, no fade-in */
 .genre-carousel-block.skeleton-block {
   opacity: 1; transform: none; animation: none;
 }
@@ -287,7 +284,6 @@ body.overlay-open { overflow: hidden; }
   min-width: 0;
   cursor: pointer; text-decoration: none;
   display: flex; flex-direction: column; align-items: center;
-  /* Padding kept tight — image fills width, text sits below */
   padding: 0.6rem 0.5rem 0.8rem;
   border-radius: var(--r-md); background: transparent;
   transition: background .2s;
@@ -303,7 +299,7 @@ body.overlay-open { overflow: hidden; }
 .artist-img-wrap {
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 50%;       /* enforced circular */
+  border-radius: 50%;
   overflow: hidden;
   margin-bottom: 0.9rem;
   position: relative;
@@ -336,14 +332,14 @@ body.overlay-open { overflow: hidden; }
 .artist-img-bg.loading {
   background: linear-gradient(
     90deg,
-    rgba(17,24,32,.06) 25%,
-    rgba(17,24,32,.12) 50%,
-    rgba(17,24,32,.06) 75%
-  ) !important;
-  background-size: 200% 100% !important;
-  animation: img-shimmer 1.4s infinite linear;
+    #ede9e4 25%,
+    #d8d3cd 50%,
+    #ede9e4 75%
+  );
+  background-size: 200% 100%;
+  animation: tw-shimmer 1.4s infinite linear;
 }
-@keyframes img-shimmer {
+@keyframes tw-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
@@ -360,7 +356,7 @@ body.overlay-open { overflow: hidden; }
   flex-shrink: 0;
 }
 
-/* Legacy initials — kept for graceful fallback, styled to look intentional */
+/* Legacy initials — graceful fallback */
 .artist-initials {
   font-family: 'Fraunces', serif;
   font-size: clamp(1.1rem, 4cqw, 1.6rem);
@@ -377,7 +373,6 @@ body.overlay-open { overflow: hidden; }
 /* ── Artist text labels ───────────────────────────────────── */
 .artist-name {
   font-size: 0.82rem; font-weight: 600;
-  /* Explicit dark colour — not a CSS variable that could resolve to white */
   color: #1a1a1a;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin-bottom: 0.2rem; line-height: 1.3; text-align: center;
@@ -388,7 +383,7 @@ body.overlay-open { overflow: hidden; }
 
 .artist-sub {
   font-size: 0.72rem;
-  color: #6b7280; /* accessible mid-grey on white/paper bg */
+  color: #6b7280;
   font-weight: 300;
   text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   max-width: 100%;
@@ -432,7 +427,7 @@ body.overlay-open { overflow: hidden; }
 .sk-card { flex: 0 0 calc(16.666% - 0.72rem); padding: 0.9rem; }
 .sk-img {
   aspect-ratio: 1;
-  border-radius: 50%; /* match circular artist images */
+  border-radius: 50%;
   background: linear-gradient(90deg, var(--paper-warm) 25%, var(--rule-light) 50%, var(--paper-warm) 75%);
   background-size: 800px 100%;
   animation: shimmer 1.5s infinite linear;
@@ -470,9 +465,6 @@ body.overlay-open { overflow: hidden; }
 
 /* ════════════════════════════════════════════════════════════
    SEE ALL — SLIDE-IN OVERLAY
-   White background, 5-per-row grid, light topbar.
-   z-index 8000 keeps it firmly below the fixed nav (9000).
-   --nav-height is set dynamically by a JS ResizeObserver.
    ════════════════════════════════════════════════════════════ */
 .see-all-overlay {
   position: fixed;
@@ -521,32 +513,30 @@ body.overlay-open { overflow: hidden; }
 /* ── Scrollable body ─────────────────────────────────────── */
 .see-all-body { flex: 1; overflow-y: auto; padding: 2rem 2.5rem 3rem; background: #fff; }
 
-/* ── 5-column grid — fixed columns, centred, max-width so cards aren't too wide */
+/* ── 5-column grid — maximises space, no border on cards ── */
 .see-all-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1.8rem 1.2rem;
-  max-width: 860px;
+  gap: 1.8rem 1.5rem;
+  max-width: 100%;
   margin: 0 auto;
 }
 
-/* Grid artist card */
+/* Grid artist card — borderless, clean modern look */
 .see-all-grid .artist-card {
   flex: unset;
   min-width: 0; max-width: none; width: 100%;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: transparent;
+  border: none;
   border-radius: 14px;
-  padding: 1rem 0.75rem 0.9rem;
+  padding: 0.9rem 0.6rem 0.8rem;
   display: flex; flex-direction: column; align-items: center;
   animation: card-in .38s cubic-bezier(.22,1,.36,1) both;
-  transition: box-shadow .22s, transform .22s, border-color .22s, background .2s;
+  transition: background .22s, transform .22s;
 }
 .see-all-grid .artist-card:hover {
-  background: #ffffff;
-  box-shadow: 0 8px 28px rgba(17,24,32,.12);
+  background: rgba(17,24,32,.04);
   transform: translateY(-3px);
-  border-color: #d1d5db;
 }
 .see-all-grid .artist-card:hover .artist-name { color: #2563eb; }
 
@@ -572,8 +562,7 @@ body.overlay-open { overflow: hidden; }
   .sk-card     { flex: 0 0 calc(25% - 0.65rem); }
   .dash-main   { padding: 2.5rem 1.8rem 4rem; }
   .dash-hero   { padding: 3.2rem 1.8rem 3rem; }
-  /* 5-col grid shrinks to 3 on tablet */
-  .see-all-grid { grid-template-columns: repeat(3, 1fr); max-width: none; }
+  .see-all-grid { grid-template-columns: repeat(3, 1fr); }
   .see-all-body { padding: 1.5rem 1.8rem 2.5rem; }
   .see-all-topbar { padding: 0 1.8rem; }
 }

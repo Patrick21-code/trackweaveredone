@@ -14,266 +14,6 @@
   <!-- Dashboard-specific styles -->
   <link rel="stylesheet" href="../styles/dashboard-page.css" />
 
-  <style>
-    /* ══════════════════════════════════════════════════════════════
-       DASHBOARD INLINE OVERRIDES
-       These rules correct and extend dashboard-page.css.
-       They are scoped precisely so nothing in the base design breaks.
-    ══════════════════════════════════════════════════════════════ */
-
-    /* ── 1. Nav — fixed, always on top ───────────────────────────── */
-    .nav {
-      position: fixed !important;
-      top: 0; left: 0; right: 0;
-      z-index: 9000 !important;
-    }
-    /* Push shell content below fixed nav */
-    #dash-shell { padding-top: 72px; }
-
-    /* ── 2. Scroll lock ───────────────────────────────────────────── */
-    body.overlay-open { overflow: hidden; }
-
-    /* ══════════════════════════════════════════════════════════════
-       ARTIST CARDS — correct sizing, colour & circular frames
-    ══════════════════════════════════════════════════════════════ */
-
-    /* Card layout — flex column, centred */
-    .artist-card {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      text-decoration: none;
-      cursor: pointer;
-      /* Remove any background the CSS file added so hover is intentional */
-      background: transparent !important;
-    }
-
-    /* Image wrapper — square, circular, sized to match skeleton (.sk-img) */
-    /* The skeleton card is flex: 0 0 calc(16.666% - 0.72rem) with padding 0.9rem,
-       so the image takes the full inner width minus padding.
-       We mirror that by removing card padding and letting the wrapper fill width. */
-    .artist-card { padding: 0.6rem 0.5rem 0.8rem !important; }
-
-    .artist-img-wrap {
-      width: 100% !important;
-      aspect-ratio: 1 !important;
-      border-radius: 50% !important;
-      overflow: hidden !important;
-      position: relative !important;
-      flex-shrink: 0 !important;
-      margin-bottom: 0.75rem !important;
-      background: #e8e4df;
-      box-shadow: 0 2px 12px rgba(17,24,32,0.08);
-      transition: box-shadow 0.28s, transform 0.28s;
-    }
-    .artist-card:hover .artist-img-wrap {
-      box-shadow: 0 8px 28px rgba(17,24,32,0.18);
-      transform: scale(1.05);
-    }
-
-    /* Image background container — fills the circle */
-    .artist-img-bg {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      border-radius: 50% !important;
-      overflow: hidden !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-    }
-
-    /* The actual <img> — cover-fit, circular */
-    .artist-img-bg img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      object-position: center top !important;
-      display: block !important;
-      border-radius: 50% !important;
-    }
-
-    /* Shimmer while image loads */
-    .artist-img-bg.loading {
-      background: linear-gradient(
-        90deg,
-        #ede9e4 25%,
-        #d8d3cd 50%,
-        #ede9e4 75%
-      ) !important;
-      background-size: 200% 100% !important;
-      animation: tw-shimmer 1.4s infinite linear !important;
-    }
-    @keyframes tw-shimmer {
-      0%   { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* Music-note placeholder — shown when no image is available */
-    .artist-img-placeholder {
-      width: 100% !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      border-radius: 50% !important;
-    }
-    .artist-img-placeholder svg {
-      width: 36% !important;
-      height: 36% !important;
-      opacity: 0.7 !important;
-      flex-shrink: 0 !important;
-    }
-
-    /* ── Artist text labels — dark readable colours ───────────────── */
-    /* Use explicit hex so we don't depend on CSS vars that may not exist */
-    .artist-name {
-      font-size: 0.8rem !important;
-      font-weight: 600 !important;
-      color: #1a1a1a !important;       /* solid dark — readable on white bg */
-      text-align: center !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      max-width: 100% !important;
-      line-height: 1.3 !important;
-      margin-bottom: 0.15rem !important;
-      transition: color 0.15s !important;
-    }
-    .artist-card:hover .artist-name { color: #2563eb !important; }
-
-    .artist-sub {
-      font-size: 0.7rem !important;
-      color: #6b7280 !important;       /* mid-grey — accessible on white */
-      text-align: center !important;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      max-width: 100% !important;
-    }
-
-    /* ══════════════════════════════════════════════════════════════
-       SEE ALL OVERLAY — white background, 5-per-row, consistent cards
-    ══════════════════════════════════════════════════════════════ */
-
-    .see-all-overlay {
-      position: fixed !important;
-      inset: 0 !important;
-      z-index: 8000 !important;
-      background: #ffffff !important;  /* white background as requested */
-      display: flex !important;
-      flex-direction: column !important;
-      padding-top: var(--nav-height, 72px) !important;
-      transform: translateX(100%) !important;
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1) !important;
-      overflow: hidden !important;
-    }
-    .see-all-overlay.open {
-      transform: translateX(0) !important;
-    }
-
-    /* Top-bar — matches nav aesthetic, light theme */
-    .see-all-topbar {
-      display: flex !important;
-      align-items: center !important;
-      gap: 1rem !important;
-      padding: 0 2.5rem !important;
-      height: 60px !important;
-      flex-shrink: 0 !important;
-      border-bottom: 1px solid #e5e7eb !important;
-      background: rgba(255,255,255,0.97) !important;
-      backdrop-filter: blur(16px) !important;
-      -webkit-backdrop-filter: blur(16px) !important;
-    }
-    .see-all-back {
-      display: flex !important;
-      align-items: center !important;
-      gap: 0.4rem !important;
-      font-size: 0.82rem !important;
-      font-weight: 500 !important;
-      color: #374151 !important;
-      cursor: pointer !important;
-      border: 1.5px solid #d1d5db !important;
-      background: none !important;
-      border-radius: 99px !important;
-      padding: 0.38rem 0.85rem 0.38rem 0.65rem !important;
-      font-family: inherit !important;
-      transition: border-color 0.16s, color 0.16s, background 0.16s !important;
-    }
-    .see-all-back:hover {
-      border-color: #111827 !important;
-      color: #111827 !important;
-      background: #f9fafb !important;
-    }
-    .see-all-back svg { color: #6b7280 !important; }
-    .see-all-back:hover svg { color: #111827 !important; }
-
-    .see-all-genre-title {
-      font-family: 'Fraunces', serif !important;
-      font-size: 1.2rem !important;
-      font-weight: 500 !important;
-      color: #111827 !important;
-      letter-spacing: -0.02em !important;
-      flex: 1 !important;
-    }
-    .see-all-count {
-      font-size: 0.78rem !important;
-      color: #6b7280 !important;
-      background: #f3f4f6 !important;
-      border: 1px solid #e5e7eb !important;
-      border-radius: 99px !important;
-      padding: 0.22rem 0.7rem !important;
-    }
-
-    /* Scrollable body */
-    .see-all-body {
-      flex: 1 !important;
-      overflow-y: auto !important;
-      padding: 2rem 2.5rem 3rem !important;
-      background: #ffffff !important;
-    }
-
-    /* Grid — exactly 5 columns, consistent with carousel card sizing */
-    .see-all-grid {
-      display: grid !important;
-      grid-template-columns: repeat(5, 1fr) !important;
-      gap: 1.8rem 1.2rem !important;
-      max-width: 860px !important;   /* keeps cards from getting too wide on large screens */
-      margin: 0 auto !important;
-    }
-
-    /* Grid cards — same dimensions and circular style as carousel */
-    .see-all-grid .artist-card {
-      flex: unset !important;
-      min-width: 0 !important;
-      max-width: none !important;
-      width: 100% !important;
-      /* Light card surface for definition on white bg */
-      background: #f9fafb !important;
-      border: 1px solid #e5e7eb !important;
-      border-radius: 14px !important;
-      padding: 1rem 0.75rem 0.9rem !important;
-      transition: box-shadow 0.22s, transform 0.22s, border-color 0.22s !important;
-    }
-    .see-all-grid .artist-card:hover {
-      background: #ffffff !important;
-      box-shadow: 0 8px 28px rgba(17,24,32,0.12) !important;
-      transform: translateY(-3px) !important;
-      border-color: #d1d5db !important;
-    }
-    /* Text colours are the same dark tokens — already set globally above */
-
-    /* Responsive: 3-col on tablet, 2-col on mobile */
-    @media (max-width: 700px) {
-      .see-all-grid { grid-template-columns: repeat(3, 1fr) !important; max-width: none !important; }
-      .see-all-topbar { padding: 0 1.2rem !important; }
-      .see-all-body { padding: 1.2rem !important; }
-    }
-    @media (max-width: 420px) {
-      .see-all-grid { grid-template-columns: repeat(2, 1fr) !important; }
-    }
-  </style>
 
   <script type="module">
     import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -592,16 +332,22 @@
           const images = json.images ?? [];
           const front  = images.find(img => img.front) ?? images[0];
           if (front) {
-            return front.thumbnails?.["250"] ?? front.thumbnails?.small ?? front.image ?? null;
+            // Prefer 250px thumbnail; fall back through sizes to raw image URL
+            return front.thumbnails?.["250"]
+              ?? front.thumbnails?.small
+              ?? front.thumbnails?.["500"]
+              ?? front.thumbnails?.large
+              ?? front.image
+              ?? null;
           }
         }
       } catch { /* fall through */ }
 
       try {
-        // 2. Direct CDN fallback via GET (HEAD is unreliable cross-origin)
+        // 2. Direct CDN fallback — attempt 250px thumbnail
         const directUrl = `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
         const directRes = await fetch(directUrl);
-        if (directRes.ok) return directUrl;
+        if (directRes.ok) return directRes.url ?? directUrl;
       } catch { /* silent */ }
 
       return null;
@@ -714,13 +460,17 @@
               loading="lazy"
               decoding="async"
               onload="this.parentElement.classList.remove('loading')"
-              onerror="
-                var bg=document.getElementById('bg-${escHtml(artist.id)}');
-                if(bg){
-                  bg.classList.remove('loading');
-                  bg.innerHTML=musicNoteIcon();
+              onerror="(function(img){
+                var src=img.src;
+                if(src.indexOf('250')>-1){
+                  img.src=src.replace('250','500');
+                } else if(src.indexOf('500')>-1){
+                  img.src=src.replace('500','1200');
+                } else {
+                  var bg=document.getElementById('bg-${escHtml(artist.id)}');
+                  if(bg){bg.classList.remove('loading');bg.innerHTML=musicNoteIcon();}
                 }
-              "
+              })(this)"
             />
           </div>`;
       } else {
@@ -788,7 +538,7 @@
             <div class="artist-img-bg loading" id="gbg-${escHtml(artist.id)}" style="${gradStyle}">
               <img src="${escHtml(artist._coverUrl)}" alt="${escHtml(artist.name)}" loading="lazy" decoding="async"
                 onload="this.parentElement.classList.remove('loading')"
-                onerror="var b=document.getElementById('gbg-${escHtml(artist.id)}');if(b){b.classList.remove('loading');b.innerHTML=musicNoteIcon();}" />
+                onerror="(function(img){var src=img.src;if(src.indexOf('250')>-1){img.src=src.replace('250','500');}else if(src.indexOf('500')>-1){img.src=src.replace('500','1200');}else{var b=document.getElementById('gbg-${escHtml(artist.id)}');if(b){b.classList.remove('loading');b.innerHTML=musicNoteIcon();}}})(this)" />
             </div>`;
         } else {
           imgHtml = `
