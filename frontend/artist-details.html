@@ -80,40 +80,12 @@
       padding: 0.38rem 0.85rem 0.38rem 0.65rem;
       font-family: inherit; text-decoration: none;
       transition: border-color .16s, color .16s, background .16s;
-      margin-left: 1.5rem;
+      margin-left: 0;
     }
     .nav-back-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--paper-warm); }
     .nav-back-btn svg { color: var(--ink-faint); transition: color .16s; }
     .nav-back-btn:hover svg { color: var(--ink); }
-    .nav-search-dash {
-      flex: 1; max-width: 380px; margin: 0 2rem; position: relative;
-    }
-    .nav-search-dash .s-icon {
-      position: absolute; left: 0.85rem; top: 50%;
-      transform: translateY(-50%);
-      color: var(--ink-faint);
-      display: flex; align-items: center;
-      pointer-events: none;
-      transition: color .18s;
-    }
-    .nav-search-dash:focus-within .s-icon { color: var(--blue); }
-    .nav-search-dash input {
-      width: 100%;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.865rem; color: var(--ink);
-      background: rgba(255,255,255,.7);
-      border: 1.5px solid var(--rule);
-      border-radius: 99px;
-      padding: 0.58rem 1rem 0.58rem 2.4rem;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s, background .2s;
-    }
-    .nav-search-dash input::placeholder { color: var(--ink-faint); font-weight: 300; }
-    .nav-search-dash input:focus {
-      border-color: var(--blue); background: #fff;
-      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
-    }
-    .nav-avatar-wrap { position: relative; margin-left: auto; }
+    .nav-avatar-wrap { position: relative; margin-left: auto; display: flex; align-items: center; gap: 0.75rem; }
     .nav-av-btn {
       width: 40px; height: 40px; border-radius: 50%;
       background: var(--blue); color: #fff;
@@ -342,53 +314,43 @@
 
     .album-carousel-wrapper {
       position: relative;
+      overflow: hidden;
+      padding: 1rem 0 1.5rem;
     }
     .album-carousel-fade-left, .album-carousel-fade-right {
-      position: absolute; top: 0; bottom: 0; width: 100px;
-      pointer-events: none; z-index: 5; transition: opacity .25s;
+      position: absolute; top: 0; bottom: 0; width: 80px;
+      pointer-events: none; z-index: 5;
     }
     .album-carousel-fade-left {
       left: 0;
       background: linear-gradient(to right, var(--paper) 0%, transparent 100%);
-      opacity: 0;
     }
     .album-carousel-fade-right {
       right: 0;
       background: linear-gradient(to left, var(--paper) 0%, transparent 100%);
-      opacity: 1;
     }
 
-    .album-carousel-track-outer { overflow: hidden; padding: 1rem 0 1.5rem; }
+    /* Continuous scroll animation */
+    @keyframes scroll-left {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .album-carousel-track-outer { overflow: hidden; }
     .album-carousel-track {
       display: flex; gap: 1.25rem;
-      transition: transform 0.48s cubic-bezier(.25,1,.5,1);
+      width: max-content;
+      animation: scroll-left 30s linear infinite;
       will-change: transform;
     }
-
-    /* Arrow buttons */
-    .album-carousel-btn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      width: 44px; height: 44px; border-radius: 50%;
-      background: #fff; border: 1.5px solid var(--rule);
-      box-shadow: 0 2px 16px rgba(17,24,32,.14);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 10;
-      transition: background .18s, box-shadow .18s, opacity .22s, transform .18s, border-color .18s;
-      color: var(--ink); opacity: 0;
+    .album-carousel-track:hover,
+    .album-carousel-track.paused {
+      animation-play-state: paused;
     }
-    .album-carousel-wrapper:hover .album-carousel-btn:not(:disabled) { opacity: 1; }
-    .album-carousel-btn:hover {
-      background: var(--blue); color: #fff; border-color: var(--blue);
-      box-shadow: 0 4px 20px rgba(37,99,235,.32);
-    }
-    .album-carousel-btn.prev { left: -22px; transform: translateY(-50%); }
-    .album-carousel-btn.next { right: -22px; transform: translateY(-50%); }
-    .album-carousel-btn:hover { transform: translateY(-50%) scale(1.1); }
-    .album-carousel-btn:disabled { opacity: 0 !important; pointer-events: none; }
 
     /* ── Album card ── */
     .album-card {
-      flex: 0 0 calc(20% - 1rem);
+      flex: 0 0 200px;
       min-width: 0;
       display: flex; flex-direction: column;
       text-decoration: none; color: inherit;
@@ -397,11 +359,12 @@
       background: transparent;
       transition: background .2s, transform .3s cubic-bezier(.22,1,.36,1);
       animation: card-in .45s cubic-bezier(.22,1,.36,1) both;
-      cursor: pointer;
+      cursor: default;
+      pointer-events: auto;
     }
     .album-card:hover {
       background: rgba(17,24,32,.04);
-      transform: translateY(-4px);
+      transform: scale(1.06);
     }
     @keyframes card-in {
       from { opacity: 0; transform: translateY(12px); }
@@ -442,25 +405,6 @@
       0%   { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-
-    /* Play overlay on hover */
-    .album-cover-overlay {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(17,24,32,.42);
-      opacity: 0; transition: opacity .25s;
-      border-radius: var(--r-sm);
-    }
-    .album-card:hover .album-cover-overlay { opacity: 1; }
-    .play-circle {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: rgba(255,255,255,.96);
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.3);
-      transform: scale(0.85); transition: transform .25s cubic-bezier(.22,1,.36,1);
-    }
-    .album-card:hover .play-circle { transform: scale(1); }
-    .play-circle svg { color: var(--ink); margin-left: 2px; }
 
     /* Type tag on cover */
     .album-type-tag {
@@ -565,19 +509,18 @@
     @media (max-width: 900px) {
       .hero-inner { flex-direction: column; gap: 2rem; align-items: flex-start; }
       .hero-portrait-ring { width: 160px; height: 160px; }
-      .album-card, .sk-album-card { flex: 0 0 calc(25% - 0.94rem); }
+      .album-card, .sk-album-card { flex: 0 0 170px; }
     }
     @media (max-width: 640px) {
       .artist-hero { padding: 2.5rem 1.2rem; }
       .artist-main { padding: 2rem 1.2rem 4rem; }
       .nav-inner { padding: 0 1.4rem; }
-      .nav-search-dash { display: none; }
       .hero-portrait-ring { width: 130px; height: 130px; }
-      .album-card, .sk-album-card { flex: 0 0 calc(33.333% - 0.84rem); }
+      .album-card, .sk-album-card { flex: 0 0 150px; }
       .artist-stats-strip { padding: 1.2rem 1.4rem; gap: 1rem; }
     }
     @media (max-width: 420px) {
-      .album-card, .sk-album-card { flex: 0 0 calc(50% - 0.63rem); }
+      .album-card, .sk-album-card { flex: 0 0 130px; }
     }
   </style>
 </head>
@@ -601,21 +544,11 @@
       <span>TrackWeave</span>
     </a>
 
-    <a href="./dashboard.html" class="nav-back-btn" id="nav-back-btn">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back
-    </a>
-
-    <div class="nav-search-dash">
-      <span class="s-icon">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </span>
-      <input type="text" placeholder="Search artists, albums, users…" autocomplete="off" />
-    </div>
-
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
+      <a href="./dashboard.html" class="nav-back-btn" id="nav-back-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
       <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
       <div class="nav-dropdown" id="nav-dropdown" role="menu">
         <div class="drop-user">
@@ -930,11 +863,10 @@
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         View on MusicBrainz
       </a>
-      <button class="hero-btn ghost" id="btn-back-hero">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back to Dashboard
-      </button>`;
-    document.getElementById("btn-back-hero").addEventListener("click", () => history.back());
+      <a class="hero-btn ghost" href="./engagement.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 12.1-.7-.7M6.3 18.4l-.7.7"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+        Generate Music Graph
+      </a>`;
 
   }
 
@@ -993,58 +925,18 @@
   function buildAlbumCarousel(albums) {
     const wrapper = document.createElement("div");
     wrapper.className = "album-carousel-wrapper";
+
+    // Duplicate cards for seamless infinite loop
+    const allCards = [...albums, ...albums];
+
     wrapper.innerHTML = `
       <div class="album-carousel-fade-left"></div>
       <div class="album-carousel-fade-right"></div>
-      <button class="album-carousel-btn prev" aria-label="Scroll left" disabled>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
       <div class="album-carousel-track-outer">
         <div class="album-carousel-track" id="album-track">
-          ${albums.map((rg, i) => albumCardHTML(rg, i)).join("")}
+          ${allCards.map((rg, i) => albumCardHTML(rg, i % albums.length)).join("")}
         </div>
-      </div>
-      <button class="album-carousel-btn next" aria-label="Scroll right">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>`;
-
-    const track      = wrapper.querySelector("#album-track");
-    const prevBtn    = wrapper.querySelector(".album-carousel-btn.prev");
-    const nextBtn    = wrapper.querySelector(".album-carousel-btn.next");
-    const fadeLeft   = wrapper.querySelector(".album-carousel-fade-left");
-    const fadeRight  = wrapper.querySelector(".album-carousel-fade-right");
-    const trackOuter = wrapper.querySelector(".album-carousel-track-outer");
-    const GAP        = 20;
-    let idx          = 0;
-    const total      = albums.length;
-
-    const visibleCount = () => {
-      const w = trackOuter.offsetWidth;
-      if (w < 420) return 2;
-      if (w < 640) return 3;
-      if (w < 860) return 4;
-      return 5;
-    };
-
-    const slide = () => {
-      const vc    = visibleCount();
-      const max   = Math.max(0, total - vc);
-      idx         = Math.min(idx, max);
-      const cardEl = track.querySelector(".album-card");
-      const cardW  = cardEl ? cardEl.offsetWidth : 0;
-      track.style.transform = `translateX(-${idx * (cardW + GAP)}px)`;
-      prevBtn.disabled = idx === 0;
-      nextBtn.disabled = idx >= max;
-      fadeLeft.style.opacity  = idx > 0 ? "1" : "0";
-      fadeRight.style.opacity = idx < max ? "1" : "0";
-    };
-
-    prevBtn.addEventListener("click", () => { idx = Math.max(0, idx - 1); slide(); });
-    nextBtn.addEventListener("click", () => { idx++; slide(); });
-
-    const ro = new ResizeObserver(slide);
-    ro.observe(trackOuter);
-    requestAnimationFrame(slide);
+      </div>`;
 
     return wrapper;
   }
@@ -1054,7 +946,6 @@
     const title   = rg.title ?? "Untitled";
     const year    = rg["first-release-date"]?.slice(0, 4) ?? "";
     const type    = rg["primary-type"] ?? "Release";
-    const mbUrl   = `https://musicbrainz.org/release-group/${rg.id}`;
 
     const hue     = Math.abs(hashStr(title)) % 360;
     const hue2    = (hue + 60) % 360;
@@ -1076,38 +967,28 @@
               else if(src.indexOf('500')>-1){img.src=src.replace('500','1200');}
               else{
                 var p=document.getElementById('ac-${escHtml(rg.id)}');
-                if(p){p.classList.remove('loading');p.style.cssText='${gradStyle}';p.innerHTML='<div class=\\'album-cover-placeholder\\'>${musicNoteSVG("36%","0.6").replace(/'/g,"\\'").replace(/"/g,"&quot;")}</div><div class=\\'album-cover-overlay\\'><div class=\\'play-circle\\'><svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'currentColor\\'><polygon points=\\'5 3 19 12 5 21 5 3\\'/></svg></div></div><span class=\\'album-type-tag\\'>${escHtml(type)}</span>';}
+                if(p){p.classList.remove('loading');p.style.cssText='${gradStyle}';p.innerHTML='<div class=\\'album-cover-placeholder\\'>${musicNoteSVG("36%","0.6").replace(/'/g,"\\'").replace(/"/g,"&quot;")}</div><span class=\\'album-type-tag\\'>${escHtml(type)}</span>';}
               }
             })(this)"
           />
-          <div class="album-cover-overlay">
-            <div class="play-circle">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
           <span class="album-type-tag">${escHtml(type)}</span>
         </div>`;
     } else {
       coverHtml = `
         <div class="album-cover-wrap" style="${gradStyle}">
           <div class="album-cover-placeholder">${musicNoteSVG("36%","0.6")}</div>
-          <div class="album-cover-overlay">
-            <div class="play-circle">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </div>
-          </div>
           <span class="album-type-tag">${escHtml(type)}</span>
         </div>`;
     }
 
     return `
-      <a class="album-card" href="${escHtml(mbUrl)}" target="_blank" rel="noopener"
+      <div class="album-card"
          style="animation-delay:${index * 0.055}s"
          aria-label="${escHtml(title)}${year ? " (" + year + ")" : ""}">
         ${coverHtml}
         <div class="album-title">${escHtml(title)}</div>
         <div class="album-year">${escHtml(year || "—")}</div>
-      </a>`;
+      </div>`;
   }
 
   // ── hashStr helper ─────────────────────────────────────────────
