@@ -436,24 +436,32 @@
       return block;
     }
 
+    // ── Store artist in sessionStorage and navigate to detail page ──────
+    function navigateToArtist(artist) {
+      try {
+        sessionStorage.setItem("tw_artist_detail", JSON.stringify(artist));
+      } catch { /* storage full */ }
+      window.location.href = `./artist-details.html?id=${encodeURIComponent(artist.id)}`;
+    }
+    window._navigateToArtist = navigateToArtist;
+
     // ── Artist card HTML — circular frame, no initials fallback ─────────
     function artistCardHTML(artist, index) {
       const hue  = Math.abs(hashStr(artist.name)) % 360;
       const hue2 = (hue + 55) % 360;
       const sat  = 58 + (Math.abs(hashStr(artist.name + "s")) % 18);
-      const mbUrl = `https://musicbrainz.org/artist/${escHtml(artist.id)}`;
 
       const year    = artist["life-span"]?.begin?.slice(0, 4) ?? "";
       const country = artist.country ?? "";
       const sub     = [year, country].filter(Boolean).join(" · ") || "Artist";
 
       const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
+      const artistDataAttr = `data-artist-id="${escHtml(artist.id)}"`;
 
       let imgHtml;
       if (artist._coverUrl) {
-        // Has cover art — show image, on error fall back to music-note icon (not initials)
         imgHtml = `
-          <div class="artist-img-bg loading" id="bg-${escHtml(artist.id)}" ${gradStyle}>
+          <div class="artist-img-bg loading" id="bg-${escHtml(artist.id)}" style="${gradStyle}">
             <img
               src="${escHtml(artist._coverUrl)}"
               alt="${escHtml(artist.name)}"
@@ -474,7 +482,6 @@
             />
           </div>`;
       } else {
-        // No cover art — show music-note icon on gradient (never initials)
         imgHtml = `
           <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
             ${musicNoteIconSVG()}
@@ -482,9 +489,11 @@
       }
 
       return `
-        <a class="artist-card" href="${mbUrl}" target="_blank" rel="noopener"
+        <a class="artist-card" href="./artist-details.html?id=${escHtml(artist.id)}"
+           ${artistDataAttr}
            style="animation-delay:${index * 0.045}s"
-           aria-label="View ${escHtml(artist.name)} on MusicBrainz">
+           aria-label="View ${escHtml(artist.name)}"
+           onclick="event.preventDefault(); window._navigateToArtist(${escHtml(JSON.stringify(artist))})">
           <div class="artist-img-wrap">
             ${imgHtml}
           </div>
@@ -549,11 +558,13 @@
 
         const card = document.createElement("a");
         card.className = "artist-card";
-        card.href = mbUrl;
-        card.target = "_blank";
-        card.rel = "noopener";
-        card.setAttribute("aria-label", `View ${artist.name} on MusicBrainz`);
+        card.href = `./artist-details.html?id=${encodeURIComponent(artist.id)}`;
+        card.setAttribute("aria-label", `View ${artist.name}`);
         card.style.animationDelay = `${i * 0.025}s`;
+        card.addEventListener("click", (e) => {
+          e.preventDefault();
+          navigateToArtist(artist);
+        });
         card.innerHTML = `
           <div class="artist-img-wrap">${imgHtml}</div>
           <div class="artist-name">${escHtml(artist.name)}</div>
