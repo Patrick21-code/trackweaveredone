@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community — TrackWeave</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       BASE — mirrors trackweave-base.css conventions
+       ═══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #111820;
+      --ink-soft:   #3d5166;
+      --ink-faint:  #7a8e9e;
+      --paper:      #f8f7f4;
+      --paper-warm: #f3f1ec;
+      --blue:       #2563eb;
+      --blue-pale:  #bfdbfe;
+      --blue-ghost: #eff6ff;
+      --rule:       #ddd7cf;
+      --rule-light: #e8e4de;
+      --gold:       #f59e0b;
+      --gold-light: #fef3c7;
+      --gold-dark:  #d97706;
+      --green:      #059669;
+      --green-light:#d1fae5;
+      --red:        #dc2626;
+      --red-light:  #fee2e2;
+      --purple:     #7c3aed;
+      --purple-light:#ede9fe;
+      --radius-sm:  8px;
+      --radius-md:  14px;
+      --radius-lg:  20px;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, textarea { font-family: inherit; }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(248,247,244,.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: flex; align-items: center;
+      gap: 1.5rem; padding: 0 2rem; height: 58px;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: .52rem;
+      font-family: 'Fraunces', serif; font-size: 1.02rem;
+      font-weight: 500; color: var(--ink); letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+    .nav-mark {
+      width: 28px; height: 28px; background: var(--ink);
+      border-radius: 7px; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: .2rem;
+    }
+    .nav-link {
+      padding: .35rem .75rem; border-radius: 99px;
+      font-size: .84rem; color: var(--ink-soft);
+      transition: all .15s;
+    }
+    .nav-link:hover { background: var(--paper-warm); color: var(--ink); }
+    .nav-link.active { background: var(--ink); color: #fff; }
+    .nav-end { margin-left: auto; display: flex; align-items: center; gap: .75rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .38rem;
+      border-radius: 99px; font-size: .84rem; font-weight: 500;
+      transition: all .18s; white-space: nowrap; cursor: pointer;
+    }
+    .btn-ghost { border: 1.5px solid var(--rule); color: var(--ink); padding: .42rem .9rem; background: transparent; }
+    .btn-ghost:hover { border-color: var(--ink); }
+    .btn-solid { background: var(--ink); color: #fff; padding: .42rem .9rem; border: 1.5px solid var(--ink); }
+    .btn-solid:hover { background: #1a2530; }
+    .btn-blue { background: var(--blue); color: #fff; padding: .42rem .9rem; border: 1.5px solid var(--blue); }
+    .btn-blue:hover { background: #1d4ed8; }
+    .btn-gold { background: var(--gold); color: var(--ink); padding: .42rem .9rem; border: 1.5px solid var(--gold); font-weight: 600; }
+    .btn-gold:hover { background: #e08d00; }
+    .btn-sm { font-size: .78rem; padding: .32rem .72rem; }
+
+    /* ─── PAGE HEADER ────────────────────────────── */
+    .page-hd {
+      background: var(--ink);
+      color: #fff;
+      padding: 3rem 2rem 2.8rem;
+      position: relative; overflow: hidden;
+    }
+    .page-hd::before {
+      content: '';
+      position: absolute; top: -100px; right: -80px;
+      width: 420px; height: 420px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,.22) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .page-hd::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -40px;
+      width: 260px; height: 260px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,.14) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .page-hd-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: flex; align-items: flex-end;
+      justify-content: space-between; gap: 2rem;
+      position: relative; z-index: 1;
+    }
+    .page-hd-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.4);
+      margin-bottom: .5rem;
+    }
+    .page-hd h1 {
+      font-family: 'Fraunces', serif; font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 400; letter-spacing: -.03em; line-height: 1.1;
+    }
+    .page-hd h1 em { font-style: italic; color: var(--blue-pale); }
+    .page-hd p {
+      font-size: .9rem; font-weight: 300;
+      color: rgba(255,255,255,.5); margin-top: .5rem;
+      max-width: 420px; line-height: 1.7;
+    }
+    .page-hd-actions { display: flex; gap: .65rem; flex-shrink: 0; flex-wrap: wrap; align-items: center; }
+
+    /* ─── LAYOUT ──────────────────────────────────── */
+    .layout {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 340px;
+      gap: 2rem; padding: 2rem 2rem 5rem;
+    }
+
+    /* ─── FEED CONTROLS ──────────────────────────── */
+    .feed-controls {
+      display: flex; align-items: center;
+      gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    }
+    .filter-tabs { display: flex; gap: .35rem; flex: 1; }
+    .filter-tab {
+      padding: .35rem .78rem; border-radius: 99px;
+      border: 1.5px solid var(--rule);
+      font-size: .79rem; font-weight: 500;
+      color: var(--ink-soft); background: #fff;
+      transition: all .15s; cursor: pointer;
+    }
+    .filter-tab:hover { border-color: var(--blue); color: var(--blue); }
+    .filter-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    /* ─── COMPOSE BOX ────────────────────────────── */
+    .compose-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.3rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 4px rgba(17,24,32,.04);
+    }
+    .compose-top {
+      display: flex; gap: .85rem; align-items: flex-start;
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .9rem; flex-shrink: 0;
+      font-weight: 600; color: #fff;
+    }
+    .compose-input {
+      flex: 1; border: none; outline: none; resize: none;
+      font-size: .9rem; color: var(--ink); line-height: 1.6;
+      background: transparent; min-height: 54px;
+      placeholder-color: var(--ink-faint);
+    }
+    .compose-input::placeholder { color: var(--ink-faint); }
+    .compose-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: .9rem; padding-top: .9rem;
+      border-top: 1px solid var(--rule-light);
+    }
+    .compose-hints { font-size: .77rem; color: var(--ink-faint); }
+    .char-count { font-size: .75rem; color: var(--ink-faint); }
+
+    /* ─── POST CARD ───────────────────────────────── */
+    .post-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.1rem;
+      box-shadow: 0 1px 4px rgba(17,24,32,.04);
+      transition: border-color .2s, box-shadow .2s;
+      overflow: hidden;
+    }
+    .post-card:hover { border-color: var(--blue-pale); box-shadow: 0 4px 20px rgba(17,24,32,.07); }
+
+    .post-card.trending-post {
+      border-left: 3px solid var(--gold);
+    }
+
+    .post-header {
+      display: flex; align-items: flex-start;
+      gap: .85rem; padding: 1.2rem 1.3rem .75rem;
+    }
+    .post-meta { flex: 1; min-width: 0; }
+    .post-author {
+      font-size: .88rem; font-weight: 600; color: var(--ink);
+    }
+    .post-time { font-size: .76rem; color: var(--ink-faint); margin-left: .45rem; }
+    .post-handle { font-size: .78rem; color: var(--ink-faint); }
+
+    .post-body { padding: 0 1.3rem .95rem; }
+    .post-text { font-size: .93rem; line-height: 1.7; color: var(--ink-soft); }
+    .post-tag {
+      display: inline-block; margin-top: .55rem;
+      padding: .18rem .55rem; border-radius: 99px;
+      font-size: .72rem; font-weight: 600;
+      background: var(--blue-ghost); color: var(--blue);
+    }
+
+    /* reward summary on posts/comments */
+    .reward-summary {
+      display: flex; flex-wrap: wrap; gap: .35rem;
+      padding: .6rem 1.3rem; border-top: 1px solid var(--rule-light);
+    }
+    .reward-pill {
+      display: inline-flex; align-items: center; gap: .28rem;
+      padding: .22rem .58rem; border-radius: 99px;
+      background: var(--gold-light); border: 1px solid rgba(245,158,11,.25);
+      font-size: .76rem; font-weight: 500; color: var(--gold-dark);
+      cursor: default; transition: transform .12s;
+    }
+    .reward-pill:hover { transform: scale(1.06); }
+    .reward-pill .rp-icon { font-size: .9rem; }
+    .reward-pill .rp-count { font-size: .72rem; opacity: .75; }
+
+    /* post actions */
+    .post-actions {
+      display: flex; align-items: center;
+      gap: .2rem; padding: .6rem 1rem;
+      border-top: 1px solid var(--rule-light);
+    }
+    .action-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .42rem .72rem; border-radius: 99px;
+      font-size: .8rem; font-weight: 500; color: var(--ink-soft);
+      transition: all .15s; cursor: pointer; background: transparent;
+      border: none;
+    }
+    .action-btn:hover { background: var(--paper-warm); color: var(--ink); }
+    .action-btn.liked { color: var(--red); }
+    .action-btn.liked:hover { background: var(--red-light); }
+    .action-btn.rewarded { color: var(--gold-dark); }
+    .action-btn.reward-btn:hover { background: var(--gold-light); color: var(--gold-dark); }
+    .action-btn svg { flex-shrink: 0; }
+    .action-sep { width: 1px; height: 20px; background: var(--rule-light); margin: 0 .2rem; }
+
+    /* ─── COMMENTS ───────────────────────────────── */
+    .comments-section { border-top: 1px solid var(--rule-light); }
+    .comments-inner { padding: .75rem 1.3rem 1.1rem; }
+
+    .comment {
+      display: flex; gap: .7rem; margin-bottom: 1rem;
+    }
+    .comment:last-child { margin-bottom: 0; }
+
+    .comment-avatar { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; font-size: .75rem; font-weight: 600; color: #fff; display: flex; align-items: center; justify-content: center; margin-top: .1rem; }
+
+    .comment-body { flex: 1; min-width: 0; }
+    .comment-bubble {
+      background: var(--paper-warm); border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm);
+      padding: .62rem .85rem; position: relative;
+    }
+    .comment-author { font-size: .8rem; font-weight: 600; color: var(--ink); margin-bottom: .18rem; }
+    .comment-text { font-size: .85rem; color: var(--ink-soft); line-height: 1.6; }
+
+    .comment-actions {
+      display: flex; align-items: center; gap: .5rem;
+      margin-top: .4rem; padding-left: .1rem;
+    }
+    .comment-action-btn {
+      display: inline-flex; align-items: center; gap: .3rem;
+      font-size: .74rem; color: var(--ink-faint);
+      background: none; border: none; cursor: pointer;
+      padding: .18rem .42rem; border-radius: 99px;
+      transition: all .13s;
+    }
+    .comment-action-btn:hover { background: var(--paper-warm); color: var(--ink-soft); }
+    .comment-action-btn.liked { color: var(--red); }
+    .comment-action-btn.reward-btn:hover { color: var(--gold-dark); background: var(--gold-light); }
+
+    .comment-rewards {
+      display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .5rem;
+    }
+    .comment-reward-pill {
+      display: inline-flex; align-items: center; gap: .22rem;
+      padding: .14rem .42rem; border-radius: 99px;
+      background: var(--gold-light); border: 1px solid rgba(245,158,11,.2);
+      font-size: .7rem; color: var(--gold-dark);
+    }
+
+    /* reply input */
+    .reply-input-wrap {
+      display: flex; gap: .6rem; align-items: flex-start;
+      margin-top: .7rem; padding-left: .2rem;
+    }
+    .reply-input {
+      flex: 1; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-sm); padding: .48rem .78rem;
+      font-size: .83rem; outline: none; color: var(--ink);
+      transition: border-color .15s;
+      background: #fff;
+    }
+    .reply-input:focus { border-color: var(--blue); }
+
+    /* replies */
+    .replies { margin-top: .7rem; padding-left: 1rem; border-left: 2px solid var(--rule-light); }
+    .reply { display: flex; gap: .6rem; margin-bottom: .75rem; }
+    .reply:last-child { margin-bottom: 0; }
+    .reply-avatar { width: 24px; height: 24px; border-radius: 50%; font-size: .65rem; font-weight: 600; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+    .reply-bubble { background: var(--paper-warm); border-radius: 0 var(--radius-sm) var(--radius-sm) var(--radius-sm); padding: .5rem .72rem; flex: 1; }
+    .reply-author { font-size: .75rem; font-weight: 600; color: var(--ink); margin-bottom: .1rem; }
+    .reply-text { font-size: .8rem; color: var(--ink-soft); line-height: 1.55; }
+
+    /* show comments toggle */
+    .toggle-comments-btn {
+      font-size: .78rem; color: var(--blue); background: none; border: none;
+      cursor: pointer; padding: .3rem 0; font-weight: 500;
+      transition: opacity .15s;
+    }
+    .toggle-comments-btn:hover { opacity: .75; }
+
+    /* comment form */
+    .comment-form { display: flex; gap: .7rem; margin-bottom: 1rem; align-items: flex-start; }
+    .comment-input {
+      flex: 1; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-sm); padding: .5rem .82rem;
+      font-size: .85rem; outline: none; color: var(--ink);
+      transition: border-color .15s; background: #fff;
+    }
+    .comment-input:focus { border-color: var(--blue); }
+
+    /* ─── REWARD PICKER MODAL ─────────────────────── */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(17,24,32,.45);
+      backdrop-filter: blur(4px);
+      z-index: 500; display: none;
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-backdrop.open { display: flex; }
+
+    .reward-modal {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1.5px solid var(--rule);
+      box-shadow: 0 24px 80px rgba(17,24,32,.18);
+      width: 100%; max-width: 420px;
+      animation: modal-in .22s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: scale(.9) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-hd {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 1.4rem 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .modal-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 500; letter-spacing: -.015em;
+    }
+    .modal-sub { font-size: .78rem; color: var(--ink-faint); margin-top: .1rem; }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 99px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink-faint); transition: all .13s;
+      background: none; border: none; cursor: pointer; flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--paper-warm); color: var(--ink); }
+
+    .modal-body { padding: 1.1rem 1.4rem 1.4rem; }
+
+    .reward-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: .7rem; max-height: 340px; overflow-y: auto;
+    }
+    .reward-grid::-webkit-scrollbar { width: 5px; }
+    .reward-grid::-webkit-scrollbar-track { background: var(--paper-warm); border-radius: 99px; }
+    .reward-grid::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
+
+    .reward-option {
+      border: 1.5px solid var(--rule); border-radius: var(--radius-sm);
+      padding: .85rem .9rem; cursor: pointer;
+      transition: all .16s; text-align: center;
+      background: #fff; position: relative;
+    }
+    .reward-option:hover { border-color: var(--gold); background: var(--gold-light); transform: translateY(-1px); }
+    .reward-option.selected { border-color: var(--gold); background: var(--gold-light); }
+
+    .ro-icon { font-size: 2rem; display: block; margin-bottom: .35rem; }
+    .ro-title { font-size: .8rem; font-weight: 600; color: var(--ink); }
+    .ro-qty {
+      font-size: .72rem; color: var(--ink-faint);
+      margin-top: .15rem;
+    }
+    .ro-qty span { color: var(--gold-dark); font-weight: 600; }
+
+    .modal-empty {
+      text-align: center; padding: 2.5rem 1rem;
+    }
+    .modal-empty .me-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .modal-empty p { font-size: .86rem; color: var(--ink-faint); margin-bottom: 1.1rem; line-height: 1.6; }
+
+    .modal-footer {
+      padding: .9rem 1.4rem;
+      border-top: 1px solid var(--rule);
+      display: flex; justify-content: flex-end; gap: .6rem;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────── */
+    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .sidebar-card {
+      background: #fff; border: 1.5px solid var(--rule);
+      border-radius: var(--radius-md);
+      padding: 1.3rem 1.35rem;
+      box-shadow: 0 1px 4px rgba(17,24,32,.03);
+    }
+
+    .sc-title {
+      font-family: 'Fraunces', serif; font-size: 1rem;
+      font-weight: 500; letter-spacing: -.01em;
+      color: var(--ink); margin-bottom: .2rem;
+    }
+    .sc-sub { font-size: .75rem; color: var(--ink-faint); margin-bottom: 1.1rem; }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: .6rem;
+    }
+    .stat-item {
+      background: var(--paper-warm);
+      border-radius: var(--radius-sm);
+      padding: .75rem .85rem;
+      text-align: center;
+    }
+    .stat-n {
+      font-family: 'Fraunces', serif; font-size: 1.5rem;
+      font-weight: 500; letter-spacing: -.03em; color: var(--ink);
+      display: block; line-height: 1;
+    }
+    .stat-l { font-size: .68rem; color: var(--ink-faint); margin-top: .3rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .stat-item.highlight { background: var(--ink); }
+    .stat-item.highlight .stat-n { color: #fff; }
+    .stat-item.highlight .stat-l { color: rgba(255,255,255,.4); }
+
+    /* Shop links */
+    .shop-link-btn {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .85rem 1rem; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--rule); background: #fff;
+      cursor: pointer; width: 100%; text-align: left;
+      transition: all .16s; margin-bottom: .55rem;
+      font-size: .85rem; color: var(--ink);
+    }
+    .shop-link-btn:hover { border-color: var(--blue); background: var(--blue-ghost); }
+    .shop-link-btn:last-child { margin-bottom: 0; }
+    .slb-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .slb-text { flex: 1; }
+    .slb-title { font-weight: 600; font-size: .84rem; }
+    .slb-hint { font-size: .73rem; color: var(--ink-faint); margin-top: .06rem; }
+    .slb-arr { color: var(--ink-faint); }
+
+    /* Trending posts list */
+    .trending-list { display: flex; flex-direction: column; gap: .5rem; }
+    .trending-item {
+      display: flex; align-items: flex-start; gap: .65rem;
+      padding: .65rem .75rem; border-radius: var(--radius-sm);
+      background: var(--paper-warm); border: 1px solid var(--rule-light);
+      cursor: pointer; transition: border-color .15s;
+    }
+    .trending-item:hover { border-color: var(--rule); }
+    .trending-rank {
+      font-family: 'Fraunces', serif; font-size: 1.15rem;
+      font-weight: 500; color: var(--rule); line-height: 1;
+      min-width: 20px;
+    }
+    .trending-text { flex: 1; min-width: 0; }
+    .trending-title { font-size: .82rem; font-weight: 500; color: var(--ink); line-height: 1.4; }
+    .trending-meta { font-size: .72rem; color: var(--ink-faint); margin-top: .18rem; }
+
+    /* Leaderboard */
+    .leaderboard-list { display: flex; flex-direction: column; gap: .4rem; }
+    .lb-item {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .55rem .65rem; border-radius: var(--radius-sm);
+      background: var(--paper-warm);
+    }
+    .lb-rank {
+      font-family: 'Fraunces', serif; font-size: .95rem;
+      font-weight: 500; color: var(--ink-faint);
+      min-width: 18px; text-align: center;
+    }
+    .lb-rank.gold { color: var(--gold); }
+    .lb-rank.silver { color: #9ca3af; }
+    .lb-rank.bronze { color: var(--gold-dark); }
+    .lb-name { flex: 1; font-size: .83rem; font-weight: 500; color: var(--ink); }
+    .lb-score { font-size: .76rem; color: var(--ink-faint); }
+    .lb-score span { color: var(--gold-dark); font-weight: 600; }
+
+    /* ─── TOAST ───────────────────────────────────── */
+    #toast-container {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: .55rem;
+      z-index: 9999; pointer-events: none;
+    }
+    .toast {
+      padding: .65rem 1.3rem;
+      border-radius: 99px;
+      font-size: .84rem; font-weight: 500;
+      box-shadow: 0 6px 24px rgba(0,0,0,.14);
+      display: flex; align-items: center; gap: .5rem;
+      animation: toast-in .25s ease both;
+      pointer-events: none;
+    }
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(12px) scale(.94); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes toast-out {
+      to   { opacity: 0; transform: translateY(10px); }
+    }
+    .toast-success { background: var(--ink); color: #fff; }
+    .toast-reward  { background: var(--gold); color: var(--ink); font-weight: 600; }
+    .toast-error   { background: var(--red); color: #fff; }
+
+    /* ─── CONFETTI ────────────────────────────────── */
+    @keyframes confetti-fly {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) rotate(360deg) scale(.4); }
+    }
+    .confetti-piece {
+      position: fixed; width: 7px; height: 7px;
+      border-radius: 2px; pointer-events: none; z-index: 9998;
+      animation: confetti-fly .7s ease-out both;
+    }
+
+    /* ─── SECTION LABEL ──────────────────────────── */
+    .sec-label {
+      font-size: .68rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--blue);
+      display: block; margin-bottom: .35rem;
+    }
+
+    /* ─── EMPTY STATE ─────────────────────────────── */
+    .empty-state {
+      text-align: center; padding: 3rem 1rem;
+      color: var(--ink-faint);
+    }
+    .empty-state .es-icon { font-size: 2.5rem; margin-bottom: .75rem; }
+    .empty-state p { font-size: .88rem; line-height: 1.6; }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      background: var(--ink); color: rgba(255,255,255,.5);
+      text-align: center; padding: 1.6rem 2rem;
+      font-size: .78rem;
+    }
+    footer a { color: rgba(255,255,255,.35); margin: 0 .6rem; }
+    footer a:hover { color: #fff; }
+
+    /* ─── ACTIVITY FEED ITEM ─────────────────────── */
+    .activity-item {
+      display: flex; gap: .7rem; align-items: flex-start;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--rule-light);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; flex-shrink: 0;
+    }
+    .activity-text { flex: 1; font-size: .8rem; color: var(--ink-soft); line-height: 1.5; }
+    .activity-text strong { color: var(--ink); font-weight: 600; }
+    .activity-time { font-size: .72rem; color: var(--ink-faint); flex-shrink: 0; margin-top: .12rem; }
+
+    /* ─── RESPONSIVE ─────────────────────────────── */
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+    @media (max-width: 600px) {
+      .page-hd-inner { flex-direction: column; align-items: flex-start; }
+      .page-hd-actions { width: 100%; }
+      .filter-tabs { overflow-x: auto; flex-wrap: nowrap; padding-bottom: .2rem; }
+      .filter-tab { flex-shrink: 0; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .post-actions { gap: 0; }
+      .action-btn { padding: .38rem .55rem; font-size: .76rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════ NAV ════════════════════════ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="./index.html" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7.0" y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link active">Community</a>
+      <a href="./shop.html"       class="nav-link">Reward Shop</a>
+    </nav>
+
+    <div class="nav-end">
+      <a href="./support.html" class="lnk" style="font-size:.84rem;color:var(--ink-soft);">Support</a>
+      <a href="./login.html" class="btn btn-ghost btn-sm">Log In</a>
+    </div>
+  </div>
+</header>
+
+
+<!-- ════════════════════════ PAGE HEADER ════════════════════════ -->
+<div class="page-hd">
+  <div class="page-hd-inner">
+    <div>
+      <div class="page-hd-label">TrackWeave Community</div>
+      <h1>Share your <em>listening</em><br>with the world</h1>
+      <p>Posts, comments, and rewards — the social heartbeat of TrackWeave.</p>
+    </div>
+    <div class="page-hd-actions">
+      <!-- Both buttons redirect to shop.html as the source of truth for rewards -->
+      <a href="./shop.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.25);" onclick="linkToShop('browse')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Open Reward Shop
+      </a>
+      <a href="./shop.html" class="btn btn-gold" onclick="linkToShop('inventory')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+        </svg>
+        View My Rewards
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════ MAIN LAYOUT ════════════════════════ -->
+<div class="layout">
+
+  <!-- ─── FEED COLUMN ─── -->
+  <main>
+
+    <!-- Feed Filter Controls -->
+    <div class="feed-controls">
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="newest">✦ Newest</button>
+        <button class="filter-tab" data-filter="liked">♥ Most Liked</button>
+        <button class="filter-tab" data-filter="rewarded">⭐ Most Rewarded</button>
+        <button class="filter-tab" data-filter="trending">🔥 Trending</button>
+      </div>
+    </div>
+
+    <!-- Compose Box -->
+    <div class="compose-card">
+      <div class="compose-top">
+        <div class="avatar" id="current-user-avatar" style="background:#2563eb;">Y</div>
+        <textarea
+          class="compose-input"
+          id="compose-input"
+          placeholder="Share your latest listening, a hot take, or a music discovery…"
+          maxlength="300"
+          rows="2"
+        ></textarea>
+      </div>
+      <div class="compose-footer">
+        <span class="compose-hints">🎵 Tag albums · 🎧 Share playlists · 💬 Start discussions</span>
+        <div style="display:flex;align-items:center;gap:.75rem;">
+          <span class="char-count" id="char-count">0 / 300</span>
+          <button class="btn btn-solid btn-sm" id="post-btn" onclick="submitPost()">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feed -->
+    <div id="feed-container">
+      <!-- Rendered by renderFeed() -->
+    </div>
+
+  </main>
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+
+    <!-- User Stats Card -->
+    <div class="sidebar-card">
+      <span class="sec-label">Your Engagement</span>
+      <div class="sc-title" id="sidebar-username">You</div>
+      <div class="sc-sub" id="sidebar-handle">@you · TrackWeave member</div>
+      <div class="stats-grid" id="stats-grid">
+        <!-- Rendered by renderStats() -->
+      </div>
+    </div>
+
+    <!-- Quick Shop Links -->
+    <div class="sidebar-card">
+      <span class="sec-label">Rewards</span>
+      <div class="sc-title">Reward Shop</div>
+      <div class="sc-sub" style="margin-bottom:.9rem;">Shop is the source of truth for all rewards</div>
+
+      <!-- These redirect to shop.html, not a duplicate page -->
+      <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('browse')">
+        <div class="slb-icon" style="background:var(--blue-ghost);">🛍️</div>
+        <div class="slb-text">
+          <div class="slb-title">Browse Rewards</div>
+          <div class="slb-hint">Spend your TrackWeave points</div>
+        </div>
+        <svg class="slb-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+      <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('inventory')">
+        <div class="slb-icon" style="background:var(--gold-light);">🎁</div>
+        <div class="slb-text">
+          <div class="slb-title">My Reward Inventory</div>
+          <div class="slb-hint" id="sidebar-owned-count">Loading…</div>
+        </div>
+        <svg class="slb-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- Trending Posts -->
+    <div class="sidebar-card">
+      <span class="sec-label">Trending</span>
+      <div class="sc-title">Hot Right Now 🔥</div>
+      <div class="sc-sub">Most liked posts this week</div>
+      <div class="trending-list" id="trending-list">
+        <!-- Rendered by renderTrending() -->
+      </div>
+    </div>
+
+    <!-- Leaderboard -->
+    <div class="sidebar-card">
+      <span class="sec-label">Leaderboard</span>
+      <div class="sc-title">Most Appreciated 🏆</div>
+      <div class="sc-sub">Ranked by rewards received</div>
+      <div class="leaderboard-list" id="leaderboard-list">
+        <!-- Rendered by renderLeaderboard() -->
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="sidebar-card">
+      <span class="sec-label">Activity</span>
+      <div class="sc-title">Recent Events</div>
+      <div id="activity-feed">
+        <!-- Rendered by renderActivity() -->
+      </div>
+    </div>
+
+  </aside>
+</div><!-- /layout -->
+
+
+<!-- ════════════════════════ REWARD PICKER MODAL ════════════════════════ -->
+<!--
+  This modal reads owned rewards from localStorage (same key used by shop.html).
+  It NEVER duplicates the shop — it only lets users SPEND owned rewards.
+  For browsing/buying, users are directed to shop.html.
+-->
+<div class="modal-backdrop" id="reward-modal-backdrop" onclick="closeRewardPicker(event)">
+  <div class="reward-modal" id="reward-modal">
+    <div class="modal-hd">
+      <div>
+        <div class="modal-title">Choose a Reward 🎁</div>
+        <div class="modal-sub" id="modal-target-label">Rewarding this post</div>
+      </div>
+      <button class="modal-close" onclick="closeRewardPicker()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div id="reward-picker-content">
+        <!-- Filled by openRewardPicker() -->
+      </div>
+    </div>
+
+    <div class="modal-footer" id="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeRewardPicker()">Cancel</button>
+      <button class="btn btn-gold btn-sm" id="send-reward-btn" onclick="confirmSendReward()" disabled>
+        Send Reward
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════ TOAST ════════════════════════ -->
+<div id="toast-container"></div>
+
+
+<!-- ════════════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <span>© 2026 TrackWeave. All rights reserved.</span>
+  <div style="margin-top:.4rem;">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="./shop.html">Reward Shop</a>
+    <a href="./dashboard.html">Dashboard</a>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════ JAVASCRIPT ════════════════════════ -->
+<script>
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  TrackWeave — Engagement Platform                            ║
+   ║  Connects to shop.html via shared localStorage keys          ║
+   ║                                                              ║
+   ║  localStorage keys shared with shop.html:                   ║
+   ║    tw_owned  — array of owned item IDs                       ║
+   ║    tw_points — user's point balance                          ║
+   ║    tw_spent  — total points spent                            ║
+   ║                                                              ║
+   ║  Engagement-specific localStorage keys:                      ║
+   ║    tw_engagement — all posts, comments, likes, rewards       ║
+   ║    tw_eng_stats  — user stats summary                        ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+
+/* ══════════════════════════════════════════
+   1. SHOP CATALOG MIRROR
+   (Same catalog as shop.html — used to map
+    owned item IDs to metadata for reward picker)
+   ══════════════════════════════════════════ */
+const SHOP_CATALOG = [
+  { id: 'theme-midnight',      icon: '🌙', title: 'Midnight Mode',      category: 'themes'  },
+  { id: 'theme-vinyl',         icon: '💿', title: 'Vinyl Warmth',        category: 'themes'  },
+  { id: 'theme-neon',          icon: '🔮', title: 'Neon Pulse',          category: 'themes'  },
+  { id: 'theme-aurora',        icon: '🌌', title: 'Aurora Borealis',     category: 'themes'  },
+  { id: 'avatar-headphones',   icon: '🎧', title: 'Audiophile',          category: 'avatars' },
+  { id: 'avatar-vinyl-spinner',icon: '🎼', title: 'Vinyl Spinner',       category: 'avatars' },
+  { id: 'avatar-cosmic',       icon: '🪐', title: 'Cosmic Explorer',     category: 'avatars' },
+  { id: 'avatar-golden-ear',   icon: '👑', title: 'Golden Ear',          category: 'avatars' },
+  { id: 'boost-double-pts',    icon: '⚡', title: '2× Points Weekend',   category: 'boosts'  },
+  { id: 'boost-early-access',  icon: '🚀', title: 'Early Access Pass',   category: 'boosts'  },
+  { id: 'boost-graph-pro',     icon: '🕸️', title: 'Graph Pro Unlock',    category: 'boosts'  },
+  { id: 'boost-spotlight',     icon: '🌟', title: 'Community Spotlight', category: 'boosts'  },
+  { id: 'badge-early-adopter', icon: '🌱', title: 'Early Adopter',       category: 'badges'  },
+  { id: 'badge-crate-digger',  icon: '📦', title: 'Crate Digger',        category: 'badges'  },
+  { id: 'badge-theorist',      icon: '🧠', title: 'Music Theorist',      category: 'badges'  },
+  { id: 'badge-legend',        icon: '🎺', title: 'Living Legend',       category: 'badges'  },
+];
+
+// Quick lookup by id
+const CATALOG_MAP = Object.fromEntries(SHOP_CATALOG.map(i => [i.id, i]));
+
+/* ══════════════════════════════════════════
+   2. MOCK USERS
+   ══════════════════════════════════════════ */
+const USERS = {
+  'you':      { id: 'you',      name: 'You',           handle: '@you',           color: '#2563eb',   initial: 'Y' },
+  'mia':      { id: 'mia',      name: 'Mia Chen',      handle: '@mia.listens',   color: '#7c3aed',   initial: 'M' },
+  'james':    { id: 'james',    name: 'James Okafor',  handle: '@jamesokafor',   color: '#059669',   initial: 'J' },
+  'priya':    { id: 'priya',    name: 'Priya Sharma',  handle: '@priyawaves',    color: '#d97706',   initial: 'P' },
+  'leo':      { id: 'leo',      name: 'Leo Vasquez',   handle: '@leobeats',      color: '#dc2626',   initial: 'L' },
+  'soren':    { id: 'soren',    name: 'Søren Kim',     handle: '@sorenkim',      color: '#0891b2',   initial: 'S' },
+  'ada':      { id: 'ada',      name: 'Ada Müller',    handle: '@adadiscovers',  color: '#be185d',   initial: 'A' },
+};
+
+const CURRENT_USER = USERS['you'];
+
+/* ══════════════════════════════════════════
+   3. MOCK SEED DATA
+   Initial posts, comments, replies
+   ══════════════════════════════════════════ */
+const SEED_POSTS = [
+  {
+    id: 'p1',
+    authorId: 'mia',
+    text: "Just finished the full Kendrick Lamar discography run. The lyrical evolution from Section.80 to GNX is absolutely breathtaking — the NLP graph on TrackWeave literally shows you the thematic shift in real time.",
+    tag: '🎵 Hip-Hop',
+    createdAt: Date.now() - 1000 * 60 * 18,
+    likes: ['james', 'priya', 'leo'],
+    rewards: { 'badge-theorist': ['james'], 'boost-spotlight': ['priya'] },
+    comments: ['c1', 'c2'],
+  },
+  {
+    id: 'p2',
+    authorId: 'james',
+    text: "Hot take: Radiohead's Kid A is not their best album. OK Computer's graph is denser with lyrical cross-references. I mapped both — the thematic clustering is incredible. Change my mind.",
+    tag: '🎸 Alt/Rock',
+    createdAt: Date.now() - 1000 * 60 * 45,
+    likes: ['mia', 'soren'],
+    rewards: { 'theme-aurora': ['mia'] },
+    comments: ['c3'],
+  },
+  {
+    id: 'p3',
+    authorId: 'priya',
+    text: "Been deep in Hiatus Kaiyote this week. The jazz-meets-soul-meets-future thing they do is hard to categorize but SO easy to love. Anyone else think 'Tawk Tomahawk' is criminally underrated?",
+    tag: '🎷 Jazz/Soul',
+    createdAt: Date.now() - 1000 * 60 * 90,
+    likes: ['ada', 'you', 'mia', 'leo'],
+    rewards: { 'avatar-cosmic': ['ada'], 'badge-early-adopter': ['you'] },
+    comments: ['c4', 'c5'],
+  },
+  {
+    id: 'p4',
+    authorId: 'leo',
+    text: "The way TrackWeave's graph shows how Tame Impala's 'Currents' is both a sonic and lyrical pivot point is genuinely mind-blowing. Every node in the cluster points back to one central motif: transformation.",
+    tag: '🔮 Psychedelic',
+    createdAt: Date.now() - 1000 * 60 * 180,
+    likes: ['james', 'mia', 'soren', 'priya', 'you'],
+    rewards: { 'boost-spotlight': ['james', 'mia'], 'theme-neon': ['priya'] },
+    comments: [],
+  },
+  {
+    id: 'p5',
+    authorId: 'soren',
+    text: "First time logging an ambient album — Brian Eno's 'Music for Airports'. The graph is almost entirely disconnected nodes with sparse edges. Fitting, honestly. Silence as punctuation.",
+    tag: '🌊 Ambient',
+    createdAt: Date.now() - 1000 * 60 * 300,
+    likes: ['ada'],
+    rewards: {},
+    comments: ['c6'],
+  },
+  {
+    id: 'p6',
+    authorId: 'ada',
+    text: "New personal challenge: log every album I own on vinyl by end of Q2. Currently at 34. The collection spans from 1960s Blue Note to last year's releases. What's the oldest record in your collection?",
+    tag: '📦 Vinyl',
+    createdAt: Date.now() - 1000 * 60 * 420,
+    likes: ['leo', 'priya'],
+    rewards: { 'badge-crate-digger': ['leo'] },
+    comments: [],
+  },
+];
+
+const SEED_COMMENTS = {
+  c1: {
+    id: 'c1', postId: 'p1', authorId: 'james',
+    text: "The DAMN. era specifically — you can see how the compressed, almost claustrophobic lyrical density breaks open on later tracks. The graph makes it so visible.",
+    createdAt: Date.now() - 1000 * 60 * 10,
+    likes: ['mia', 'priya'],
+    rewards: { 'theme-midnight': ['mia'] },
+    replies: ['r1'],
+  },
+  c2: {
+    id: 'c2', postId: 'p1', authorId: 'soren',
+    text: "I saw the exact same pattern when I ran the discography! The node density is wild on To Pimp a Butterfly — every track references at least 4 others thematically.",
+    createdAt: Date.now() - 1000 * 60 * 8,
+    likes: ['mia'],
+    rewards: {},
+    replies: [],
+  },
+  c3: {
+    id: 'c3', postId: 'p2', authorId: 'priya',
+    text: "Respectfully disagree — Kid A's disconnected motifs create a more interesting graph topology precisely because the threads are fewer but stronger. Sparse edges, high weight.",
+    createdAt: Date.now() - 1000 * 60 * 40,
+    likes: ['james', 'mia'],
+    rewards: { 'badge-theorist': ['james'] },
+    replies: [],
+  },
+  c4: {
+    id: 'c4', postId: 'p3', authorId: 'leo',
+    text: "Tawk Tomahawk is everything. 'Nakamarra' alone should have put them in every conversation about best vocal performances of the decade.",
+    createdAt: Date.now() - 1000 * 60 * 85,
+    likes: ['priya', 'ada'],
+    rewards: {},
+    replies: ['r2'],
+  },
+  c5: {
+    id: 'c5', postId: 'p3', authorId: 'mia',
+    text: "Their live performances are even better than the studio versions. The polyrhythm is insane in person.",
+    createdAt: Date.now() - 1000 * 60 * 80,
+    likes: ['priya'],
+    rewards: {},
+    replies: [],
+  },
+  c6: {
+    id: 'c6', postId: 'p5', authorId: 'ada',
+    text: "Ambient music is the only genre where the graph's empty space is the point. Love this observation.",
+    createdAt: Date.now() - 1000 * 60 * 290,
+    likes: ['soren'],
+    rewards: {},
+    replies: [],
+  },
+};
+
+const SEED_REPLIES = {
+  r1: {
+    id: 'r1', commentId: 'c1', authorId: 'priya',
+    text: "Exactly — DAMN. is almost a closed loop. Every track echoes another. TrackWeave maps that beautifully.",
+    createdAt: Date.now() - 1000 * 60 * 6,
+  },
+  r2: {
+    id: 'r2', commentId: 'c4', authorId: 'priya',
+    text: "Nakamarra!! That guitar line under Nai Palm's voice is otherworldly. Absolutely agreed.",
+    createdAt: Date.now() - 1000 * 60 * 82,
+  },
+};
+
+/* ══════════════════════════════════════════
+   4. STORAGE KEYS
+   ══════════════════════════════════════════ */
+const KEYS = {
+  /* Shared with shop.html — do NOT change these */
+  shopOwned:  'tw_owned',
+  shopPoints: 'tw_points',
+
+  /* Engagement-only keys */
+  engagement: 'tw_engagement',
+  stats:      'tw_eng_stats',
+};
+
+/* ══════════════════════════════════════════
+   5. STATE
+   ══════════════════════════════════════════ */
+let activeFilter    = 'newest';
+let rewardTarget    = null; // { type: 'post'|'comment', id }
+let selectedRewardId = null;
+let activityLog     = [];
+
+
+/* ══════════════════════════════════════════
+   6. PERSISTENCE HELPERS
+   ══════════════════════════════════════════ */
+
+/**
+ * loadShopRewards — reads owned items from the same
+ * localStorage key that shop.html writes to.
+ * Returns array of catalog metadata for each owned item.
+ */
+function loadShopRewards() {
+  const raw = localStorage.getItem(KEYS.shopOwned);
+  if (!raw) return [];
+  const ids = JSON.parse(raw);
+  return ids.map(id => CATALOG_MAP[id]).filter(Boolean);
+}
+
+/**
+ * loadEngagementData — loads posts, comments, replies
+ * from localStorage, seeding with mock data on first visit.
+ */
+function loadEngagementData() {
+  const raw = localStorage.getItem(KEYS.engagement);
+  if (raw) return JSON.parse(raw);
+
+  // First visit — seed with mock data
+  const data = {
+    posts:    SEED_POSTS,
+    comments: SEED_COMMENTS,
+    replies:  SEED_REPLIES,
+  };
+  saveEngagementData(data);
+  return data;
+}
+
+/** saveEngagementData — persists all social data */
+function saveEngagementData(data) {
+  localStorage.setItem(KEYS.engagement, JSON.stringify(data));
+}
+
+/** loadStats — returns user stats object */
+function loadStats() {
+  const raw = localStorage.getItem(KEYS.stats);
+  if (raw) return JSON.parse(raw);
+  return { posts: 0, comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0 };
+}
+
+/** saveStats */
+function saveStats(stats) {
+  localStorage.setItem(KEYS.stats, JSON.stringify(stats));
+}
+
+
+/* ══════════════════════════════════════════
+   7. NAVIGATION / SHOP LINK
+   ══════════════════════════════════════════ */
+
+/**
+ * linkToShop — navigates to shop.html.
+ * The engagement platform NEVER replaces shop.html.
+ * All reward browsing/purchasing happens there.
+ */
+function linkToShop(context = 'browse') {
+  // Could add a query param for context if shop.html supports it
+  // For now just navigate
+  window.location.href = './shop.html';
+}
+
+
+/* ══════════════════════════════════════════
+   8. RENDER ENGINE
+   ══════════════════════════════════════════ */
+
+/** renderFeed — main entry point; filters and renders all posts */
+function renderFeed() {
+  const data = loadEngagementData();
+  let posts  = [...data.posts];
+
+  // Apply filter
+  if (activeFilter === 'liked') {
+    posts.sort((a, b) => b.likes.length - a.likes.length);
+  } else if (activeFilter === 'rewarded') {
+    posts.sort((a, b) => rewardCount(b.rewards) - rewardCount(a.rewards));
+  } else if (activeFilter === 'trending') {
+    // Trending = high likes + rewards + recency bonus
+    posts.sort((a, b) => {
+      const scoreA = a.likes.length * 2 + rewardCount(a.rewards) * 3 + (Date.now() - a.createdAt < 3600000 ? 5 : 0);
+      const scoreB = b.likes.length * 2 + rewardCount(b.rewards) * 3 + (Date.now() - b.createdAt < 3600000 ? 5 : 0);
+      return scoreB - scoreA;
+    });
+  } else {
+    posts.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  renderPosts(posts, data);
+}
+
+/** rewardCount — total rewards on a post or comment */
+function rewardCount(rewards) {
+  return Object.values(rewards).reduce((sum, arr) => sum + arr.length, 0);
+}
+
+/** renderPosts — creates all post cards */
+function renderPosts(posts, data) {
+  const container = document.getElementById('feed-container');
+  container.innerHTML = '';
+
+  if (!posts.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">💬</div>
+        <p>No posts yet. Be the first to share something!</p>
+      </div>`;
+    return;
+  }
+
+  // Mark top-rewarded post as trending
+  const topRewarded = [...posts].sort((a, b) => rewardCount(b.rewards) - rewardCount(a.rewards))[0];
+
+  posts.forEach(post => {
+    const el = buildPostCard(post, data, post.id === topRewarded?.id && rewardCount(post.rewards) > 0);
+    container.appendChild(el);
+  });
+}
+
+/** buildPostCard — constructs a single post card DOM element */
+function buildPostCard(post, data, isTrending) {
+  const author  = USERS[post.authorId] || USERS['you'];
+  const isLiked = post.likes.includes(CURRENT_USER.id);
+  const likeCount = post.likes.length;
+  const commentCount = post.comments.length;
+  const totalRewards = rewardCount(post.rewards);
+  const timeAgo = formatTime(post.createdAt);
+
+  const card = document.createElement('div');
+  card.className = `post-card${isTrending ? ' trending-post' : ''}`;
+  card.id = `post-${post.id}`;
+
+  card.innerHTML = `
+    <div class="post-header">
+      <div class="avatar" style="background:${author.color};">${author.initial}</div>
+      <div class="post-meta">
+        <span class="post-author">${author.name}</span>
+        <span class="post-time">${timeAgo}</span>
+        <div class="post-handle">${author.handle}${isTrending ? ' · <span style="color:var(--gold-dark)">🔥 Trending</span>' : ''}</div>
+      </div>
+    </div>
+    <div class="post-body">
+      <div class="post-text">${escapeHtml(post.text)}</div>
+      ${post.tag ? `<span class="post-tag">${post.tag}</span>` : ''}
+    </div>
+    ${renderRewardSummary(post.rewards, 'post')}
+    <div class="post-actions">
+      <button class="action-btn${isLiked ? ' liked' : ''}" onclick="toggleLike('post', '${post.id}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        ${likeCount} Like${likeCount !== 1 ? 's' : ''}
+      </button>
+      <button class="action-btn" onclick="toggleComments('${post.id}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        ${commentCount} Comment${commentCount !== 1 ? 's' : ''}
+      </button>
+      <div class="action-sep"></div>
+      <button class="action-btn reward-btn${totalRewards > 0 ? ' rewarded' : ''}" onclick="openRewardPicker('post', '${post.id}')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/>
+          <line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+        Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
+      </button>
+    </div>
+    <div class="comments-section" id="comments-${post.id}" style="display:none;">
+      <div class="comments-inner" id="comments-inner-${post.id}">
+        <!-- Comments rendered on toggle -->
+      </div>
+    </div>
+  `;
+
+  return card;
+}
+
+/** renderRewardSummary — builds reward pill row for post/comment */
+function renderRewardSummary(rewards, context) {
+  const entries = Object.entries(rewards);
+  if (!entries.length) return '';
+
+  const pills = entries.map(([itemId, givers]) => {
+    const item = CATALOG_MAP[itemId];
+    if (!item || !givers.length) return '';
+    return `<span class="reward-pill" title="${givers.length} × ${item.title}">
+      <span class="rp-icon">${item.icon}</span>
+      <span class="rp-count">×${givers.length}</span>
+    </span>`;
+  }).join('');
+
+  return pills ? `<div class="reward-summary">${pills}</div>` : '';
+}
+
+/** renderComments — builds comment list inside a post */
+function renderComments(postId) {
+  const data = loadEngagementData();
+  const post = data.posts.find(p => p.id === postId);
+  if (!post) return;
+
+  const container = document.getElementById(`comments-inner-${postId}`);
+  if (!container) return;
+
+  let html = `
+    <div class="comment-form">
+      <div class="avatar" style="background:${CURRENT_USER.color};width:30px;height:30px;font-size:.75rem;">${CURRENT_USER.initial}</div>
+      <input class="comment-input" id="comment-input-${postId}" placeholder="Write a comment…" maxlength="200"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${postId}')}" />
+      <button class="btn btn-solid btn-sm" onclick="submitComment('${postId}')">Post</button>
+    </div>`;
+
+  if (!post.comments.length) {
+    html += `<div style="text-align:center;padding:1rem;color:var(--ink-faint);font-size:.83rem;">No comments yet — be first!</div>`;
+  } else {
+    post.comments.forEach(cid => {
+      const comment = data.comments[cid];
+      if (!comment) return;
+      html += buildCommentHTML(comment, data);
+    });
+  }
+
+  container.innerHTML = html;
+}
+
+/** buildCommentHTML — builds a single comment's HTML string */
+function buildCommentHTML(comment, data) {
+  const author   = USERS[comment.authorId] || USERS['you'];
+  const isLiked  = comment.likes.includes(CURRENT_USER.id);
+  const likeCount = comment.likes.length;
+  const totalRewards = rewardCount(comment.rewards);
+  const timeAgo  = formatTime(comment.createdAt);
+
+  const rewardSummaryHTML = Object.entries(comment.rewards).map(([itemId, givers]) => {
+    const item = CATALOG_MAP[itemId];
+    if (!item || !givers.length) return '';
+    return `<span class="comment-reward-pill">${item.icon} ×${givers.length}</span>`;
+  }).join('');
+
+  const repliesHTML = comment.replies.map(rid => {
+    const reply  = data.replies[rid];
+    if (!reply) return '';
+    const rAuthor = USERS[reply.authorId] || USERS['you'];
+    return `
+      <div class="reply">
+        <div class="reply-avatar" style="background:${rAuthor.color};">${rAuthor.initial}</div>
+        <div class="reply-bubble">
+          <div class="reply-author">${rAuthor.name}</div>
+          <div class="reply-text">${escapeHtml(reply.text)}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="comment" id="comment-${comment.id}">
+      <div class="comment-avatar" style="background:${author.color};">${author.initial}</div>
+      <div class="comment-body">
+        <div class="comment-bubble">
+          <div class="comment-author">${author.name} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
+          <div class="comment-text">${escapeHtml(comment.text)}</div>
+          ${rewardSummaryHTML ? `<div class="comment-rewards">${rewardSummaryHTML}</div>` : ''}
+        </div>
+        <div class="comment-actions">
+          <button class="comment-action-btn${isLiked ? ' liked' : ''}" onclick="toggleLike('comment', '${comment.id}', '${comment.postId}')">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            ${likeCount} Like${likeCount !== 1 ? 's' : ''}
+          </button>
+          <button class="comment-action-btn" onclick="toggleReplyInput('${comment.id}')">Reply</button>
+          <button class="comment-action-btn reward-btn${totalRewards > 0 ? ' rewarded' : ''}" onclick="openRewardPicker('comment', '${comment.id}')">
+            🎁 Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
+          </button>
+        </div>
+        ${repliesHTML ? `<div class="replies">${repliesHTML}</div>` : ''}
+        <div class="reply-input-wrap" id="reply-wrap-${comment.id}" style="display:none;">
+          <div class="avatar" style="background:${CURRENT_USER.color};width:24px;height:24px;font-size:.65rem;">${CURRENT_USER.initial}</div>
+          <input class="reply-input" id="reply-input-${comment.id}" placeholder="Write a reply…" maxlength="200"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();submitReply('${comment.id}', '${comment.postId}')}" />
+          <button class="btn btn-solid btn-sm" style="font-size:.75rem;padding:.28rem .65rem;" onclick="submitReply('${comment.id}', '${comment.postId}')">Reply</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+/** renderStats — fills sidebar stats grid */
+function renderStats() {
+  const stats    = loadStats();
+  const shopData = loadShopRewards();
+  const grid     = document.getElementById('stats-grid');
+  if (!grid) return;
+
+  const items = [
+    { n: stats.posts,           l: 'Posts',           highlight: false },
+    { n: stats.comments,        l: 'Comments',        highlight: false },
+    { n: stats.likesGiven,      l: 'Likes Given',     highlight: false },
+    { n: stats.rewardsSent,     l: 'Rewards Sent',    highlight: true  },
+    { n: stats.rewardsReceived, l: 'Received',        highlight: false },
+    { n: shopData.length,       l: 'Items Owned',     highlight: false },
+  ];
+
+  grid.innerHTML = items.map(s => `
+    <div class="stat-item${s.highlight ? ' highlight' : ''}">
+      <span class="stat-n">${s.n}</span>
+      <div class="stat-l">${s.l}</div>
+    </div>`).join('');
+
+  // Update sidebar owned count hint
+  const hint = document.getElementById('sidebar-owned-count');
+  if (hint) hint.textContent = shopData.length ? `${shopData.length} reward${shopData.length !== 1 ? 's' : ''} owned` : 'No rewards yet — visit shop';
+}
+
+/** renderTrending — sidebar trending list */
+function renderTrending() {
+  const data  = loadEngagementData();
+  const posts  = [...data.posts]
+    .sort((a, b) => (b.likes.length * 2 + rewardCount(b.rewards) * 3) - (a.likes.length * 2 + rewardCount(a.rewards) * 3))
+    .slice(0, 4);
+
+  const el = document.getElementById('trending-list');
+  if (!el) return;
+
+  el.innerHTML = posts.map((p, i) => {
+    const author = USERS[p.authorId];
+    return `
+      <div class="trending-item" onclick="scrollToPost('${p.id}')">
+        <div class="trending-rank">${i + 1}</div>
+        <div class="trending-text">
+          <div class="trending-title">${truncate(p.text, 55)}</div>
+          <div class="trending-meta">by ${author?.name} · ♥ ${p.likes.length} · 🎁 ${rewardCount(p.rewards)}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/** renderLeaderboard — sidebar leaderboard by rewards received */
+function renderLeaderboard() {
+  const data = loadEngagementData();
+
+  // Tally rewards received per user from posts + comments
+  const tally = {};
+  data.posts.forEach(p => {
+    Object.values(p.rewards).forEach(givers => {
+      const author = p.authorId;
+      tally[author] = (tally[author] || 0) + givers.length;
+    });
+  });
+  Object.values(data.comments).forEach(c => {
+    Object.values(c.rewards).forEach(givers => {
+      const author = c.authorId;
+      tally[author] = (tally[author] || 0) + givers.length;
+    });
+  });
+
+  const ranked = Object.entries(tally)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  const rankClass = ['gold','silver','bronze','',''];
+  const medals    = ['🥇','🥈','🥉','4','5'];
+
+  const el = document.getElementById('leaderboard-list');
+  if (!el) return;
+
+  el.innerHTML = ranked.map(([userId, count], i) => {
+    const user = USERS[userId];
+    return `
+      <div class="lb-item">
+        <div class="lb-rank ${rankClass[i]}">${medals[i]}</div>
+        <div class="avatar" style="background:${user?.color};width:26px;height:26px;font-size:.68rem;flex-shrink:0;">${user?.initial}</div>
+        <div class="lb-name">${user?.name || userId}</div>
+        <div class="lb-score"><span>${count}</span> rewards</div>
+      </div>`;
+  }).join('') || '<div style="color:var(--ink-faint);font-size:.82rem;">No data yet</div>';
+}
+
+/** renderActivity — recent activity sidebar */
+function renderActivity() {
+  const el = document.getElementById('activity-feed');
+  if (!el) return;
+
+  if (!activityLog.length) {
+    el.innerHTML = `<div style="color:var(--ink-faint);font-size:.82rem;padding:.5rem 0;">Interact with posts to see activity here.</div>`;
+    return;
+  }
+
+  el.innerHTML = activityLog.slice(0, 6).map(a => `
+    <div class="activity-item">
+      <div class="activity-icon" style="background:${a.color || 'var(--paper-warm)'};">${a.icon}</div>
+      <div class="activity-text">${a.text}</div>
+      <div class="activity-time">${formatTime(a.time)}</div>
+    </div>`).join('');
+}
+
+/** addActivity — pushes to the front of activityLog */
+function addActivity(icon, color, text) {
+  activityLog.unshift({ icon, color, text, time: Date.now() });
+  renderActivity();
+}
+
+
+/* ══════════════════════════════════════════
+   9. INTERACTIONS
+   ══════════════════════════════════════════ */
+
+/** toggleComments — shows/hides comment section */
+function toggleComments(postId) {
+  const section = document.getElementById(`comments-${postId}`);
+  if (!section) return;
+  const isOpen = section.style.display !== 'none';
+  section.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) renderComments(postId);
+}
+
+/** toggleLike — like/unlike a post or comment */
+function toggleLike(type, id, postId) {
+  const data  = loadEngagementData();
+  const stats = loadStats();
+  let target;
+
+  if (type === 'post') {
+    target = data.posts.find(p => p.id === id);
+  } else {
+    target = data.comments[id];
+  }
+  if (!target) return;
+
+  const idx = target.likes.indexOf(CURRENT_USER.id);
+  if (idx === -1) {
+    target.likes.push(CURRENT_USER.id);
+    stats.likesGiven++;
+    addActivity('♥', '#fee2e2', `You liked a ${type}.`);
+  } else {
+    target.likes.splice(idx, 1);
+    stats.likesGiven = Math.max(0, stats.likesGiven - 1);
+  }
+
+  saveEngagementData(data);
+  saveStats(stats);
+
+  // Re-render relevant section
+  if (type === 'post') {
+    const postEl = document.getElementById(`post-${id}`);
+    const btn    = postEl?.querySelector('.action-btn');
+    if (btn) {
+      const liked = target.likes.includes(CURRENT_USER.id);
+      btn.className = `action-btn${liked ? ' liked' : ''}`;
+      btn.querySelector('svg').setAttribute('fill', liked ? 'currentColor' : 'none');
+      btn.innerHTML = btn.innerHTML.replace(/\d+ Like/, `${target.likes.length} Like`);
+    }
+    renderStats();
+    renderTrending();
+  } else {
+    // Re-render the comment section
+    const pid = postId || data.comments[id]?.postId;
+    if (pid) renderComments(pid);
+    renderStats();
+  }
+}
+
+/** submitPost — creates a new post from compose box */
+function submitPost() {
+  const input = document.getElementById('compose-input');
+  const text  = input.value.trim();
+  if (!text) { showToast('Write something first!', 'error'); return; }
+
+  const data  = loadEngagementData();
+  const stats = loadStats();
+
+  const newPost = {
+    id:        `p${Date.now()}`,
+    authorId:  CURRENT_USER.id,
+    text,
+    tag:       '',
+    createdAt: Date.now(),
+    likes:     [],
+    rewards:   {},
+    comments:  [],
+  };
+
+  data.posts.unshift(newPost);
+  stats.posts++;
+  saveEngagementData(data);
+  saveStats(stats);
+
+  input.value = '';
+  document.getElementById('char-count').textContent = '0 / 300';
+
+  renderFeed();
+  renderStats();
+  renderTrending();
+  addActivity('✦', '#bfdbfe', 'You created a new post.');
+  showToast('Post published! ✦', 'success');
+}
+
+/** submitComment — adds a comment to a post */
+function submitComment(postId) {
+  const input = document.getElementById(`comment-input-${postId}`);
+  const text  = input?.value.trim();
+  if (!text) return;
+
+  const data  = loadEngagementData();
+  const stats = loadStats();
+  const post  = data.posts.find(p => p.id === postId);
+  if (!post) return;
+
+  const cid = `c${Date.now()}`;
+  const newComment = {
+    id:        cid,
+    postId,
+    authorId:  CURRENT_USER.id,
+    text,
+    createdAt: Date.now(),
+    likes:     [],
+    rewards:   {},
+    replies:   [],
+  };
+
+  data.comments[cid] = newComment;
+  post.comments.push(cid);
+  stats.comments++;
+  saveEngagementData(data);
+  saveStats(stats);
+
+  renderComments(postId);
+  // Update comment count on post card
+  const postCard = document.getElementById(`post-${postId}`);
+  if (postCard) {
+    const commentBtns = postCard.querySelectorAll('.action-btn');
+    commentBtns.forEach(btn => {
+      if (btn.textContent.includes('Comment')) {
+        btn.childNodes[btn.childNodes.length - 1].textContent = ` ${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}`;
+      }
+    });
+  }
+  renderStats();
+  addActivity('💬', '#bfdbfe', 'You commented on a post.');
+}
+
+/** submitReply — adds a reply to a comment */
+function submitReply(commentId, postId) {
+  const input = document.getElementById(`reply-input-${commentId}`);
+  const text  = input?.value.trim();
+  if (!text) return;
+
+  const data    = loadEngagementData();
+  const comment = data.comments[commentId];
+  if (!comment) return;
+
+  const rid = `r${Date.now()}`;
+  data.replies[rid] = {
+    id: rid, commentId, authorId: CURRENT_USER.id,
+    text, createdAt: Date.now(),
+  };
+  comment.replies.push(rid);
+  saveEngagementData(data);
+  renderComments(postId);
+  addActivity('↩️', '#bfdbfe', 'You replied to a comment.');
+}
+
+/** toggleReplyInput — shows/hides reply input for a comment */
+function toggleReplyInput(commentId) {
+  const wrap = document.getElementById(`reply-wrap-${commentId}`);
+  if (!wrap) return;
+  const isOpen = wrap.style.display !== 'none';
+  wrap.style.display = isOpen ? 'none' : 'flex';
+  if (!isOpen) document.getElementById(`reply-input-${commentId}`)?.focus();
+}
+
+
+/* ══════════════════════════════════════════
+   10. REWARD SYSTEM
+   Reads inventory from shop.html localStorage.
+   Reduces quantity on send.
+   ══════════════════════════════════════════ */
+
+/**
+ * openRewardPicker — opens the modal populated with
+ * the user's currently owned rewards from shop.html.
+ */
+function openRewardPicker(targetType, targetId) {
+  rewardTarget     = { type: targetType, id: targetId };
+  selectedRewardId = null;
+
+  // Update modal subtitle
+  const label = document.getElementById('modal-target-label');
+  if (label) label.textContent = `Rewarding this ${targetType}`;
+
+  // Load owned rewards from the SAME localStorage key as shop.html
+  const owned = loadShopRewards();
+
+  const content = document.getElementById('reward-picker-content');
+  const footer  = document.getElementById('modal-footer');
+  const sendBtn = document.getElementById('send-reward-btn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  if (!owned.length) {
+    // User has no rewards — direct them to shop.html
+    content.innerHTML = `
+      <div class="modal-empty">
+        <div class="me-icon">🎁</div>
+        <p>You don't have any rewards yet.<br>Visit the Reward Shop to buy some with your TrackWeave points!</p>
+        <a href="./shop.html" class="btn btn-gold" style="text-decoration:none;" onclick="linkToShop('browse')">
+          Open Reward Shop
+        </a>
+      </div>`;
+    if (footer) footer.style.display = 'none';
+  } else {
+    if (footer) footer.style.display = 'flex';
+    content.innerHTML = `
+      <div style="margin-bottom:.9rem;">
+        <p style="font-size:.82rem;color:var(--ink-soft);line-height:1.6;">Select a reward to send. It will be removed from your inventory.</p>
+      </div>
+      <div class="reward-grid" id="reward-grid">
+        ${owned.map(item => `
+          <div class="reward-option" data-reward-id="${item.id}" onclick="selectReward('${item.id}')">
+            <span class="ro-icon">${item.icon}</span>
+            <div class="ro-title">${item.title}</div>
+            <div class="ro-qty">You own this</div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  document.getElementById('reward-modal-backdrop').classList.add('open');
+}
+
+/** selectReward — highlights selected reward in picker */
+function selectReward(rewardId) {
+  selectedRewardId = rewardId;
+  document.querySelectorAll('.reward-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.rewardId === rewardId);
+  });
+  const sendBtn = document.getElementById('send-reward-btn');
+  if (sendBtn) sendBtn.disabled = false;
+}
+
+/** closeRewardPicker — hides the modal */
+function closeRewardPicker(event) {
+  if (event && event.target !== document.getElementById('reward-modal-backdrop')) return;
+  document.getElementById('reward-modal-backdrop').classList.remove('open');
+  rewardTarget     = null;
+  selectedRewardId = null;
+}
+
+/**
+ * confirmSendReward — called when user clicks "Send Reward".
+ * Delegates to sendReward().
+ */
+function confirmSendReward() {
+  if (!rewardTarget || !selectedRewardId) return;
+  sendReward(rewardTarget.type, rewardTarget.id, selectedRewardId);
+}
+
+/**
+ * sendReward — core reward logic:
+ *   1. Validates the user owns the reward (from shop.html localStorage)
+ *   2. Removes it from their inventory (updates tw_owned in localStorage)
+ *   3. Records it on the target post/comment
+ *   4. Updates UI and shows confirmation
+ */
+function sendReward(targetType, targetId, rewardId) {
+  // 1. Validate ownership using shop.html's localStorage key
+  const ownedIds = JSON.parse(localStorage.getItem(KEYS.shopOwned) || '[]');
+  if (!ownedIds.includes(rewardId)) {
+    showToast('You no longer own this reward.', 'error');
+    return;
+  }
+
+  const item = CATALOG_MAP[rewardId];
+  if (!item) return;
+
+  // 2. Remove from inventory (shop.html reads tw_owned — we update the same key)
+  const newOwned = ownedIds.filter(id => id !== rewardId);
+  localStorage.setItem(KEYS.shopOwned, JSON.stringify(newOwned));
+
+  // 3. Record the reward on the target
+  const data  = loadEngagementData();
+  const stats = loadStats();
+  let target;
+
+  if (targetType === 'post') {
+    target = data.posts.find(p => p.id === targetId);
+  } else {
+    target = data.comments[targetId];
+  }
+
+  if (!target) { showToast('Target not found.', 'error'); return; }
+
+  if (!target.rewards[rewardId]) target.rewards[rewardId] = [];
+  target.rewards[rewardId].push(CURRENT_USER.id);
+
+  stats.rewardsSent++;
+
+  // If the recipient isn't the current user, count their received rewards too
+  if (target.authorId && target.authorId !== CURRENT_USER.id) {
+    stats.rewardsReceived = (stats.rewardsReceived || 0); // only tracks self-received
+  }
+
+  saveEngagementData(data);
+  saveStats(stats);
+
+  // 4. Update UI
+  closeRewardPicker();
+  burstConfetti();
+  showToast(`${item.icon} Sent "${item.title}" as a reward! 🎉`, 'reward');
+  addActivity(item.icon, '#fef3c7', `You sent <strong>${item.title}</strong> as a reward.`);
+
+  // Re-render the affected section
+  if (targetType === 'post') {
+    renderFeed();
+  } else {
+    const postId = data.comments[targetId]?.postId || target.postId;
+    if (postId) renderComments(postId);
+  }
+
+  renderStats();
+  renderTrending();
+  renderLeaderboard();
+}
+
+
+/* ══════════════════════════════════════════
+   11. UTILITY FUNCTIONS
+   ══════════════════════════════════════════ */
+
+/** escapeHtml — prevents XSS from user content */
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+/** formatTime — human-readable relative time */
+function formatTime(ts) {
+  const diff = Date.now() - ts;
+  const m = Math.floor(diff / 60000);
+  const h = Math.floor(diff / 3600000);
+  const d = Math.floor(diff / 86400000);
+  if (m < 1)  return 'just now';
+  if (m < 60) return `${m}m ago`;
+  if (h < 24) return `${h}h ago`;
+  return `${d}d ago`;
+}
+
+/** truncate — cuts string to max length */
+function truncate(str, max) {
+  return str.length > max ? str.slice(0, max) + '…' : str;
+}
+
+/** scrollToPost — smoothly scrolls to a post card */
+function scrollToPost(postId) {
+  const el = document.getElementById(`post-${postId}`);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/** showToast — displays bottom-center notification */
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  const icon = type === 'reward' ? '🎁' : type === 'error' ? '✕' : '✓';
+  t.innerHTML = `<span>${icon}</span> ${msg}`;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.style.animation = 'toast-out .25s ease both';
+    t.addEventListener('animationend', () => t.remove(), { once: true });
+  }, 3200);
+}
+
+/** burstConfetti — micro-animation on reward send */
+function burstConfetti() {
+  const colors = ['#f59e0b', '#2563eb', '#7c3aed', '#059669', '#dc2626', '#fef3c7'];
+  for (let i = 0; i < 14; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.cssText = `
+      background: ${colors[i % colors.length]};
+      left: ${40 + Math.random() * 20}%;
+      top: ${35 + Math.random() * 15}%;
+      animation-delay: ${i * 35}ms;
+      animation-duration: ${0.6 + Math.random() * 0.4}s;
+    `;
+    document.body.appendChild(piece);
+    piece.addEventListener('animationend', () => piece.remove(), { once: true });
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   12. EVENT WIRING
+   ══════════════════════════════════════════ */
+
+// Filter tabs
+document.getElementById('filter-tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.filter-tab');
+  if (!tab) return;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  activeFilter = tab.dataset.filter;
+  renderFeed();
+});
+
+// Compose char counter
+document.getElementById('compose-input').addEventListener('input', e => {
+  const len = e.target.value.length;
+  document.getElementById('char-count').textContent = `${len} / 300`;
+});
+
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('reward-modal-backdrop').classList.remove('open');
+});
+
+
+/* ══════════════════════════════════════════
+   13. INITIALISE
+   ══════════════════════════════════════════ */
+(function init() {
+  // Seed default points if shop.html hasn't been visited yet
+  if (!localStorage.getItem(KEYS.shopPoints)) {
+    localStorage.setItem(KEYS.shopPoints, '1250');
+  }
+
+  renderFeed();
+  renderStats();
+  renderTrending();
+  renderLeaderboard();
+  renderActivity();
+})();
+</script>
+</body>
+</html>
