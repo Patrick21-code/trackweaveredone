@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Community â€” TrackWeave</title>
+  <title>Community — TrackWeave</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -87,7 +87,7 @@
 </head>
 <body>
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAV â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== NAV ======================== -->
 <header class="nav">
   <div class="nav-inner">
     <a href="./index.html" class="nav-brand">
@@ -118,7 +118,7 @@
         <div class="drop-user">
           <div class="drop-av" id="drop-av-mini">?</div>
           <div>
-            <div class="drop-name" id="drop-display-name">â€”</div>
+            <div class="drop-name" id="drop-display-name">—</div>
             <div class="drop-handle" id="drop-username"></div>
           </div>
         </div>
@@ -155,7 +155,7 @@
 </header>
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• PAGE HEADER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== PAGE HEADER ======================== -->
 <div id="page-shell" hidden>
 
 <div class="page-hd">
@@ -163,7 +163,7 @@
     <div>
       <div class="page-hd-label">TrackWeave Community</div>
       <h1>Share your <em>listening</em><br>with the world</h1>
-      <p>Posts, comments, and rewards â€” the social heartbeat of TrackWeave.</p>
+      <p>Posts, comments, and rewards — the social heartbeat of TrackWeave.</p>
     </div>
     <div class="page-hd-actions">
       <!-- Both buttons redirect to shop.html as the source of truth for rewards -->
@@ -185,19 +185,19 @@
 </div>
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MAIN LAYOUT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== MAIN LAYOUT ======================== -->
 <div class="layout">
 
-  <!-- â”€â”€â”€ FEED COLUMN â”€â”€â”€ -->
+  <!-- === FEED COLUMN === -->
   <main>
 
     <!-- Feed Filter Controls -->
     <div class="feed-controls">
       <div class="filter-tabs" id="filter-tabs">
-        <button class="filter-tab active" data-filter="newest">âœ¦ Newest</button>
-        <button class="filter-tab" data-filter="liked">â™¥ Most Liked</button>
-        <button class="filter-tab" data-filter="rewarded">â­ Most Rewarded</button>
-        <button class="filter-tab" data-filter="trending">ðŸ”¥ Trending</button>
+        <button class="filter-tab active" data-filter="newest">✦ Newest</button>
+        <button class="filter-tab" data-filter="liked">♥ Most Liked</button>
+        <button class="filter-tab" data-filter="rewarded">⭐ Most Rewarded</button>
+        <button class="filter-tab" data-filter="trending">🔥 Trending</button>
       </div>
     </div>
 
@@ -208,13 +208,13 @@
         <textarea
           class="compose-input"
           id="compose-input"
-          placeholder="Share your latest listening, a hot take, or a music discoveryâ€¦"
+          placeholder="Share your latest listening, a hot take, or a music discovery…"
           maxlength="300"
           rows="2"
         ></textarea>
       </div>
       <div class="compose-footer">
-        <span class="compose-hints">ðŸŽµ Tag albums Â· ðŸŽ§ Share playlists Â· ðŸ’¬ Start discussions</span>
+        <span class="compose-hints">🎵 Tag albums · 🎧 Share playlists · 💬 Start discussions</span>
         <div style="display:flex;align-items:center;gap:.75rem;">
           <span class="char-count" id="char-count">0 / 300</span>
           <button class="btn btn-solid btn-sm" id="post-btn" onclick="submitPost()">Post</button>
@@ -229,14 +229,14 @@
 
   </main>
 
-  <!-- â”€â”€â”€ SIDEBAR â”€â”€â”€ -->
+  <!-- === SIDEBAR === -->
   <aside class="sidebar">
 
     <!-- User Stats Card -->
     <div class="sidebar-card">
       <span class="sec-label">Your Engagement</span>
       <div class="sc-title" id="sidebar-username">You</div>
-      <div class="sc-sub" id="sidebar-handle">@you Â· TrackWeave member</div>
+      <div class="sc-sub" id="sidebar-handle">@you · TrackWeave member</div>
       <div class="stats-grid" id="stats-grid">
         <!-- Rendered by renderStats() -->
       </div>
@@ -250,7 +250,7 @@
 
       <!-- These redirect to shop.html, not a duplicate page -->
       <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('browse')">
-        <div class="slb-icon" style="background:var(--blue-ghost);">ðŸ›ï¸</div>
+        <div class="slb-icon" style="background:var(--blue-ghost);">🛍️</div>
         <div class="slb-text">
           <div class="slb-title">Browse Rewards</div>
           <div class="slb-hint">Spend your TrackWeave points</div>
@@ -259,10 +259,10 @@
       </a>
 
       <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('inventory')">
-        <div class="slb-icon" style="background:var(--gold-light);">ðŸŽ</div>
+        <div class="slb-icon" style="background:var(--gold-light);">🎁</div>
         <div class="slb-text">
           <div class="slb-title">My Reward Inventory</div>
-          <div class="slb-hint" id="sidebar-owned-count">Loadingâ€¦</div>
+          <div class="slb-hint" id="sidebar-owned-count">Loading…</div>
         </div>
         <svg class="slb-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
       </a>
@@ -271,7 +271,7 @@
     <!-- Trending Posts -->
     <div class="sidebar-card">
       <span class="sec-label">Trending</span>
-      <div class="sc-title">Hot Right Now ðŸ”¥</div>
+      <div class="sc-title">Hot Right Now 🔥</div>
       <div class="sc-sub">Most liked posts this week</div>
       <div class="trending-list" id="trending-list">
         <!-- Rendered by renderTrending() -->
@@ -281,7 +281,7 @@
     <!-- Leaderboard -->
     <div class="sidebar-card">
       <span class="sec-label">Leaderboard</span>
-      <div class="sc-title">Most Appreciated ðŸ†</div>
+      <div class="sc-title">Most Appreciated 🏆</div>
       <div class="sc-sub">Ranked by rewards received</div>
       <div class="leaderboard-list" id="leaderboard-list">
         <!-- Rendered by renderLeaderboard() -->
@@ -303,17 +303,17 @@
 </div><!-- /page-shell -->
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• REWARD PICKER MODAL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== REWARD PICKER MODAL ======================== -->
 <!--
   This modal reads owned rewards from localStorage (same key used by shop.html).
-  It NEVER duplicates the shop â€” it only lets users SPEND owned rewards.
+  It NEVER duplicates the shop — it only lets users SPEND owned rewards.
   For browsing/buying, users are directed to shop.html.
 -->
 <div class="modal-backdrop" id="reward-modal-backdrop" onclick="closeRewardPicker(event)">
   <div class="reward-modal" id="reward-modal">
     <div class="modal-hd">
       <div>
-        <div class="modal-title">Choose a Reward ðŸŽ</div>
+        <div class="modal-title">Choose a Reward 🎁</div>
         <div class="modal-sub" id="modal-target-label">Rewarding this post</div>
       </div>
       <button class="modal-close" onclick="closeRewardPicker()">
@@ -339,13 +339,13 @@
 </div>
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• TOAST â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== TOAST ======================== -->
 <div id="toast-container"></div>
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== FOOTER ======================== -->
 <footer>
-  <span>Â© 2026 TrackWeave. All rights reserved.</span>
+  <span>© 2026 TrackWeave. All rights reserved.</span>
   <div style="margin-top:.4rem;">
     <a href="#">Privacy Policy</a>
     <a href="#">Terms of Service</a>
@@ -355,73 +355,73 @@
 </footer>
 
 
-<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• JAVASCRIPT â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ======================== JAVASCRIPT ======================== -->
 <script>
-/* â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—
-   â•‘  TrackWeave â€” Engagement Platform                            â•‘
-   â•‘  Connects to shop.html via shared localStorage keys          â•‘
-   â•‘                                                              â•‘
-   â•‘  localStorage keys shared with shop.html:                   â•‘
-   â•‘    tw_owned  â€” array of owned item IDs                       â•‘
-   â•‘    tw_points â€” user's point balance                          â•‘
-   â•‘    tw_spent  â€” total points spent                            â•‘
-   â•‘                                                              â•‘
-   â•‘  Engagement-specific localStorage keys:                      â•‘
-   â•‘    tw_engagement â€” all posts, comments, likes, rewards       â•‘
-   â•‘    tw_eng_stats  â€” user stats summary                        â•‘
-   â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ================================================================
+   =  TrackWeave — Engagement Platform                            =
+   =  Connects to shop.html via shared localStorage keys          =
+   =                                                              =
+   =  localStorage keys shared with shop.html:                   =
+   =    tw_owned  — array of owned item IDs                       =
+   =    tw_points — user's point balance                          =
+   =    tw_spent  — total points spent                            =
+   =                                                              =
+   =  Engagement-specific localStorage keys:                      =
+   =    tw_engagement — all posts, comments, likes, rewards       =
+   =    tw_eng_stats  — user stats summary                        =
+   ================================================================ */
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    1. SHOP CATALOG MIRROR
-   (Same catalog as shop.html â€” used to map
+   (Same catalog as shop.html — used to map
     owned item IDs to metadata for reward picker)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 const SHOP_CATALOG = [
-  { id: 'theme-midnight',      icon: 'ðŸŒ™', title: 'Midnight Mode',      category: 'themes'  },
-  { id: 'theme-vinyl',         icon: 'ðŸ’¿', title: 'Vinyl Warmth',        category: 'themes'  },
-  { id: 'theme-neon',          icon: 'ðŸ”®', title: 'Neon Pulse',          category: 'themes'  },
-  { id: 'theme-aurora',        icon: 'ðŸŒŒ', title: 'Aurora Borealis',     category: 'themes'  },
-  { id: 'avatar-headphones',   icon: 'ðŸŽ§', title: 'Audiophile',          category: 'avatars' },
-  { id: 'avatar-vinyl-spinner',icon: 'ðŸŽ¼', title: 'Vinyl Spinner',       category: 'avatars' },
-  { id: 'avatar-cosmic',       icon: 'ðŸª', title: 'Cosmic Explorer',     category: 'avatars' },
-  { id: 'avatar-golden-ear',   icon: 'ðŸ‘‘', title: 'Golden Ear',          category: 'avatars' },
-  { id: 'boost-double-pts',    icon: 'âš¡', title: '2Ã— Points Weekend',   category: 'boosts'  },
-  { id: 'boost-early-access',  icon: 'ðŸš€', title: 'Early Access Pass',   category: 'boosts'  },
-  { id: 'boost-graph-pro',     icon: 'ðŸ•¸ï¸', title: 'Graph Pro Unlock',    category: 'boosts'  },
-  { id: 'boost-spotlight',     icon: 'ðŸŒŸ', title: 'Community Spotlight', category: 'boosts'  },
-  { id: 'badge-early-adopter', icon: 'ðŸŒ±', title: 'Early Adopter',       category: 'badges'  },
-  { id: 'badge-crate-digger',  icon: 'ðŸ“¦', title: 'Crate Digger',        category: 'badges'  },
-  { id: 'badge-theorist',      icon: 'ðŸ§ ', title: 'Music Theorist',      category: 'badges'  },
-  { id: 'badge-legend',        icon: 'ðŸŽº', title: 'Living Legend',       category: 'badges'  },
+  { id: 'theme-midnight',      icon: '🌙', title: 'Midnight Mode',      category: 'themes'  },
+  { id: 'theme-vinyl',         icon: '💿', title: 'Vinyl Warmth',        category: 'themes'  },
+  { id: 'theme-neon',          icon: '🔮', title: 'Neon Pulse',          category: 'themes'  },
+  { id: 'theme-aurora',        icon: '🌌', title: 'Aurora Borealis',     category: 'themes'  },
+  { id: 'avatar-headphones',   icon: '🎧', title: 'Audiophile',          category: 'avatars' },
+  { id: 'avatar-vinyl-spinner',icon: '🎼', title: 'Vinyl Spinner',       category: 'avatars' },
+  { id: 'avatar-cosmic',       icon: '🪐', title: 'Cosmic Explorer',     category: 'avatars' },
+  { id: 'avatar-golden-ear',   icon: '👑', title: 'Golden Ear',          category: 'avatars' },
+  { id: 'boost-double-pts',    icon: '⚡', title: '2× Points Weekend',   category: 'boosts'  },
+  { id: 'boost-early-access',  icon: '🚀', title: 'Early Access Pass',   category: 'boosts'  },
+  { id: 'boost-graph-pro',     icon: '🕸️', title: 'Graph Pro Unlock',    category: 'boosts'  },
+  { id: 'boost-spotlight',     icon: '🌟', title: 'Community Spotlight', category: 'boosts'  },
+  { id: 'badge-early-adopter', icon: '🌱', title: 'Early Adopter',       category: 'badges'  },
+  { id: 'badge-crate-digger',  icon: '📦', title: 'Crate Digger',        category: 'badges'  },
+  { id: 'badge-theorist',      icon: '🧠', title: 'Music Theorist',      category: 'badges'  },
+  { id: 'badge-legend',        icon: '🎺', title: 'Living Legend',       category: 'badges'  },
 ];
 
 // Quick lookup by id
 const CATALOG_MAP = Object.fromEntries(SHOP_CATALOG.map(i => [i.id, i]));
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    AVATAR UTILITIES
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
-/** hashStr â€” djb2-style hash (same as dashboard.html) */
+/** hashStr — djb2-style hash (same as dashboard.html) */
 function hashStr(s) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
   return h;
 }
 
-/** avatarColor â€” deterministic HSL colour from a UID string */
+/** avatarColor — deterministic HSL colour from a UID string */
 function avatarColor(uid) {
   const hue = Math.abs(hashStr(uid)) % 360;
   return `hsl(${hue}, 65%, 48%)`;
 }
 
-/** getAvatarInitial â€” first char of username uppercased, or '?' */
+/** getAvatarInitial — first char of username uppercased, or '?' */
 function getAvatarInitial(username) {
   return username ? username.charAt(0).toUpperCase() : '?';
 }
 
-/** renderAvatar â€” renders photo or initial+gradient into an element */
+/** renderAvatar — renders photo or initial+gradient into an element */
 function renderAvatar(el, { username, photoURL, uid }) {
   if (!el) return;
   if (photoURL) {
@@ -443,149 +443,18 @@ function renderAvatar(el, { username, photoURL, uid }) {
 }
 window._renderAvatar = renderAvatar;
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    2. CURRENT USER (set by Firebase auth)
    window._currentUser is populated by initPage()
    after onAuthStateChanged resolves.
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 // currentUser is accessed via window._currentUser throughout this script
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   3. MOCK SEED DATA
-   Initial posts, comments, replies
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-const SEED_POSTS = [
-  {
-    id: 'p1',
-    authorId: 'mia',
-    text: "Just finished the full Kendrick Lamar discography run. The lyrical evolution from Section.80 to GNX is absolutely breathtaking â€” the NLP graph on TrackWeave literally shows you the thematic shift in real time.",
-    tag: 'ðŸŽµ Hip-Hop',
-    createdAt: Date.now() - 1000 * 60 * 18,
-    likes: ['james', 'priya', 'leo'],
-    rewards: { 'badge-theorist': ['james'], 'boost-spotlight': ['priya'] },
-    comments: ['c1', 'c2'],
-  },
-  {
-    id: 'p2',
-    authorId: 'james',
-    text: "Hot take: Radiohead's Kid A is not their best album. OK Computer's graph is denser with lyrical cross-references. I mapped both â€” the thematic clustering is incredible. Change my mind.",
-    tag: 'ðŸŽ¸ Alt/Rock',
-    createdAt: Date.now() - 1000 * 60 * 45,
-    likes: ['mia', 'soren'],
-    rewards: { 'theme-aurora': ['mia'] },
-    comments: ['c3'],
-  },
-  {
-    id: 'p3',
-    authorId: 'priya',
-    text: "Been deep in Hiatus Kaiyote this week. The jazz-meets-soul-meets-future thing they do is hard to categorize but SO easy to love. Anyone else think 'Tawk Tomahawk' is criminally underrated?",
-    tag: 'ðŸŽ· Jazz/Soul',
-    createdAt: Date.now() - 1000 * 60 * 90,
-    likes: ['ada', 'you', 'mia', 'leo'],
-    rewards: { 'avatar-cosmic': ['ada'], 'badge-early-adopter': ['you'] },
-    comments: ['c4', 'c5'],
-  },
-  {
-    id: 'p4',
-    authorId: 'leo',
-    text: "The way TrackWeave's graph shows how Tame Impala's 'Currents' is both a sonic and lyrical pivot point is genuinely mind-blowing. Every node in the cluster points back to one central motif: transformation.",
-    tag: 'ðŸ”® Psychedelic',
-    createdAt: Date.now() - 1000 * 60 * 180,
-    likes: ['james', 'mia', 'soren', 'priya', 'you'],
-    rewards: { 'boost-spotlight': ['james', 'mia'], 'theme-neon': ['priya'] },
-    comments: [],
-  },
-  {
-    id: 'p5',
-    authorId: 'soren',
-    text: "First time logging an ambient album â€” Brian Eno's 'Music for Airports'. The graph is almost entirely disconnected nodes with sparse edges. Fitting, honestly. Silence as punctuation.",
-    tag: 'ðŸŒŠ Ambient',
-    createdAt: Date.now() - 1000 * 60 * 300,
-    likes: ['ada'],
-    rewards: {},
-    comments: ['c6'],
-  },
-  {
-    id: 'p6',
-    authorId: 'ada',
-    text: "New personal challenge: log every album I own on vinyl by end of Q2. Currently at 34. The collection spans from 1960s Blue Note to last year's releases. What's the oldest record in your collection?",
-    tag: 'ðŸ“¦ Vinyl',
-    createdAt: Date.now() - 1000 * 60 * 420,
-    likes: ['leo', 'priya'],
-    rewards: { 'badge-crate-digger': ['leo'] },
-    comments: [],
-  },
-];
-
-const SEED_COMMENTS = {
-  c1: {
-    id: 'c1', postId: 'p1', authorId: 'james',
-    text: "The DAMN. era specifically â€” you can see how the compressed, almost claustrophobic lyrical density breaks open on later tracks. The graph makes it so visible.",
-    createdAt: Date.now() - 1000 * 60 * 10,
-    likes: ['mia', 'priya'],
-    rewards: { 'theme-midnight': ['mia'] },
-    replies: ['r1'],
-  },
-  c2: {
-    id: 'c2', postId: 'p1', authorId: 'soren',
-    text: "I saw the exact same pattern when I ran the discography! The node density is wild on To Pimp a Butterfly â€” every track references at least 4 others thematically.",
-    createdAt: Date.now() - 1000 * 60 * 8,
-    likes: ['mia'],
-    rewards: {},
-    replies: [],
-  },
-  c3: {
-    id: 'c3', postId: 'p2', authorId: 'priya',
-    text: "Respectfully disagree â€” Kid A's disconnected motifs create a more interesting graph topology precisely because the threads are fewer but stronger. Sparse edges, high weight.",
-    createdAt: Date.now() - 1000 * 60 * 40,
-    likes: ['james', 'mia'],
-    rewards: { 'badge-theorist': ['james'] },
-    replies: [],
-  },
-  c4: {
-    id: 'c4', postId: 'p3', authorId: 'leo',
-    text: "Tawk Tomahawk is everything. 'Nakamarra' alone should have put them in every conversation about best vocal performances of the decade.",
-    createdAt: Date.now() - 1000 * 60 * 85,
-    likes: ['priya', 'ada'],
-    rewards: {},
-    replies: ['r2'],
-  },
-  c5: {
-    id: 'c5', postId: 'p3', authorId: 'mia',
-    text: "Their live performances are even better than the studio versions. The polyrhythm is insane in person.",
-    createdAt: Date.now() - 1000 * 60 * 80,
-    likes: ['priya'],
-    rewards: {},
-    replies: [],
-  },
-  c6: {
-    id: 'c6', postId: 'p5', authorId: 'ada',
-    text: "Ambient music is the only genre where the graph's empty space is the point. Love this observation.",
-    createdAt: Date.now() - 1000 * 60 * 290,
-    likes: ['soren'],
-    rewards: {},
-    replies: [],
-  },
-};
-
-const SEED_REPLIES = {
-  r1: {
-    id: 'r1', commentId: 'c1', authorId: 'priya',
-    text: "Exactly â€” DAMN. is almost a closed loop. Every track echoes another. TrackWeave maps that beautifully.",
-    createdAt: Date.now() - 1000 * 60 * 6,
-  },
-  r2: {
-    id: 'r2', commentId: 'c4', authorId: 'priya',
-    text: "Nakamarra!! That guitar line under Nai Palm's voice is otherworldly. Absolutely agreed.",
-    createdAt: Date.now() - 1000 * 60 * 82,
-  },
-};
-
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    4. STORAGE KEYS
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 const KEYS = {
-  /* Shared with shop.html â€” do NOT change these */
+  /* Shared with shop.html — do NOT change these */
   shopOwned:  'tw_owned',
   shopPoints: 'tw_points',
 
@@ -594,23 +463,23 @@ const KEYS = {
   stats:      'tw_eng_stats',
 };
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    5. STATE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 let activeFilter    = 'newest';
 let rewardTarget    = null; // { type: 'post'|'comment', id }
 let selectedRewardId = null;
 let activityLog     = [];
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    USER PROFILE CACHE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
-/** In-memory cache: uid â†’ { username, photoURL } */
+/** In-memory cache: uid → { username, photoURL } */
 const userProfileCache = new Map();
 
 /**
- * resolveAuthor â€” returns author profile for a given UID.
+ * resolveAuthor — returns author profile for a given UID.
  * - Returns currentUser immediately if uid matches
  * - Returns cached profile if available
  * - Otherwise fetches from Firestore, caches, and returns
@@ -640,12 +509,12 @@ async function resolveAuthor(uid, currentUser) {
   }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    6. PERSISTENCE HELPERS
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
 /**
- * loadShopRewards â€” reads owned items from the same
+ * loadShopRewards — reads owned items from the same
  * localStorage key that shop.html writes to.
  * Returns array of catalog metadata for each owned item.
  */
@@ -657,29 +526,24 @@ function loadShopRewards() {
 }
 
 /**
- * loadEngagementData â€” loads posts, comments, replies
- * from localStorage, seeding with mock data on first visit.
+ * loadEngagementData — loads posts, comments, replies
+ * from localStorage on first visit.
  */
 function loadEngagementData() {
   const raw = localStorage.getItem(KEYS.engagement);
   if (raw) return JSON.parse(raw);
 
-  // First visit â€” seed with mock data
-  const data = {
-    posts:    SEED_POSTS,
-    comments: SEED_COMMENTS,
-    replies:  SEED_REPLIES,
-  };
-  saveEngagementData(data);
+  // First visit — start with empty data
+  const data = { posts: [], comments: {}, replies: {} };
   return data;
 }
 
-/** saveEngagementData â€” persists all social data */
+/** saveEngagementData — persists all social data */
 function saveEngagementData(data) {
   localStorage.setItem(KEYS.engagement, JSON.stringify(data));
 }
 
-/** loadStats â€” returns user stats object */
+/** loadStats — returns user stats object */
 function loadStats() {
   const raw = localStorage.getItem(KEYS.stats);
   if (raw) return JSON.parse(raw);
@@ -692,12 +556,12 @@ function saveStats(stats) {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    7. NAVIGATION / SHOP LINK
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
 /**
- * linkToShop â€” navigates to shop.html.
+ * linkToShop — navigates to shop.html.
  * The engagement platform NEVER replaces shop.html.
  * All reward browsing/purchasing happens there.
  */
@@ -708,26 +572,11 @@ function linkToShop(context = 'browse') {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   SEED DATA PATCH
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
-
-/**
- * patchSeedData â€” replaces 'you' authorId in seed data
- * with the real Firebase UID of the current user.
- * Called once after auth resolves, before renderFeed.
- */
-function patchSeedData(uid) {
-  SEED_POSTS.forEach(p => { if (p.authorId === 'you') p.authorId = uid; });
-  Object.values(SEED_COMMENTS).forEach(c => { if (c.authorId === 'you') c.authorId = uid; });
-  Object.values(SEED_REPLIES).forEach(r => { if (r.authorId === 'you') r.authorId = uid; });
-}
-
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    8. RENDER ENGINE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
-/** renderFeed â€” main entry point; filters and renders all posts */
+/** renderFeed — main entry point; filters and renders all posts */
 async function renderFeed() {
   const data = loadEngagementData();
   let posts  = [...data.posts];
@@ -751,12 +600,12 @@ async function renderFeed() {
   await renderPosts(posts, data);
 }
 
-/** rewardCount â€” total rewards on a post or comment */
+/** rewardCount — total rewards on a post or comment */
 function rewardCount(rewards) {
   return Object.values(rewards).reduce((sum, arr) => sum + arr.length, 0);
 }
 
-/** renderPosts â€” creates all post cards */
+/** renderPosts — creates all post cards */
 async function renderPosts(posts, data) {
   const container = document.getElementById('feed-container');
   container.innerHTML = '';
@@ -764,7 +613,7 @@ async function renderPosts(posts, data) {
   if (!posts.length) {
     container.innerHTML = `
       <div class="empty-state">
-        <div class="es-icon">ðŸ’¬</div>
+        <div class="es-icon">💬</div>
         <p>No posts yet. Be the first to share something!</p>
       </div>`;
     return;
@@ -779,12 +628,12 @@ async function renderPosts(posts, data) {
   }
 }
 
-/** buildPostCard â€” constructs a single post card DOM element */
+/** buildPostCard — constructs a single post card DOM element */
 async function buildPostCard(post, data, isTrending) {
   const cu = window._currentUser;
   const author = await resolveAuthor(post.authorId, cu);
   const username = author.username || '';
-  const handle = username ? `@${username}` : '@unknown';
+  const handle = username ? `@${username}` : 'Anonymous';
   const initial = getAvatarInitial(username);
   const color = avatarColor(post.authorId);
 
@@ -804,7 +653,7 @@ async function buildPostCard(post, data, isTrending) {
       <div class="post-meta">
         <span class="post-author">${handle}</span>
         <span class="post-time">${timeAgo}</span>
-        <div class="post-handle">${handle}${isTrending ? ' Â· <span style="color:var(--gold-dark)">ðŸ”¥ Trending</span>' : ''}</div>
+        ${isTrending ? '<div class="post-handle"><span style="color:var(--gold-dark)">&#x1F525; Trending</span></div>' : ''}
       </div>
     </div>
     <div class="post-body">
@@ -849,7 +698,7 @@ async function buildPostCard(post, data, isTrending) {
   return card;
 }
 
-/** renderRewardSummary â€” builds reward pill row for post/comment */
+/** renderRewardSummary — builds reward pill row for post/comment */
 function renderRewardSummary(rewards, context) {
   const entries = Object.entries(rewards);
   if (!entries.length) return '';
@@ -857,16 +706,16 @@ function renderRewardSummary(rewards, context) {
   const pills = entries.map(([itemId, givers]) => {
     const item = CATALOG_MAP[itemId];
     if (!item || !givers.length) return '';
-    return `<span class="reward-pill" title="${givers.length} Ã— ${item.title}">
+    return `<span class="reward-pill" title="${givers.length} × ${item.title}">
       <span class="rp-icon">${item.icon}</span>
-      <span class="rp-count">Ã—${givers.length}</span>
+      <span class="rp-count">×${givers.length}</span>
     </span>`;
   }).join('');
 
   return pills ? `<div class="reward-summary">${pills}</div>` : '';
 }
 
-/** renderComments â€” builds comment list inside a post */
+/** renderComments — builds comment list inside a post */
 async function renderComments(postId) {
   const data = loadEngagementData();
   const post = data.posts.find(p => p.id === postId);
@@ -883,13 +732,13 @@ async function renderComments(postId) {
   let html = `
     <div class="comment-form">
       <div class="avatar" style="background:${cuColor};width:30px;height:30px;font-size:.75rem;">${cuInitial}</div>
-      <input class="comment-input" id="comment-input-${postId}" placeholder="Write a commentâ€¦" maxlength="200"
+      <input class="comment-input" id="comment-input-${postId}" placeholder="Write a comment…" maxlength="200"
         onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${postId}')}" />
       <button class="btn btn-solid btn-sm" onclick="submitComment('${postId}')">Post</button>
     </div>`;
 
   if (!post.comments.length) {
-    html += `<div style="text-align:center;padding:1rem;color:var(--ink-faint);font-size:.83rem;">No comments yet â€” be first!</div>`;
+    html += `<div style="text-align:center;padding:1rem;color:var(--ink-faint);font-size:.83rem;">No comments yet — be first!</div>`;
     container.innerHTML = html;
     return;
   }
@@ -904,12 +753,12 @@ async function renderComments(postId) {
   }
 }
 
-/** buildCommentElement â€” builds a single comment DOM element (async, uses resolveAuthor) */
+/** buildCommentElement — builds a single comment DOM element (async, uses resolveAuthor) */
 async function buildCommentElement(comment, data) {
   const cu = window._currentUser;
   const author = await resolveAuthor(comment.authorId, cu);
   const username = author.username || '';
-  const handle = username ? `@${username}` : '@unknown';
+  const handle = username ? `@${username}` : 'Anonymous';
   const initial = getAvatarInitial(username);
   const color = avatarColor(comment.authorId);
 
@@ -921,7 +770,7 @@ async function buildCommentElement(comment, data) {
   const rewardSummaryHTML = Object.entries(comment.rewards).map(([itemId, givers]) => {
     const item = CATALOG_MAP[itemId];
     if (!item || !givers.length) return '';
-    return `<span class="comment-reward-pill">${item.icon} Ã—${givers.length}</span>`;
+    return `<span class="comment-reward-pill">${item.icon} ×${givers.length}</span>`;
   }).join('');
 
   // Build replies HTML
@@ -931,7 +780,7 @@ async function buildCommentElement(comment, data) {
     if (!reply) continue;
     const rAuthor = await resolveAuthor(reply.authorId, cu);
     const rUsername = rAuthor.username || '';
-    const rHandle = rUsername ? `@${rUsername}` : '@unknown';
+    const rHandle = rUsername ? `@${rUsername}` : 'Anonymous';
     const rInitial = getAvatarInitial(rUsername);
     const rColor = avatarColor(reply.authorId);
     repliesHTML += `
@@ -964,13 +813,13 @@ async function buildCommentElement(comment, data) {
         </button>
         <button class="comment-action-btn" onclick="toggleReplyInput('${comment.id}')">Reply</button>
         <button class="comment-action-btn reward-btn${totalRewards > 0 ? ' rewarded' : ''}" onclick="openRewardPicker('comment', '${comment.id}')">
-          ðŸŽ Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
+          🎁 Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
         </button>
       </div>
       ${repliesHTML ? `<div class="replies">${repliesHTML}</div>` : ''}
       <div class="reply-input-wrap" id="reply-wrap-${comment.id}" style="display:none;">
         <div class="avatar" style="background:${cu ? avatarColor(cu.uid) : '#2563eb'};width:24px;height:24px;font-size:.65rem;">${getAvatarInitial(cu?.username || '')}</div>
-        <input class="reply-input" id="reply-input-${comment.id}" placeholder="Write a replyâ€¦" maxlength="200"
+        <input class="reply-input" id="reply-input-${comment.id}" placeholder="Write a reply…" maxlength="200"
           onkeydown="if(event.key==='Enter'){event.preventDefault();submitReply('${comment.id}', '${comment.postId}')}" />
         <button class="btn btn-solid btn-sm" style="font-size:.75rem;padding:.28rem .65rem;" onclick="submitReply('${comment.id}', '${comment.postId}')">Reply</button>
       </div>
@@ -983,7 +832,7 @@ async function buildCommentElement(comment, data) {
   return el;
 }
 
-/** renderStats â€” fills sidebar stats grid */
+/** renderStats — fills sidebar stats grid */
 function renderStats() {
   const stats    = loadStats();
   const shopData = loadShopRewards();
@@ -1007,10 +856,10 @@ function renderStats() {
 
   // Update sidebar owned count hint
   const hint = document.getElementById('sidebar-owned-count');
-  if (hint) hint.textContent = shopData.length ? `${shopData.length} reward${shopData.length !== 1 ? 's' : ''} owned` : 'No rewards yet â€” visit shop';
+  if (hint) hint.textContent = shopData.length ? `${shopData.length} reward${shopData.length !== 1 ? 's' : ''} owned` : 'No rewards yet — visit shop';
 }
 
-/** renderTrending â€” sidebar trending list */
+/** renderTrending — sidebar trending list */
 async function renderTrending() {
   const data  = loadEngagementData();
   const posts  = [...data.posts]
@@ -1023,13 +872,13 @@ async function renderTrending() {
   const cu = window._currentUser;
   const items = await Promise.all(posts.map(async (p, i) => {
     const author = await resolveAuthor(p.authorId, cu);
-    const handle = author.username ? `@${author.username}` : '@unknown';
+    const handle = author.username ? `@${author.username}` : 'Anonymous';
     return `
       <div class="trending-item" onclick="scrollToPost('${p.id}')">
         <div class="trending-rank">${i + 1}</div>
         <div class="trending-text">
           <div class="trending-title">${truncate(p.text, 55)}</div>
-          <div class="trending-meta">by ${handle} Â· â™¥ ${p.likes.length} Â· ðŸŽ ${rewardCount(p.rewards)}</div>
+          <div class="trending-meta">by ${handle} · ♥ ${p.likes.length} · 🎁 ${rewardCount(p.rewards)}</div>
         </div>
       </div>`;
   }));
@@ -1037,7 +886,7 @@ async function renderTrending() {
   el.innerHTML = items.join('');
 }
 
-/** renderLeaderboard â€” sidebar leaderboard by rewards received */
+/** renderLeaderboard — sidebar leaderboard by rewards received */
 async function renderLeaderboard() {
   const data = loadEngagementData();
 
@@ -1059,7 +908,7 @@ async function renderLeaderboard() {
     .slice(0, 5);
 
   const rankClass = ['gold','silver','bronze','',''];
-  const medals    = ['ðŸ¥‡','ðŸ¥ˆ','ðŸ¥‰','4','5'];
+  const medals    = ['🥇','🥈','🥉','4','5'];
 
   const el = document.getElementById('leaderboard-list');
   if (!el) return;
@@ -1072,7 +921,7 @@ async function renderLeaderboard() {
   const cu = window._currentUser;
   const items = await Promise.all(ranked.map(async ([userId, count], i) => {
     const author = await resolveAuthor(userId, cu);
-    const handle = author.username ? `@${author.username}` : '@unknown';
+    const handle = author.username ? `@${author.username}` : 'Anonymous';
     const initial = getAvatarInitial(author.username || '');
     const color = avatarColor(userId);
     return `
@@ -1087,7 +936,7 @@ async function renderLeaderboard() {
   el.innerHTML = items.join('');
 }
 
-/** renderActivity â€” recent activity sidebar */
+/** renderActivity — recent activity sidebar */
 function renderActivity() {
   const el = document.getElementById('activity-feed');
   if (!el) return;
@@ -1105,18 +954,18 @@ function renderActivity() {
     </div>`).join('');
 }
 
-/** addActivity â€” pushes to the front of activityLog */
+/** addActivity — pushes to the front of activityLog */
 function addActivity(icon, color, text) {
   activityLog.unshift({ icon, color, text, time: Date.now() });
   renderActivity();
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    9. INTERACTIONS
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
-/** toggleComments â€” shows/hides comment section */
+/** toggleComments — shows/hides comment section */
 function toggleComments(postId) {
   const section = document.getElementById(`comments-${postId}`);
   if (!section) return;
@@ -1125,7 +974,7 @@ function toggleComments(postId) {
   if (!isOpen) renderComments(postId);
 }
 
-/** toggleLike â€” like/unlike a post or comment */
+/** toggleLike — like/unlike a post or comment */
 function toggleLike(type, id, postId) {
   const cu    = window._currentUser;
   const data  = loadEngagementData();
@@ -1143,7 +992,7 @@ function toggleLike(type, id, postId) {
   if (idx === -1) {
     target.likes.push(cu.uid);
     stats.likesGiven++;
-    addActivity('â™¥', '#fee2e2', `You liked a ${type}.`);
+    addActivity('♥', '#fee2e2', `You liked a ${type}.`);
   } else {
     target.likes.splice(idx, 1);
     stats.likesGiven = Math.max(0, stats.likesGiven - 1);
@@ -1172,7 +1021,7 @@ function toggleLike(type, id, postId) {
   }
 }
 
-/** submitPost â€” creates a new post from compose box */
+/** submitPost — creates a new post from compose box */
 function submitPost() {
   const cu    = window._currentUser;
   const input = document.getElementById('compose-input');
@@ -1204,11 +1053,11 @@ function submitPost() {
   renderFeed();
   renderStats();
   renderTrending();
-  addActivity('âœ¦', '#bfdbfe', 'You created a new post.');
-  showToast('Post published! âœ¦', 'success');
+  addActivity('✦', '#bfdbfe', 'You created a new post.');
+  showToast('Post published! ✦', 'success');
 }
 
-/** submitComment â€” adds a comment to a post */
+/** submitComment — adds a comment to a post */
 function submitComment(postId) {
   const cu    = window._currentUser;
   const input = document.getElementById(`comment-input-${postId}`);
@@ -1245,15 +1094,15 @@ function submitComment(postId) {
     const commentBtns = postCard.querySelectorAll('.action-btn');
     commentBtns.forEach(btn => {
       if (btn.textContent.includes('Comment')) {
-        btn.childNodes[btn.childNodes.length - 1].textContent = ` ${post.comments.length} Comment${post.comments.length !== 1 ? 's' : ''}`;
+        btn.innerHTML = btn.innerHTML.replace(/\d+ Comment/, `${post.comments.length} Comment`);
       }
     });
   }
   renderStats();
-  addActivity('ðŸ’¬', '#bfdbfe', 'You commented on a post.');
+  addActivity('💬', '#bfdbfe', 'You commented on a post.');
 }
 
-/** submitReply â€” adds a reply to a comment */
+/** submitReply — adds a reply to a comment */
 function submitReply(commentId, postId) {
   const cu    = window._currentUser;
   const input = document.getElementById(`reply-input-${commentId}`);
@@ -1272,10 +1121,10 @@ function submitReply(commentId, postId) {
   comment.replies.push(rid);
   saveEngagementData(data);
   renderComments(postId);
-  addActivity('â†©ï¸', '#bfdbfe', 'You replied to a comment.');
+  addActivity('↩️', '#bfdbfe', 'You replied to a comment.');
 }
 
-/** toggleReplyInput â€” shows/hides reply input for a comment */
+/** toggleReplyInput — shows/hides reply input for a comment */
 function toggleReplyInput(commentId) {
   const wrap = document.getElementById(`reply-wrap-${commentId}`);
   if (!wrap) return;
@@ -1285,14 +1134,14 @@ function toggleReplyInput(commentId) {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    10. REWARD SYSTEM
    Reads inventory from shop.html localStorage.
    Reduces quantity on send.
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
 /**
- * openRewardPicker â€” opens the modal populated with
+ * openRewardPicker — opens the modal populated with
  * the user's currently owned rewards from shop.html.
  */
 function openRewardPicker(targetType, targetId) {
@@ -1312,10 +1161,10 @@ function openRewardPicker(targetType, targetId) {
   if (sendBtn) sendBtn.disabled = true;
 
   if (!owned.length) {
-    // User has no rewards â€” direct them to shop.html
+    // User has no rewards — direct them to shop.html
     content.innerHTML = `
       <div class="modal-empty">
-        <div class="me-icon">ðŸŽ</div>
+        <div class="me-icon">🎁</div>
         <p>You don't have any rewards yet.<br>Visit the Reward Shop to buy some with your TrackWeave points!</p>
         <a href="./shop.html" class="btn btn-gold" style="text-decoration:none;" onclick="linkToShop('browse')">
           Open Reward Shop
@@ -1341,7 +1190,7 @@ function openRewardPicker(targetType, targetId) {
   document.getElementById('reward-modal-backdrop').classList.add('open');
 }
 
-/** selectReward â€” highlights selected reward in picker */
+/** selectReward — highlights selected reward in picker */
 function selectReward(rewardId) {
   selectedRewardId = rewardId;
   document.querySelectorAll('.reward-option').forEach(el => {
@@ -1351,7 +1200,7 @@ function selectReward(rewardId) {
   if (sendBtn) sendBtn.disabled = false;
 }
 
-/** closeRewardPicker â€” hides the modal */
+/** closeRewardPicker — hides the modal */
 function closeRewardPicker(event) {
   if (event && event.target !== document.getElementById('reward-modal-backdrop')) return;
   document.getElementById('reward-modal-backdrop').classList.remove('open');
@@ -1360,7 +1209,7 @@ function closeRewardPicker(event) {
 }
 
 /**
- * confirmSendReward â€” called when user clicks "Send Reward".
+ * confirmSendReward — called when user clicks "Send Reward".
  * Delegates to sendReward().
  */
 function confirmSendReward() {
@@ -1369,7 +1218,7 @@ function confirmSendReward() {
 }
 
 /**
- * sendReward â€” core reward logic:
+ * sendReward — core reward logic:
  *   1. Validates the user owns the reward (from shop.html localStorage)
  *   2. Removes it from their inventory (updates tw_owned in localStorage)
  *   3. Records it on the target post/comment
@@ -1388,7 +1237,7 @@ function sendReward(targetType, targetId, rewardId) {
   const item = CATALOG_MAP[rewardId];
   if (!item) return;
 
-  // 2. Remove from inventory (shop.html reads tw_owned â€” we update the same key)
+  // 2. Remove from inventory (shop.html reads tw_owned — we update the same key)
   const newOwned = ownedIds.filter(id => id !== rewardId);
   localStorage.setItem(KEYS.shopOwned, JSON.stringify(newOwned));
 
@@ -1421,7 +1270,7 @@ function sendReward(targetType, targetId, rewardId) {
   // 4. Update UI
   closeRewardPicker();
   burstConfetti();
-  showToast(`${item.icon} Sent "${item.title}" as a reward! ðŸŽ‰`, 'reward');
+  showToast(`${item.icon} Sent "${item.title}" as a reward! 🎉`, 'reward');
   addActivity(item.icon, '#fef3c7', `You sent <strong>${item.title}</strong> as a reward.`);
 
   // Re-render the affected section
@@ -1438,11 +1287,11 @@ function sendReward(targetType, targetId, rewardId) {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    11. UTILITY FUNCTIONS
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
-/** escapeHtml â€” prevents XSS from user content */
+/** escapeHtml — prevents XSS from user content */
 function escapeHtml(str) {
   return str
     .replace(/&/g, '&amp;')
@@ -1452,7 +1301,7 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
-/** formatTime â€” human-readable relative time */
+/** formatTime — human-readable relative time */
 function formatTime(ts) {
   const diff = Date.now() - ts;
   const m = Math.floor(diff / 60000);
@@ -1464,23 +1313,23 @@ function formatTime(ts) {
   return `${d}d ago`;
 }
 
-/** truncate â€” cuts string to max length */
+/** truncate — cuts string to max length */
 function truncate(str, max) {
-  return str.length > max ? str.slice(0, max) + 'â€¦' : str;
+  return str.length > max ? str.slice(0, max) + '…' : str;
 }
 
-/** scrollToPost â€” smoothly scrolls to a post card */
+/** scrollToPost — smoothly scrolls to a post card */
 function scrollToPost(postId) {
   const el = document.getElementById(`post-${postId}`);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-/** showToast â€” displays bottom-center notification */
+/** showToast — displays bottom-center notification */
 function showToast(msg, type = 'success') {
   const c = document.getElementById('toast-container');
   const t = document.createElement('div');
   t.className = `toast toast-${type}`;
-  const icon = type === 'reward' ? 'ðŸŽ' : type === 'error' ? 'âœ•' : 'âœ“';
+  const icon = type === 'reward' ? '🎁' : type === 'error' ? '✕' : '✓';
   t.innerHTML = `<span>${icon}</span> ${msg}`;
   c.appendChild(t);
   setTimeout(() => {
@@ -1489,7 +1338,7 @@ function showToast(msg, type = 'success') {
   }, 3200);
 }
 
-/** burstConfetti â€” micro-animation on reward send */
+/** burstConfetti — micro-animation on reward send */
 function burstConfetti() {
   const colors = ['#f59e0b', '#2563eb', '#7c3aed', '#059669', '#dc2626', '#fef3c7'];
   for (let i = 0; i < 14; i++) {
@@ -1508,9 +1357,9 @@ function burstConfetti() {
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    12. EVENT WIRING
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 
 // Filter tabs
 document.getElementById('filter-tabs').addEventListener('click', e => {
@@ -1533,7 +1382,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('reward-modal-backdrop').classList.remove('open');
 });
 
-// â”€â”€ Avatar dropdown toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// == Avatar dropdown toggle ================================
 (function wireDropdown() {
   const wrap  = document.getElementById('nav-avatar-wrap');
   const avBtn = document.getElementById('nav-avatar');
@@ -1559,18 +1408,16 @@ document.addEventListener('keydown', e => {
 })();
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ==========================================
    13. INITIALISE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ========================================== */
 window._engagementInit = function() {
   // Seed default points if shop.html hasn't been visited yet
   if (!localStorage.getItem(KEYS.shopPoints)) {
     localStorage.setItem(KEYS.shopPoints, '1250');
   }
 
-  // Patch seed data to use real Firebase UID
   const cu = window._currentUser;
-  if (cu?.uid) patchSeedData(cu.uid);
 
   // Update compose box avatar
   const composeAvatar = document.getElementById('current-user-avatar');
@@ -1585,7 +1432,7 @@ window._engagementInit = function() {
     sidebarUsername.textContent = cu.username ? `@${cu.username}` : (cu.email || 'You');
   }
   if (sidebarHandle && cu) {
-    sidebarHandle.textContent = cu.username ? `@${cu.username} Â· TrackWeave member` : 'TrackWeave member';
+    sidebarHandle.textContent = cu.username ? `@${cu.username} · TrackWeave member` : 'TrackWeave member';
   }
 
   // Also update CURRENT_USER reference for interactions (likes, posts, comments)

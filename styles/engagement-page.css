@@ -1,5 +1,5 @@
-﻿   BASE â€” mirrors trackweave-base.css conventions
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+﻿/* BASE = mirrors trackweave-base.css conventions
+   ======================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -41,7 +41,7 @@ a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 input, textarea { font-family: inherit; }
 
-/* â”€â”€â”€ NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === NAV ======================================= */
 .nav {
   position: sticky; top: 0; z-index: 200;
   background: rgba(248,247,244,.93);
@@ -90,7 +90,7 @@ input, textarea { font-family: inherit; }
 .btn-gold:hover { background: #e08d00; }
 .btn-sm { font-size: .78rem; padding: .32rem .72rem; }
 
-/* â”€â”€â”€ PAGE HEADER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === PAGE HEADER ============================== */
 .page-hd {
   background: var(--ink);
   color: #fff;
@@ -134,14 +134,14 @@ input, textarea { font-family: inherit; }
 }
 .page-hd-actions { display: flex; gap: .65rem; flex-shrink: 0; flex-wrap: wrap; align-items: center; }
 
-/* â”€â”€â”€ LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === LAYOUT ==================================== */
 .layout {
   max-width: 1160px; margin: 0 auto;
   display: grid; grid-template-columns: 1fr 340px;
   gap: 2rem; padding: 2rem 2rem 5rem;
 }
 
-/* â”€â”€â”€ FEED CONTROLS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === FEED CONTROLS ============================ */
 .feed-controls {
   display: flex; align-items: center;
   gap: .5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
@@ -157,7 +157,7 @@ input, textarea { font-family: inherit; }
 .filter-tab:hover { border-color: var(--blue); color: var(--blue); }
 .filter-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-/* â”€â”€â”€ COMPOSE BOX â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === COMPOSE BOX ============================== */
 .compose-card {
   background: #fff; border: 1.5px solid var(--rule);
   border-radius: var(--radius-md);
@@ -188,7 +188,7 @@ input, textarea { font-family: inherit; }
 .compose-hints { font-size: .77rem; color: var(--ink-faint); }
 .char-count { font-size: .75rem; color: var(--ink-faint); }
 
-/* â”€â”€â”€ POST CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === POST CARD ================================= */
 .post-card {
   background: #fff; border: 1.5px solid var(--rule);
   border-radius: var(--radius-md);
@@ -260,7 +260,7 @@ input, textarea { font-family: inherit; }
 .action-btn svg { flex-shrink: 0; }
 .action-sep { width: 1px; height: 20px; background: var(--rule-light); margin: 0 .2rem; }
 
-/* â”€â”€â”€ COMMENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === COMMENTS ================================= */
 .comments-section { border-top: 1px solid var(--rule-light); }
 .comments-inner { padding: .75rem 1.3rem 1.1rem; }
 
@@ -345,7 +345,7 @@ input, textarea { font-family: inherit; }
 }
 .comment-input:focus { border-color: var(--blue); }
 
-/* â”€â”€â”€ REWARD PICKER MODAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === REWARD PICKER MODAL ======================= */
 .modal-backdrop {
   position: fixed; inset: 0;
   background: rgba(17,24,32,.45);
@@ -425,7 +425,7 @@ input, textarea { font-family: inherit; }
   display: flex; justify-content: flex-end; gap: .6rem;
 }
 
-/* â”€â”€â”€ SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === SIDEBAR =================================== */
 .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
 
 .sidebar-card {
@@ -522,7 +522,7 @@ input, textarea { font-family: inherit; }
 .lb-score { font-size: .76rem; color: var(--ink-faint); }
 .lb-score span { color: var(--gold-dark); font-weight: 600; }
 
-/* â”€â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === TOAST ===================================== */
 #toast-container {
   position: fixed; bottom: 2rem; left: 50%;
   transform: translateX(-50%);
@@ -550,7 +550,7 @@ input, textarea { font-family: inherit; }
 .toast-reward  { background: var(--gold); color: var(--ink); font-weight: 600; }
 .toast-error   { background: var(--red); color: #fff; }
 
-/* â”€â”€â”€ CONFETTI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === CONFETTI ================================== */
 @keyframes confetti-fly {
   0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
   100% { opacity: 0; transform: translateY(-60px) rotate(360deg) scale(.4); }
@@ -561,14 +561,14 @@ input, textarea { font-family: inherit; }
   animation: confetti-fly .7s ease-out both;
 }
 
-/* â”€â”€â”€ SECTION LABEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === SECTION LABEL ============================ */
 .sec-label {
   font-size: .68rem; font-weight: 600; letter-spacing: .1em;
   text-transform: uppercase; color: var(--blue);
   display: block; margin-bottom: .35rem;
 }
 
-/* â”€â”€â”€ EMPTY STATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === EMPTY STATE =============================== */
 .empty-state {
   text-align: center; padding: 3rem 1rem;
   color: var(--ink-faint);
@@ -576,7 +576,7 @@ input, textarea { font-family: inherit; }
 .empty-state .es-icon { font-size: 2.5rem; margin-bottom: .75rem; }
 .empty-state p { font-size: .88rem; line-height: 1.6; }
 
-/* â”€â”€â”€ FOOTER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === FOOTER ==================================== */
 footer {
   border-top: 1px solid var(--rule);
   background: var(--ink); color: rgba(255,255,255,.5);
@@ -586,7 +586,7 @@ footer {
 footer a { color: rgba(255,255,255,.35); margin: 0 .6rem; }
 footer a:hover { color: #fff; }
 
-/* â”€â”€â”€ ACTIVITY FEED ITEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === ACTIVITY FEED ITEM ======================= */
 .activity-item {
   display: flex; gap: .7rem; align-items: flex-start;
   padding: .6rem 0;
@@ -602,7 +602,7 @@ footer a:hover { color: #fff; }
 .activity-text strong { color: var(--ink); font-weight: 600; }
 .activity-time { font-size: .72rem; color: var(--ink-faint); flex-shrink: 0; margin-top: .12rem; }
 
-/* â”€â”€â”€ RESPONSIVE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* === RESPONSIVE =============================== */
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { display: none; }
