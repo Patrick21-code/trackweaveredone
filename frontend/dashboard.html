@@ -436,24 +436,32 @@
       return block;
     }
 
+    // ── Store artist in sessionStorage and navigate to detail page ──────
+    function navigateToArtist(artist) {
+      try {
+        sessionStorage.setItem("tw_artist_detail", JSON.stringify(artist));
+      } catch { /* storage full */ }
+      window.location.href = `./artist-details.html?id=${encodeURIComponent(artist.id)}`;
+    }
+    window._navigateToArtist = navigateToArtist;
+
     // ── Artist card HTML — circular frame, no initials fallback ─────────
     function artistCardHTML(artist, index) {
       const hue  = Math.abs(hashStr(artist.name)) % 360;
       const hue2 = (hue + 55) % 360;
       const sat  = 58 + (Math.abs(hashStr(artist.name + "s")) % 18);
-      const mbUrl = `https://musicbrainz.org/artist/${escHtml(artist.id)}`;
 
       const year    = artist["life-span"]?.begin?.slice(0, 4) ?? "";
       const country = artist.country ?? "";
       const sub     = [year, country].filter(Boolean).join(" · ") || "Artist";
 
       const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
+      const artistDataAttr = `data-artist-id="${escHtml(artist.id)}"`;
 
       let imgHtml;
       if (artist._coverUrl) {
-        // Has cover art — show image, on error fall back to music-note icon (not initials)
         imgHtml = `
-          <div class="artist-img-bg loading" id="bg-${escHtml(artist.id)}" ${gradStyle}>
+          <div class="artist-img-bg loading" id="bg-${escHtml(artist.id)}" style="${gradStyle}">
             <img
               src="${escHtml(artist._coverUrl)}"
               alt="${escHtml(artist.name)}"
@@ -474,7 +482,6 @@
             />
           </div>`;
       } else {
-        // No cover art — show music-note icon on gradient (never initials)
         imgHtml = `
           <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
             ${musicNoteIconSVG()}
@@ -482,9 +489,11 @@
       }
 
       return `
-        <a class="artist-card" href="${mbUrl}" target="_blank" rel="noopener"
+        <a class="artist-card" href="./artist-details.html?id=${escHtml(artist.id)}"
+           ${artistDataAttr}
            style="animation-delay:${index * 0.045}s"
-           aria-label="View ${escHtml(artist.name)} on MusicBrainz">
+           aria-label="View ${escHtml(artist.name)}"
+           onclick="event.preventDefault(); window._navigateToArtist(${escHtml(JSON.stringify(artist))})">
           <div class="artist-img-wrap">
             ${imgHtml}
           </div>
@@ -549,11 +558,13 @@
 
         const card = document.createElement("a");
         card.className = "artist-card";
-        card.href = mbUrl;
-        card.target = "_blank";
-        card.rel = "noopener";
-        card.setAttribute("aria-label", `View ${artist.name} on MusicBrainz`);
+        card.href = `./artist-details.html?id=${encodeURIComponent(artist.id)}`;
+        card.setAttribute("aria-label", `View ${artist.name}`);
         card.style.animationDelay = `${i * 0.025}s`;
+        card.addEventListener("click", (e) => {
+          e.preventDefault();
+          navigateToArtist(artist);
+        });
         card.innerHTML = `
           <div class="artist-img-wrap">${imgHtml}</div>
           <div class="artist-name">${escHtml(artist.name)}</div>
@@ -571,6 +582,143 @@
       overlay.classList.remove("open");
       document.body.classList.remove("overlay-open");
     }
+
+    // ── Artist search (navbar) ────────────────────────────────────
+    const searchInput   = document.getElementById("artist-search-input");
+    const searchResults = document.getElementById("artist-search-results");
+    const searchClear   = document.getElementById("artist-search-clear");
+
+    let searchTimer = null;
+    let activeIndex = -1;
+
+    function setSearchLoading() {
+      searchResults.classList.add("open");
+      searchResults.innerHTML = `<div class="search-state"><span class="search-spinner"></span>Searching…</div>`;
+    }
+
+    function setSearchEmpty(query) {
+      searchResults.innerHTML = `<div class="search-state search-state-empty">No artists found for "<strong>${escHtml(query)}</strong>"</div>`;
+    }
+
+    function closeSearchResults() {
+      searchResults.classList.remove("open");
+      searchResults.innerHTML = "";
+      activeIndex = -1;
+    }
+
+    function renderSearchResults(artists) {
+      if (!artists.length) return;
+      activeIndex = -1;
+      searchResults.classList.add("open");
+      searchResults.innerHTML = artists.map((a, i) => {
+        const hue  = Math.abs(hashStr(a.name)) % 360;
+        const hue2 = (hue + 55) % 360;
+        const sat  = 58 + (Math.abs(hashStr(a.name + "s")) % 18);
+        const grad = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat-8}%,34%))`;
+        const year    = a["life-span"]?.begin?.slice(0,4) ?? "";
+        const country = a.country ?? "";
+        const meta    = [a.type, year, country].filter(Boolean).join(" · ") || "Artist";
+
+        let thumb;
+        if (a._coverUrl) {
+          thumb = `<img src="${escHtml(a._coverUrl)}" alt="${escHtml(a.name)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><span class="sr-thumb-fallback" style="${grad};display:none">${musicNoteIconSVG()}</span>`;
+        } else {
+          thumb = `<span class="sr-thumb-fallback" style="${grad}">${musicNoteIconSVG()}</span>`;
+        }
+
+        return `<div class="search-result-item" role="option" tabindex="-1" data-index="${i}" data-artist='${escHtml(JSON.stringify(a))}'>
+          <div class="sr-thumb">${thumb}</div>
+          <div class="sr-info">
+            <div class="sr-name">${escHtml(a.name)}</div>
+            <div class="sr-meta">${escHtml(meta)}</div>
+          </div>
+          <svg class="sr-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>`;
+      }).join("");
+
+      searchResults.querySelectorAll(".search-result-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const artist = JSON.parse(item.dataset.artist);
+          closeSearchResults();
+          navigateToArtist(artist);
+        });
+        item.addEventListener("mouseenter", () => {
+          activeIndex = parseInt(item.dataset.index);
+          highlightItem();
+        });
+      });
+    }
+
+    function highlightItem() {
+      searchResults.querySelectorAll(".search-result-item").forEach((el, i) => {
+        el.classList.toggle("active", i === activeIndex);
+      });
+    }
+
+    async function doSearch(query) {
+      setSearchLoading();
+      try {
+        const res = await mbFetch(
+          `https://musicbrainz.org/ws/2/artist?query=artist:${encodeURIComponent(query)}&limit=8&fmt=json`
+        );
+        if (!res.ok) throw new Error("MB error");
+        const json = await res.json();
+        const artists = (json.artists ?? []).filter(a => a.id && a.name).slice(0, 8);
+        if (!artists.length) { setSearchEmpty(query); return; }
+
+        renderSearchResults(artists);
+
+        // Enrich covers in background then re-render
+        enrichBatch(artists).then(() => {
+          if (searchInput.value.trim() === query) renderSearchResults(artists);
+        });
+      } catch {
+        searchResults.innerHTML = `<div class="search-state search-state-empty">Something went wrong. Try again.</div>`;
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.trim();
+      searchClear.hidden = !q;
+      clearTimeout(searchTimer);
+      if (!q) { closeSearchResults(); return; }
+      searchTimer = setTimeout(() => doSearch(q), 380);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      const items = [...searchResults.querySelectorAll(".search-result-item")];
+      if (!items.length) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+        highlightItem();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        highlightItem();
+      } else if (e.key === "Enter" && activeIndex >= 0) {
+        e.preventDefault();
+        items[activeIndex]?.click();
+      } else if (e.key === "Escape") {
+        closeSearchResults();
+        searchInput.blur();
+      }
+    });
+
+    searchInput.addEventListener("focus", () => {
+      if (searchInput.value.trim() && searchResults.innerHTML) searchResults.classList.add("open");
+    });
+
+    searchClear.addEventListener("click", () => {
+      searchInput.value = "";
+      searchClear.hidden = true;
+      closeSearchResults();
+      searchInput.focus();
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest("#nav-search-wrap")) closeSearchResults();
+    });
 
     // ── Helpers ───────────────────────────────────────────────────────
     function hashStr(s) {
@@ -611,13 +759,17 @@
     </a>
 
     <!-- Search -->
-    <div class="nav-search-dash">
+    <div class="nav-search-dash" id="nav-search-wrap">
       <span class="s-icon">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
       </span>
-      <input type="text" placeholder="Search artists, albums, users…" autocomplete="off" />
+      <input type="text" id="artist-search-input" placeholder="Search artists…" autocomplete="off" spellcheck="false" aria-label="Search artists" aria-autocomplete="list" aria-controls="artist-search-results" />
+      <button class="nav-search-clear" id="artist-search-clear" type="button" aria-label="Clear search" hidden>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="nav-search-results" id="artist-search-results" role="listbox"></div>
     </div>
 
     <!-- Avatar + dropdown -->
