@@ -191,41 +191,132 @@
   <!-- === FEED COLUMN === -->
   <main>
 
-    <!-- Feed Filter Controls -->
-    <div class="feed-controls">
-      <div class="filter-tabs" id="filter-tabs">
-        <button class="filter-tab active" data-filter="newest">✦ Newest</button>
-        <button class="filter-tab" data-filter="liked">♥ Most Liked</button>
-        <button class="filter-tab" data-filter="rewarded">⭐ Most Rewarded</button>
-        <button class="filter-tab" data-filter="trending">🔥 Trending</button>
-      </div>
+    <!-- Main view tabs: Community Feed vs Artist Discussions -->
+    <div class="main-view-tabs" id="main-view-tabs">
+      <button class="main-view-tab active" id="tab-feed" onclick="switchMainView('feed')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Community Feed
+      </button>
+      <button class="main-view-tab" id="tab-artists" onclick="switchMainView('artists')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Artist Discussions
+      </button>
     </div>
 
-    <!-- Compose Box -->
-    <div class="compose-card">
-      <div class="compose-top">
-        <div class="avatar" id="current-user-avatar" style="background:#2563eb;">Y</div>
-        <textarea
-          class="compose-input"
-          id="compose-input"
-          placeholder="Share your latest listening, a hot take, or a music discovery…"
-          maxlength="300"
-          rows="2"
-        ></textarea>
-      </div>
-      <div class="compose-footer">
-        <span class="compose-hints">🎵 Tag albums · 🎧 Share playlists · 💬 Start discussions</span>
-        <div style="display:flex;align-items:center;gap:.75rem;">
-          <span class="char-count" id="char-count">0 / 300</span>
-          <button class="btn btn-solid btn-sm" id="post-btn" onclick="submitPost()">Post</button>
+    <!-- ===== VIEW: COMMUNITY FEED ===== -->
+    <div id="view-feed">
+      <!-- Feed Filter Controls -->
+      <div class="feed-controls">
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="filter-tab active" data-filter="newest">✦ Newest</button>
+          <button class="filter-tab" data-filter="liked">♥ Most Liked</button>
+          <button class="filter-tab" data-filter="rewarded">⭐ Most Rewarded</button>
+          <button class="filter-tab" data-filter="trending">🔥 Trending</button>
         </div>
       </div>
-    </div>
 
-    <!-- Feed -->
-    <div id="feed-container">
-      <!-- Rendered by renderFeed() -->
-    </div>
+      <!-- Compose Box -->
+      <div class="compose-card">
+        <div class="compose-top">
+          <div class="avatar" id="current-user-avatar" style="background:#2563eb;">Y</div>
+          <textarea
+            class="compose-input"
+            id="compose-input"
+            placeholder="Share your latest listening, a hot take, or a music discovery…"
+            maxlength="300"
+            rows="2"
+          ></textarea>
+        </div>
+        <div class="compose-footer">
+          <span class="compose-hints">🎵 Tag albums · 🎧 Share playlists · 💬 Start discussions</span>
+          <div style="display:flex;align-items:center;gap:.75rem;">
+            <span class="char-count" id="char-count">0 / 300</span>
+            <button class="btn btn-solid btn-sm" id="post-btn" onclick="submitPost()">Post</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div id="feed-container">
+        <!-- Rendered by renderFeed() -->
+      </div>
+    </div><!-- /view-feed -->
+
+    <!-- ===== VIEW: ARTIST DISCUSSIONS ===== -->
+    <div id="view-artists" style="display:none;">
+
+      <!-- Artist picker -->
+      <div class="artist-picker-card" id="artist-picker-card">
+        <div class="ap-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <div>
+            <div class="ap-title">Artist Discussions</div>
+            <div class="ap-sub">Each artist has their own dedicated comment section</div>
+          </div>
+        </div>
+
+        <!-- Recent artists -->
+        <div id="ap-recent-wrap" style="display:none;">
+          <div class="ap-recent-label">Recently discussed</div>
+          <div class="ap-recent-chips" id="ap-recent-chips"></div>
+        </div>
+
+        <!-- Search row -->
+        <div class="ap-search-row" style="margin-top:.9rem;">
+          <div class="ap-search-wrap">
+            <svg class="ap-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input
+              class="ap-search-input"
+              id="artist-search-input"
+              type="text"
+              placeholder="Search for an artist by name…"
+              autocomplete="off"
+              onkeydown="if(event.key==='Enter') searchArtistMB()"
+            />
+          </div>
+          <button class="btn btn-solid btn-sm" onclick="searchArtistMB()">Search</button>
+        </div>
+
+        <!-- Results -->
+        <div id="ap-results-wrap"></div>
+      </div>
+
+      <!-- Artist discussion panel (shown after selecting an artist) -->
+      <div class="artist-discussion-panel" id="artist-discussion-panel" style="display:none;">
+        <div class="adp-header">
+          <div class="adp-avatar" id="adp-avatar"></div>
+          <div class="adp-info">
+            <div class="adp-artist-name" id="adp-artist-name">—</div>
+            <div class="adp-meta" id="adp-meta">Artist Discussion</div>
+          </div>
+          <button class="adp-back-btn" onclick="closeArtistPanel()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+            Back
+          </button>
+        </div>
+        <div class="adp-body">
+          <!-- Compose -->
+          <div class="artist-compose">
+            <div class="avatar" id="adp-user-avatar" style="background:#2563eb;">?</div>
+            <textarea
+              class="artist-compose-input"
+              id="adp-comment-input"
+              placeholder="Share your thoughts on this artist…"
+              maxlength="300"
+              rows="2"
+            ></textarea>
+            <div class="artist-compose-actions">
+              <button class="btn btn-solid btn-sm" onclick="submitArtistComment()">Post</button>
+            </div>
+          </div>
+          <!-- Comments -->
+          <div class="artist-comments-list" id="adp-comments-list">
+            <!-- Rendered by renderArtistComments() -->
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /view-artists -->
 
   </main>
 
@@ -1411,6 +1502,307 @@ document.addEventListener('keydown', e => {
 /* ==========================================
    13. INITIALISE
    ========================================== */
+/* ==========================================
+   14. ARTIST DISCUSSIONS
+   ========================================== */
+
+/* Storage key for artist-specific comments */
+function artistCommentsKey(artistId) {
+  return `tw_artist_comments_${artistId}`;
+}
+
+/* Load comments for a specific artist */
+function loadArtistComments(artistId) {
+  try {
+    const raw = localStorage.getItem(artistCommentsKey(artistId));
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+/* Save comments for a specific artist */
+function saveArtistComments(artistId, comments) {
+  localStorage.setItem(artistCommentsKey(artistId), JSON.stringify(comments));
+}
+
+/* Track recently-discussed artists */
+const RECENT_ARTISTS_KEY = 'tw_recent_artists';
+function loadRecentArtists() {
+  try { return JSON.parse(localStorage.getItem(RECENT_ARTISTS_KEY) || '[]'); } catch { return []; }
+}
+function saveRecentArtist(artist) {
+  const list = loadRecentArtists().filter(a => a.id !== artist.id);
+  list.unshift({ id: artist.id, name: artist.name, type: artist.type ?? '' });
+  localStorage.setItem(RECENT_ARTISTS_KEY, JSON.stringify(list.slice(0, 8)));
+}
+
+/* Active artist state */
+let activeArtist = null; // { id, name, type }
+
+/* Switch main view between Feed and Artist Discussions */
+function switchMainView(view) {
+  const feedView    = document.getElementById('view-feed');
+  const artistView  = document.getElementById('view-artists');
+  const tabFeed     = document.getElementById('tab-feed');
+  const tabArtists  = document.getElementById('tab-artists');
+
+  if (view === 'feed') {
+    feedView.style.display   = '';
+    artistView.style.display = 'none';
+    tabFeed.classList.add('active');
+    tabArtists.classList.remove('active');
+  } else {
+    feedView.style.display   = 'none';
+    artistView.style.display = '';
+    tabFeed.classList.remove('active');
+    tabArtists.classList.add('active');
+    renderRecentArtistChips();
+  }
+}
+
+/* Render recently-discussed artist chips */
+function renderRecentArtistChips() {
+  const recent = loadRecentArtists();
+  const wrap   = document.getElementById('ap-recent-wrap');
+  const chips  = document.getElementById('ap-recent-chips');
+  if (!wrap || !chips) return;
+
+  if (!recent.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = '';
+
+  chips.innerHTML = recent.map(a => {
+    const hue     = Math.abs(hashStr(a.id)) % 360;
+    const initial = a.name.charAt(0).toUpperCase();
+    return `
+      <button class="ap-recent-chip" onclick="selectArtist(${JSON.stringify({id:a.id,name:a.name,type:a.type||''}).replace(/"/g,'&quot;')})">
+        <span class="ap-chip-dot" style="background:hsl(${hue},60%,44%);">${initial}</span>
+        ${escapeHtml(a.name)}
+      </button>`;
+  }).join('');
+}
+
+/* MusicBrainz artist search */
+let _mbSearchTimer = null;
+async function searchArtistMB() {
+  const query = document.getElementById('artist-search-input')?.value.trim();
+  if (!query) return;
+
+  const wrap = document.getElementById('ap-results-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="ap-loading">Searching MusicBrainz…</div>';
+
+  try {
+    await new Promise(r => setTimeout(r, 300)); // small debounce
+    const url = `https://musicbrainz.org/ws/2/artist/?query=${encodeURIComponent(query)}&limit=6&fmt=json`;
+    const res = await fetch(url, { headers: { 'User-Agent': 'TrackWeave/1.0 (hello@trackweave.app)' } });
+    if (!res.ok) throw new Error('MB error');
+    const json = await res.json();
+    const artists = json.artists ?? [];
+
+    if (!artists.length) {
+      wrap.innerHTML = '<div class="ap-empty">No artists found. Try a different name.</div>';
+      return;
+    }
+
+    const results = document.createElement('div');
+    results.className = 'ap-results';
+    results.innerHTML = artists.map(a => {
+      const hue      = Math.abs(hashStr(a.id)) % 360;
+      const initial  = (a.name || '?').charAt(0).toUpperCase();
+      const type     = a.type ?? '';
+      const country  = a.country ? ` · ${a.country}` : '';
+      const tags     = (a.tags ?? []).slice(0, 2).map(t => t.name).join(', ');
+      const meta     = [type, country, tags].filter(Boolean).join('');
+      const count    = loadArtistComments(a.id).length;
+      const countTxt = count ? `${count} comment${count !== 1 ? 's' : ''}` : 'No comments yet';
+      const artistJson = JSON.stringify({id:a.id, name:a.name, type}).replace(/"/g,'&quot;');
+      return `
+        <div class="ap-result-item" onclick="selectArtist(${artistJson})">
+          <div class="ap-result-avatar" style="background:hsl(${hue},60%,44%);">${initial}</div>
+          <div class="ap-result-info">
+            <div class="ap-result-name">${escapeHtml(a.name)}</div>
+            <div class="ap-result-meta">${escapeHtml(meta)}</div>
+          </div>
+          <span class="ap-result-count">${countTxt}</span>
+        </div>`;
+    }).join('');
+
+    wrap.innerHTML = '';
+    wrap.appendChild(results);
+  } catch (e) {
+    wrap.innerHTML = '<div class="ap-empty">Search failed. Check your connection and try again.</div>';
+  }
+}
+
+/* Select an artist and open their discussion panel */
+function selectArtist(artist) {
+  activeArtist = artist;
+  saveRecentArtist(artist);
+
+  // Hide picker, show panel
+  document.getElementById('artist-picker-card').style.display   = 'none';
+  document.getElementById('artist-discussion-panel').style.display = '';
+
+  // Set header
+  const hue     = Math.abs(hashStr(artist.id)) % 360;
+  const initial = artist.name.charAt(0).toUpperCase();
+  const adpAv   = document.getElementById('adp-avatar');
+  if (adpAv) { adpAv.textContent = initial; adpAv.style.background = `hsl(${hue},60%,44%)`; }
+  const adpName = document.getElementById('adp-artist-name');
+  if (adpName) adpName.textContent = artist.name;
+  const adpMeta = document.getElementById('adp-meta');
+  if (adpMeta) adpMeta.textContent = artist.type ? `${artist.type} Discussion` : 'Artist Discussion';
+
+  // Set compose avatar
+  const cu = window._currentUser;
+  const adpUserAv = document.getElementById('adp-user-avatar');
+  if (adpUserAv && cu) renderAvatar(adpUserAv, { username: cu.username, photoURL: cu.photoURL, uid: cu.uid });
+
+  // Clear input
+  const input = document.getElementById('adp-comment-input');
+  if (input) input.value = '';
+
+  renderArtistComments();
+}
+
+/* Close artist panel, go back to picker */
+function closeArtistPanel() {
+  activeArtist = null;
+  document.getElementById('artist-picker-card').style.display   = '';
+  document.getElementById('artist-discussion-panel').style.display = 'none';
+  renderRecentArtistChips();
+}
+
+/* Submit a comment for the active artist */
+async function submitArtistComment() {
+  if (!activeArtist) return;
+  const cu    = window._currentUser;
+  const input = document.getElementById('adp-comment-input');
+  const text  = input?.value.trim();
+  if (!text) { showToast('Write something first!', 'error'); return; }
+
+  const comments = loadArtistComments(activeArtist.id);
+  const newComment = {
+    id:        `ac${Date.now()}`,
+    artistId:  activeArtist.id,
+    authorId:  cu?.uid || 'unknown',
+    authorName: cu?.username || '',
+    photoURL:  cu?.photoURL || '',
+    text,
+    createdAt: Date.now(),
+    likes:     [],
+  };
+
+  comments.unshift(newComment);
+  saveArtistComments(activeArtist.id, comments);
+
+  input.value = '';
+  renderArtistComments();
+
+  const stats = loadStats();
+  stats.comments++;
+  saveStats(stats);
+  renderStats();
+  addActivity('🎵', '#bfdbfe', `You commented on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
+  showToast('Comment posted! 🎵', 'success');
+}
+
+/* Like/unlike an artist comment */
+function toggleArtistCommentLike(commentId) {
+  if (!activeArtist) return;
+  const cu = window._currentUser;
+  if (!cu) return;
+
+  const comments = loadArtistComments(activeArtist.id);
+  const comment  = comments.find(c => c.id === commentId);
+  if (!comment) return;
+
+  const idx = comment.likes.indexOf(cu.uid);
+  if (idx === -1) {
+    comment.likes.push(cu.uid);
+    addActivity('♥', '#fee2e2', `You liked a comment on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
+  } else {
+    comment.likes.splice(idx, 1);
+  }
+
+  saveArtistComments(activeArtist.id, comments);
+  renderArtistComments();
+}
+
+/* Render artist-specific comments */
+async function renderArtistComments() {
+  if (!activeArtist) return;
+  const list = document.getElementById('adp-comments-list');
+  if (!list) return;
+
+  const cu       = window._currentUser;
+  const comments = loadArtistComments(activeArtist.id);
+
+  if (!comments.length) {
+    list.innerHTML = `
+      <div class="artist-comment-empty">
+        <div class="ace-icon">🎵</div>
+        <div>No comments yet for <strong>${escapeHtml(activeArtist.name)}</strong>.<br>Be the first to share your thoughts!</div>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  for (const comment of comments) {
+    const el = await buildArtistCommentElement(comment, cu);
+    list.appendChild(el);
+  }
+}
+
+/* Build a single artist comment element */
+async function buildArtistCommentElement(comment, cu) {
+  // Resolve latest author profile (may have updated since comment was stored)
+  const author   = await resolveAuthor(comment.authorId, cu);
+  const username = author.username || comment.authorName || '';
+  const handle   = username ? `@${username}` : 'Anonymous';
+  const initial  = getAvatarInitial(username);
+  const color    = avatarColor(comment.authorId);
+  const isLiked  = cu ? comment.likes.includes(cu.uid) : false;
+  const timeAgo  = formatTime(comment.createdAt);
+
+  const el = document.createElement('div');
+  el.className = 'comment';
+  el.id = `acomment-${comment.id}`;
+  el.innerHTML = `
+    <div class="comment-avatar" style="background:${color};">${initial}</div>
+    <div class="comment-body">
+      <div class="comment-bubble">
+        <div class="comment-author">${escapeHtml(handle)} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
+        <div class="comment-text">${escapeHtml(comment.text)}</div>
+      </div>
+      <div class="comment-actions">
+        <button class="comment-action-btn${isLiked ? ' liked' : ''}" onclick="toggleArtistCommentLike('${comment.id}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          ${comment.likes.length} Like${comment.likes.length !== 1 ? 's' : ''}
+        </button>
+      </div>
+    </div>`;
+
+  // Render avatar properly (photo if available)
+  const avatarEl = el.querySelector('.comment-avatar');
+  if (avatarEl) renderAvatar(avatarEl, { username, photoURL: author.photoURL, uid: comment.authorId });
+
+  return el;
+}
+
+/* Open artist discussion from URL param ?artist=ID&artistName=NAME */
+function checkArtistUrlParam() {
+  const params     = new URLSearchParams(window.location.search);
+  const artistId   = params.get('artist');
+  const artistName = params.get('artistName');
+  const artistType = params.get('artistType') || '';
+  if (artistId && artistName) {
+    switchMainView('artists');
+    selectArtist({ id: artistId, name: decodeURIComponent(artistName), type: artistType });
+  }
+}
+
 window._engagementInit = function() {
   // Seed default points if shop.html hasn't been visited yet
   if (!localStorage.getItem(KEYS.shopPoints)) {
@@ -1435,14 +1827,14 @@ window._engagementInit = function() {
     sidebarHandle.textContent = cu.username ? `@${cu.username} · TrackWeave member` : 'TrackWeave member';
   }
 
-  // Also update CURRENT_USER reference for interactions (likes, posts, comments)
-  // We use window._currentUser throughout
-
   renderFeed();
   renderStats();
   renderTrending();
   renderLeaderboard();
   renderActivity();
+
+  // Check if arriving from artist-details.html
+  checkArtistUrlParam();
 };
 </script>
 </body>
