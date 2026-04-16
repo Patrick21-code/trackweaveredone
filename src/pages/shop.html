@@ -9,6 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- Base design system -->
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/pages/dashboard.css" />
+
+  <!-- Firebase Authentication -->
+  <script type="module" src="../scripts/shop-auth.js"></script>
+
   <style>
     /* ═══════════════════════════════════════════════
        BASE (mirrors trackweave-base.css conventions)
@@ -458,7 +465,7 @@
 <!-- ═══ NAV ═══ -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-brand">
+    <a href="./index.html" class="nav-brand">
       <div class="nav-mark">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
           <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
@@ -473,12 +480,68 @@
       <span>TrackWeave</span>
     </a>
 
-    <div class="nav-end">
-      <a href="./index.html" class="lnk">Home</a>
-      <a href="./checkin.html" class="lnk">Daily Check-In</a>
-      <a href="./support.html" class="lnk">Support</a>
-      <a href="./login.html" class="btn btn-ghost" style="padding:.42rem .9rem;font-size:.82rem;">Log In</a>
-      <a href="./register.html" class="btn btn-solid" style="padding:.42rem .9rem;font-size:.82rem;">Get Started</a>
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link">Community</a>
+      <a href="./checkin.html" class="nav-link">Check-In</a>
+      <a href="./shop.html" class="nav-link active">Shop</a>
+    </nav>
+
+    <div class="nav-avatar-wrap" id="nav-avatar-wrap">
+      <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
+
+      <div class="nav-dropdown" id="nav-dropdown" role="menu">
+        <div class="drop-user">
+          <div class="drop-av" id="drop-av-mini">?</div>
+          <div>
+            <div class="drop-name" id="drop-display-name">—</div>
+            <div class="drop-handle" id="drop-username"></div>
+          </div>
+        </div>
+
+        <div class="drop-items">
+          <a class="drop-item" href="./dashboard.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+          <a class="drop-item" href="./engagement.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Community
+          </a>
+          <a class="drop-item" href="./checkin.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Check-In
+          </a>
+          <a class="drop-item active" href="./shop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Shop
+          </a>
+
+          <div class="drop-divider"></div>
+
+          <button class="drop-item danger" id="btn-signout" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Sign out
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </header>

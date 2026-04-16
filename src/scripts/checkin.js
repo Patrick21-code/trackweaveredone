@@ -788,6 +788,7 @@ document.head.appendChild(style);
 
 // ─── INITIALIZATION ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize UI with current state
   updateUI();
   
   // Close modal on overlay click

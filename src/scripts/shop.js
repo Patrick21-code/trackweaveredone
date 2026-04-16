@@ -501,4 +501,10 @@ document.getElementById('search-input').addEventListener('input', e => {
 /* ──────────────────────────────────────
    9. INIT
    ────────────────────────────────────── */
+// Initialize points banner on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const state = loadUserData();
+  updateBanner(state);
+});
+
 renderShop();

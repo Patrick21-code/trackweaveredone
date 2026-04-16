@@ -14,6 +14,37 @@
   <!-- Dashboard avatar/dropdown styles -->
   <link rel="stylesheet" href="../styles/pages/dashboard.css" />
   <link rel="stylesheet" href="../styles/pages/engagement.css" />
+  
+  <style>
+    /* Toast animations */
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(14px) scale(.94); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes toast-out {
+      from { opacity: 1; }
+      to   { opacity: 0; transform: translateY(10px); }
+    }
+    
+    #toast-container {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column;
+      align-items: center; gap: .6rem;
+      z-index: 9999; pointer-events: none;
+    }
+    .toast {
+      padding: .65rem 1.3rem;
+      border-radius: 99px;
+      font-size: .84rem; font-weight: 500;
+      box-shadow: 0 6px 24px rgba(0,0,0,.14);
+      display: flex; align-items: center; gap: .5rem;
+      animation: toast-in .25s ease both;
+    }
+    .toast-success { background: var(--ink); color: #fff; }
+    .toast-error   { background: var(--red); color: #fff; }
+    .toast-reward  { background: var(--gold); color: var(--ink); }
+  </style>
 
   <script type="module">
     import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -86,6 +117,8 @@
     window._fbDoc      = doc;
     window._fbSignOut  = signOut;
   </script>
+  
+  <script type="module" src="../scripts/engagement.js"></script>
 </head>
 <body>
 
@@ -111,6 +144,8 @@
     <nav class="nav-links">
       <a href="./dashboard.html" class="nav-link">Dashboard</a>
       <a href="./engagement.html" class="nav-link active">Community</a>
+      <a href="./checkin.html" class="nav-link">Check-In</a>
+      <a href="./shop.html" class="nav-link">Shop</a>
     </nav>
 
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
@@ -139,6 +174,21 @@
             </svg>
             Community
           </a>
+          <a class="drop-item" href="./checkin.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Check-In
+          </a>
+          <a class="drop-item" href="./shop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Shop
+          </a>
 
           <div class="drop-divider"></div>
 
@@ -164,19 +214,18 @@
   <div class="page-hd-inner">
     <div>
       <div class="page-hd-label">TrackWeave Community</div>
-      <h1>Share your <em>listening</em><br>with the world</h1>
-      <p>Posts, comments, and rewards — the social heartbeat of TrackWeave.</p>
+      <h1>Connect with <em>artist communities</em><br>around the world</h1>
+      <p>Join dedicated chats for every artist — share your thoughts, discover insights, and connect with fellow fans.</p>
     </div>
     <div class="page-hd-actions">
-      <!-- Both buttons redirect to shop.html as the source of truth for rewards -->
-      <a href="./shop.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.25);" onclick="linkToShop('browse')">
+      <a href="./shop.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.25);">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 01-8 0"/>
         </svg>
         Open Reward Shop
       </a>
-      <a href="./shop.html" class="btn btn-gold" onclick="linkToShop('inventory')">
+      <a href="./shop.html" class="btn btn-gold">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
         </svg>
@@ -190,135 +239,79 @@
 <!-- ======================== MAIN LAYOUT ======================== -->
 <div class="layout">
 
-  <!-- === FEED COLUMN === -->
+  <!-- === ARTIST COMMUNITY FEED === -->
   <main>
 
-    <!-- Main view tabs: Community Feed vs Artist Discussions -->
-    <div class="main-view-tabs" id="main-view-tabs">
-      <button class="main-view-tab active" id="tab-feed" onclick="switchMainView('feed')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Community Feed
-      </button>
-      <button class="main-view-tab" id="tab-artists" onclick="switchMainView('artists')">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        Artist Discussions
-      </button>
-    </div>
-
-    <!-- ===== VIEW: COMMUNITY FEED ===== -->
-    <div id="view-feed">
-      <!-- Feed Filter Controls -->
-      <div class="feed-controls">
-        <div class="filter-tabs" id="filter-tabs">
-          <button class="filter-tab active" data-filter="newest">✦ Newest</button>
-          <button class="filter-tab" data-filter="liked">♥ Most Liked</button>
-          <button class="filter-tab" data-filter="rewarded">⭐ Most Rewarded</button>
-          <button class="filter-tab" data-filter="trending">🔥 Trending</button>
+    <!-- Artist picker -->
+    <div class="artist-picker-card" id="artist-picker-card">
+      <div class="ap-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <div>
+          <div class="ap-title">Artist Community Chats</div>
+          <div class="ap-sub">Each artist has their own dedicated community chat</div>
         </div>
       </div>
 
-      <!-- Compose Box -->
-      <div class="compose-card">
-        <div class="compose-top">
-          <div class="avatar" id="current-user-avatar" style="background:#2563eb;">Y</div>
+      <!-- Recent artists -->
+      <div id="ap-recent-wrap" style="display:none;">
+        <div class="ap-recent-label">Recently visited</div>
+        <div class="ap-recent-chips" id="ap-recent-chips"></div>
+      </div>
+
+      <!-- Search row -->
+      <div class="ap-search-row" style="margin-top:.9rem;">
+        <div class="ap-search-wrap">
+          <svg class="ap-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input
+            class="ap-search-input"
+            id="artist-search-input"
+            type="text"
+            placeholder="Search for an artist by name…"
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter') window.searchArtistMB()"
+          />
+        </div>
+        <button class="btn btn-solid btn-sm" onclick="window.searchArtistMB()">Search</button>
+      </div>
+
+      <!-- Results -->
+      <div id="ap-results-wrap"></div>
+    </div>
+
+    <!-- Artist discussion panel (shown after selecting an artist) -->
+    <div class="artist-discussion-panel" id="artist-discussion-panel" style="display:none;">
+      <div class="adp-header">
+        <div class="adp-avatar" id="adp-avatar"></div>
+        <div class="adp-info">
+          <div class="adp-artist-name" id="adp-artist-name">—</div>
+          <div class="adp-meta" id="adp-meta">Artist Community Chat</div>
+        </div>
+        <button class="adp-back-btn" onclick="window.closeArtistPanel()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+      </div>
+      <div class="adp-body">
+        <!-- Compose -->
+        <div class="artist-compose">
+          <div class="avatar" id="adp-user-avatar" style="background:#2563eb;">?</div>
           <textarea
-            class="compose-input"
-            id="compose-input"
-            placeholder="Share your latest listening, a hot take, or a music discovery…"
+            class="artist-compose-input"
+            id="adp-comment-input"
+            placeholder="Share your thoughts on this artist…"
             maxlength="300"
             rows="2"
           ></textarea>
-        </div>
-        <div class="compose-footer">
-          <span class="compose-hints">🎵 Tag albums · 🎧 Share playlists · 💬 Start discussions</span>
-          <div style="display:flex;align-items:center;gap:.75rem;">
-            <span class="char-count" id="char-count">0 / 300</span>
-            <button class="btn btn-solid btn-sm" id="post-btn" onclick="submitPost()">Post</button>
+          <div class="artist-compose-actions">
+            <button class="btn btn-solid btn-sm" onclick="window.submitArtistComment()">Post</button>
           </div>
+        </div>
+        <!-- Comments -->
+        <div class="artist-comments-list" id="adp-comments-list">
+          <!-- Rendered by renderArtistComments() -->
         </div>
       </div>
-
-      <!-- Feed -->
-      <div id="feed-container">
-        <!-- Rendered by renderFeed() -->
-      </div>
-    </div><!-- /view-feed -->
-
-    <!-- ===== VIEW: ARTIST DISCUSSIONS ===== -->
-    <div id="view-artists" style="display:none;">
-
-      <!-- Artist picker -->
-      <div class="artist-picker-card" id="artist-picker-card">
-        <div class="ap-header">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          <div>
-            <div class="ap-title">Artist Discussions</div>
-            <div class="ap-sub">Each artist has their own dedicated comment section</div>
-          </div>
-        </div>
-
-        <!-- Recent artists -->
-        <div id="ap-recent-wrap" style="display:none;">
-          <div class="ap-recent-label">Recently discussed</div>
-          <div class="ap-recent-chips" id="ap-recent-chips"></div>
-        </div>
-
-        <!-- Search row -->
-        <div class="ap-search-row" style="margin-top:.9rem;">
-          <div class="ap-search-wrap">
-            <svg class="ap-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            <input
-              class="ap-search-input"
-              id="artist-search-input"
-              type="text"
-              placeholder="Search for an artist by name…"
-              autocomplete="off"
-              onkeydown="if(event.key==='Enter') searchArtistMB()"
-            />
-          </div>
-          <button class="btn btn-solid btn-sm" onclick="searchArtistMB()">Search</button>
-        </div>
-
-        <!-- Results -->
-        <div id="ap-results-wrap"></div>
-      </div>
-
-      <!-- Artist discussion panel (shown after selecting an artist) -->
-      <div class="artist-discussion-panel" id="artist-discussion-panel" style="display:none;">
-        <div class="adp-header">
-          <div class="adp-avatar" id="adp-avatar"></div>
-          <div class="adp-info">
-            <div class="adp-artist-name" id="adp-artist-name">—</div>
-            <div class="adp-meta" id="adp-meta">Artist Discussion</div>
-          </div>
-          <button class="adp-back-btn" onclick="closeArtistPanel()">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
-            Back
-          </button>
-        </div>
-        <div class="adp-body">
-          <!-- Compose -->
-          <div class="artist-compose">
-            <div class="avatar" id="adp-user-avatar" style="background:#2563eb;">?</div>
-            <textarea
-              class="artist-compose-input"
-              id="adp-comment-input"
-              placeholder="Share your thoughts on this artist…"
-              maxlength="300"
-              rows="2"
-            ></textarea>
-            <div class="artist-compose-actions">
-              <button class="btn btn-solid btn-sm" onclick="submitArtistComment()">Post</button>
-            </div>
-          </div>
-          <!-- Comments -->
-          <div class="artist-comments-list" id="adp-comments-list">
-            <!-- Rendered by renderArtistComments() -->
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /view-artists -->
+    </div>
 
   </main>
 
@@ -341,8 +334,7 @@
       <div class="sc-title">Reward Shop</div>
       <div class="sc-sub" style="margin-bottom:.9rem;">Shop is the source of truth for all rewards</div>
 
-      <!-- These redirect to shop.html, not a duplicate page -->
-      <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('browse')">
+      <a href="./shop.html" class="shop-link-btn">
         <div class="slb-icon" style="background:var(--blue-ghost);">🛍️</div>
         <div class="slb-text">
           <div class="slb-title">Browse Rewards</div>
@@ -351,7 +343,7 @@
         <svg class="slb-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
       </a>
 
-      <a href="./shop.html" class="shop-link-btn" onclick="linkToShop('inventory')">
+      <a href="./shop.html" class="shop-link-btn">
         <div class="slb-icon" style="background:var(--gold-light);">🎁</div>
         <div class="slb-text">
           <div class="slb-title">My Reward Inventory</div>
@@ -359,26 +351,6 @@
         </div>
         <svg class="slb-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
       </a>
-    </div>
-
-    <!-- Trending Posts -->
-    <div class="sidebar-card">
-      <span class="sec-label">Trending</span>
-      <div class="sc-title">Hot Right Now 🔥</div>
-      <div class="sc-sub">Most liked posts this week</div>
-      <div class="trending-list" id="trending-list">
-        <!-- Rendered by renderTrending() -->
-      </div>
-    </div>
-
-    <!-- Leaderboard -->
-    <div class="sidebar-card">
-      <span class="sec-label">Leaderboard</span>
-      <div class="sc-title">Most Appreciated 🏆</div>
-      <div class="sc-sub">Ranked by rewards received</div>
-      <div class="leaderboard-list" id="leaderboard-list">
-        <!-- Rendered by renderLeaderboard() -->
-      </div>
     </div>
 
     <!-- Recent Activity -->
@@ -395,46 +367,8 @@
 
 </div><!-- /page-shell -->
 
-
-<!-- ======================== REWARD PICKER MODAL ======================== -->
-<!--
-  This modal reads owned rewards from localStorage (same key used by shop.html).
-  It NEVER duplicates the shop — it only lets users SPEND owned rewards.
-  For browsing/buying, users are directed to shop.html.
--->
-<div class="modal-backdrop" id="reward-modal-backdrop" onclick="closeRewardPicker(event)">
-  <div class="reward-modal" id="reward-modal">
-    <div class="modal-hd">
-      <div>
-        <div class="modal-title">Choose a Reward 🎁</div>
-        <div class="modal-sub" id="modal-target-label">Rewarding this post</div>
-      </div>
-      <button class="modal-close" onclick="closeRewardPicker()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 6 6 18M6 6l12 12"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="modal-body">
-      <div id="reward-picker-content">
-        <!-- Filled by openRewardPicker() -->
-      </div>
-    </div>
-
-    <div class="modal-footer" id="modal-footer">
-      <button class="btn btn-ghost btn-sm" onclick="closeRewardPicker()">Cancel</button>
-      <button class="btn btn-gold btn-sm" id="send-reward-btn" onclick="confirmSendReward()" disabled>
-        Send Reward
-      </button>
-    </div>
-  </div>
-</div>
-
-
 <!-- ======================== TOAST ======================== -->
 <div id="toast-container"></div>
-
 
 <!-- ======================== FOOTER ======================== -->
 <footer>
@@ -447,1397 +381,5 @@
   </div>
 </footer>
 
-
-<!-- ======================== JAVASCRIPT ======================== -->
-<script>
-/* ================================================================
-   =  TrackWeave — Engagement Platform                            =
-   =  Connects to shop.html via shared localStorage keys          =
-   =                                                              =
-   =  localStorage keys shared with shop.html:                   =
-   =    tw_owned  — array of owned item IDs                       =
-   =    tw_points — user's point balance                          =
-   =    tw_spent  — total points spent                            =
-   =                                                              =
-   =  Engagement-specific localStorage keys:                      =
-   =    tw_engagement — all posts, comments, likes, rewards       =
-   =    tw_eng_stats  — user stats summary                        =
-   ================================================================ */
-
-
-/* ==========================================
-   1. SHOP CATALOG MIRROR
-   (Same catalog as shop.html — used to map
-    owned item IDs to metadata for reward picker)
-   ========================================== */
-const SHOP_CATALOG = [
-  { id: 'theme-midnight',      icon: '🌙', title: 'Midnight Mode',      category: 'themes'  },
-  { id: 'theme-vinyl',         icon: '💿', title: 'Vinyl Warmth',        category: 'themes'  },
-  { id: 'theme-neon',          icon: '🔮', title: 'Neon Pulse',          category: 'themes'  },
-  { id: 'theme-aurora',        icon: '🌌', title: 'Aurora Borealis',     category: 'themes'  },
-  { id: 'avatar-headphones',   icon: '🎧', title: 'Audiophile',          category: 'avatars' },
-  { id: 'avatar-vinyl-spinner',icon: '🎼', title: 'Vinyl Spinner',       category: 'avatars' },
-  { id: 'avatar-cosmic',       icon: '🪐', title: 'Cosmic Explorer',     category: 'avatars' },
-  { id: 'avatar-golden-ear',   icon: '👑', title: 'Golden Ear',          category: 'avatars' },
-  { id: 'boost-double-pts',    icon: '⚡', title: '2× Points Weekend',   category: 'boosts'  },
-  { id: 'boost-early-access',  icon: '🚀', title: 'Early Access Pass',   category: 'boosts'  },
-  { id: 'boost-graph-pro',     icon: '🕸️', title: 'Graph Pro Unlock',    category: 'boosts'  },
-  { id: 'boost-spotlight',     icon: '🌟', title: 'Community Spotlight', category: 'boosts'  },
-  { id: 'badge-early-adopter', icon: '🌱', title: 'Early Adopter',       category: 'badges'  },
-  { id: 'badge-crate-digger',  icon: '📦', title: 'Crate Digger',        category: 'badges'  },
-  { id: 'badge-theorist',      icon: '🧠', title: 'Music Theorist',      category: 'badges'  },
-  { id: 'badge-legend',        icon: '🎺', title: 'Living Legend',       category: 'badges'  },
-];
-
-// Quick lookup by id
-const CATALOG_MAP = Object.fromEntries(SHOP_CATALOG.map(i => [i.id, i]));
-
-/* ==========================================
-   AVATAR UTILITIES
-   ========================================== */
-
-/** hashStr — djb2-style hash (same as dashboard.html) */
-function hashStr(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
-  return h;
-}
-
-/** avatarColor — deterministic HSL colour from a UID string */
-function avatarColor(uid) {
-  const hue = Math.abs(hashStr(uid)) % 360;
-  return `hsl(${hue}, 65%, 48%)`;
-}
-
-/** getAvatarInitial — first char of username uppercased, or '?' */
-function getAvatarInitial(username) {
-  return username ? username.charAt(0).toUpperCase() : '?';
-}
-
-/** renderAvatar — renders photo or initial+gradient into an element */
-function renderAvatar(el, { username, photoURL, uid }) {
-  if (!el) return;
-  if (photoURL) {
-    const img = document.createElement('img');
-    img.src = photoURL;
-    img.alt = username || '';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
-    img.onerror = () => {
-      el.innerHTML = '';
-      el.textContent = getAvatarInitial(username);
-      el.style.background = uid ? avatarColor(uid) : 'linear-gradient(135deg, var(--blue), #7c3aed)';
-    };
-    el.innerHTML = '';
-    el.appendChild(img);
-  } else {
-    el.textContent = getAvatarInitial(username);
-    el.style.background = uid ? avatarColor(uid) : 'linear-gradient(135deg, var(--blue), #7c3aed)';
-  }
-}
-window._renderAvatar = renderAvatar;
-
-/* ==========================================
-   2. CURRENT USER (set by Firebase auth)
-   window._currentUser is populated by initPage()
-   after onAuthStateChanged resolves.
-   ========================================== */
-// currentUser is accessed via window._currentUser throughout this script
-
-/* ==========================================
-   4. STORAGE KEYS
-   ========================================== */
-const KEYS = {
-  /* Shared with shop.html — do NOT change these */
-  shopOwned:  'tw_owned',
-  shopPoints: 'tw_points',
-
-  /* Engagement-only keys */
-  engagement: 'tw_engagement',
-  stats:      'tw_eng_stats',
-};
-
-/* ==========================================
-   5. STATE
-   ========================================== */
-let activeFilter    = 'newest';
-let rewardTarget    = null; // { type: 'post'|'comment', id }
-let selectedRewardId = null;
-let activityLog     = [];
-
-/* ==========================================
-   USER PROFILE CACHE
-   ========================================== */
-
-/** In-memory cache: uid → { username, photoURL } */
-const userProfileCache = new Map();
-
-/**
- * resolveAuthor — returns author profile for a given UID.
- * - Returns currentUser immediately if uid matches
- * - Returns cached profile if available
- * - Otherwise fetches from Firestore, caches, and returns
- * - On error or missing doc, caches and returns fallback
- */
-async function resolveAuthor(uid, currentUser) {
-  if (!uid) return { username: '', photoURL: '' };
-  if (currentUser && uid === currentUser.uid) return currentUser;
-  if (userProfileCache.has(uid)) return userProfileCache.get(uid);
-
-  try {
-    const db   = window._fbDb;
-    const getDoc = window._fbGetDoc;
-    const docFn  = window._fbDoc;
-    if (!db || !getDoc || !docFn) throw new Error('Firebase not ready');
-
-    const snap = await getDoc(docFn(db, 'users', uid));
-    const profile = snap.exists()
-      ? { username: snap.data().username ?? '', photoURL: snap.data().photoURL ?? '' }
-      : { username: '', photoURL: '' };
-    userProfileCache.set(uid, profile);
-    return profile;
-  } catch {
-    const fallback = { username: '', photoURL: '' };
-    userProfileCache.set(uid, fallback);
-    return fallback;
-  }
-}
-
-/* ==========================================
-   6. PERSISTENCE HELPERS
-   ========================================== */
-
-/**
- * loadShopRewards — reads owned items from the same
- * localStorage key that shop.html writes to.
- * Returns array of catalog metadata for each owned item.
- */
-function loadShopRewards() {
-  const raw = localStorage.getItem(KEYS.shopOwned);
-  if (!raw) return [];
-  const ids = JSON.parse(raw);
-  return ids.map(id => CATALOG_MAP[id]).filter(Boolean);
-}
-
-/**
- * loadEngagementData — loads posts, comments, replies
- * from localStorage on first visit.
- */
-function loadEngagementData() {
-  const raw = localStorage.getItem(KEYS.engagement);
-  if (raw) return JSON.parse(raw);
-
-  // First visit — start with empty data
-  const data = { posts: [], comments: {}, replies: {} };
-  return data;
-}
-
-/** saveEngagementData — persists all social data */
-function saveEngagementData(data) {
-  localStorage.setItem(KEYS.engagement, JSON.stringify(data));
-}
-
-/** loadStats — returns user stats object */
-function loadStats() {
-  const raw = localStorage.getItem(KEYS.stats);
-  if (raw) return JSON.parse(raw);
-  return { posts: 0, comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0 };
-}
-
-/** saveStats */
-function saveStats(stats) {
-  localStorage.setItem(KEYS.stats, JSON.stringify(stats));
-}
-
-
-/* ==========================================
-   7. NAVIGATION / SHOP LINK
-   ========================================== */
-
-/**
- * linkToShop — navigates to shop.html.
- * The engagement platform NEVER replaces shop.html.
- * All reward browsing/purchasing happens there.
- */
-function linkToShop(context = 'browse') {
-  // Could add a query param for context if shop.html supports it
-  // For now just navigate
-  window.location.href = './shop.html';
-}
-
-
-/* ==========================================
-   8. RENDER ENGINE
-   ========================================== */
-
-/** renderFeed — main entry point; filters and renders all posts */
-async function renderFeed() {
-  const data = loadEngagementData();
-  let posts  = [...data.posts];
-
-  // Apply filter
-  if (activeFilter === 'liked') {
-    posts.sort((a, b) => b.likes.length - a.likes.length);
-  } else if (activeFilter === 'rewarded') {
-    posts.sort((a, b) => rewardCount(b.rewards) - rewardCount(a.rewards));
-  } else if (activeFilter === 'trending') {
-    // Trending = high likes + rewards + recency bonus
-    posts.sort((a, b) => {
-      const scoreA = a.likes.length * 2 + rewardCount(a.rewards) * 3 + (Date.now() - a.createdAt < 3600000 ? 5 : 0);
-      const scoreB = b.likes.length * 2 + rewardCount(b.rewards) * 3 + (Date.now() - b.createdAt < 3600000 ? 5 : 0);
-      return scoreB - scoreA;
-    });
-  } else {
-    posts.sort((a, b) => b.createdAt - a.createdAt);
-  }
-
-  await renderPosts(posts, data);
-}
-
-/** rewardCount — total rewards on a post or comment */
-function rewardCount(rewards) {
-  return Object.values(rewards).reduce((sum, arr) => sum + arr.length, 0);
-}
-
-/** renderPosts — creates all post cards */
-async function renderPosts(posts, data) {
-  const container = document.getElementById('feed-container');
-  container.innerHTML = '';
-
-  if (!posts.length) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="es-icon">💬</div>
-        <p>No posts yet. Be the first to share something!</p>
-      </div>`;
-    return;
-  }
-
-  const cu = window._currentUser;
-  const topRewarded = [...posts].sort((a, b) => rewardCount(b.rewards) - rewardCount(a.rewards))[0];
-
-  for (const post of posts) {
-    const el = await buildPostCard(post, data, post.id === topRewarded?.id && rewardCount(post.rewards) > 0);
-    container.appendChild(el);
-  }
-}
-
-/** buildPostCard — constructs a single post card DOM element */
-async function buildPostCard(post, data, isTrending) {
-  const cu = window._currentUser;
-  const author = await resolveAuthor(post.authorId, cu);
-  const username = author.username || '';
-  const handle = username ? `@${username}` : 'Anonymous';
-  const initial = getAvatarInitial(username);
-  const color = avatarColor(post.authorId);
-
-  const isLiked = cu ? post.likes.includes(cu.uid) : false;
-  const likeCount = post.likes.length;
-  const commentCount = post.comments.length;
-  const totalRewards = rewardCount(post.rewards);
-  const timeAgo = formatTime(post.createdAt);
-
-  const card = document.createElement('div');
-  card.className = `post-card${isTrending ? ' trending-post' : ''}`;
-  card.id = `post-${post.id}`;
-
-  card.innerHTML = `
-    <div class="post-header">
-      <div class="avatar post-avatar-placeholder" style="background:${color};width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;font-weight:600;color:#fff;">${initial}</div>
-      <div class="post-meta">
-        <span class="post-author">${handle}</span>
-        <span class="post-time">${timeAgo}</span>
-        ${isTrending ? '<div class="post-handle"><span style="color:var(--gold-dark)">&#x1F525; Trending</span></div>' : ''}
-      </div>
-    </div>
-    <div class="post-body">
-      <div class="post-text">${escapeHtml(post.text)}</div>
-      ${post.tag ? `<span class="post-tag">${post.tag}</span>` : ''}
-    </div>
-    ${renderRewardSummary(post.rewards, 'post')}
-    <div class="post-actions">
-      <button class="action-btn${isLiked ? ' liked' : ''}" onclick="toggleLike('post', '${post.id}')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-        ${likeCount} Like${likeCount !== 1 ? 's' : ''}
-      </button>
-      <button class="action-btn" onclick="toggleComments('${post.id}')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        </svg>
-        ${commentCount} Comment${commentCount !== 1 ? 's' : ''}
-      </button>
-      <div class="action-sep"></div>
-      <button class="action-btn reward-btn${totalRewards > 0 ? ' rewarded' : ''}" onclick="openRewardPicker('post', '${post.id}')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/>
-          <line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
-          <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
-        </svg>
-        Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
-      </button>
-    </div>
-    <div class="comments-section" id="comments-${post.id}" style="display:none;">
-      <div class="comments-inner" id="comments-inner-${post.id}">
-        <!-- Comments rendered on toggle -->
-      </div>
-    </div>
-  `;
-
-  // Replace placeholder avatar with rendered one
-  const placeholder = card.querySelector('.post-avatar-placeholder');
-  if (placeholder) renderAvatar(placeholder, { username, photoURL: author.photoURL, uid: post.authorId });
-
-  return card;
-}
-
-/** renderRewardSummary — builds reward pill row for post/comment */
-function renderRewardSummary(rewards, context) {
-  const entries = Object.entries(rewards);
-  if (!entries.length) return '';
-
-  const pills = entries.map(([itemId, givers]) => {
-    const item = CATALOG_MAP[itemId];
-    if (!item || !givers.length) return '';
-    return `<span class="reward-pill" title="${givers.length} × ${item.title}">
-      <span class="rp-icon">${item.icon}</span>
-      <span class="rp-count">×${givers.length}</span>
-    </span>`;
-  }).join('');
-
-  return pills ? `<div class="reward-summary">${pills}</div>` : '';
-}
-
-/** renderComments — builds comment list inside a post */
-async function renderComments(postId) {
-  const data = loadEngagementData();
-  const post = data.posts.find(p => p.id === postId);
-  if (!post) return;
-
-  const container = document.getElementById(`comments-inner-${postId}`);
-  if (!container) return;
-
-  const cu = window._currentUser;
-  const cuUsername = cu?.username || '';
-  const cuColor = cu ? avatarColor(cu.uid) : '#2563eb';
-  const cuInitial = getAvatarInitial(cuUsername);
-
-  let html = `
-    <div class="comment-form">
-      <div class="avatar" style="background:${cuColor};width:30px;height:30px;font-size:.75rem;">${cuInitial}</div>
-      <input class="comment-input" id="comment-input-${postId}" placeholder="Write a comment…" maxlength="200"
-        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();submitComment('${postId}')}" />
-      <button class="btn btn-solid btn-sm" onclick="submitComment('${postId}')">Post</button>
-    </div>`;
-
-  if (!post.comments.length) {
-    html += `<div style="text-align:center;padding:1rem;color:var(--ink-faint);font-size:.83rem;">No comments yet — be first!</div>`;
-    container.innerHTML = html;
-    return;
-  }
-
-  container.innerHTML = html;
-
-  for (const cid of post.comments) {
-    const comment = data.comments[cid];
-    if (!comment) continue;
-    const commentEl = await buildCommentElement(comment, data);
-    container.appendChild(commentEl);
-  }
-}
-
-/** buildCommentElement — builds a single comment DOM element (async, uses resolveAuthor) */
-async function buildCommentElement(comment, data) {
-  const cu = window._currentUser;
-  const author = await resolveAuthor(comment.authorId, cu);
-  const username = author.username || '';
-  const handle = username ? `@${username}` : 'Anonymous';
-  const initial = getAvatarInitial(username);
-  const color = avatarColor(comment.authorId);
-
-  const isLiked = cu ? comment.likes.includes(cu.uid) : false;
-  const likeCount = comment.likes.length;
-  const totalRewards = rewardCount(comment.rewards);
-  const timeAgo = formatTime(comment.createdAt);
-
-  const rewardSummaryHTML = Object.entries(comment.rewards).map(([itemId, givers]) => {
-    const item = CATALOG_MAP[itemId];
-    if (!item || !givers.length) return '';
-    return `<span class="comment-reward-pill">${item.icon} ×${givers.length}</span>`;
-  }).join('');
-
-  // Build replies HTML
-  let repliesHTML = '';
-  for (const rid of comment.replies) {
-    const reply = data.replies[rid];
-    if (!reply) continue;
-    const rAuthor = await resolveAuthor(reply.authorId, cu);
-    const rUsername = rAuthor.username || '';
-    const rHandle = rUsername ? `@${rUsername}` : 'Anonymous';
-    const rInitial = getAvatarInitial(rUsername);
-    const rColor = avatarColor(reply.authorId);
-    repliesHTML += `
-      <div class="reply">
-        <div class="reply-avatar" style="background:${rColor};">${rInitial}</div>
-        <div class="reply-bubble">
-          <div class="reply-author">${rHandle}</div>
-          <div class="reply-text">${escapeHtml(reply.text)}</div>
-        </div>
-      </div>`;
-  }
-
-  const el = document.createElement('div');
-  el.className = 'comment';
-  el.id = `comment-${comment.id}`;
-  el.innerHTML = `
-    <div class="comment-avatar" style="background:${color};">${initial}</div>
-    <div class="comment-body">
-      <div class="comment-bubble">
-        <div class="comment-author">${handle} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
-        <div class="comment-text">${escapeHtml(comment.text)}</div>
-        ${rewardSummaryHTML ? `<div class="comment-rewards">${rewardSummaryHTML}</div>` : ''}
-      </div>
-      <div class="comment-actions">
-        <button class="comment-action-btn${isLiked ? ' liked' : ''}" onclick="toggleLike('comment', '${comment.id}', '${comment.postId}')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-          ${likeCount} Like${likeCount !== 1 ? 's' : ''}
-        </button>
-        <button class="comment-action-btn" onclick="toggleReplyInput('${comment.id}')">Reply</button>
-        <button class="comment-action-btn reward-btn${totalRewards > 0 ? ' rewarded' : ''}" onclick="openRewardPicker('comment', '${comment.id}')">
-          🎁 Reward${totalRewards > 0 ? ` (${totalRewards})` : ''}
-        </button>
-      </div>
-      ${repliesHTML ? `<div class="replies">${repliesHTML}</div>` : ''}
-      <div class="reply-input-wrap" id="reply-wrap-${comment.id}" style="display:none;">
-        <div class="avatar" style="background:${cu ? avatarColor(cu.uid) : '#2563eb'};width:24px;height:24px;font-size:.65rem;">${getAvatarInitial(cu?.username || '')}</div>
-        <input class="reply-input" id="reply-input-${comment.id}" placeholder="Write a reply…" maxlength="200"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();submitReply('${comment.id}', '${comment.postId}')}" />
-        <button class="btn btn-solid btn-sm" style="font-size:.75rem;padding:.28rem .65rem;" onclick="submitReply('${comment.id}', '${comment.postId}')">Reply</button>
-      </div>
-    </div>`;
-
-  // Render avatar properly
-  const avatarEl = el.querySelector('.comment-avatar');
-  if (avatarEl) renderAvatar(avatarEl, { username, photoURL: author.photoURL, uid: comment.authorId });
-
-  return el;
-}
-
-/** renderStats — fills sidebar stats grid */
-function renderStats() {
-  const stats    = loadStats();
-  const shopData = loadShopRewards();
-  const grid     = document.getElementById('stats-grid');
-  if (!grid) return;
-
-  const items = [
-    { n: stats.posts,           l: 'Posts',           highlight: false },
-    { n: stats.comments,        l: 'Comments',        highlight: false },
-    { n: stats.likesGiven,      l: 'Likes Given',     highlight: false },
-    { n: stats.rewardsSent,     l: 'Rewards Sent',    highlight: true  },
-    { n: stats.rewardsReceived, l: 'Received',        highlight: false },
-    { n: shopData.length,       l: 'Items Owned',     highlight: false },
-  ];
-
-  grid.innerHTML = items.map(s => `
-    <div class="stat-item${s.highlight ? ' highlight' : ''}">
-      <span class="stat-n">${s.n}</span>
-      <div class="stat-l">${s.l}</div>
-    </div>`).join('');
-
-  // Update sidebar owned count hint
-  const hint = document.getElementById('sidebar-owned-count');
-  if (hint) hint.textContent = shopData.length ? `${shopData.length} reward${shopData.length !== 1 ? 's' : ''} owned` : 'No rewards yet — visit shop';
-}
-
-/** renderTrending — sidebar trending list */
-async function renderTrending() {
-  const data  = loadEngagementData();
-  const posts  = [...data.posts]
-    .sort((a, b) => (b.likes.length * 2 + rewardCount(b.rewards) * 3) - (a.likes.length * 2 + rewardCount(a.rewards) * 3))
-    .slice(0, 4);
-
-  const el = document.getElementById('trending-list');
-  if (!el) return;
-
-  const cu = window._currentUser;
-  const items = await Promise.all(posts.map(async (p, i) => {
-    const author = await resolveAuthor(p.authorId, cu);
-    const handle = author.username ? `@${author.username}` : 'Anonymous';
-    return `
-      <div class="trending-item" onclick="scrollToPost('${p.id}')">
-        <div class="trending-rank">${i + 1}</div>
-        <div class="trending-text">
-          <div class="trending-title">${truncate(p.text, 55)}</div>
-          <div class="trending-meta">by ${handle} · ♥ ${p.likes.length} · 🎁 ${rewardCount(p.rewards)}</div>
-        </div>
-      </div>`;
-  }));
-
-  el.innerHTML = items.join('');
-}
-
-/** renderLeaderboard — sidebar leaderboard by rewards received */
-async function renderLeaderboard() {
-  const data = loadEngagementData();
-
-  // Tally rewards received per user from posts + comments
-  const tally = {};
-  data.posts.forEach(p => {
-    Object.values(p.rewards).forEach(givers => {
-      tally[p.authorId] = (tally[p.authorId] || 0) + givers.length;
-    });
-  });
-  Object.values(data.comments).forEach(c => {
-    Object.values(c.rewards).forEach(givers => {
-      tally[c.authorId] = (tally[c.authorId] || 0) + givers.length;
-    });
-  });
-
-  const ranked = Object.entries(tally)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
-
-  const rankClass = ['gold','silver','bronze','',''];
-  const medals    = ['🥇','🥈','🥉','4','5'];
-
-  const el = document.getElementById('leaderboard-list');
-  if (!el) return;
-
-  if (!ranked.length) {
-    el.innerHTML = '<div style="color:var(--ink-faint);font-size:.82rem;">No data yet</div>';
-    return;
-  }
-
-  const cu = window._currentUser;
-  const items = await Promise.all(ranked.map(async ([userId, count], i) => {
-    const author = await resolveAuthor(userId, cu);
-    const handle = author.username ? `@${author.username}` : 'Anonymous';
-    const initial = getAvatarInitial(author.username || '');
-    const color = avatarColor(userId);
-    return `
-      <div class="lb-item">
-        <div class="lb-rank ${rankClass[i]}">${medals[i]}</div>
-        <div class="avatar" style="background:${color};width:26px;height:26px;font-size:.68rem;flex-shrink:0;">${initial}</div>
-        <div class="lb-name">${handle}</div>
-        <div class="lb-score"><span>${count}</span> rewards</div>
-      </div>`;
-  }));
-
-  el.innerHTML = items.join('');
-}
-
-/** renderActivity — recent activity sidebar */
-function renderActivity() {
-  const el = document.getElementById('activity-feed');
-  if (!el) return;
-
-  if (!activityLog.length) {
-    el.innerHTML = `<div style="color:var(--ink-faint);font-size:.82rem;padding:.5rem 0;">Interact with posts to see activity here.</div>`;
-    return;
-  }
-
-  el.innerHTML = activityLog.slice(0, 6).map(a => `
-    <div class="activity-item">
-      <div class="activity-icon" style="background:${a.color || 'var(--paper-warm)'};">${a.icon}</div>
-      <div class="activity-text">${a.text}</div>
-      <div class="activity-time">${formatTime(a.time)}</div>
-    </div>`).join('');
-}
-
-/** addActivity — pushes to the front of activityLog */
-function addActivity(icon, color, text) {
-  activityLog.unshift({ icon, color, text, time: Date.now() });
-  renderActivity();
-}
-
-
-/* ==========================================
-   9. INTERACTIONS
-   ========================================== */
-
-/** toggleComments — shows/hides comment section */
-function toggleComments(postId) {
-  const section = document.getElementById(`comments-${postId}`);
-  if (!section) return;
-  const isOpen = section.style.display !== 'none';
-  section.style.display = isOpen ? 'none' : 'block';
-  if (!isOpen) renderComments(postId);
-}
-
-/** toggleLike — like/unlike a post or comment */
-function toggleLike(type, id, postId) {
-  const cu    = window._currentUser;
-  const data  = loadEngagementData();
-  const stats = loadStats();
-  let target;
-
-  if (type === 'post') {
-    target = data.posts.find(p => p.id === id);
-  } else {
-    target = data.comments[id];
-  }
-  if (!target) return;
-
-  const idx = target.likes.indexOf(cu?.uid || '');
-  if (idx === -1) {
-    target.likes.push(cu.uid);
-    stats.likesGiven++;
-    addActivity('♥', '#fee2e2', `You liked a ${type}.`);
-  } else {
-    target.likes.splice(idx, 1);
-    stats.likesGiven = Math.max(0, stats.likesGiven - 1);
-  }
-
-  saveEngagementData(data);
-  saveStats(stats);
-
-  // Re-render relevant section
-  if (type === 'post') {
-    const postEl = document.getElementById(`post-${id}`);
-    const btn    = postEl?.querySelector('.action-btn');
-    if (btn) {
-      const liked = target.likes.includes(cu?.uid || '');
-      btn.className = `action-btn${liked ? ' liked' : ''}`;
-      btn.querySelector('svg').setAttribute('fill', liked ? 'currentColor' : 'none');
-      btn.innerHTML = btn.innerHTML.replace(/\d+ Like/, `${target.likes.length} Like`);
-    }
-    renderStats();
-    renderTrending();
-  } else {
-    // Re-render the comment section
-    const pid = postId || data.comments[id]?.postId;
-    if (pid) renderComments(pid);
-    renderStats();
-  }
-}
-
-/** submitPost — creates a new post from compose box */
-function submitPost() {
-  const cu    = window._currentUser;
-  const input = document.getElementById('compose-input');
-  const text  = input.value.trim();
-  if (!text) { showToast('Write something first!', 'error'); return; }
-
-  const data  = loadEngagementData();
-  const stats = loadStats();
-
-  const newPost = {
-    id:        `p${Date.now()}`,
-    authorId:  cu?.uid || 'unknown',
-    text,
-    tag:       '',
-    createdAt: Date.now(),
-    likes:     [],
-    rewards:   {},
-    comments:  [],
-  };
-
-  data.posts.unshift(newPost);
-  stats.posts++;
-  saveEngagementData(data);
-  saveStats(stats);
-
-  input.value = '';
-  document.getElementById('char-count').textContent = '0 / 300';
-
-  renderFeed();
-  renderStats();
-  renderTrending();
-  addActivity('✦', '#bfdbfe', 'You created a new post.');
-  showToast('Post published! ✦', 'success');
-}
-
-/** submitComment — adds a comment to a post */
-function submitComment(postId) {
-  const cu    = window._currentUser;
-  const input = document.getElementById(`comment-input-${postId}`);
-  const text  = input?.value.trim();
-  if (!text) return;
-
-  const data  = loadEngagementData();
-  const stats = loadStats();
-  const post  = data.posts.find(p => p.id === postId);
-  if (!post) return;
-
-  const cid = `c${Date.now()}`;
-  const newComment = {
-    id:        cid,
-    postId,
-    authorId:  cu?.uid || 'unknown',
-    text,
-    createdAt: Date.now(),
-    likes:     [],
-    rewards:   {},
-    replies:   [],
-  };
-
-  data.comments[cid] = newComment;
-  post.comments.push(cid);
-  stats.comments++;
-  saveEngagementData(data);
-  saveStats(stats);
-
-  renderComments(postId);
-  // Update comment count on post card
-  const postCard = document.getElementById(`post-${postId}`);
-  if (postCard) {
-    const commentBtns = postCard.querySelectorAll('.action-btn');
-    commentBtns.forEach(btn => {
-      if (btn.textContent.includes('Comment')) {
-        btn.innerHTML = btn.innerHTML.replace(/\d+ Comment/, `${post.comments.length} Comment`);
-      }
-    });
-  }
-  renderStats();
-  addActivity('💬', '#bfdbfe', 'You commented on a post.');
-}
-
-/** submitReply — adds a reply to a comment */
-function submitReply(commentId, postId) {
-  const cu    = window._currentUser;
-  const input = document.getElementById(`reply-input-${commentId}`);
-  const text  = input?.value.trim();
-  if (!text) return;
-
-  const data    = loadEngagementData();
-  const comment = data.comments[commentId];
-  if (!comment) return;
-
-  const rid = `r${Date.now()}`;
-  data.replies[rid] = {
-    id: rid, commentId, authorId: cu?.uid || 'unknown',
-    text, createdAt: Date.now(),
-  };
-  comment.replies.push(rid);
-  saveEngagementData(data);
-  renderComments(postId);
-  addActivity('↩️', '#bfdbfe', 'You replied to a comment.');
-}
-
-/** toggleReplyInput — shows/hides reply input for a comment */
-function toggleReplyInput(commentId) {
-  const wrap = document.getElementById(`reply-wrap-${commentId}`);
-  if (!wrap) return;
-  const isOpen = wrap.style.display !== 'none';
-  wrap.style.display = isOpen ? 'none' : 'flex';
-  if (!isOpen) document.getElementById(`reply-input-${commentId}`)?.focus();
-}
-
-
-/* ==========================================
-   10. REWARD SYSTEM
-   Reads inventory from shop.html localStorage.
-   Reduces quantity on send.
-   ========================================== */
-
-/**
- * openRewardPicker — opens the modal populated with
- * the user's currently owned rewards from shop.html.
- */
-function openRewardPicker(targetType, targetId) {
-  rewardTarget     = { type: targetType, id: targetId };
-  selectedRewardId = null;
-
-  // Update modal subtitle
-  const label = document.getElementById('modal-target-label');
-  if (label) label.textContent = `Rewarding this ${targetType}`;
-
-  // Load owned rewards from the SAME localStorage key as shop.html
-  const owned = loadShopRewards();
-
-  const content = document.getElementById('reward-picker-content');
-  const footer  = document.getElementById('modal-footer');
-  const sendBtn = document.getElementById('send-reward-btn');
-  if (sendBtn) sendBtn.disabled = true;
-
-  if (!owned.length) {
-    // User has no rewards — direct them to shop.html
-    content.innerHTML = `
-      <div class="modal-empty">
-        <div class="me-icon">🎁</div>
-        <p>You don't have any rewards yet.<br>Visit the Reward Shop to buy some with your TrackWeave points!</p>
-        <a href="./shop.html" class="btn btn-gold" style="text-decoration:none;" onclick="linkToShop('browse')">
-          Open Reward Shop
-        </a>
-      </div>`;
-    if (footer) footer.style.display = 'none';
-  } else {
-    if (footer) footer.style.display = 'flex';
-    content.innerHTML = `
-      <div style="margin-bottom:.9rem;">
-        <p style="font-size:.82rem;color:var(--ink-soft);line-height:1.6;">Select a reward to send. It will be removed from your inventory.</p>
-      </div>
-      <div class="reward-grid" id="reward-grid">
-        ${owned.map(item => `
-          <div class="reward-option" data-reward-id="${item.id}" onclick="selectReward('${item.id}')">
-            <span class="ro-icon">${item.icon}</span>
-            <div class="ro-title">${item.title}</div>
-            <div class="ro-qty">You own this</div>
-          </div>`).join('')}
-      </div>`;
-  }
-
-  document.getElementById('reward-modal-backdrop').classList.add('open');
-}
-
-/** selectReward — highlights selected reward in picker */
-function selectReward(rewardId) {
-  selectedRewardId = rewardId;
-  document.querySelectorAll('.reward-option').forEach(el => {
-    el.classList.toggle('selected', el.dataset.rewardId === rewardId);
-  });
-  const sendBtn = document.getElementById('send-reward-btn');
-  if (sendBtn) sendBtn.disabled = false;
-}
-
-/** closeRewardPicker — hides the modal */
-function closeRewardPicker(event) {
-  if (event && event.target !== document.getElementById('reward-modal-backdrop')) return;
-  document.getElementById('reward-modal-backdrop').classList.remove('open');
-  rewardTarget     = null;
-  selectedRewardId = null;
-}
-
-/**
- * confirmSendReward — called when user clicks "Send Reward".
- * Delegates to sendReward().
- */
-function confirmSendReward() {
-  if (!rewardTarget || !selectedRewardId) return;
-  sendReward(rewardTarget.type, rewardTarget.id, selectedRewardId);
-}
-
-/**
- * sendReward — core reward logic:
- *   1. Validates the user owns the reward (from shop.html localStorage)
- *   2. Removes it from their inventory (updates tw_owned in localStorage)
- *   3. Records it on the target post/comment
- *   4. Updates UI and shows confirmation
- */
-function sendReward(targetType, targetId, rewardId) {
-  const cu = window._currentUser;
-
-  // 1. Validate ownership using shop.html's localStorage key
-  const ownedIds = JSON.parse(localStorage.getItem(KEYS.shopOwned) || '[]');
-  if (!ownedIds.includes(rewardId)) {
-    showToast('You no longer own this reward.', 'error');
-    return;
-  }
-
-  const item = CATALOG_MAP[rewardId];
-  if (!item) return;
-
-  // 2. Remove from inventory (shop.html reads tw_owned — we update the same key)
-  const newOwned = ownedIds.filter(id => id !== rewardId);
-  localStorage.setItem(KEYS.shopOwned, JSON.stringify(newOwned));
-
-  // 3. Record the reward on the target
-  const data  = loadEngagementData();
-  const stats = loadStats();
-  let target;
-
-  if (targetType === 'post') {
-    target = data.posts.find(p => p.id === targetId);
-  } else {
-    target = data.comments[targetId];
-  }
-
-  if (!target) { showToast('Target not found.', 'error'); return; }
-
-  if (!target.rewards[rewardId]) target.rewards[rewardId] = [];
-  target.rewards[rewardId].push(cu?.uid || 'unknown');
-
-  stats.rewardsSent++;
-
-  // If the recipient isn't the current user, count their received rewards too
-  if (target.authorId && target.authorId !== cu?.uid) {
-    stats.rewardsReceived = (stats.rewardsReceived || 0); // only tracks self-received
-  }
-
-  saveEngagementData(data);
-  saveStats(stats);
-
-  // 4. Update UI
-  closeRewardPicker();
-  burstConfetti();
-  showToast(`${item.icon} Sent "${item.title}" as a reward! 🎉`, 'reward');
-  addActivity(item.icon, '#fef3c7', `You sent <strong>${item.title}</strong> as a reward.`);
-
-  // Re-render the affected section
-  if (targetType === 'post') {
-    renderFeed();
-  } else {
-    const postId = data.comments[targetId]?.postId || target.postId;
-    if (postId) renderComments(postId);
-  }
-
-  renderStats();
-  renderTrending();
-  renderLeaderboard();
-}
-
-
-/* ==========================================
-   11. UTILITY FUNCTIONS
-   ========================================== */
-
-/** escapeHtml — prevents XSS from user content */
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-/** formatTime — human-readable relative time */
-function formatTime(ts) {
-  const diff = Date.now() - ts;
-  const m = Math.floor(diff / 60000);
-  const h = Math.floor(diff / 3600000);
-  const d = Math.floor(diff / 86400000);
-  if (m < 1)  return 'just now';
-  if (m < 60) return `${m}m ago`;
-  if (h < 24) return `${h}h ago`;
-  return `${d}d ago`;
-}
-
-/** truncate — cuts string to max length */
-function truncate(str, max) {
-  return str.length > max ? str.slice(0, max) + '…' : str;
-}
-
-/** scrollToPost — smoothly scrolls to a post card */
-function scrollToPost(postId) {
-  const el = document.getElementById(`post-${postId}`);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-/** showToast — displays bottom-center notification */
-function showToast(msg, type = 'success') {
-  const c = document.getElementById('toast-container');
-  const t = document.createElement('div');
-  t.className = `toast toast-${type}`;
-  const icon = type === 'reward' ? '🎁' : type === 'error' ? '✕' : '✓';
-  t.innerHTML = `<span>${icon}</span> ${msg}`;
-  c.appendChild(t);
-  setTimeout(() => {
-    t.style.animation = 'toast-out .25s ease both';
-    t.addEventListener('animationend', () => t.remove(), { once: true });
-  }, 3200);
-}
-
-/** burstConfetti — micro-animation on reward send */
-function burstConfetti() {
-  const colors = ['#f59e0b', '#2563eb', '#7c3aed', '#059669', '#dc2626', '#fef3c7'];
-  for (let i = 0; i < 14; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.cssText = `
-      background: ${colors[i % colors.length]};
-      left: ${40 + Math.random() * 20}%;
-      top: ${35 + Math.random() * 15}%;
-      animation-delay: ${i * 35}ms;
-      animation-duration: ${0.6 + Math.random() * 0.4}s;
-    `;
-    document.body.appendChild(piece);
-    piece.addEventListener('animationend', () => piece.remove(), { once: true });
-  }
-}
-
-
-/* ==========================================
-   12. EVENT WIRING
-   ========================================== */
-
-// Filter tabs
-document.getElementById('filter-tabs').addEventListener('click', e => {
-  const tab = e.target.closest('.filter-tab');
-  if (!tab) return;
-  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-  activeFilter = tab.dataset.filter;
-  renderFeed();
-});
-
-// Compose char counter
-document.getElementById('compose-input').addEventListener('input', e => {
-  const len = e.target.value.length;
-  document.getElementById('char-count').textContent = `${len} / 300`;
-});
-
-// Close modal on Escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.getElementById('reward-modal-backdrop').classList.remove('open');
-});
-
-// == Avatar dropdown toggle ================================
-(function wireDropdown() {
-  const wrap  = document.getElementById('nav-avatar-wrap');
-  const avBtn = document.getElementById('nav-avatar');
-  if (!wrap || !avBtn) return;
-
-  avBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const open = wrap.classList.toggle('open');
-    avBtn.setAttribute('aria-expanded', open);
-  });
-  document.addEventListener('click', e => {
-    if (!wrap.contains(e.target)) {
-      wrap.classList.remove('open');
-      avBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      wrap.classList.remove('open');
-      avBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
-})();
-
-
-/* ==========================================
-   13. INITIALISE
-   ========================================== */
-/* ==========================================
-   14. ARTIST DISCUSSIONS
-   ========================================== */
-
-/* Storage key for artist-specific comments */
-function artistCommentsKey(artistId) {
-  return `tw_artist_comments_${artistId}`;
-}
-
-/* Load comments for a specific artist */
-function loadArtistComments(artistId) {
-  try {
-    const raw = localStorage.getItem(artistCommentsKey(artistId));
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
-}
-
-/* Save comments for a specific artist */
-function saveArtistComments(artistId, comments) {
-  localStorage.setItem(artistCommentsKey(artistId), JSON.stringify(comments));
-}
-
-/* Track recently-discussed artists */
-const RECENT_ARTISTS_KEY = 'tw_recent_artists';
-function loadRecentArtists() {
-  try { return JSON.parse(localStorage.getItem(RECENT_ARTISTS_KEY) || '[]'); } catch { return []; }
-}
-function saveRecentArtist(artist) {
-  const list = loadRecentArtists().filter(a => a.id !== artist.id);
-  list.unshift({ id: artist.id, name: artist.name, type: artist.type ?? '' });
-  localStorage.setItem(RECENT_ARTISTS_KEY, JSON.stringify(list.slice(0, 8)));
-}
-
-/* Active artist state */
-let activeArtist = null; // { id, name, type }
-
-/* Switch main view between Feed and Artist Discussions */
-function switchMainView(view) {
-  const feedView    = document.getElementById('view-feed');
-  const artistView  = document.getElementById('view-artists');
-  const tabFeed     = document.getElementById('tab-feed');
-  const tabArtists  = document.getElementById('tab-artists');
-
-  if (view === 'feed') {
-    feedView.style.display   = '';
-    artistView.style.display = 'none';
-    tabFeed.classList.add('active');
-    tabArtists.classList.remove('active');
-  } else {
-    feedView.style.display   = 'none';
-    artistView.style.display = '';
-    tabFeed.classList.remove('active');
-    tabArtists.classList.add('active');
-    renderRecentArtistChips();
-  }
-}
-
-/* Render recently-discussed artist chips */
-function renderRecentArtistChips() {
-  const recent = loadRecentArtists();
-  const wrap   = document.getElementById('ap-recent-wrap');
-  const chips  = document.getElementById('ap-recent-chips');
-  if (!wrap || !chips) return;
-
-  if (!recent.length) { wrap.style.display = 'none'; return; }
-  wrap.style.display = '';
-
-  chips.innerHTML = recent.map(a => {
-    const hue     = Math.abs(hashStr(a.id)) % 360;
-    const initial = a.name.charAt(0).toUpperCase();
-    return `
-      <button class="ap-recent-chip" onclick="selectArtist(${JSON.stringify({id:a.id,name:a.name,type:a.type||''}).replace(/"/g,'&quot;')})">
-        <span class="ap-chip-dot" style="background:hsl(${hue},60%,44%);">${initial}</span>
-        ${escapeHtml(a.name)}
-      </button>`;
-  }).join('');
-}
-
-/* MusicBrainz artist search */
-let _mbSearchTimer = null;
-async function searchArtistMB() {
-  const query = document.getElementById('artist-search-input')?.value.trim();
-  if (!query) return;
-
-  const wrap = document.getElementById('ap-results-wrap');
-  if (!wrap) return;
-  wrap.innerHTML = '<div class="ap-loading">Searching MusicBrainz…</div>';
-
-  try {
-    await new Promise(r => setTimeout(r, 300)); // small debounce
-    const url = `https://musicbrainz.org/ws/2/artist/?query=${encodeURIComponent(query)}&limit=6&fmt=json`;
-    const res = await fetch(url, { headers: { 'User-Agent': 'TrackWeave/1.0 (hello@trackweave.app)' } });
-    if (!res.ok) throw new Error('MB error');
-    const json = await res.json();
-    const artists = json.artists ?? [];
-
-    if (!artists.length) {
-      wrap.innerHTML = '<div class="ap-empty">No artists found. Try a different name.</div>';
-      return;
-    }
-
-    const results = document.createElement('div');
-    results.className = 'ap-results';
-    results.innerHTML = artists.map(a => {
-      const hue      = Math.abs(hashStr(a.id)) % 360;
-      const initial  = (a.name || '?').charAt(0).toUpperCase();
-      const type     = a.type ?? '';
-      const country  = a.country ? ` · ${a.country}` : '';
-      const tags     = (a.tags ?? []).slice(0, 2).map(t => t.name).join(', ');
-      const meta     = [type, country, tags].filter(Boolean).join('');
-      const count    = loadArtistComments(a.id).length;
-      const countTxt = count ? `${count} comment${count !== 1 ? 's' : ''}` : 'No comments yet';
-      const artistJson = JSON.stringify({id:a.id, name:a.name, type}).replace(/"/g,'&quot;');
-      return `
-        <div class="ap-result-item" onclick="selectArtist(${artistJson})">
-          <div class="ap-result-avatar" style="background:hsl(${hue},60%,44%);">${initial}</div>
-          <div class="ap-result-info">
-            <div class="ap-result-name">${escapeHtml(a.name)}</div>
-            <div class="ap-result-meta">${escapeHtml(meta)}</div>
-          </div>
-          <span class="ap-result-count">${countTxt}</span>
-        </div>`;
-    }).join('');
-
-    wrap.innerHTML = '';
-    wrap.appendChild(results);
-  } catch (e) {
-    wrap.innerHTML = '<div class="ap-empty">Search failed. Check your connection and try again.</div>';
-  }
-}
-
-/* Select an artist and open their discussion panel */
-function selectArtist(artist) {
-  activeArtist = artist;
-  saveRecentArtist(artist);
-
-  // Hide picker, show panel
-  document.getElementById('artist-picker-card').style.display   = 'none';
-  document.getElementById('artist-discussion-panel').style.display = '';
-
-  // Set header
-  const hue     = Math.abs(hashStr(artist.id)) % 360;
-  const initial = artist.name.charAt(0).toUpperCase();
-  const adpAv   = document.getElementById('adp-avatar');
-  if (adpAv) { adpAv.textContent = initial; adpAv.style.background = `hsl(${hue},60%,44%)`; }
-  const adpName = document.getElementById('adp-artist-name');
-  if (adpName) adpName.textContent = artist.name;
-  const adpMeta = document.getElementById('adp-meta');
-  if (adpMeta) adpMeta.textContent = artist.type ? `${artist.type} Discussion` : 'Artist Discussion';
-
-  // Set compose avatar
-  const cu = window._currentUser;
-  const adpUserAv = document.getElementById('adp-user-avatar');
-  if (adpUserAv && cu) renderAvatar(adpUserAv, { username: cu.username, photoURL: cu.photoURL, uid: cu.uid });
-
-  // Clear input
-  const input = document.getElementById('adp-comment-input');
-  if (input) input.value = '';
-
-  renderArtistComments();
-}
-
-/* Close artist panel, go back to picker */
-function closeArtistPanel() {
-  activeArtist = null;
-  document.getElementById('artist-picker-card').style.display   = '';
-  document.getElementById('artist-discussion-panel').style.display = 'none';
-  renderRecentArtistChips();
-}
-
-/* Submit a comment for the active artist */
-async function submitArtistComment() {
-  if (!activeArtist) return;
-  const cu    = window._currentUser;
-  const input = document.getElementById('adp-comment-input');
-  const text  = input?.value.trim();
-  if (!text) { showToast('Write something first!', 'error'); return; }
-
-  const comments = loadArtistComments(activeArtist.id);
-  const newComment = {
-    id:        `ac${Date.now()}`,
-    artistId:  activeArtist.id,
-    authorId:  cu?.uid || 'unknown',
-    authorName: cu?.username || '',
-    photoURL:  cu?.photoURL || '',
-    text,
-    createdAt: Date.now(),
-    likes:     [],
-  };
-
-  comments.unshift(newComment);
-  saveArtistComments(activeArtist.id, comments);
-
-  input.value = '';
-  renderArtistComments();
-
-  const stats = loadStats();
-  stats.comments++;
-  saveStats(stats);
-  renderStats();
-  addActivity('🎵', '#bfdbfe', `You commented on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
-  showToast('Comment posted! 🎵', 'success');
-}
-
-/* Like/unlike an artist comment */
-function toggleArtistCommentLike(commentId) {
-  if (!activeArtist) return;
-  const cu = window._currentUser;
-  if (!cu) return;
-
-  const comments = loadArtistComments(activeArtist.id);
-  const comment  = comments.find(c => c.id === commentId);
-  if (!comment) return;
-
-  const idx = comment.likes.indexOf(cu.uid);
-  if (idx === -1) {
-    comment.likes.push(cu.uid);
-    addActivity('♥', '#fee2e2', `You liked a comment on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
-  } else {
-    comment.likes.splice(idx, 1);
-  }
-
-  saveArtistComments(activeArtist.id, comments);
-  renderArtistComments();
-}
-
-/* Render artist-specific comments */
-async function renderArtistComments() {
-  if (!activeArtist) return;
-  const list = document.getElementById('adp-comments-list');
-  if (!list) return;
-
-  const cu       = window._currentUser;
-  const comments = loadArtistComments(activeArtist.id);
-
-  if (!comments.length) {
-    list.innerHTML = `
-      <div class="artist-comment-empty">
-        <div class="ace-icon">🎵</div>
-        <div>No comments yet for <strong>${escapeHtml(activeArtist.name)}</strong>.<br>Be the first to share your thoughts!</div>
-      </div>`;
-    return;
-  }
-
-  list.innerHTML = '';
-  for (const comment of comments) {
-    const el = await buildArtistCommentElement(comment, cu);
-    list.appendChild(el);
-  }
-}
-
-/* Build a single artist comment element */
-async function buildArtistCommentElement(comment, cu) {
-  // Resolve latest author profile (may have updated since comment was stored)
-  const author   = await resolveAuthor(comment.authorId, cu);
-  const username = author.username || comment.authorName || '';
-  const handle   = username ? `@${username}` : 'Anonymous';
-  const initial  = getAvatarInitial(username);
-  const color    = avatarColor(comment.authorId);
-  const isLiked  = cu ? comment.likes.includes(cu.uid) : false;
-  const timeAgo  = formatTime(comment.createdAt);
-
-  const el = document.createElement('div');
-  el.className = 'comment';
-  el.id = `acomment-${comment.id}`;
-  el.innerHTML = `
-    <div class="comment-avatar" style="background:${color};">${initial}</div>
-    <div class="comment-body">
-      <div class="comment-bubble">
-        <div class="comment-author">${escapeHtml(handle)} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
-        <div class="comment-text">${escapeHtml(comment.text)}</div>
-      </div>
-      <div class="comment-actions">
-        <button class="comment-action-btn${isLiked ? ' liked' : ''}" onclick="toggleArtistCommentLike('${comment.id}')">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-          </svg>
-          ${comment.likes.length} Like${comment.likes.length !== 1 ? 's' : ''}
-        </button>
-      </div>
-    </div>`;
-
-  // Render avatar properly (photo if available)
-  const avatarEl = el.querySelector('.comment-avatar');
-  if (avatarEl) renderAvatar(avatarEl, { username, photoURL: author.photoURL, uid: comment.authorId });
-
-  return el;
-}
-
-/* Open artist discussion from URL param ?artist=ID&artistName=NAME */
-function checkArtistUrlParam() {
-  const params     = new URLSearchParams(window.location.search);
-  const artistId   = params.get('artist');
-  const artistName = params.get('artistName');
-  const artistType = params.get('artistType') || '';
-  if (artistId && artistName) {
-    switchMainView('artists');
-    selectArtist({ id: artistId, name: decodeURIComponent(artistName), type: artistType });
-  }
-}
-
-window._engagementInit = function() {
-  // Seed default points if shop.html hasn't been visited yet
-  if (!localStorage.getItem(KEYS.shopPoints)) {
-    localStorage.setItem(KEYS.shopPoints, '1250');
-  }
-
-  const cu = window._currentUser;
-
-  // Update compose box avatar
-  const composeAvatar = document.getElementById('current-user-avatar');
-  if (composeAvatar && cu) {
-    renderAvatar(composeAvatar, { username: cu.username, photoURL: cu.photoURL, uid: cu.uid });
-  }
-
-  // Update sidebar username
-  const sidebarUsername = document.getElementById('sidebar-username');
-  const sidebarHandle   = document.getElementById('sidebar-handle');
-  if (sidebarUsername && cu) {
-    sidebarUsername.textContent = cu.username ? `@${cu.username}` : (cu.email || 'You');
-  }
-  if (sidebarHandle && cu) {
-    sidebarHandle.textContent = cu.username ? `@${cu.username} · TrackWeave member` : 'TrackWeave member';
-  }
-
-  renderFeed();
-  renderStats();
-  renderTrending();
-  renderLeaderboard();
-  renderActivity();
-
-  // Check if arriving from artist-details.html
-  checkArtistUrlParam();
-};
-</script>
 </body>
 </html>
