@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Check-In — TrackWeave</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/pages/dashboard.css" />
+  <link rel="stylesheet" href="../styles/pages/checkin.css" />
+
+  <!-- Firebase Authentication -->
+  <script type="module" src="../scripts/checkin-auth.js"></script>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="./index.html" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7.0" y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14.0" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link">Community</a>
+      <a href="./checkin.html" class="nav-link active">Check-In</a>
+      <a href="./shop.html" class="nav-link">Shop</a>
+    </nav>
+
+    <div class="nav-avatar-wrap" id="nav-avatar-wrap">
+      <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
+
+      <div class="nav-dropdown" id="nav-dropdown" role="menu">
+        <div class="drop-user">
+          <div class="drop-av" id="drop-av-mini">?</div>
+          <div>
+            <div class="drop-name" id="drop-display-name">—</div>
+            <div class="drop-handle" id="drop-username"></div>
+          </div>
+        </div>
+
+        <div class="drop-items">
+          <a class="drop-item" href="./dashboard.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+          <a class="drop-item" href="./engagement.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Community
+          </a>
+          <a class="drop-item active" href="./checkin.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Check-In
+          </a>
+          <a class="drop-item" href="./shop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Shop
+          </a>
+
+          <div class="drop-divider"></div>
+
+          <button class="drop-item danger" id="btn-signout" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ POINTS BANNER ═══ -->
+<div class="points-banner">
+  <div class="points-banner-inner">
+    <div>
+      <div class="pts-label">Your Balance</div>
+      <div class="pts-value">
+        <span class="pts-coin">🪙</span>
+        <span id="pts-display">0</span>
+      </div>
+      <div class="pts-subtitle">TrackWeave Points</div>
+    </div>
+    <div class="pts-divider"></div>
+    <div class="pts-stat">
+      <div class="pts-stat-n" id="streak-display">0</div>
+      <div class="pts-stat-l">Day Streak</div>
+    </div>
+    <div class="pts-divider"></div>
+    <div class="pts-stat">
+      <div class="pts-stat-n" id="earned-today">0</div>
+      <div class="pts-stat-l">Earned Today</div>
+    </div>
+    <div class="pts-actions">
+      <a href="./shop.html" class="btn btn-gold">Visit Shop</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HEADER ═══ -->
+<div class="checkin-hd">
+  <span class="sec-label">Daily Activities</span>
+  <h1>Complete tasks,<br><em>earn coins</em></h1>
+  <p>Check in daily, complete interactive challenges, and earn coins to spend in the shop. The more you engage, the more you earn!</p>
+</div>
+
+<!-- ═══ DAILY CHECK-IN CARD ═══ -->
+<div class="container">
+  <div class="checkin-card" id="daily-checkin">
+    <div class="checkin-card-inner">
+      <div class="checkin-icon">📅</div>
+      <div class="checkin-content">
+        <h3>Daily Check-In</h3>
+        <p>Come back every day to maintain your streak and earn bonus coins!</p>
+        <div class="checkin-streak">
+          <div class="streak-day" data-day="1">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 1</div>
+            <div class="streak-reward">+50</div>
+          </div>
+          <div class="streak-day" data-day="2">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 2</div>
+            <div class="streak-reward">+75</div>
+          </div>
+          <div class="streak-day" data-day="3">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 3</div>
+            <div class="streak-reward">+100</div>
+          </div>
+          <div class="streak-day" data-day="4">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 4</div>
+            <div class="streak-reward">+125</div>
+          </div>
+          <div class="streak-day" data-day="5">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 5</div>
+            <div class="streak-reward">+150</div>
+          </div>
+          <div class="streak-day" data-day="6">
+            <div class="streak-icon">🔥</div>
+            <div class="streak-label">Day 6</div>
+            <div class="streak-reward">+175</div>
+          </div>
+          <div class="streak-day" data-day="7">
+            <div class="streak-icon">🎁</div>
+            <div class="streak-label">Day 7</div>
+            <div class="streak-reward">+300</div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-solid btn-lg" id="checkin-btn" onclick="performCheckIn()">Check In</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TASKS GRID ═══ -->
+<div class="container">
+  <div class="tasks-header">
+    <h2>Interactive Tasks</h2>
+    <p>Complete these activities to earn more coins</p>
+  </div>
+
+  <div class="tasks-grid">
+    
+    <!-- Task: Graph Generator -->
+    <div class="task-card" data-task-id="graph-generator">
+      <div class="task-header">
+        <div class="task-icon">📊</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+200</span>
+        </div>
+      </div>
+      <h3>Generate a Music Graph</h3>
+      <p>Create an interactive graph visualization showing connections between songs</p>
+      <div class="task-status" id="status-graph-generator">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('graph-generator')">Start Task</button>
+    </div>
+
+    <!-- Task: Listening Quiz -->
+    <div class="task-card" data-task-id="listening-quiz">
+      <div class="task-header">
+        <div class="task-icon">🎵</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+150</span>
+        </div>
+      </div>
+      <h3>Music Knowledge Quiz</h3>
+      <p>Test your music knowledge with 5 questions about artists and albums</p>
+      <div class="task-status" id="status-listening-quiz">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('listening-quiz')">Start Task</button>
+    </div>
+
+    <!-- Task: Mood Tracker -->
+    <div class="task-card" data-task-id="mood-tracker">
+      <div class="task-header">
+        <div class="task-icon">😊</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+100</span>
+        </div>
+      </div>
+      <h3>Track Your Mood</h3>
+      <p>Log your current mood and see how it correlates with your listening habits</p>
+      <div class="task-status" id="status-mood-tracker">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('mood-tracker')">Start Task</button>
+    </div>
+
+    <!-- Task: Album Review -->
+    <div class="task-card" data-task-id="album-review">
+      <div class="task-header">
+        <div class="task-icon">✍️</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+250</span>
+        </div>
+      </div>
+      <h3>Write an Album Review</h3>
+      <p>Share your thoughts on an album with a detailed review (min 100 words)</p>
+      <div class="task-status" id="status-album-review">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('album-review')">Start Task</button>
+    </div>
+
+    <!-- Task: Discovery Challenge -->
+    <div class="task-card" data-task-id="discovery-challenge">
+      <div class="task-header">
+        <div class="task-icon">🔍</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+175</span>
+        </div>
+      </div>
+      <h3>Discovery Challenge</h3>
+      <p>Explore 3 new artists you've never listened to before</p>
+      <div class="task-status" id="status-discovery-challenge">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('discovery-challenge')">Start Task</button>
+    </div>
+
+    <!-- Task: Playlist Creator -->
+    <div class="task-card" data-task-id="playlist-creator">
+      <div class="task-header">
+        <div class="task-icon">🎧</div>
+        <div class="task-reward">
+          <span class="reward-coin">🪙</span>
+          <span class="reward-amount">+125</span>
+        </div>
+      </div>
+      <h3>Create a Themed Playlist</h3>
+      <p>Build a playlist with at least 10 songs around a specific theme or mood</p>
+      <div class="task-status" id="status-playlist-creator">Not Started</div>
+      <button class="btn btn-solid" onclick="openTask('playlist-creator')">Start Task</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TASK MODAL ═══ -->
+<div class="modal-overlay" id="task-modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    <div id="modal-body">
+      <!-- Dynamic content loaded here -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST CONTAINER ═══ -->
+<div id="toast-container"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="fb-wm">
+        <div class="fm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+            <circle cx="12" cy="12" r="2.1" fill="white"/>
+            <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+            <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+            <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="11.4" x2="17"   y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+            <line x1="14" y1="12.7" x2="17"   y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+          </svg>
+        </div>
+        <span>TrackWeave</span>
+      </div>
+      <p>A graph-based music intelligence platform connecting songs, albums, and artists through NLP analysis.</p>
+    </div>
+
+    <div class="foot-col">
+      <h5>Product</h5>
+      <a href="#">Features</a>
+      <a href="#">Graph Explorer</a>
+      <a href="./shop.html">Shop</a>
+      <a href="./checkin.html">Daily Check-In</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Community</h5>
+      <a href="#">Discover</a>
+      <a href="#">Reviews</a>
+      <a href="#">Following</a>
+    </div>
+
+    <div class="foot-col">
+      <h5>Company</h5>
+      <a href="./about.html">About</a>
+      <a href="./support.html">Support</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <div class="foot-bottom">
+    <span>© 2026 TrackWeave. All rights reserved.</span>
+    <div>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../scripts/checkin.js"></script>
+</body>
+</html>
