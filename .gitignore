@@ -43,6 +43,9 @@ yarn-error.log*
 
 # Optional: Keep .kiro for AI assistance
 # .kiro/
-
+.kiro/
 # Optional: Keep tests
 # tests/
+tests/
+
+DEPLOY_COIN_FIX.md
