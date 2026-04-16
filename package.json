@@ -1,11 +1,37 @@
 {
-  "name": "trackweave-tests",
+  "name": "trackweave",
+  "version": "1.0.0",
+  "description": "A graph-based music intelligence platform connecting songs, albums, and artists through NLP analysis",
   "type": "module",
   "scripts": {
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "dev": "echo 'Open src/pages/index.html in your browser to view the application'",
+    "lint": "echo 'Linting not configured yet'",
+    "format": "echo 'Formatting not configured yet'"
   },
+  "keywords": [
+    "music",
+    "graph",
+    "nlp",
+    "visualization",
+    "social",
+    "gamification"
+  ],
+  "author": "TrackWeave Team",
+  "license": "MIT",
   "devDependencies": {
     "vitest": "^1.6.0",
     "fast-check": "^3.19.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/trackweave.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/trackweave/issues"
+  },
+  "homepage": "https://github.com/yourusername/trackweave#readme"
 }

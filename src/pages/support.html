@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../styles/trackweave-base.css" />
-  <link rel="stylesheet" href="../styles/support-page.css" />
+  <link rel="stylesheet" href="../styles/base.css" />
+  <link rel="stylesheet" href="../styles/pages/support.css" />
 </head>
 <body>
 
@@ -443,20 +443,7 @@
 
 
 <!-- ═══ SCRIPTS ═══ -->
-<script>
-  /* ── Scroll reveal ── */
-  const io = new IntersectionObserver(
-    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
-    { threshold: 0.08 }
-  );
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  /* ── Amount chip selector ── */
-  function pickAmount(el, val) {
-    document.querySelectorAll('.amount-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-  }
-</script>
+<script src="../scripts/support.js"></script>
 
 </body>
 </html>
