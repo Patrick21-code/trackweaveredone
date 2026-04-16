@@ -365,6 +365,13 @@
     .buy-btn.is-owned {
       background: var(--green); color: #fff; cursor: default;
     }
+    .btn-gift {
+      background: var(--gold); color: var(--ink);
+      margin-top: .5rem; width: 100%;
+    }
+    .btn-gift:hover {
+      background: #fbbf24;
+    }
 
     /* ─── PURCHASE ANIMATION ─────────────────────── */
     @keyframes pop-in {
@@ -468,6 +475,7 @@
 
     <div class="nav-end">
       <a href="./index.html" class="lnk">Home</a>
+      <a href="./checkin.html" class="lnk">Daily Check-In</a>
       <a href="./support.html" class="lnk">Support</a>
       <a href="./login.html" class="btn btn-ghost" style="padding:.42rem .9rem;font-size:.82rem;">Log In</a>
       <a href="./register.html" class="btn btn-solid" style="padding:.42rem .9rem;font-size:.82rem;">Get Started</a>
@@ -892,6 +900,7 @@ function buildCard(item, state) {
           ${isOwned ? 'Owned' : isFree ? 'Claim' : 'Buy'}
         </button>
       </div>
+      ${isOwned ? `<button class="btn btn-gift" onclick="giftItem('${item.id}')">🎁 Gift to Commenter</button>` : ''}
     </div>
   `;
   return card;
@@ -969,7 +978,52 @@ function renderShop() {
 }
 
 /* ──────────────────────────────────────
-   6. DEMO HELPER
+   6. GIFTING SYSTEM
+   ────────────────────────────────────── */
+/**
+ * giftItem — allows users to gift owned items to commenters
+ * In a real implementation, this would integrate with a comment system
+ */
+function giftItem(itemId) {
+  const state = loadUserData();
+  const item = CATALOG.find(i => i.id === itemId);
+  
+  if (!item) return;
+  
+  // Check if user owns the item
+  if (!state.owned.includes(itemId)) {
+    showToast('You must own this item to gift it!', 'error');
+    return;
+  }
+  
+  // In a real app, this would open a modal to select a commenter
+  // For demo purposes, we'll simulate the gifting
+  const commenterName = prompt('Enter the username of the commenter you want to gift this to:');
+  
+  if (!commenterName || !commenterName.trim()) {
+    showToast('Gift cancelled', 'error');
+    return;
+  }
+  
+  // Save gift record (in real app, this would be sent to backend)
+  const gifts = JSON.parse(localStorage.getItem('tw_gifts') || '[]');
+  gifts.push({
+    itemId: itemId,
+    itemTitle: item.title,
+    recipient: commenterName.trim(),
+    timestamp: new Date().toISOString(),
+  });
+  localStorage.setItem('tw_gifts', JSON.stringify(gifts));
+  
+  showToast(`"${item.title}" gifted to @${commenterName}! 🎁`, 'success');
+  
+  // Celebrate with confetti
+  const card = document.querySelector(`[data-item-id="${itemId}"]`);
+  if (card) burstConfetti(card);
+}
+
+/* ──────────────────────────────────────
+   7. DEMO HELPER
    ────────────────────────────────────── */
 function addDemoPoints() {
   const state = loadUserData();
@@ -981,7 +1035,7 @@ function addDemoPoints() {
 }
 
 /* ──────────────────────────────────────
-   7. EVENT WIRING
+   8. EVENT WIRING
    ────────────────────────────────────── */
 
 // Category tabs
@@ -1005,7 +1059,7 @@ document.getElementById('search-input').addEventListener('input', e => {
 });
 
 /* ──────────────────────────────────────
-   8. INIT
+   9. INIT
    ────────────────────────────────────── */
 renderShop();
 </script>
