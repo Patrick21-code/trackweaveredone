@@ -48,4 +48,4 @@ yarn-error.log*
 # tests/
 tests/
 
-DEPLOY_COIN_FIX.md
+instructions/
