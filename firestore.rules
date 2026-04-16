@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Artist Comments Subcollection Structure
+    // artistComments/{artistId}/comments/{commentId}
+    match /artistComments/{artistId}/comments/{commentId} {
+      
+      // Anyone authenticated can read comments
+      allow read: if request.auth != null;
+      
+      // Authenticated users can create comments
+      // Must include required fields and authorId must match auth UID
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasAll([
+          'artistId', 'authorId', 'text', 'createdAt', 'likes'
+        ])
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() >= 1
+        && request.resource.data.text.size() <= 300
+        && request.resource.data.artistId is string
+        && request.resource.data.artistId.size() > 0
+        && request.resource.data.likes is list;
+      
+      // Users can update only the likes array
+      // Cannot modify text, authorId, artistId, or createdAt
+      allow update: if request.auth != null
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['likes'])
+        && request.resource.data.likes is list;
+      
+      // Users can delete only their own comments
+      allow delete: if request.auth != null
+        && resource.data.authorId == request.auth.uid;
+    }
+    
+    // Users Collection (for profile lookups)
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
