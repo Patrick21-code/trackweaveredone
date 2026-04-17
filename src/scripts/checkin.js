@@ -64,16 +64,31 @@ const TASKS = {
 function loadState() {
   const today = new Date().toDateString();
   const lastCheckin = localStorage.getItem(STORAGE.lastCheckin);
+  const lastTaskReset = localStorage.getItem('tw_last_task_reset');
+  
+  // Check if tasks need to be reset (24 hours have passed)
+  const shouldResetTasks = !lastTaskReset || lastTaskReset !== today;
+  
   const earnedToday = lastCheckin === today 
     ? parseInt(localStorage.getItem(STORAGE.earnedToday) || '0', 10)
     : 0;
+
+  const tasks = shouldResetTasks 
+    ? {} 
+    : JSON.parse(localStorage.getItem(STORAGE.tasks) || '{}');
+  
+  // If we reset tasks, save the reset date
+  if (shouldResetTasks) {
+    localStorage.setItem('tw_last_task_reset', today);
+    localStorage.setItem(STORAGE.tasks, '{}');
+  }
 
   return {
     points: parseInt(localStorage.getItem(STORAGE.points) || '1250', 10),
     streak: parseInt(localStorage.getItem(STORAGE.streak) || '0', 10),
     lastCheckin: lastCheckin,
     earnedToday: earnedToday,
-    tasks: JSON.parse(localStorage.getItem(STORAGE.tasks) || '{}'),
+    tasks: tasks,
     inventory: JSON.parse(localStorage.getItem(STORAGE.inventory) || '[]'),
     spent: parseInt(localStorage.getItem(STORAGE.spent) || '0', 10),
   };

@@ -276,14 +276,6 @@
       box-shadow: 0 6px 28px rgba(17,24,32,.09);
       transform: translateY(-2px);
     }
-    .item-card.owned {
-      border-color: var(--green);
-      background: var(--green-light);
-    }
-    .item-card.owned:hover {
-      border-color: var(--green);
-      box-shadow: 0 6px 28px rgba(5,150,105,.12);
-    }
 
     /* Rarity badge */
     .rarity-badge {
@@ -304,10 +296,6 @@
       min-height: 100px;
       background: var(--paper-warm);
       border-bottom: 1px solid var(--rule);
-    }
-    .item-card.owned .item-icon-wrap {
-      background: rgba(5,150,105,.07);
-      border-bottom-color: rgba(5,150,105,.18);
     }
     .item-icon {
       font-size: 3rem; line-height: 1;
@@ -336,6 +324,14 @@
     .item-footer {
       display: flex; align-items: center;
       justify-content: space-between; gap: .6rem;
+      flex-wrap: wrap;
+    }
+    .inventory-count {
+      font-size: .75rem; font-weight: 600;
+      color: var(--green); background: var(--green-light);
+      padding: .25rem .6rem; border-radius: 99px;
+      border: 1px solid rgba(5,150,105,.2);
+      flex-shrink: 0;
     }
     .item-cost {
       display: flex; align-items: center; gap: .35rem;
