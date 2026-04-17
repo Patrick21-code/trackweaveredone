@@ -758,6 +758,118 @@ footer a:hover { color: #fff; }
 .adp-back-btn:hover { border-color: var(--ink); color: var(--ink); }
 .adp-body { padding: 1rem 1.35rem 1.3rem; }
 
+/* Comment Filter Tabs */
+.comment-filter-tabs {
+  display: flex; gap: .3rem;
+  padding: .75rem 1.35rem;
+  border-bottom: 1px solid var(--rule-light);
+  background: var(--paper);
+}
+.comment-filter-tab {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .38rem .75rem;
+  font-size: .78rem; font-weight: 500;
+  color: var(--ink-soft); background: #fff;
+  border: 1.5px solid var(--rule); border-radius: 99px;
+  cursor: pointer; transition: all .15s;
+  font-family: inherit;
+}
+.comment-filter-tab:hover { border-color: var(--blue); color: var(--blue); }
+.comment-filter-tab.active { 
+  background: var(--blue); color: #fff; border-color: var(--blue); 
+}
+.comment-filter-tab svg { flex-shrink: 0; opacity: .7; }
+.comment-filter-tab.active svg { opacity: 1; }
+
+/* Comment Gifts Display */
+.comment-gifts {
+  display: flex; flex-wrap: wrap; gap: .35rem;
+  margin-top: .5rem;
+}
+.comment-gift-badge {
+  display: inline-flex; align-items: center; gap: .25rem;
+  padding: .2rem .55rem; border-radius: 99px;
+  background: var(--gold-light); border: 1px solid rgba(245,158,11,.25);
+  font-size: .72rem; font-weight: 600; color: var(--gold-dark);
+  cursor: default;
+}
+
+/* Delete Button Styling */
+.comment-action-btn.delete-btn:hover {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.comment-action-btn.gift-btn:hover {
+  background: var(--gold-light);
+  color: var(--gold-dark);
+}
+
+/* Top Gifted Ranking */
+.ranking-item {
+  display: flex; gap: .7rem; align-items: flex-start;
+  padding: .7rem .8rem; border-radius: var(--radius-sm);
+  background: var(--paper-warm); border: 1px solid var(--rule-light);
+  margin-bottom: .5rem; cursor: pointer;
+  transition: all .15s;
+}
+.ranking-item:hover {
+  border-color: var(--gold);
+  background: var(--gold-light);
+  transform: translateX(2px);
+}
+.ranking-item:last-child { margin-bottom: 0; }
+
+.ranking-rank {
+  font-family: 'Fraunces', serif; font-size: 1rem;
+  font-weight: 600; color: var(--ink-faint);
+  min-width: 28px; text-align: center;
+  flex-shrink: 0;
+}
+.ranking-rank.top-rank {
+  color: var(--gold);
+  font-size: 1.1rem;
+}
+
+.ranking-content { flex: 1; min-width: 0; }
+.ranking-author {
+  font-size: .8rem; font-weight: 600;
+  color: var(--ink); margin-bottom: .15rem;
+}
+.ranking-text {
+  font-size: .75rem; color: var(--ink-soft);
+  line-height: 1.5; margin-bottom: .3rem;
+  overflow: hidden; text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.ranking-gifts {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .72rem; font-weight: 600;
+  color: var(--gold-dark);
+}
+.ranking-gifts svg {
+  flex-shrink: 0;
+}
+
+.ranking-empty {
+  text-align: center; padding: 1.5rem 1rem;
+  color: var(--ink-faint);
+}
+.ranking-empty .re-icon {
+  font-size: 2rem; margin-bottom: .5rem;
+}
+.ranking-empty p {
+  font-size: .8rem; line-height: 1.6;
+}
+
+/* Highlight animation for scrolling to comment */
+@keyframes highlight-flash {
+  0%, 100% { background: transparent; }
+  50% { background: var(--gold-light); }
+}
+
 /* Artist comment compose */
 .artist-compose {
   display: flex; gap: .75rem; align-items: flex-start;

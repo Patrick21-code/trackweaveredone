@@ -16,7 +16,11 @@ import {
   arrayUnion,
   arrayRemove,
   serverTimestamp,
-  getDoc
+  getDoc,
+  deleteDoc,
+  increment,
+  where,
+  limit
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // Wait for Firebase to be initialized
@@ -114,6 +118,8 @@ const KEYS = {
 let activeArtist = null;
 let unsubscribeComments = null;
 let activityLog = [];
+let currentCommentFilter = 'recent'; // 'recent', 'liked', 'popular'
+let allComments = []; // Store all comments for filtering
 
 /* ==========================================
    USER PROFILE CACHE
@@ -368,7 +374,9 @@ function subscribeToArtistComments(artistId) {
         console.log('Comment data:', docSnap.id, data);
         comments.push({ id: docSnap.id, ...data });
       });
-      await renderArtistComments(comments);
+      allComments = comments;
+      await renderArtistComments(filterComments(comments));
+      await renderTopGiftedComments(comments);
     }, (error) => {
       console.error('Error fetching comments:', error);
       console.error('Error details:', error.message, error.code);
@@ -392,6 +400,45 @@ function subscribeToArtistComments(artistId) {
     console.error('Error details:', error.message);
     showToast('Failed to initialize comments', 'error');
   }
+}
+
+function filterComments(comments) {
+  let filtered = [...comments];
+  
+  switch (currentCommentFilter) {
+    case 'liked':
+      filtered.sort((a, b) => {
+        const aLikes = (a.likes || []).length;
+        const bLikes = (b.likes || []).length;
+        return bLikes - aLikes;
+      });
+      break;
+    case 'popular':
+      filtered.sort((a, b) => {
+        const aGifts = (a.gifts || []).length;
+        const bGifts = (b.gifts || []).length;
+        return bGifts - aGifts;
+      });
+      break;
+    case 'recent':
+    default:
+      // Already sorted by createdAt desc
+      break;
+  }
+  
+  return filtered;
+}
+
+function switchCommentFilter(filter) {
+  currentCommentFilter = filter;
+  
+  // Update tab UI
+  document.querySelectorAll('.comment-filter-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.filter === filter);
+  });
+  
+  // Re-render with new filter
+  renderArtistComments(filterComments(allComments));
 }
 
 async function renderArtistComments(comments) {
@@ -439,7 +486,9 @@ async function buildArtistCommentElement(comment, cu) {
   const color = avatarColor(comment.authorId);
   const isLiked = cu && comment.likes ? comment.likes.includes(cu.uid) : false;
   const likeCount = comment.likes ? comment.likes.length : 0;
+  const giftCount = comment.gifts ? comment.gifts.length : 0;
   const timeAgo = formatTime(comment.createdAt?.toMillis ? comment.createdAt.toMillis() : Date.now());
+  const isOwner = cu && comment.authorId === cu.uid;
 
   const el = document.createElement('div');
   el.className = 'comment';
@@ -451,13 +500,37 @@ async function buildArtistCommentElement(comment, cu) {
         <div class="comment-author">${escapeHtml(handle)} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
         <div class="comment-text">${escapeHtml(comment.text)}</div>
       </div>
+      ${giftCount > 0 ? `
+        <div class="comment-gifts">
+          ${renderCommentGifts(comment.gifts)}
+        </div>
+      ` : ''}
       <div class="comment-actions">
         <button class="comment-action-btn${isLiked ? ' liked' : ''}" onclick="window.toggleArtistCommentLike('${comment.id}')">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
-          ${likeCount} Like${likeCount !== 1 ? 's' : ''}
+          ${likeCount}
         </button>
+        <button class="comment-action-btn gift-btn" onclick="window.openGiftModal('${comment.id}')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 12 20 22 4 22 4 12"/>
+            <rect x="2" y="7" width="20" height="5"/>
+            <line x1="12" y1="22" x2="12" y2="7"/>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+          </svg>
+          ${giftCount > 0 ? giftCount : 'Gift'}
+        </button>
+        ${isOwner ? `
+          <button class="comment-action-btn delete-btn" onclick="window.deleteArtistComment('${comment.id}')" style="color:var(--red);">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            Delete
+          </button>
+        ` : ''}
       </div>
     </div>`;
 
@@ -465,6 +538,23 @@ async function buildArtistCommentElement(comment, cu) {
   if (avatarEl) renderAvatar(avatarEl, { username, photoURL: author.photoURL, uid: comment.authorId });
 
   return el;
+}
+
+function renderCommentGifts(gifts) {
+  if (!gifts || gifts.length === 0) return '';
+  
+  const giftCounts = {};
+  gifts.forEach(gift => {
+    const itemId = gift.itemId || 'unknown';
+    giftCounts[itemId] = (giftCounts[itemId] || 0) + 1;
+  });
+  
+  return Object.entries(giftCounts).map(([itemId, count]) => {
+    const item = CATALOG_MAP[itemId];
+    const icon = item ? item.icon : '🎁';
+    const title = item ? item.title : 'Gift';
+    return `<span class="comment-gift-badge" title="${escapeHtml(title)}">${icon} ×${count}</span>`;
+  }).join('');
 }
 
 /* ==========================================
@@ -581,6 +671,213 @@ async function toggleArtistCommentLike(commentId) {
   }
 }
 
+async function deleteArtistComment(commentId) {
+  if (!activeArtist) return;
+  const cu = window._currentUser;
+  if (!cu) return;
+
+  if (!confirm('Are you sure you want to delete this comment? This action cannot be undone.')) {
+    return;
+  }
+
+  const db = window._fbDb;
+  if (!db) return;
+
+  try {
+    const commentRef = doc(db, 'artistComments', activeArtist.id, 'comments', commentId);
+    await deleteDoc(commentRef);
+    
+    const stats = loadStats();
+    if (stats.comments > 0) stats.comments--;
+    saveStats(stats);
+    renderStats();
+    
+    showToast('Comment deleted', 'success');
+    addActivity('🗑️', '#fee2e2', `You deleted a comment on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+    showToast('Failed to delete comment', 'error');
+  }
+}
+
+function openGiftModal(commentId) {
+  const cu = window._currentUser;
+  if (!cu) {
+    showToast('You must be logged in to send gifts', 'error');
+    return;
+  }
+
+  const ownedItems = loadShopRewards();
+  if (ownedItems.length === 0) {
+    showToast('Visit the shop to purchase gifts first!', 'error');
+    return;
+  }
+
+  // Store current comment ID for gifting
+  window._currentGiftCommentId = commentId;
+
+  // Build modal
+  const modal = document.getElementById('gift-modal');
+  const modalBody = document.getElementById('gift-modal-body');
+  
+  if (ownedItems.length === 0) {
+    modalBody.innerHTML = `
+      <div class="modal-empty">
+        <div class="me-icon">🎁</div>
+        <p>You don't have any rewards to gift yet.<br>Visit the shop to purchase some!</p>
+        <a href="./shop.html" class="btn btn-solid">Go to Shop</a>
+      </div>`;
+  } else {
+    modalBody.innerHTML = `
+      <div class="reward-grid">
+        ${ownedItems.map(item => `
+          <div class="reward-option" data-item-id="${item.id}" onclick="window.selectGiftItem('${item.id}')">
+            <div class="ro-icon">${item.icon}</div>
+            <div class="ro-title">${escapeHtml(item.title)}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+  
+  modal.classList.add('open');
+}
+
+function closeGiftModal() {
+  const modal = document.getElementById('gift-modal');
+  modal.classList.remove('open');
+  window._currentGiftCommentId = null;
+  window._selectedGiftItemId = null;
+  
+  // Clear selections
+  document.querySelectorAll('.reward-option').forEach(opt => opt.classList.remove('selected'));
+}
+
+function selectGiftItem(itemId) {
+  window._selectedGiftItemId = itemId;
+  
+  // Update UI
+  document.querySelectorAll('.reward-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.dataset.itemId === itemId);
+  });
+}
+
+async function confirmGift() {
+  const commentId = window._currentGiftCommentId;
+  const itemId = window._selectedGiftItemId;
+  
+  if (!commentId || !itemId) {
+    showToast('Please select a gift', 'error');
+    return;
+  }
+
+  const cu = window._currentUser;
+  if (!cu || !activeArtist) return;
+
+  const db = window._fbDb;
+  if (!db) return;
+
+  try {
+    const commentRef = doc(db, 'artistComments', activeArtist.id, 'comments', commentId);
+    
+    await updateDoc(commentRef, {
+      gifts: arrayUnion({
+        itemId,
+        senderId: cu.uid,
+        timestamp: new Date().toISOString()
+      })
+    });
+
+    const item = CATALOG_MAP[itemId];
+    const stats = loadStats();
+    stats.rewardsSent++;
+    saveStats(stats);
+    renderStats();
+    
+    closeGiftModal();
+    showToast(`${item.icon} Gift sent!`, 'reward');
+    addActivity('🎁', '#fef3c7', `You gifted <strong>${escapeHtml(item.title)}</strong> to a comment.`);
+    
+    // Confetti effect
+    createConfetti(event.clientX, event.clientY);
+  } catch (error) {
+    console.error('Error sending gift:', error);
+    showToast('Failed to send gift', 'error');
+  }
+}
+
+async function renderTopGiftedComments(comments) {
+  const rankingEl = document.getElementById('top-gifted-ranking');
+  if (!rankingEl) return;
+
+  // Sort by gift count
+  const topComments = [...comments]
+    .filter(c => c.gifts && c.gifts.length > 0)
+    .sort((a, b) => b.gifts.length - a.gifts.length)
+    .slice(0, 10);
+
+  if (topComments.length === 0) {
+    rankingEl.innerHTML = `
+      <div class="ranking-empty">
+        <div class="re-icon">🎁</div>
+        <p>No gifted comments yet.<br>Be the first to send a gift!</p>
+      </div>`;
+    return;
+  }
+
+  rankingEl.innerHTML = '';
+  for (let i = 0; i < topComments.length; i++) {
+    const comment = topComments[i];
+    const author = await resolveAuthor(comment.authorId, window._currentUser);
+    const username = author.username || 'Anonymous';
+    const giftCount = comment.gifts.length;
+    const rank = i + 1;
+    
+    const item = document.createElement('div');
+    item.className = 'ranking-item';
+    item.innerHTML = `
+      <div class="ranking-rank ${rank <= 3 ? 'top-rank' : ''}">#${rank}</div>
+      <div class="ranking-content">
+        <div class="ranking-author">@${escapeHtml(username)}</div>
+        <div class="ranking-text">${escapeHtml(comment.text.substring(0, 60))}${comment.text.length > 60 ? '...' : ''}</div>
+        <div class="ranking-gifts">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 12 20 22 4 22 4 12"/>
+            <rect x="2" y="7" width="20" height="5"/>
+            <line x1="12" y1="22" x2="12" y2="7"/>
+          </svg>
+          ${giftCount} gift${giftCount !== 1 ? 's' : ''}
+        </div>
+      </div>
+    `;
+    
+    item.onclick = () => {
+      const commentEl = document.getElementById(`acomment-${comment.id}`);
+      if (commentEl) {
+        commentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        commentEl.style.animation = 'highlight-flash 1s ease';
+        setTimeout(() => commentEl.style.animation = '', 1000);
+      }
+    };
+    
+    rankingEl.appendChild(item);
+  }
+}
+
+function createConfetti(x, y) {
+  const colors = ['#f59e0b', '#2563eb', '#7c3aed', '#059669', '#dc2626'];
+  for (let i = 0; i < 12; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${x}px`;
+    piece.style.top = `${y}px`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = `${Math.random() * 0.1}s`;
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 700);
+  }
+}
+
 function closeArtistPanel() {
   if (unsubscribeComments) {
     unsubscribeComments();
@@ -680,6 +977,12 @@ window.selectArtist = selectArtist;
 window.closeArtistPanel = closeArtistPanel;
 window.submitArtistComment = submitArtistComment;
 window.toggleArtistCommentLike = toggleArtistCommentLike;
+window.deleteArtistComment = deleteArtistComment;
+window.openGiftModal = openGiftModal;
+window.closeGiftModal = closeGiftModal;
+window.selectGiftItem = selectGiftItem;
+window.confirmGift = confirmGift;
+window.switchCommentFilter = switchCommentFilter;
 
 // Avatar dropdown toggle
 (function wireDropdown() {

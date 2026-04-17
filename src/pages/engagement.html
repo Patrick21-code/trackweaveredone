@@ -291,6 +291,31 @@
           Back
         </button>
       </div>
+      
+      <!-- Comment Filter Tabs -->
+      <div class="comment-filter-tabs">
+        <button class="comment-filter-tab active" data-filter="recent" onclick="window.switchCommentFilter('recent')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Recent
+        </button>
+        <button class="comment-filter-tab" data-filter="liked" onclick="window.switchCommentFilter('liked')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          Most Liked
+        </button>
+        <button class="comment-filter-tab" data-filter="popular" onclick="window.switchCommentFilter('popular')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 12 20 22 4 22 4 12"/>
+            <rect x="2" y="7" width="20" height="5"/>
+            <line x1="12" y1="22" x2="12" y2="7"/>
+          </svg>
+          Most Popular
+        </button>
+      </div>
+      
       <div class="adp-body">
         <!-- Compose -->
         <div class="artist-compose">
@@ -362,6 +387,16 @@
       </div>
     </div>
 
+    <!-- Top Gifted Comments Ranking -->
+    <div class="sidebar-card">
+      <span class="sec-label">🏆 Top Gifted</span>
+      <div class="sc-title">Most Supported Comments</div>
+      <div class="sc-sub" style="margin-bottom:.9rem;">Comments with the most gifts</div>
+      <div id="top-gifted-ranking">
+        <!-- Rendered by renderTopGiftedComments() -->
+      </div>
+    </div>
+
   </aside>
 </div><!-- /layout -->
 
@@ -369,6 +404,37 @@
 
 <!-- ======================== TOAST ======================== -->
 <div id="toast-container"></div>
+
+<!-- ======================== GIFT MODAL ======================== -->
+<div class="modal-backdrop" id="gift-modal">
+  <div class="reward-modal">
+    <div class="modal-hd">
+      <div>
+        <div class="modal-title">Send a Gift</div>
+        <div class="modal-sub">Choose a reward from your inventory</div>
+      </div>
+      <button class="modal-close" onclick="window.closeGiftModal()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" id="gift-modal-body">
+      <!-- Rendered dynamically -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="window.closeGiftModal()">Cancel</button>
+      <button class="btn btn-gold btn-sm" onclick="window.confirmGift()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 12 20 22 4 22 4 12"/>
+          <rect x="2" y="7" width="20" height="5"/>
+          <line x1="12" y1="22" x2="12" y2="7"/>
+        </svg>
+        Send Gift
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ======================== FOOTER ======================== -->
 <footer>
