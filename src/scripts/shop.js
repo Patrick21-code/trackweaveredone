@@ -170,26 +170,44 @@ const RARITY_LABEL = {
    ────────────────────────────────────── */
 const STORAGE_KEYS = {
   points:    'tw_points',
-  owned:     'tw_owned',
+  owned:     'tw_owned',      // Legacy: array of item IDs
+  inventory: 'tw_inventory',  // New: object with item counts { itemId: count }
   spent:     'tw_spent',
 };
 
 /**
  * loadUserData — reads state from localStorage,
  * seeding defaults on first visit.
+ * Migrates from old 'owned' array to new 'inventory' count system.
  */
 function loadUserData() {
+  let inventory = JSON.parse(localStorage.getItem(STORAGE_KEYS.inventory) || '{}');
+  
+  // Migration: convert old 'owned' array to inventory counts
+  const oldOwned = JSON.parse(localStorage.getItem(STORAGE_KEYS.owned) || '[]');
+  if (oldOwned.length > 0 && Object.keys(inventory).length === 0) {
+    // Migrate: each owned item gets count of 1
+    oldOwned.forEach(itemId => {
+      inventory[itemId] = 1;
+    });
+    localStorage.setItem(STORAGE_KEYS.inventory, JSON.stringify(inventory));
+  }
+  
   return {
     points: parseInt(localStorage.getItem(STORAGE_KEYS.points) ?? '1250', 10),
-    owned:  JSON.parse(localStorage.getItem(STORAGE_KEYS.owned)  || '[]'),
+    inventory: inventory,
     spent:  parseInt(localStorage.getItem(STORAGE_KEYS.spent)  ?? '0',    10),
   };
 }
 
 function saveUserData(state) {
   localStorage.setItem(STORAGE_KEYS.points, state.points);
-  localStorage.setItem(STORAGE_KEYS.owned,  JSON.stringify(state.owned));
+  localStorage.setItem(STORAGE_KEYS.inventory, JSON.stringify(state.inventory));
   localStorage.setItem(STORAGE_KEYS.spent,  state.spent);
+  
+  // Keep 'owned' array in sync for backward compatibility with other systems
+  const ownedArray = Object.keys(state.inventory).filter(id => state.inventory[id] > 0);
+  localStorage.setItem(STORAGE_KEYS.owned, JSON.stringify(ownedArray));
 }
 
 /* ──────────────────────────────────────
@@ -197,7 +215,11 @@ function saveUserData(state) {
    ────────────────────────────────────── */
 function updateBanner(state) {
   document.getElementById('pts-display').textContent = state.points.toLocaleString();
-  document.getElementById('owned-count').textContent  = state.owned.length;
+  
+  // Count total items in inventory
+  const totalItems = Object.values(state.inventory).reduce((sum, count) => sum + count, 0);
+  document.getElementById('owned-count').textContent = totalItems;
+  
   document.getElementById('spent-display').textContent = state.spent.toLocaleString();
 }
 
@@ -240,18 +262,12 @@ function burstConfetti(card) {
    ────────────────────────────────────── */
 /**
  * handlePurchase — validates points, deducts cost,
- * marks item as owned, persists, re-renders.
+ * adds item to inventory (increments count), persists, re-renders.
  */
 function handlePurchase(itemId) {
   const state = loadUserData();
   const item  = CATALOG.find(i => i.id === itemId);
   if (!item) return;
-
-  // Already owned guard
-  if (state.owned.includes(itemId)) {
-    showToast('You already own this item.', 'error');
-    return;
-  }
 
   // Insufficient points guard
   if (state.points < item.cost) {
@@ -264,9 +280,9 @@ function handlePurchase(itemId) {
     return;
   }
 
-  // Deduct & record
+  // Deduct & add to inventory
   state.points -= item.cost;
-  state.owned.push(itemId);
+  state.inventory[itemId] = (state.inventory[itemId] || 0) + 1;
   state.spent  += item.cost;
   saveUserData(state);
 
@@ -277,24 +293,35 @@ function handlePurchase(itemId) {
     refreshCard(card, item, state);
   }
   updateBanner(state);
-  showToast(`"${item.title}" unlocked! 🎉`, 'success');
+  
+  const count = state.inventory[itemId];
+  showToast(`"${item.title}" added to inventory! (×${count}) 🎉`, 'success');
 }
 
 /** Refresh a single card's interactive elements after purchase */
 function refreshCard(card, item, state) {
-  card.classList.add('owned');
-  const iconWrap = card.querySelector('.item-icon-wrap');
-  if (iconWrap) iconWrap.style.background = 'rgba(5,150,105,.07)';
+  const count = state.inventory[item.id] || 0;
 
+  // Update the button to show count
   const btn = card.querySelector('.buy-btn');
   if (btn) {
-    btn.textContent = 'Owned';
-    btn.className = 'buy-btn is-owned';
-    btn.disabled = true;
+    btn.textContent = item.cost === 0 ? 'Claim' : 'Buy';
+    btn.className = 'buy-btn can-buy';
+    btn.disabled = false;
   }
-
-  const cost = card.querySelector('.item-cost');
-  if (cost) cost.style.opacity = '.45';
+  
+  // Update inventory count display
+  const footer = card.querySelector('.item-footer');
+  let countBadge = card.querySelector('.inventory-count');
+  
+  if (count > 0) {
+    if (!countBadge) {
+      countBadge = document.createElement('div');
+      countBadge.className = 'inventory-count';
+      footer.insertBefore(countBadge, footer.firstChild);
+    }
+    countBadge.textContent = `Owned: ×${count}`;
+  }
 }
 
 /* ──────────────────────────────────────
@@ -305,12 +332,13 @@ let searchQuery    = '';
 
 /** Build one item card element */
 function buildCard(item, state) {
-  const isOwned   = state.owned.includes(item.id);
+  const inventoryCount = state.inventory[item.id] || 0;
+  const isOwned   = inventoryCount > 0;
   const canAfford = state.points >= item.cost;
   const isFree    = item.cost === 0;
 
   const card = document.createElement('div');
-  card.className = `item-card${isOwned ? ' owned' : ''}`;
+  card.className = `item-card`;
   card.dataset.itemId   = item.id;
   card.dataset.category = item.category;
 
@@ -323,19 +351,18 @@ function buildCard(item, state) {
       <div class="item-title">${item.title}</div>
       <div class="item-desc">${item.desc}</div>
       <div class="item-footer">
+        ${isOwned ? `<div class="inventory-count">Owned: ×${inventoryCount}</div>` : ''}
         <div class="item-cost">
           <span class="cost-coin">🪙</span>
           ${isFree ? '<span style="color:var(--green);font-size:.85rem;">Free</span>' : item.cost.toLocaleString()}
         </div>
         <button
-          class="buy-btn ${isOwned ? 'is-owned' : canAfford ? 'can-buy' : 'cant-buy'}"
-          ${isOwned ? 'disabled' : ''}
+          class="buy-btn ${canAfford ? 'can-buy' : 'cant-buy'}"
           onclick="handlePurchase('${item.id}')"
         >
-          ${isOwned ? 'Owned' : isFree ? 'Claim' : 'Buy'}
+          ${isFree ? 'Claim' : 'Buy'}
         </button>
       </div>
-      ${isOwned ? `<button class="btn btn-gift" onclick="giftItem('${item.id}')">🎁 Gift to Commenter</button>` : ''}
     </div>
   `;
   return card;
@@ -413,11 +440,11 @@ function renderShop() {
 }
 
 /* ──────────────────────────────────────
-   6. GIFTING SYSTEM
+   6. GIFTING SYSTEM (for engagement page)
    ────────────────────────────────────── */
 /**
  * giftItem — allows users to gift owned items to commenters
- * In a real implementation, this would integrate with a comment system
+ * This is called from the engagement page gift modal
  */
 function giftItem(itemId) {
   const state = loadUserData();
@@ -425,37 +452,28 @@ function giftItem(itemId) {
   
   if (!item) return;
   
-  // Check if user owns the item
-  if (!state.owned.includes(itemId)) {
+  // Check if user has this item in inventory
+  const inventoryCount = state.inventory[itemId] || 0;
+  if (inventoryCount === 0) {
     showToast('You must own this item to gift it!', 'error');
     return;
   }
   
-  // In a real app, this would open a modal to select a commenter
-  // For demo purposes, we'll simulate the gifting
-  const commenterName = prompt('Enter the username of the commenter you want to gift this to:');
-  
-  if (!commenterName || !commenterName.trim()) {
-    showToast('Gift cancelled', 'error');
-    return;
-  }
-  
-  // Save gift record (in real app, this would be sent to backend)
-  const gifts = JSON.parse(localStorage.getItem('tw_gifts') || '[]');
-  gifts.push({
-    itemId: itemId,
-    itemTitle: item.title,
-    recipient: commenterName.trim(),
-    timestamp: new Date().toISOString(),
-  });
-  localStorage.setItem('tw_gifts', JSON.stringify(gifts));
-  
-  showToast(`"${item.title}" gifted to @${commenterName}! 🎁`, 'success');
-  
-  // Celebrate with confetti
-  const card = document.querySelector(`[data-item-id="${itemId}"]`);
-  if (card) burstConfetti(card);
+  // Note: The actual gifting is handled by the engagement page
+  // This function is just for validation
+  return true;
 }
+
+/**
+ * getInventoryCount — helper function for other pages to check inventory
+ */
+function getInventoryCount(itemId) {
+  const state = loadUserData();
+  return state.inventory[itemId] || 0;
+}
+
+// Expose inventory helper globally
+window.getInventoryCount = getInventoryCount;
 
 /* ──────────────────────────────────────
    7. DEMO HELPER

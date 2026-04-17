@@ -154,10 +154,9 @@ async function resolveAuthor(uid, currentUser) {
    PERSISTENCE HELPERS
    ========================================== */
 function loadShopRewards() {
-  const raw = localStorage.getItem(KEYS.shopOwned);
-  if (!raw) return [];
-  const ids = JSON.parse(raw);
-  return ids.map(id => CATALOG_MAP[id]).filter(Boolean);
+  const inventory = JSON.parse(localStorage.getItem('tw_inventory') || '{}');
+  const ownedIds = Object.keys(inventory).filter(id => inventory[id] > 0);
+  return ownedIds.map(id => CATALOG_MAP[id]).filter(Boolean);
 }
 
 function loadStats() {
@@ -188,8 +187,8 @@ function saveRecentArtist(artist) {
 /* ==========================================
    RENDER FUNCTIONS
    ========================================== */
-function renderStats() {
-  const stats = loadStats();
+async function renderStats() {
+  const stats = await getAccurateStats();
   const shopData = loadShopRewards();
   const grid = document.getElementById('stats-grid');
   if (!grid) return;
@@ -210,6 +209,74 @@ function renderStats() {
 
   const hint = document.getElementById('sidebar-owned-count');
   if (hint) hint.textContent = shopData.length ? `${shopData.length} reward${shopData.length !== 1 ? 's' : ''} owned` : 'No rewards yet — visit shop';
+}
+
+async function getAccurateStats() {
+  const cu = window._currentUser;
+  if (!cu) return { comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0 };
+
+  const db = window._fbDb;
+  if (!db) return loadStats();
+
+  try {
+    // Get actual comment count from Firestore
+    const { collection, query, where, getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    
+    let totalComments = 0;
+    let totalLikesGiven = 0;
+    let totalRewardsSent = 0;
+    let totalRewardsReceived = 0;
+
+    // Query all artist comment collections for user's comments
+    // Note: This is a simplified approach. In production, you'd want to maintain
+    // a user-level collection that tracks these stats more efficiently
+    
+    // For now, we'll use the localStorage stats but sync the comment count
+    // when we have access to the current artist's comments
+    const localStats = loadStats();
+    
+    // If we have an active artist, count their comments accurately
+    if (activeArtist && allComments.length > 0) {
+      const userComments = allComments.filter(c => c.authorId === cu.uid);
+      
+      // Count user's comments
+      totalComments = userComments.length;
+      
+      // Count likes given by user across all comments
+      totalLikesGiven = allComments.filter(c => 
+        c.likes && c.likes.includes(cu.uid)
+      ).length;
+      
+      // Count rewards sent by user
+      totalRewardsSent = allComments.reduce((sum, c) => {
+        if (!c.gifts) return sum;
+        return sum + c.gifts.filter(g => g.senderId === cu.uid).length;
+      }, 0);
+      
+      // Count rewards received by user
+      totalRewardsReceived = userComments.reduce((sum, c) => {
+        return sum + (c.gifts ? c.gifts.length : 0);
+      }, 0);
+      
+      // Update localStorage with accurate counts
+      const updatedStats = {
+        comments: totalComments,
+        likesGiven: totalLikesGiven,
+        rewardsSent: totalRewardsSent,
+        rewardsReceived: totalRewardsReceived
+      };
+      saveStats(updatedStats);
+      
+      return updatedStats;
+    }
+    
+    // If no active artist, return localStorage stats
+    return localStats;
+    
+  } catch (error) {
+    console.error('Error getting accurate stats:', error);
+    return loadStats();
+  }
 }
 
 function renderActivity() {
@@ -377,6 +444,9 @@ function subscribeToArtistComments(artistId) {
       allComments = comments;
       await renderArtistComments(filterComments(comments));
       await renderTopGiftedComments(comments);
+      
+      // Recalculate and update stats whenever comments change
+      await renderStats();
     }, (error) => {
       console.error('Error fetching comments:', error);
       console.error('Error details:', error.message, error.code);
@@ -486,7 +556,7 @@ async function buildArtistCommentElement(comment, cu) {
   const color = avatarColor(comment.authorId);
   const isLiked = cu && comment.likes ? comment.likes.includes(cu.uid) : false;
   const likeCount = comment.likes ? comment.likes.length : 0;
-  const giftCount = comment.gifts ? comment.gifts.length : 0;
+  const giftCount = comment.gifts ? comment.gifts.length : 0; // Handle legacy comments without gifts
   const timeAgo = formatTime(comment.createdAt?.toMillis ? comment.createdAt.toMillis() : Date.now());
   const isOwner = cu && comment.authorId === cu.uid;
 
@@ -498,7 +568,7 @@ async function buildArtistCommentElement(comment, cu) {
     <div class="comment-body">
       <div class="comment-bubble">
         <div class="comment-author">${escapeHtml(handle)} <span style="font-weight:300;color:var(--ink-faint);font-size:.72rem;">${timeAgo}</span></div>
-        <div class="comment-text">${escapeHtml(comment.text)}</div>
+        <div class="comment-text">${escapeHtml(comment.text || '')}</div>
       </div>
       ${giftCount > 0 ? `
         <div class="comment-gifts">
@@ -510,7 +580,7 @@ async function buildArtistCommentElement(comment, cu) {
           <svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
-          ${likeCount}
+          ${likeCount > 0 ? likeCount : ''}
         </button>
         <button class="comment-action-btn gift-btn" onclick="window.openGiftModal('${comment.id}')">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -606,6 +676,7 @@ async function submitArtistComment() {
       text,
       createdAt: serverTimestamp(),
       likes: [],
+      gifts: [],
     };
     
     console.log('Adding comment to Firestore:', newComment);
@@ -613,10 +684,8 @@ async function submitArtistComment() {
     console.log('Comment added successfully with ID:', docRef.id);
 
     input.value = '';
-    const stats = loadStats();
-    stats.comments++;
-    saveStats(stats);
-    renderStats();
+    
+    // Stats will be recalculated when comments update via snapshot listener
     addActivity('🎵', '#bfdbfe', `You commented on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
     showToast('Comment posted! 🎵', 'success');
   } catch (error) {
@@ -665,6 +734,8 @@ async function toggleArtistCommentLike(commentId) {
       });
       addActivity('♥', '#fee2e2', `You liked a comment on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
     }
+    
+    // Stats will be recalculated when comments update via snapshot listener
   } catch (error) {
     console.error('Error toggling like:', error);
     showToast('Failed to update like', 'error');
@@ -687,11 +758,7 @@ async function deleteArtistComment(commentId) {
     const commentRef = doc(db, 'artistComments', activeArtist.id, 'comments', commentId);
     await deleteDoc(commentRef);
     
-    const stats = loadStats();
-    if (stats.comments > 0) stats.comments--;
-    saveStats(stats);
-    renderStats();
-    
+    // Stats will be recalculated when comments update via snapshot listener
     showToast('Comment deleted', 'success');
     addActivity('🗑️', '#fee2e2', `You deleted a comment on <strong>${escapeHtml(activeArtist.name)}</strong>.`);
   } catch (error) {
@@ -788,17 +855,14 @@ async function confirmGift() {
     });
 
     const item = CATALOG_MAP[itemId];
-    const stats = loadStats();
-    stats.rewardsSent++;
-    saveStats(stats);
-    renderStats();
     
+    // Stats will be recalculated when comments update via snapshot listener
     closeGiftModal();
     showToast(`${item.icon} Gift sent!`, 'reward');
     addActivity('🎁', '#fef3c7', `You gifted <strong>${escapeHtml(item.title)}</strong> to a comment.`);
     
     // Confetti effect
-    createConfetti(event.clientX, event.clientY);
+    createConfetti(window.innerWidth / 2, window.innerHeight / 2);
   } catch (error) {
     console.error('Error sending gift:', error);
     showToast('Failed to send gift', 'error');
@@ -965,7 +1029,7 @@ window._engagementInit = async function() {
     sidebarHandle.textContent = cu.username ? `@${cu.username} · TrackWeave member` : 'TrackWeave member';
   }
 
-  renderStats();
+  await renderStats();
   renderActivity();
   renderRecentArtistChips();
   checkArtistUrlParam();
