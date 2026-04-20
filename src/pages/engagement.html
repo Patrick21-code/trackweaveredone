@@ -226,12 +226,12 @@
         </svg>
         Open Reward Shop
       </a>
-      <a href="./shop.html" class="btn btn-gold">
+      <button class="btn btn-gold" onclick="window.openInventoryModal()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
         </svg>
         View My Rewards
-      </a>
+      </button>
     </div>
   </div>
 </div>
@@ -433,6 +433,36 @@
         </svg>
         Send Gift
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== INVENTORY MODAL ======================== -->
+<div class="modal-backdrop" id="inventory-modal">
+  <div class="reward-modal">
+    <div class="modal-hd">
+      <div>
+        <div class="modal-title">My Reward Inventory</div>
+        <div class="modal-sub">Your collected rewards and items</div>
+      </div>
+      <button class="modal-close" onclick="window.closeInventoryModal()" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" id="inventory-modal-body">
+      <!-- Rendered dynamically -->
+    </div>
+    <div class="modal-footer">
+      <a href="./shop.html" class="btn btn-solid btn-sm">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Visit Shop
+      </a>
+      <button class="btn btn-ghost btn-sm" onclick="window.closeInventoryModal()">Close</button>
     </div>
   </div>
 </div>
