@@ -168,98 +168,40 @@
 .tm-role { font-size: 0.77rem; font-weight: 300; color: var(--ink-faint); }
 
 
-/* ─── PAYMENT METHODS ────────────────────────────────────────── */
-.payment-section { max-width: 1100px; margin: 0 auto; }
-.payment-header  { text-align: center; margin-bottom: 3rem; }
-
-.payment-grid {
+/* ─── COMMUNITY ENGAGEMENT ───────────────────────────────────── */
+.community-grid {
+  max-width: 1100px; margin: 3.5rem auto 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
 
-.pay-card {
-  background: #fff; border: 1.5px solid var(--rule);
-  border-radius: var(--r-lg); padding: 2.2rem 1.8rem;
-  text-align: center;
-  transition: border-color .22s, box-shadow .22s, transform .22s;
-  position: relative; overflow: hidden;
+.community-card {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: var(--r-md); padding: 1.9rem;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.section.alt .community-card { background: var(--paper); }
+.community-card:hover {
+  border-color: var(--blue-pale);
+  box-shadow: 0 6px 28px rgba(17,24,32,.07);
+  transform: translateY(-2px);
 }
 
-.pay-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  opacity: 0; transition: opacity .22s;
-}
-
-.pay-card:hover { box-shadow: 0 8px 36px rgba(17,24,32,.1); transform: translateY(-3px); }
-
-/* PayMaya */
-.pay-card.paymaya { border-top-color: #00c194; }
-.pay-card.paymaya::before { background: #00c194; opacity: 1; }
-.pay-card.paymaya:hover { border-color: #00c194; }
-
-/* GCash */
-.pay-card.gcash { border-top-color: #007aff; }
-.pay-card.gcash::before { background: #007aff; opacity: 1; }
-.pay-card.gcash:hover { border-color: #007aff; }
-
-/* PayPal */
-.pay-card.paypal { border-top-color: #003087; }
-.pay-card.paypal::before { background: linear-gradient(90deg,#003087,#009cde); opacity: 1; }
-.pay-card.paypal:hover { border-color: #003087; }
-
-.pay-logo-wrap {
-  width: 72px; height: 72px; border-radius: 16px;
-  margin: 0 auto 1.4rem;
+.community-icon {
+  width: 44px; height: 44px; border-radius: 11px;
+  background: var(--blue-ghost); border: 1px solid var(--blue-pale);
   display: flex; align-items: center; justify-content: center;
-  position: relative;
+  color: var(--blue); margin-bottom: 1.1rem;
 }
 
-.pay-card h3 {
+.community-card h3 {
   font-family: 'Fraunces', serif;
-  font-size: 1.3rem; font-weight: 500;
-  color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.5rem;
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--ink); margin-bottom: 0.45rem; letter-spacing: -0.01em;
 }
 
-.pay-card p {
-  font-size: 0.875rem; font-weight: 300;
-  color: var(--ink-soft); line-height: 1.65; margin-bottom: 1.6rem;
-}
-
-.pay-coming {
-  display: inline-flex; align-items: center; gap: 0.35rem;
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--ink-faint);
-  background: var(--paper-warm); border: 1px solid var(--rule);
-  padding: 0.28rem 0.75rem; border-radius: 99px;
-}
-.pay-coming .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-faint); }
-
-
-/* ─── AMOUNT PICKER ──────────────────────────────────────────── */
-.amount-section { max-width: 720px; margin: 0 auto; text-align: center; }
-
-.amount-chips {
-  display: flex; flex-wrap: wrap; gap: 0.65rem;
-  justify-content: center; margin: 1.8rem 0 1.2rem;
-}
-
-.amount-chip {
-  font-family: 'Fraunces', serif;
-  font-size: 1rem; font-weight: 400;
-  color: var(--ink-soft); letter-spacing: -0.01em;
-  background: #fff; border: 1.5px solid var(--rule);
-  border-radius: var(--r-sm); padding: 0.55rem 1.2rem;
-  cursor: pointer; transition: border-color .15s, color .15s, background .15s;
-  user-select: none;
-}
-.amount-chip:hover  { border-color: var(--amber); color: var(--amber-dk); }
-.amount-chip.active {
-  border-color: var(--amber); color: var(--amber-dk);
-  background: var(--amber-ghost);
-}
-
-.amount-note { font-size: 0.82rem; font-weight: 300; color: var(--ink-faint); margin-top: 0.75rem; }
+.community-card p { font-size: 0.875rem; font-weight: 300; color: var(--ink-soft); line-height: 1.68; }
 
 
 /* ─── MORAL SUPPORT ──────────────────────────────────────────── */
@@ -360,12 +302,12 @@
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 860px) {
-  .why-grid     { grid-template-columns: 1fr; }
-  .payment-grid { grid-template-columns: 1fr; }
-  .moral-grid   { grid-template-columns: 1fr; }
-  .team-members { grid-template-columns: 1fr; }
-  .hero-stats   { gap: 1.5rem; }
-  .hs-divider   { display: none; }
+  .why-grid       { grid-template-columns: 1fr; }
+  .community-grid { grid-template-columns: 1fr; }
+  .moral-grid     { grid-template-columns: 1fr; }
+  .team-members   { grid-template-columns: 1fr; }
+  .hero-stats     { gap: 1.5rem; }
+  .hs-divider     { display: none; }
 }
 
 @media (max-width: 560px) {
