@@ -50,3 +50,7 @@ tests/
 
 instructions/
 docs/
+
+firestore.rules
+
+gift
