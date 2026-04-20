@@ -774,7 +774,12 @@ function openGiftModal(commentId) {
     return;
   }
 
-  const ownedItems = loadShopRewards();
+  const inventory = JSON.parse(localStorage.getItem('tw_inventory') || '{}');
+  const ownedItems = Object.keys(inventory)
+    .filter(id => inventory[id] > 0)
+    .map(id => ({ ...CATALOG_MAP[id], count: inventory[id] }))
+    .filter(Boolean);
+
   if (ownedItems.length === 0) {
     showToast('Visit the shop to purchase gifts first!', 'error');
     return;
@@ -787,26 +792,56 @@ function openGiftModal(commentId) {
   const modal = document.getElementById('gift-modal');
   const modalBody = document.getElementById('gift-modal-body');
   
+  modalBody.innerHTML = `
+    <div class="reward-grid">
+      ${ownedItems.map(item => `
+        <div class="reward-option" data-item-id="${item.id}" onclick="window.selectGiftItem('${item.id}')">
+          <div class="ro-icon">${item.icon}</div>
+          <div class="ro-title">${escapeHtml(item.title)}</div>
+          <div class="ro-count">×${item.count}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  
+  modal.classList.add('open');
+}
+
+function openInventoryModal() {
+  const inventory = JSON.parse(localStorage.getItem('tw_inventory') || '{}');
+  const ownedItems = Object.keys(inventory)
+    .filter(id => inventory[id] > 0)
+    .map(id => ({ ...CATALOG_MAP[id], count: inventory[id] }))
+    .filter(Boolean);
+
+  const modal = document.getElementById('inventory-modal');
+  const modalBody = document.getElementById('inventory-modal-body');
+  
   if (ownedItems.length === 0) {
     modalBody.innerHTML = `
       <div class="modal-empty">
         <div class="me-icon">🎁</div>
-        <p>You don't have any rewards to gift yet.<br>Visit the shop to purchase some!</p>
+        <p>You don't have any rewards yet.<br>Visit the shop to purchase some!</p>
         <a href="./shop.html" class="btn btn-solid">Go to Shop</a>
       </div>`;
   } else {
     modalBody.innerHTML = `
       <div class="reward-grid">
         ${ownedItems.map(item => `
-          <div class="reward-option" data-item-id="${item.id}" onclick="window.selectGiftItem('${item.id}')">
+          <div class="reward-option inventory-item">
             <div class="ro-icon">${item.icon}</div>
             <div class="ro-title">${escapeHtml(item.title)}</div>
+            <div class="ro-count">×${item.count}</div>
           </div>
         `).join('')}
       </div>`;
   }
   
   modal.classList.add('open');
+}
+
+function closeInventoryModal() {
+  const modal = document.getElementById('inventory-modal');
+  modal.classList.remove('open');
 }
 
 function closeGiftModal() {
@@ -844,6 +879,16 @@ async function confirmGift() {
   if (!db) return;
 
   try {
+    // Check if user has this item in inventory
+    const inventory = JSON.parse(localStorage.getItem('tw_inventory') || '{}');
+    const inventoryCount = inventory[itemId] || 0;
+    
+    if (inventoryCount === 0) {
+      showToast('You no longer have this item in your inventory!', 'error');
+      closeGiftModal();
+      return;
+    }
+    
     const commentRef = doc(db, 'artistComments', activeArtist.id, 'comments', commentId);
     
     await updateDoc(commentRef, {
@@ -856,10 +901,21 @@ async function confirmGift() {
 
     const item = CATALOG_MAP[itemId];
     
+    // Decrement inventory count
+    inventory[itemId] = inventoryCount - 1;
+    localStorage.setItem('tw_inventory', JSON.stringify(inventory));
+    
+    // Update 'owned' array for backward compatibility
+    const ownedArray = Object.keys(inventory).filter(id => inventory[id] > 0);
+    localStorage.setItem('tw_owned', JSON.stringify(ownedArray));
+    
     // Stats will be recalculated when comments update via snapshot listener
     closeGiftModal();
     showToast(`${item.icon} Gift sent!`, 'reward');
     addActivity('🎁', '#fef3c7', `You gifted <strong>${escapeHtml(item.title)}</strong> to a comment.`);
+    
+    // Update stats display to reflect new inventory count
+    await renderStats();
     
     // Confetti effect
     createConfetti(window.innerWidth / 2, window.innerHeight / 2);
@@ -1047,6 +1103,8 @@ window.closeGiftModal = closeGiftModal;
 window.selectGiftItem = selectGiftItem;
 window.confirmGift = confirmGift;
 window.switchCommentFilter = switchCommentFilter;
+window.openInventoryModal = openInventoryModal;
+window.closeInventoryModal = closeInventoryModal;
 
 // Avatar dropdown toggle
 (function wireDropdown() {

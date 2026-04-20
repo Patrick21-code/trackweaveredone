@@ -404,9 +404,23 @@ input, textarea { font-family: inherit; }
 }
 .reward-option:hover { border-color: var(--gold); background: var(--gold-light); transform: translateY(-1px); }
 .reward-option.selected { border-color: var(--gold); background: var(--gold-light); }
+.reward-option.inventory-item { cursor: default; }
+.reward-option.inventory-item:hover { transform: none; }
 
 .ro-icon { font-size: 2rem; display: block; margin-bottom: .35rem; }
 .ro-title { font-size: .8rem; font-weight: 600; color: var(--ink); }
+.ro-count {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  background: var(--blue);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .15rem .4rem;
+  border-radius: 99px;
+  line-height: 1;
+}
 .ro-qty {
   font-size: .72rem; color: var(--ink-faint);
   margin-top: .15rem;
