@@ -836,19 +836,40 @@
         const res = await mbFetch(
           `https://musicbrainz.org/ws/2/artist?query=artist:${encodeURIComponent(query)}&limit=8&fmt=json`
         );
-        if (!res.ok) throw new Error("MB error");
+        if (!res.ok) throw new Error(`MusicBrainz returned status ${res.status}`);
+        
         const json = await res.json();
         const artists = (json.artists ?? []).filter(a => a.id && a.name).slice(0, 8);
-        if (!artists.length) { setSearchEmpty(query); return; }
+        
+        if (!artists.length) { 
+          setSearchEmpty(query); 
+          return; 
+        }
 
+        // Show results immediately without images
         renderSearchResults(artists);
 
-        // Enrich covers in background then re-render
-        enrichBatch(artists).then(() => {
-          if (searchInput.value.trim() === query) renderSearchResults(artists);
+        // Enrich covers in background then re-render with images
+        // Use the correct function name: enrichBatchWithImageValidation
+        enrichBatchWithImageValidation(artists).then((enrichedArtists) => {
+          // Only update if the search query hasn't changed
+          if (searchInput.value.trim() === query && enrichedArtists.length > 0) {
+            // Merge enriched data back into original artists array
+            enrichedArtists.forEach(enriched => {
+              const original = artists.find(a => a.id === enriched.id);
+              if (original) {
+                original._coverUrl = enriched._coverUrl;
+              }
+            });
+            renderSearchResults(artists);
+          }
+        }).catch(err => {
+          console.warn('[TrackWeave] Failed to enrich search results with images:', err);
+          // Keep showing results without images rather than failing completely
         });
-      } catch {
-        searchResults.innerHTML = `<div class="search-state search-state-empty">Something went wrong. Try again.</div>`;
+      } catch (err) {
+        console.error('[TrackWeave] Search error:', err);
+        searchResults.innerHTML = `<div class="search-state search-state-empty">Something went wrong. Please try again.</div>`;
       }
     }
 
