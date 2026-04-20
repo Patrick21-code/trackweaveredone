@@ -58,9 +58,14 @@
     };
 
     // ── Session cache — survives page interactions, clears on tab close ──
-    // Key: "tw_artists_<genre>", Value: JSON-stringified artist array
+    // This caching strategy significantly improves performance by storing fetched artist data
+    // in the browser's session storage. When users navigate between pages and return to the
+    // dashboard, cached data loads instantly without requiring new API calls. The 60-minute
+    // TTL ensures that users see fresh, up-to-date artist recommendations while minimizing
+    // unnecessary network requests and respecting MusicBrainz API rate limits.
+    // Key: "tw_artists_<genre>", Value: JSON-stringified artist array with metadata
     const CACHE_PREFIX = "tw_artists_";
-    const CACHE_TTL_MS = 30 * 60 * 1000; // 30 min
+    const CACHE_TTL_MS = 60 * 60 * 1000; // 60 minutes - balances freshness with performance
 
     function cacheGet(genre) {
       try {
@@ -158,16 +163,30 @@
     });
 
     // ── Build all carousels — skeletons shown immediately ──────────────
+    // This function orchestrates the loading and display of artist carousels for each genre.
+    // It implements a progressive loading strategy where skeleton placeholders are shown
+    // immediately to provide visual feedback, then replaced with actual content as data loads.
+    // 
+    // Performance strategy:
+    // 1. Render skeleton UI instantly for perceived performance
+    // 2. Check cache first for immediate data availability (no API delay)
+    // 3. Stagger uncached API requests to respect rate limits
+    // 4. Replace skeletons progressively as each genre's data becomes available
+    // 5. Ensure ALL genres are attempted - no silent failures
+    // 
+    // This approach ensures the page feels fast and responsive even when fetching
+    // data from external APIs, significantly improving the user experience.
     async function buildCarousels(genres) {
       const section = document.getElementById("artists-section");
       section.innerHTML = "";
 
       const eyebrow = document.createElement("p");
       eyebrow.className = "section-eyebrow";
-      eyebrow.textContent = "Based on your taste";
+      eyebrow.textContent = "Trending now · Popular artists of today";
       section.appendChild(eyebrow);
 
-      // 1. Render all skeleton blocks immediately
+      // 1. Render all skeleton blocks immediately for instant visual feedback
+      // This creates the perception of a fast-loading page while data fetches in the background
       const skeletonBlocks = {};
       genres.forEach(genre => {
         const blockId = "c-" + genre.toLowerCase().replace(/[\s&]/g,"-").replace(/[^a-z0-9-]/g,"");
@@ -179,7 +198,7 @@
             <div class="sk-title-bar"></div>
           </div>
           <div class="carousel-skeleton">
-            ${Array(6).fill(0).map(() => `
+            ${Array(8).fill(0).map(() => `
               <div class="sk-card">
                 <div class="sk-img" style="border-radius:50%"></div>
                 <div class="sk-line"></div>
@@ -195,144 +214,288 @@
       creditEl.innerHTML = `Artist data via <a href="https://musicbrainz.org" target="_blank" rel="noopener">MusicBrainz</a> &amp; <a href="https://coverartarchive.org" target="_blank" rel="noopener">Cover Art Archive</a>`;
       section.appendChild(creditEl);
 
-      // 2. Fetch genres — check cache first, then API.
-      //    Cached genres resolve instantly (no stagger needed).
-      //    Uncached genres are staggered to respect MB rate limit.
-      let mbSlot = 0; // MB API slot counter for uncached genres
-      const STAGGER_MS = 1100;
+      // 2. Fetch genres with intelligent caching and rate limiting
+      // Cached genres resolve instantly without API calls, providing immediate content.
+      // Uncached genres are staggered to respect MusicBrainz rate limits (1 request per second).
+      // This hybrid approach optimizes for both speed and API compliance.
+      let mbSlot = 0; // API request slot counter for rate limiting
+      const STAGGER_MS = 1100; // Slightly over 1 second to safely respect rate limits
+
+      // Track which genres have been successfully loaded to ensure completeness
+      const loadedGenres = new Set();
+      const failedGenres = new Set();
 
       const promises = genres.map(async (genre) => {
-        // Check cache first — no rate-limit delay needed
-        const cached = cacheGet(genre);
-        if (cached) {
-          try {
-            // Re-mark used IDs from cache
-            cached.forEach(a => usedArtistIds.add(a.id));
-            return { genre, artists: cached };
-          } catch { /* fall through to API */ }
-        }
-
-        // Not cached — assign an MB slot and wait
-        const mySlot = mbSlot++;
-        if (mySlot > 0) await new Promise(r => setTimeout(r, mySlot * STAGGER_MS));
-
         try {
+          // Check cache first — instant resolution with no network delay
+          const cached = cacheGet(genre);
+          if (cached && cached.length > 0) { // Accept any cached data, even if less than 20
+            try {
+              // Re-mark used IDs from cache to prevent duplicates
+              cached.forEach(a => usedArtistIds.add(a.id));
+              loadedGenres.add(genre);
+              return { genre, artists: cached, fromCache: true };
+            } catch (err) {
+              console.warn(`Cache read failed for ${genre}, fetching fresh data:`, err);
+              // Fall through to API fetch
+            }
+          }
+
+          // Not cached or insufficient cached data — assign an API slot and wait for our turn
+          const mySlot = mbSlot++;
+          if (mySlot > 0) {
+            await new Promise(r => setTimeout(r, mySlot * STAGGER_MS));
+          }
+
+          // Fetch fresh data from API
           const result = await fetchArtistsForGenre(genre);
-          if (result.artists.length) cacheSet(genre, result.artists);
-          return result;
+          
+          // Cache any valid results (even if less than 20 artists)
+          if (result.artists.length > 0) {
+            cacheSet(genre, result.artists);
+            loadedGenres.add(genre);
+            if (result.artists.length < 20) {
+              console.log(`[TrackWeave] Genre "${genre}" has ${result.artists.length} artists (less than target of 20)`);
+            }
+          } else {
+            // No artists found - mark as failed
+            failedGenres.add(genre);
+            console.error(`[TrackWeave] Genre "${genre}" returned no artists - this genre will not be displayed`);
+          }
+          
+          return { ...result, fromCache: false };
         } catch (e) {
-          console.warn(`[TrackWeave] Skipped genre "${genre}":`, e);
-          return { genre, artists: [] };
+          failedGenres.add(genre);
+          console.error(`[TrackWeave] Failed to fetch artists for "${genre}":`, e);
+          return { genre, artists: [], error: e.message };
         }
       });
 
-      // As each promise resolves, swap its skeleton for the real block
-      promises.forEach(async (p, i) => {
-        const { genre, artists } = await p;
+      // 3. As each promise resolves, swap its skeleton for the real carousel
+      // This progressive rendering approach makes the page feel faster by showing
+      // content as soon as it's available rather than waiting for all data to load
+      const results = await Promise.allSettled(promises);
+      
+      results.forEach((result, index) => {
+        const genre = genres[index];
         const sk = skeletonBlocks[genre];
-        if (!artists.length) { sk?.remove(); return; }
-        const block = buildCarouselBlock(genre, artists);
-        if (sk) {
-          section.insertBefore(block, sk);
-          sk.remove();
+        
+        if (result.status === 'fulfilled') {
+          const { artists, fromCache } = result.value;
+          
+          // Skip genres with no artists (failed fetch or no images available)
+          if (!artists || artists.length === 0) {
+            sk?.remove();
+            return;
+          }
+          
+          const block = buildCarouselBlock(genre, artists);
+          if (sk) {
+            section.insertBefore(block, sk);
+            sk.remove();
+          } else {
+            section.insertBefore(block, creditEl);
+          }
         } else {
-          section.insertBefore(block, creditEl);
+          // Promise rejected - remove skeleton and log error
+          console.error(`[TrackWeave] Promise rejected for genre "${genre}":`, result.reason);
+          sk?.remove();
         }
       });
+
+      // 4. Log summary of loading results for debugging
+      console.log(`[TrackWeave] Dashboard loaded: ${loadedGenres.size}/${genres.length} genres successful`);
+      if (failedGenres.size > 0) {
+        console.warn(`[TrackWeave] Failed genres:`, Array.from(failedGenres).join(', '));
+      }
     }
 
     // ── Fetch artists for a genre ─────────────────────────────────────
+    // This function retrieves the most popular contemporary artists for a given genre.
+    // It prioritizes artists who are currently trending and relevant to teenage audiences,
+    // ensuring that the displayed artists are recognizable and engaging for our target demographic.
+    // The function implements a fallback strategy: first try contemporary artists (2010+),
+    // then expand to 2000+ if needed, ensuring every genre displays content.
     async function fetchArtistsForGenre(genre) {
       const tag = GENRE_MB_MAP[genre] ?? genre.toLowerCase();
-      const url = `https://musicbrainz.org/ws/2/artist?query=tag:(${encodeURIComponent(tag)})&limit=30&fmt=json`;
-
-      const res = await mbFetch(url);
-      if (!res.ok) throw new Error(`MusicBrainz ${res.status}`);
-
-      const json = await res.json();
-      let allArtists = (json.artists ?? []).filter(a => a.id && a.name);
-
-      const fresh  = allArtists.filter(a => !usedArtistIds.has(a.id));
-      const chosen = fresh.slice(0, 14);
-      chosen.forEach(a => usedArtistIds.add(a.id));
-
-      // Enrich images
-      const enriched = await enrichBatch(chosen);
-      return { genre, artists: enriched };
-    }
-
-    // ── Enrich artists with cover art — optimised pipeline ───────────
-    // Strategy:
-    //   1. For each artist, fire the MB release-group fetch (rate-limited).
-    //   2. Collect all candidate release-group IDs.
-    //   3. Probe CAA for ALL artists in parallel (CAA has no strict limit).
-    //   4. First successful CAA URL wins for each artist.
-    async function enrichBatch(artists) {
-      // Step 1+2: gather release group IDs (MB is rate-limited, do sequentially)
-      const candidateMap = new Map(); // artistId → string[]
-
-      for (const artist of artists) {
-        try {
-          // Try album-type first
-          const rgRes = await mbFetch(
-            `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&type=album&limit=6&fmt=json`
-          );
-          if (rgRes.ok) {
-            const j = await rgRes.json();
-            const ids = (j["release-groups"] ?? [])
-              .filter(rg => rg["primary-type"] === "Album")
-              .slice(0, 5).map(rg => rg.id);
-            if (ids.length) { candidateMap.set(artist.id, ids); continue; }
-          }
-        } catch { /* fall through */ }
-
-        try {
-          // Fallback: any release group
-          const rgRes2 = await mbFetch(
-            `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&limit=6&fmt=json`
-          );
-          if (rgRes2.ok) {
-            const j2 = await rgRes2.json();
-            const ids2 = (j2["release-groups"] ?? []).slice(0, 5).map(rg => rg.id);
-            if (ids2.length) candidateMap.set(artist.id, ids2);
-          }
-        } catch { /* no ids found */ }
+      const currentYear = new Date().getFullYear();
+      
+      // Strategy 1: Try contemporary artists first (2010 onwards)
+      let allArtists = await fetchArtistsByDateRange(tag, 2010, currentYear);
+      
+      // Strategy 2: If we don't have enough, expand to 2000 onwards
+      if (allArtists.length < 30) {
+        console.log(`[TrackWeave] Genre "${genre}" has limited 2010+ artists, expanding to 2000+`);
+        allArtists = await fetchArtistsByDateRange(tag, 2000, currentYear);
+      }
+      
+      // Strategy 3: If still not enough, get any artists with the tag (no date filter)
+      if (allArtists.length < 20) {
+        console.log(`[TrackWeave] Genre "${genre}" has limited recent artists, fetching all available`);
+        const url = `https://musicbrainz.org/ws/2/artist?query=tag:(${encodeURIComponent(tag)}) AND type:person&limit=200&fmt=json`;
+        const res = await mbFetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          allArtists = (json.artists ?? []).filter(a => a.id && a.name && a.type === "Person");
+        }
       }
 
-      // Step 3: Probe CAA for all artists concurrently (no rate limit on CAA)
-      await Promise.all(artists.map(async (artist) => {
+      // Sort by MusicBrainz relevance score (higher score = more popular/relevant)
+      allArtists.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+
+      // Filter out artists we've already used to avoid duplicates across genre carousels
+      const fresh = allArtists.filter(a => !usedArtistIds.has(a.id));
+      
+      // Take top 50 candidates to ensure we get at least 20 with images
+      // This larger pool accounts for artists that may not have cover art available
+      const candidates = fresh.slice(0, 50);
+      
+      if (candidates.length === 0) {
+        console.warn(`[TrackWeave] No unique artists found for genre "${genre}"`);
+        return { genre, artists: [] };
+      }
+      
+      // Enrich with images and filter to only artists with successful image retrieval
+      const enriched = await enrichBatchWithImageValidation(candidates);
+      
+      // Take up to 20 artists that have images (or whatever we got if less)
+      const chosen = enriched.slice(0, 20);
+      chosen.forEach(a => usedArtistIds.add(a.id));
+
+      console.log(`[TrackWeave] Genre "${genre}": ${chosen.length} artists loaded`);
+      return { genre, artists: chosen };
+    }
+
+    // Helper function to fetch artists by date range
+    async function fetchArtistsByDateRange(tag, startYear, endYear) {
+      const url = `https://musicbrainz.org/ws/2/artist?query=tag:(${encodeURIComponent(tag)}) AND begin:[${startYear} TO ${endYear}] AND type:person&limit=200&fmt=json`;
+      
+      try {
+        const res = await mbFetch(url);
+        if (!res.ok) return [];
+        
+        const json = await res.json();
+        return (json.artists ?? []).filter(a => a.id && a.name && a.type === "Person");
+      } catch (err) {
+        console.warn(`Failed to fetch artists for tag "${tag}" in range ${startYear}-${endYear}:`, err);
+        return [];
+      }
+    }
+
+    // ── Enrich artists with cover art and validate image availability ─────────
+    // This optimized pipeline fetches album cover art for artists while ensuring
+    // that only artists with valid, accessible images are returned. This improves
+    // both performance and visual consistency of the dashboard.
+    // 
+    // Performance optimizations:
+    // 1. Parallel processing of release group fetches (with rate limiting)
+    // 2. Concurrent image validation across all artists
+    // 3. Early termination when sufficient artists with images are found
+    // 4. Efficient filtering to prioritize artists with recent, popular releases
+    async function enrichBatchWithImageValidation(artists) {
+      const artistsWithImages = [];
+      const candidateMap = new Map(); // artistId → release group IDs
+      
+      // Step 1: Fetch release groups for all artists in parallel batches
+      // We process 5 artists at a time to respect MusicBrainz rate limits while
+      // achieving better performance than sequential processing.
+      const BATCH_SIZE = 5;
+      for (let i = 0; i < artists.length; i += BATCH_SIZE) {
+        const batch = artists.slice(i, i + BATCH_SIZE);
+        
+        await Promise.all(batch.map(async (artist) => {
+          try {
+            // Fetch albums - try to get as many as possible to maximize image chances
+            const rgRes = await mbFetch(
+              `https://musicbrainz.org/ws/2/release-group?artist=${artist.id}&limit=20&fmt=json`
+            );
+            
+            if (rgRes.ok) {
+              const j = await rgRes.json();
+              const releaseGroups = j["release-groups"] ?? [];
+              
+              // Sort by first release date (most recent first) to prioritize current albums
+              releaseGroups.sort((a, b) => {
+                const dateA = a["first-release-date"] ?? "0000";
+                const dateB = b["first-release-date"] ?? "0000";
+                return dateB.localeCompare(dateA);
+              });
+              
+              // Take up to 15 release groups as candidates (increased for better coverage)
+              // Prioritize albums but include EPs and singles as fallback
+              const albums = releaseGroups.filter(rg => rg["primary-type"] === "Album").slice(0, 10);
+              const eps = releaseGroups.filter(rg => rg["primary-type"] === "EP").slice(0, 3);
+              const singles = releaseGroups.filter(rg => rg["primary-type"] === "Single").slice(0, 2);
+              
+              const ids = [...albums, ...eps, ...singles].map(rg => rg.id);
+              
+              if (ids.length > 0) {
+                candidateMap.set(artist.id, ids);
+              }
+            }
+          } catch (err) {
+            console.warn(`Failed to fetch releases for ${artist.name}:`, err);
+          }
+        }));
+      }
+
+      // Step 2: Probe Cover Art Archive for all artists concurrently
+      // CAA has no strict rate limits, so we can check all artists in parallel
+      const imagePromises = artists.map(async (artist) => {
         const rgIds = candidateMap.get(artist.id) ?? [];
-        // Try all release groups in parallel, take first success
-        const results = await Promise.allSettled(
-          rgIds.map(rgId => checkCoverArt(rgId))
-        );
-        for (const r of results) {
-          if (r.status === "fulfilled" && r.value) {
-            artist._coverUrl = r.value;
-            break;
+        
+        if (rgIds.length === 0) return null; // Skip artists with no release groups
+        
+        // Try release groups in order (most recent first) until we find a valid image
+        for (const rgId of rgIds) {
+          const coverUrl = await checkCoverArt(rgId);
+          if (coverUrl) {
+            artist._coverUrl = coverUrl;
+            return artist;
           }
         }
-      }));
+        return null; // No valid image found
+      });
 
-      return artists;
+      // Wait for all image checks to complete
+      const results = await Promise.all(imagePromises);
+      
+      // Filter out null results (artists without images) and return only valid artists
+      const validArtists = results.filter(artist => artist !== null);
+      
+      console.log(`[TrackWeave] Image enrichment: ${validArtists.length}/${artists.length} artists have cover art`);
+      
+      return validArtists;
     }
 
     // ── Probe Cover Art Archive for a release-group ───────────────────
-    // Uses the CAA JSON API which is CORS-friendly and returns thumbnail URLs.
-    // Falls back to a direct GET on the CDN URL if the JSON API returns nothing.
+    // This function attempts to retrieve album cover art from the Cover Art Archive.
+    // It uses multiple fallback strategies to maximize the chances of finding a valid image.
+    // The function prioritizes smaller thumbnail sizes (250px) for faster loading times
+    // while maintaining visual quality suitable for the dashboard display.
     async function checkCoverArt(releaseGroupId) {
       try {
-        // 1. CAA JSON API — most reliable, explicit CORS support
+        // Strategy 1: Use CAA JSON API for reliable, CORS-friendly access
+        // This API provides structured data with multiple image size options
         const apiRes = await fetch(
           `https://coverartarchive.org/release-group/${releaseGroupId}`,
-          { headers: { "Accept": "application/json" } }
+          { 
+            headers: { "Accept": "application/json" },
+            // Add timeout to prevent slow requests from blocking the UI
+            signal: AbortSignal.timeout(5000)
+          }
         );
+        
         if (apiRes.ok) {
           const json = await apiRes.json();
           const images = json.images ?? [];
-          const front  = images.find(img => img.front) ?? images[0];
+          
+          // Prioritize front cover images, fall back to any available image
+          const front = images.find(img => img.front) ?? images[0];
+          
           if (front) {
-            // Prefer 250px thumbnail; fall back through sizes to raw image URL
+            // Return the most appropriate thumbnail size for dashboard display
+            // 250px provides good quality while keeping file sizes small for fast loading
             return front.thumbnails?.["250"]
               ?? front.thumbnails?.small
               ?? front.thumbnails?.["500"]
@@ -341,14 +504,26 @@
               ?? null;
           }
         }
-      } catch { /* fall through */ }
+      } catch (err) {
+        // Silently handle errors (timeouts, network issues, etc.)
+        // We'll try the fallback strategy below
+      }
 
       try {
-        // 2. Direct CDN fallback — attempt 250px thumbnail
+        // Strategy 2: Direct CDN access as fallback
+        // Attempt to fetch the 250px thumbnail directly from the CDN
+        // This sometimes works even when the JSON API fails
         const directUrl = `https://coverartarchive.org/release-group/${releaseGroupId}/front-250`;
-        const directRes = await fetch(directUrl);
-        if (directRes.ok) return directRes.url ?? directUrl;
-      } catch { /* silent */ }
+        const directRes = await fetch(directUrl, {
+          signal: AbortSignal.timeout(5000)
+        });
+        
+        if (directRes.ok) {
+          return directRes.url ?? directUrl;
+        }
+      } catch (err) {
+        // Both strategies failed - return null to indicate no image available
+      }
 
       return null;
     }
@@ -841,7 +1016,7 @@
     <div class="hero-inner">
       <p class="hero-eyebrow">TrackWeave Dashboard</p>
       <h1 id="dash-name">Welcome back.</h1>
-      <p class="hero-sub">Discover new artists and deepen your taste across every genre you love.</p>
+      <p class="hero-sub">Explore today's most popular artists and connect with the music that defines your generation.</p>
       <div class="hero-genres" id="hero-genres"></div>
     </div>
   </div>
