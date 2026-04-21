@@ -1,0 +1,179 @@
+song_a,album_a,song_b,album_b,similarity
+Young Dumb & Broke,American Teen,Young Dumb & Broke (Remix),American Teen: Music From the Motion Picture,0.7661
+Young Dumb & Broke,American Teen,Young dumb,,0.9137
+Location,American Teen,Talk,Free Spirit,0.6301
+Location,American Teen,Coaster,American Teen,0.6131
+Location,American Teen,Reasons,,0.6048
+Location,American Teen,Location (Remix),,0.7011
+Location,American Teen,Right Back,Free Spirit,0.6994
+Location,American Teen,Intro,Free Spirit,0.6695
+Location,American Teen,Location (London Remix),,0.7787
+Location,American Teen,Location (Jorja Smith & Wretch 32 Remix),,0.7803
+Location,American Teen,Talk (Disclosure VIP),The Annual 2020,0.6253
+Better,Suncity,Free Spirit,Free Spirit,0.6155
+Better,Suncity,Hundred,Free Spirit,0.6102
+Better,Suncity,Intro,Free Spirit,0.6021
+Better,Suncity,Let’s Go (Remix),,0.6444
+Better,Suncity,Better (noclue? Remix),,0.8805
+Better,Suncity,Better (Miles Away Remix),,0.9437
+Better,Suncity,Better (Rennie! Remix),,0.9034
+Talk,Free Spirit,Another Sad Love Song,American Teen,0.6266
+Talk,Free Spirit,Shot Down,American Teen,0.6034
+Talk,Free Spirit,Motion,Suncity,0.6067
+Talk,Free Spirit,Right Back,Free Spirit,0.622
+Talk,Free Spirit,Free Spirit,Free Spirit,0.6028
+Talk,Free Spirit,Intro,Free Spirit,0.6477
+Talk,Free Spirit,Paradise,Free Spirit,0.6026
+Talk,Free Spirit,Location (London Remix),,0.6037
+Talk,Free Spirit,Talk (Disclosure VIP),The Annual 2020,0.9235
+Talk,Free Spirit,Better (noclue? Remix),,0.6278
+Talk,Free Spirit,Better (Rennie! Remix),,0.605
+Saved,American Teen,Coaster,American Teen,0.6465
+Saved,American Teen,Winter,American Teen,0.6425
+Saved,American Teen,Don’t Pretend,Free Spirit,0.6224
+Saved,American Teen,Intro,Free Spirit,0.6891
+Saved,American Teen,Twenty One,Free Spirit,0.6318
+Coaster,American Teen,Therapy,American Teen,0.646
+Coaster,American Teen,Another Sad Love Song,American Teen,0.649
+Coaster,American Teen,Shot Down,American Teen,0.6486
+Coaster,American Teen,Intro,Free Spirit,0.7094
+Coaster,American Teen,Bluffin’,Free Spirit,0.6185
+Coaster,American Teen,Stuck On U,,0.6333
+OTW,,Location (Remix),,0.6104
+OTW,,Right Back (Remix),So Fresh: The Hits of Spring 2019,0.6316
+OTW,,Don’t Pretend,Free Spirit,0.6705
+OTW,,Saturday Nights REMIX,,0.6013
+OTW,,Eleven (Remix),K3*,0.7016
+OTW,,Location (London Remix),,0.6202
+OTW,,Location (Jorja Smith & Wretch 32 Remix),,0.6251
+OTW,,Talk (Disclosure VIP),The Annual 2020,0.6001
+OTW,,OTW (BURNS Version),,0.9734
+Saturday Nights,Suncity,8TEEN,American Teen,0.6513
+Saturday Nights,Suncity,Saturday Nights REMIX,,0.8238
+Saturday Nights,Suncity,Let’s Go (Remix),,0.7018
+8TEEN,American Teen,Young Dumb & Broke (Remix),American Teen: Music From the Motion Picture,0.6376
+8TEEN,American Teen,Paradise,Free Spirit,0.6083
+8TEEN,American Teen,Let’s Go (Remix),,0.6742
+Suncity,Suncity,Location (Jorja Smith & Wretch 32 Remix),,0.6172
+Therapy,American Teen,Another Sad Love Song,American Teen,0.6561
+Therapy,American Teen,Shot Down,American Teen,0.631
+Therapy,American Teen,Reasons,,0.6124
+Therapy,American Teen,Intro,Free Spirit,0.6267
+Therapy,American Teen,Twenty One,Free Spirit,0.6256
+Therapy,American Teen,Stuck On U,,0.6536
+Another Sad Love Song,American Teen,Shot Down,American Teen,0.6079
+Another Sad Love Song,American Teen,Motion,Suncity,0.6687
+Another Sad Love Song,American Teen,Don’t Pretend,Free Spirit,0.604
+Another Sad Love Song,American Teen,Twenty One,Free Spirit,0.6198
+Another Sad Love Song,American Teen,Bluffin’,Free Spirit,0.6015
+Another Sad Love Song,American Teen,Stuck On U,,0.6464
+Another Sad Love Song,American Teen,Talk (Disclosure VIP),The Annual 2020,0.6263
+Shot Down,American Teen,Reasons,,0.6028
+Shot Down,American Teen,Motion,Suncity,0.6197
+Shot Down,American Teen,Keep Me,American Teen,0.666
+Shot Down,American Teen,Bad Luck,Free Spirit,0.6175
+Shot Down,American Teen,Intro,Free Spirit,0.6342
+Shot Down,American Teen,Stuck On U,,0.6649
+Shot Down,American Teen,Talk (Disclosure VIP),The Annual 2020,0.6135
+Shot Down,American Teen,Better (Rennie! Remix),,0.6041
+Reasons,,Bad Luck,Free Spirit,0.6607
+Reasons,,Right Back (Remix),So Fresh: The Hits of Spring 2019,0.6506
+Reasons,,Intro,Free Spirit,0.6074
+Reasons,,Stuck On U,,0.6202
+My Bad,Free Spirit,Eleven,K3*,0.6059
+My Bad,Free Spirit,Right Back (Remix),So Fresh: The Hits of Spring 2019,0.6145
+My Bad,Free Spirit,Right Back,Free Spirit,0.6364
+Vertigo,Suncity,Twenty One,Free Spirit,0.6189
+Eleven,K3*,Right Back (Remix),So Fresh: The Hits of Spring 2019,0.637
+Eleven,K3*,Right Back,Free Spirit,0.6208
+Eleven,K3*,Don’t Pretend,Free Spirit,0.6007
+Eleven,K3*,Let’s Go (Remix),,0.605
+Eleven,K3*,Eleven (Remix),K3*,0.8638
+Eleven,K3*,Talk (Disclosure VIP),The Annual 2020,0.6067
+Winter,American Teen,Intro,Free Spirit,0.6025
+Let’s Go,American Teen,Hundred,Free Spirit,0.6093
+Location (Remix),,Right Back (Remix),So Fresh: The Hits of Spring 2019,0.635
+Location (Remix),,Right Back,Free Spirit,0.6046
+Location (Remix),,Location (London Remix),,0.7296
+Location (Remix),,Location (Jorja Smith & Wretch 32 Remix),,0.6604
+Motion,Suncity,Stuck On U,,0.6008
+Motion,Suncity,Talk (Disclosure VIP),The Annual 2020,0.6323
+Motion,Suncity,Better (noclue? Remix),,0.6117
+Motion,Suncity,Better (Rennie! Remix),,0.6394
+Bad Luck,Free Spirit,Intro,Free Spirit,0.6118
+Bad Luck,Free Spirit,Twenty One,Free Spirit,0.6339
+Bad Luck,Free Spirit,Stuck On U,,0.6309
+Right Back (Remix),So Fresh: The Hits of Spring 2019,Right Back,Free Spirit,0.6405
+Right Back (Remix),So Fresh: The Hits of Spring 2019,Don’t Pretend,Free Spirit,0.6225
+Right Back (Remix),So Fresh: The Hits of Spring 2019,Let’s Go (Remix),,0.6857
+Right Back (Remix),So Fresh: The Hits of Spring 2019,Eleven (Remix),K3*,0.6531
+Right Back (Remix),So Fresh: The Hits of Spring 2019,OTW (BURNS Version),,0.6028
+Right Back,Free Spirit,Hundred,Free Spirit,0.6427
+Right Back,Free Spirit,Up All Night,K3*,0.6069
+Right Back,Free Spirit,Intro,Free Spirit,0.6042
+Right Back,Free Spirit,Stay,The Uncle Drew Motion Picture Soundtrack,0.6177
+Right Back,Free Spirit,Twenty One,Free Spirit,0.6027
+Right Back,Free Spirit,Let’s Go (Remix),,0.6351
+Right Back,Free Spirit,Location (London Remix),,0.6041
+Right Back,Free Spirit,Talk (Disclosure VIP),The Annual 2020,0.6261
+Right Back,Free Spirit,Better (Miles Away Remix),,0.6244
+Right Back,Free Spirit,Better (Rennie! Remix),,0.6062
+Free Spirit,Free Spirit,Hundred,Free Spirit,0.6416
+Free Spirit,Free Spirit,Up All Night,K3*,0.6244
+Free Spirit,Free Spirit,Paradise,Free Spirit,0.6322
+Free Spirit,Free Spirit,Heaven,Free Spirit,0.6174
+Free Spirit,Free Spirit,Talk (Disclosure VIP),The Annual 2020,0.6078
+Free Spirit,Free Spirit,Better (Miles Away Remix),,0.6271
+Free Spirit,Free Spirit,Better (Rennie! Remix),,0.6308
+Hundred,Free Spirit,Up All Night,K3*,0.6639
+Hundred,Free Spirit,Paradise,Free Spirit,0.693
+Hundred,Free Spirit,Twenty One,Free Spirit,0.7002
+Hundred,Free Spirit,Stuck On U,,0.6085
+Hundred,Free Spirit,Let’s Go (Remix),,0.6545
+Hundred,Free Spirit,Better (noclue? Remix),,0.6221
+Hundred,Free Spirit,Better (Miles Away Remix),,0.6077
+Hundred,Free Spirit,Better (Rennie! Remix),,0.6425
+Up All Night,K3*,Paradise,Free Spirit,0.651
+Up All Night,K3*,Stay,The Uncle Drew Motion Picture Soundtrack,0.6274
+Up All Night,K3*,Twenty One,Free Spirit,0.647
+Don’t Pretend,Free Spirit,Intro,Free Spirit,0.6228
+Don’t Pretend,Free Spirit,Stuck On U,,0.6607
+Don’t Pretend,Free Spirit,Eleven (Remix),K3*,0.7593
+Don’t Pretend,Free Spirit,Location (London Remix),,0.6042
+Don’t Pretend,Free Spirit,Location (Jorja Smith & Wretch 32 Remix),,0.6137
+Don’t Pretend,Free Spirit,Talk (Disclosure VIP),The Annual 2020,0.6131
+Don’t Pretend,Free Spirit,OTW (BURNS Version),,0.657
+Intro,Free Spirit,Stay,The Uncle Drew Motion Picture Soundtrack,0.6778
+Intro,Free Spirit,Twenty One,Free Spirit,0.6355
+Intro,Free Spirit,Stuck On U,,0.6649
+Intro,Free Spirit,Location (London Remix),,0.6125
+Intro,Free Spirit,Talk (Disclosure VIP),The Annual 2020,0.6574
+Intro,Free Spirit,Better (noclue? Remix),,0.6018
+Young Dumb & Broke (Remix),American Teen: Music From the Motion Picture,Let’s Go (Remix),,0.647
+Young Dumb & Broke (Remix),American Teen: Music From the Motion Picture,Young dumb,,0.7364
+Alive,Free Spirit,Paradise,Free Spirit,0.6029
+Paradise,Free Spirit,Heaven,Free Spirit,0.6034
+Paradise,Free Spirit,Twenty One,Free Spirit,0.614
+Paradise,Free Spirit,Let’s Go (Remix),,0.6059
+Saturday Nights REMIX,,Let’s Go (Remix),,0.6511
+Stay,The Uncle Drew Motion Picture Soundtrack,Talk (Disclosure VIP),The Annual 2020,0.6105
+Twenty One,Free Spirit,Stuck On U,,0.6256
+Stuck On U,,Talk (Disclosure VIP),The Annual 2020,0.601
+Stuck On U,,Better (noclue? Remix),,0.6211
+Stuck On U,,Better (Miles Away Remix),,0.6209
+Stuck On U,,Better (Rennie! Remix),,0.6437
+Let’s Go (Remix),,Eleven (Remix),K3*,0.6217
+Let’s Go (Remix),,Talk (Disclosure VIP),The Annual 2020,0.6085
+Let’s Go (Remix),,Better (noclue? Remix),,0.6314
+Let’s Go (Remix),,Better (Miles Away Remix),,0.635
+Let’s Go (Remix),,Better (Rennie! Remix),,0.6694
+Eleven (Remix),K3*,Talk (Disclosure VIP),The Annual 2020,0.6263
+Eleven (Remix),K3*,OTW (BURNS Version),,0.6852
+Location (London Remix),,Location (Jorja Smith & Wretch 32 Remix),,0.8454
+Talk (Disclosure VIP),The Annual 2020,OTW (BURNS Version),,0.6111
+Talk (Disclosure VIP),The Annual 2020,Better (noclue? Remix),,0.632
+Talk (Disclosure VIP),The Annual 2020,Better (Miles Away Remix),,0.6325
+Talk (Disclosure VIP),The Annual 2020,Better (Rennie! Remix),,0.6405
+Better (noclue? Remix),,Better (Miles Away Remix),,0.8489
+Better (noclue? Remix),,Better (Rennie! Remix),,0.9293
+Better (Miles Away Remix),,Better (Rennie! Remix),,0.8889
