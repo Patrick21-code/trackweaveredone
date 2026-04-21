@@ -137,7 +137,7 @@
       </blockquote>
 
       <p>
-        TrackWeave was created to make that conversation legible. By applying <strong>graph-based natural language processing</strong> to lyrics, metadata, and audio features, we construct a relational map of every artist's catalogue — revealing how themes migrate between albums, how early obsessions resurface years later, and how songs that seem unrelated are, in fact, deeply connected.
+        TrackWeave was created to make that conversation legible. By applying <strong>graph-based analysis and computational techniques</strong> to lyrics, metadata, and audio features, we construct a relational map of every artist's catalogue — revealing how themes migrate between albums, how early obsessions resurface years later, and how songs that seem unrelated are, in fact, deeply connected.
       </p>
 
       <p>
@@ -160,7 +160,7 @@
       <span class="sec-label">The Technology</span>
       <h2 class="sec-h">From lyrics to graph</h2>
       <p class="sec-p" style="max-width:520px;">
-        Our NLP pipeline processes a discography end-to-end — from raw text to an interactive, queryable knowledge graph — in four stages.
+        Our analysis pipeline processes a discography end-to-end — from raw text to an interactive, queryable knowledge graph — in four stages.
       </p>
     </div>
 
@@ -189,8 +189,8 @@
           </svg>
         </div>
         <h4>Semantic Extraction</h4>
-        <p>Each track's lyrics are tokenized and embedded using transformer-based models. Named entities, motifs, emotional valence, and thematic clusters are identified and scored.</p>
-        <span class="pipe-badge">NLP Core</span>
+        <p>Each track's lyrics are analyzed and processed using computational models. Named entities, motifs, emotional valence, and thematic clusters are identified and scored.</p>
+        <span class="pipe-badge">Analysis Core</span>
       </div>
 
       <div class="pipe-step">
@@ -392,54 +392,54 @@
       <span class="sec-label">Under the Hood</span>
       <h2 class="sec-h">Built on solid foundations</h2>
       <p class="sec-p" style="max-width:500px;">
-        TrackWeave is built with tools chosen for reliability, performance, and transparency — not trend-following.
+        TrackWeave is built with modern web technologies chosen for reliability, performance, and simplicity.
       </p>
     </div>
 
     <div class="tech-grid reveal">
       <div class="tech-group">
-        <h4>NLP &amp; Graph</h4>
+        <h4>Analysis &amp; Data</h4>
         <div class="tech-item">
           <span class="tech-dot" style="background:#f59e0b;"></span>
-          <span>PyTorch Transformers</span>
+          <span>Python</span>
           <span class="tech-badge">Core</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#2563eb;"></span>
-          <span>NetworkX</span>
+          <span>Pandas</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#7c3aed;"></span>
-          <span>spaCy</span>
+          <span>NumPy</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#0891b2;"></span>
-          <span>FAISS (vector search)</span>
+          <span>Scikit-learn</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#16a34a;"></span>
-          <span>Sentence-Transformers</span>
+          <span>CSV Data Processing</span>
         </div>
       </div>
 
       <div class="tech-group">
-        <h4>Backend &amp; Data</h4>
+        <h4>Backend &amp; Storage</h4>
         <div class="tech-item">
-          <span class="tech-dot" style="background:#2563eb;"></span>
-          <span>FastAPI (Python)</span>
+          <span class="tech-dot" style="background:#f59e0b;"></span>
+          <span>Firebase</span>
           <span class="tech-badge">Core</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#16a34a;"></span>
-          <span>Neo4j (graph DB)</span>
+          <span>Firestore (database)</span>
         </div>
         <div class="tech-item">
-          <span class="tech-dot" style="background:#f59e0b;"></span>
-          <span>PostgreSQL</span>
+          <span class="tech-dot" style="background:#2563eb;"></span>
+          <span>Firebase Auth</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#7c3aed;"></span>
-          <span>Redis (caching)</span>
+          <span>Firebase Storage</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#0891b2;"></span>
@@ -448,27 +448,27 @@
       </div>
 
       <div class="tech-group">
-        <h4>Frontend &amp; Infra</h4>
+        <h4>Frontend</h4>
         <div class="tech-item">
           <span class="tech-dot" style="background:#f59e0b;"></span>
-          <span>React + D3.js</span>
+          <span>HTML5 + CSS3</span>
           <span class="tech-badge">Core</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#2563eb;"></span>
-          <span>Tailwind CSS</span>
+          <span>Vanilla JavaScript</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#7c3aed;"></span>
-          <span>Vercel (hosting)</span>
+          <span>D3.js (visualization)</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#0891b2;"></span>
-          <span>AWS S3 (storage)</span>
+          <span>Custom CSS Design System</span>
         </div>
         <div class="tech-item">
           <span class="tech-dot" style="background:#16a34a;"></span>
-          <span>GitHub Actions (CI)</span>
+          <span>Responsive Design</span>
         </div>
       </div>
     </div>
@@ -492,14 +492,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);">A</div>
         <h4>Ashley John Baguio</h4>
         <div class="role">Contributor</div>
-        <p>Former ML engineer at a major streaming platform. Built the original NLP pipeline in a weekend — and never stopped improving it. Listens exclusively to jazz while coding.</p>
+        <p>Former data analyst with a passion for music. Built the original analysis pipeline and graph visualization system. Listens exclusively to jazz while coding.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);">M</div>
         <h4>Michaella Francine Crema</h4>
         <div class="role">Contributor</div>
-        <p>PhD in computational linguistics. Designed the graph construction model and the semantic similarity scoring system. Has a ranked list of every Radiohead album she updates annually.</p>
+        <p>Computer science graduate with a focus on data structures. Designed the graph construction model and the semantic similarity scoring system. Has a ranked list of every Radiohead album she updates annually.</p>
       </div>
 
 
@@ -507,14 +507,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#15803d,#16a34a);">S</div>
         <h4>Sid Alexis Serrano</h4>
         <div class="role">Contributor</div>
-        <p>Keeps the graph database running at scale. Wrote the ingestion pipeline that processes tens of thousands of tracks daily. Collects vinyl records and corrects their Wikipedia pages.</p>
+        <p>Backend developer and database specialist. Manages the Firebase infrastructure and data ingestion pipeline. Collects vinyl records and corrects their Wikipedia pages.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#b45309,#d97706);">P</div>
         <h4>Patrick Danielle Tomas</h4>
         <div class="role">Contributor</div>
-        <p>Responsible for the interactive graph canvas. Previously built data visualisations for a science museum. Has opinions about force-directed graph layouts that could fill a book.</p>
+        <p>Frontend developer specializing in data visualization. Built the interactive graph canvas using D3.js. Has opinions about force-directed graph layouts that could fill a book.</p>
       </div>
 
     </div>
@@ -540,13 +540,13 @@
       <div class="tl-item">
         <span class="tl-date">January 2024</span>
         <h4>First prototype</h4>
-        <p>A working NLP pipeline processes the complete discography of three artists and produces its first graph. Edge weights are rough, but the patterns are immediately visible and surprising.</p>
+        <p>A working analysis pipeline processes the complete discography of three artists and produces its first graph. Edge weights are rough, but the patterns are immediately visible and surprising.</p>
       </div>
 
       <div class="tl-item">
         <span class="tl-date">April 2024</span>
         <h4>Team grows</h4>
-        <p>Marcus, Lena, Jonas, and Clara join. The product goes from a research demo to a product with a design language, a social layer, and a proper backend.</p>
+        <p>Marcus, Lena, Jonas, and Clara join. The product goes from a research demo to a working platform with a design language, a social layer, and a proper backend.</p>
       </div>
 
       <div class="tl-item">
@@ -564,7 +564,7 @@
       <div class="tl-item">
         <span class="tl-date">Now</span>
         <h4>Still building</h4>
-        <p>We are actively expanding the NLP model, improving the visualisation engine, and working closely with our community to make the graph smarter with every annotation.</p>
+        <p>We are actively expanding the analysis model, improving the visualisation engine, and working closely with our community to make the graph smarter with every annotation.</p>
       </div>
     </div>
   </div>
@@ -578,8 +578,8 @@
     <h2>Start exploring the music<br>you thought you knew.</h2>
     <p>Create a free account and discover what the graph reveals about your favourite artists.</p>
     <div class="cta-btns">
-      <a href="/register.html" class="btn btn-solid btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;">Create free account</a>
-      <a href="/index.html"    class="btn btn-ghost btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.6);"
+      <a href="./register.html" class="btn btn-solid btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;">Create free account</a>
+      <a href="./index.html" class="btn btn-ghost btn-lg" style="font-size:.95rem;padding:.82rem 1.8rem;border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.6);"
          onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.35)';this.style.color='rgba(255,255,255,.9)'"
          onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,.18)';this.style.color='rgba(255,255,255,.6)'">
         Back to Home
@@ -626,28 +626,24 @@
 
     <div class="foot-col">
       <h5>Product</h5>
-      <a href="#">Features</a>
-      <a href="#">Graph Explorer</a>
-      <a href="#">NLP Insights</a>
-      <a href="#">Pricing</a>
-      <a href="#">Changelog</a>
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./engagement.html">Community</a>
+      <a href="./checkin.html">Check-In</a>
+      <a href="./shop.html">Rewards Shop</a>
     </div>
 
     <div class="foot-col">
-      <h5>Community</h5>
-      <a href="#">Discover</a>
-      <a href="#">Reviews</a>
-      <a href="#">Following</a>
-      <a href="#">Forums</a>
+      <h5>Explore</h5>
+      <a href="./dashboard.html">Discover Artists</a>
+      <a href="./engagement.html">Activity Feed</a>
+      <a href="./artist-details.html">Artist Graphs</a>
     </div>
 
     <div class="foot-col">
       <h5>Company</h5>
-      <a href="/about.html">About</a>
-      <a href="#">Blog</a>
-      <a href="#">API</a>
-      <a href="/support.html">Support</a>
-      <a href="#">Contact</a>
+      <a href="./about.html">About</a>
+      <a href="./support.html">Support</a>
+      <a href="./index.html">Home</a>
     </div>
   </div>
 

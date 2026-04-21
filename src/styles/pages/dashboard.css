@@ -36,6 +36,64 @@ body.overlay-open { overflow: hidden; }
 
 .nav-inner { max-width: 1280px; padding: 0 2.5rem; }
 
+/* ─── Navigation Links (Dashboard pages) ─────────────────── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: 1rem;
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  color: var(--ink-soft) !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease;
+  position: relative;
+  padding: 0.5rem 0;
+  background: transparent !important;
+  white-space: nowrap;
+}
+
+.nav-link:visited {
+  color: var(--ink-soft) !important;
+}
+
+.nav-link:hover {
+  color: var(--ink) !important;
+  background: transparent !important;
+}
+
+.nav-link.active {
+  color: var(--ink) !important;
+  font-weight: 500;
+  background: transparent !important;
+}
+
+.nav-link.active:visited {
+  color: var(--ink) !important;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
+
+/* Ensure nav brand text is always blue */
+.nav-brand span {
+  color: var(--blue) !important;
+}
+.nav-mark {
+  background: var(--blue) !important;
+}
+
 .nav-search-dash {
   flex: 1; max-width: 380px; margin: 0 2rem; position: relative;
 }

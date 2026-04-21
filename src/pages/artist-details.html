@@ -61,15 +61,64 @@
     }
     .nav-brand {
       display: flex; align-items: center; gap: 0.55rem;
-      text-decoration: none; color: var(--ink);
+      text-decoration: none;
       font-family: 'Fraunces', serif; font-weight: 500;
       font-size: 1.05rem; letter-spacing: -0.02em;
       flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .nav-brand:hover { opacity: 0.85; }
+    .nav-brand span {
+      color: var(--blue) !important;
     }
     .nav-mark {
       width: 32px; height: 32px; border-radius: 8px;
-      background: var(--ink);
+      background: var(--blue);
       display: flex; align-items: center; justify-content: center;
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1rem;
+    }
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--ink-soft) !important;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      background: transparent !important;
+      white-space: nowrap;
+    }
+    .nav-link:visited {
+      color: var(--ink-soft) !important;
+    }
+    .nav-link:hover {
+      color: var(--ink) !important;
+      background: transparent !important;
+    }
+    .nav-link.active {
+      color: var(--ink) !important;
+      font-weight: 500;
+      background: transparent !important;
+    }
+    .nav-link.active:visited {
+      color: var(--ink) !important;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
     }
     .nav-back-btn {
       display: flex; align-items: center; gap: 0.45rem;
@@ -339,7 +388,7 @@
     .album-carousel-track {
       display: flex; gap: 1.25rem;
       width: max-content;
-      animation: scroll-left 30s linear infinite;
+      animation: scroll-left 50s linear infinite;
       will-change: transform;
     }
     .album-carousel-track:hover,
@@ -457,28 +506,35 @@
       100% { background-position:  800px 0; }
     }
     .sk-block {
-      background: linear-gradient(90deg, var(--paper-warm) 25%, var(--rule-light) 50%, var(--paper-warm) 75%);
+      background: linear-gradient(90deg, #e8e4df 0%, #f5f2ed 50%, #e8e4df 100%);
       background-size: 800px 100%;
-      animation: shimmer 1.5s infinite linear;
+      animation: shimmer 1.8s ease-in-out infinite;
       border-radius: 8px;
     }
     .sk-album-card {
-      flex: 0 0 calc(20% - 1rem);
+      flex: 0 0 200px;
+      min-width: 0;
       padding: 0.75rem 0.75rem 1rem;
     }
     .sk-cover {
-      aspect-ratio: 1; border-radius: var(--r-sm);
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--r-sm);
       margin-bottom: 0.85rem;
     }
-    .sk-line { height: 11px; border-radius: 5px; margin-bottom: 0.4rem; }
+    .sk-line {
+      height: 11px;
+      border-radius: 5px;
+      margin-bottom: 0.4rem;
+    }
     .sk-line.short { width: 50%; }
 
     /* Stagger skeleton shimmer */
     .sk-album-card:nth-child(1) .sk-block { animation-delay: 0s; }
-    .sk-album-card:nth-child(2) .sk-block { animation-delay: .07s; }
-    .sk-album-card:nth-child(3) .sk-block { animation-delay: .14s; }
-    .sk-album-card:nth-child(4) .sk-block { animation-delay: .21s; }
-    .sk-album-card:nth-child(5) .sk-block { animation-delay: .28s; }
+    .sk-album-card:nth-child(2) .sk-block { animation-delay: .1s; }
+    .sk-album-card:nth-child(3) .sk-block { animation-delay: .2s; }
+    .sk-album-card:nth-child(4) .sk-block { animation-delay: .3s; }
+    .sk-album-card:nth-child(5) .sk-block { animation-delay: .4s; }
 
     /* ── Tags section ── */
     .artist-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
@@ -543,11 +599,15 @@
       <span>TrackWeave</span>
     </a>
 
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link">Community</a>
+      <a href="./checkin.html" class="nav-link">Check-In</a>
+      <a href="./shop.html" class="nav-link">Shop</a>
+    </nav>
+
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
-      <a href="./dashboard.html" class="nav-back-btn" id="nav-back-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </a>
       <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
       <div class="nav-dropdown" id="nav-dropdown" role="menu">
         <div class="drop-user">
@@ -558,12 +618,6 @@
           </div>
         </div>
         <div class="drop-items">
-          <a class="drop-item" href="#">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            My Profile
-          </a>
           <a class="drop-item" href="./dashboard.html">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -571,7 +625,27 @@
             </svg>
             Dashboard
           </a>
-          <div class="drop-divider"></div>
+          <a class="drop-item" href="./engagement.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Community
+          </a>
+          <a class="drop-item" href="./checkin.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Check-In
+          </a>
+          <a class="drop-item" href="./shop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Shop
+          </a>
           <button class="drop-item danger" id="btn-signout" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -631,12 +705,31 @@
         <div class="album-carousel-wrapper">
           <div class="album-carousel-track-outer">
             <div class="album-carousel-track" id="albums-skeleton-track">
-              ${Array(5).fill(0).map(() => `
-                <div class="sk-album-card">
-                  <div class="sk-cover sk-block"></div>
-                  <div class="sk-line sk-block" style="width:80%"></div>
-                  <div class="sk-line short sk-block"></div>
-                </div>`).join("")}
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -857,19 +950,11 @@
 
     // Action buttons
     const actionsEl = document.getElementById("hero-actions");
-    const communityUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
+    const musicGraphUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
     actionsEl.innerHTML = `
-      <a class="hero-btn primary" href="https://musicbrainz.org/artist/${escHtml(artist.id)}" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on MusicBrainz
-      </a>
-      <a class="hero-btn ghost" href="${escHtml(communityUrl)}">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Discuss in Community
-      </a>
-      <a class="hero-btn ghost" href="./engagement.html">
+      <a class="hero-btn primary" href="${escHtml(musicGraphUrl)}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 12.1-.7-.7M6.3 18.4l-.7.7"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
-        Generate Music Graph
+        View Music Graph
       </a>`;
 
   }

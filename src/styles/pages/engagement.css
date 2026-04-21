@@ -56,24 +56,60 @@ input, textarea { font-family: inherit; }
 .nav-brand {
   display: flex; align-items: center; gap: .52rem;
   font-family: 'Fraunces', serif; font-size: 1.02rem;
-  font-weight: 500; color: var(--ink); letter-spacing: -0.01em;
+  font-weight: 500; letter-spacing: -0.01em;
   flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nav-brand:hover { opacity: 0.85; }
+.nav-brand span {
+  color: var(--blue) !important;
 }
 .nav-mark {
-  width: 28px; height: 28px; background: var(--ink);
+  width: 28px; height: 28px; background: var(--blue);
   border-radius: 7px; display: flex;
   align-items: center; justify-content: center;
 }
 .nav-links {
-  display: flex; align-items: center; gap: .2rem;
+  display: flex; align-items: center; gap: 1.5rem;
+  margin-left: 1rem;
 }
 .nav-link {
-  padding: .35rem .75rem; border-radius: 99px;
-  font-size: .84rem; color: var(--ink-soft);
-  transition: all .15s;
+  padding: .5rem 0;
+  font-size: .875rem;
+  color: var(--ink-soft) !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .15s ease;
+  position: relative;
+  background: transparent !important;
+  white-space: nowrap;
 }
-.nav-link:hover { background: var(--paper-warm); color: var(--ink); }
-.nav-link.active { background: var(--ink); color: #fff; }
+.nav-link:visited {
+  color: var(--ink-soft) !important;
+}
+.nav-link:hover {
+  color: var(--ink) !important;
+  background: transparent !important;
+}
+.nav-link.active {
+  color: var(--ink) !important;
+  font-weight: 500;
+  background: transparent !important;
+}
+.nav-link.active:visited {
+  color: var(--ink) !important;
+}
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
 .nav-end { margin-left: auto; display: flex; align-items: center; gap: .75rem; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .38rem;

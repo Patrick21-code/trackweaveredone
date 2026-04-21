@@ -396,7 +396,7 @@ async function selectArtist(artist) {
   const adpName = document.getElementById('adp-artist-name');
   if (adpName) adpName.textContent = artist.name;
   const adpMeta = document.getElementById('adp-meta');
-  if (adpMeta) adpMeta.textContent = `${artist.name} Community Chat`;
+  if (adpMeta) adpMeta.textContent = `Music Graph & Community Chat`;
 
   // Set compose avatar
   const cu = window._currentUser;
@@ -413,6 +413,11 @@ async function selectArtist(artist) {
   // Show artist panel
   document.getElementById('artist-picker-card').style.display = 'none';
   document.getElementById('artist-discussion-panel').style.display = '';
+
+  // Load music graph for this artist (if available)
+  if (window.loadMusicGraph) {
+    window.loadMusicGraph(artist.id);
+  }
 
   // Subscribe to Firestore comments for this artist
   console.log('About to subscribe to comments');
