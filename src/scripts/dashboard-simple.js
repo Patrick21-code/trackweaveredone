@@ -1,9 +1,10 @@
 /* ═══════════════════════════════════════════════════════════
    TrackWeave — Simplified Dashboard Script
-   Uses only available artists from graph_data folder
+   Uses MusicBrainz API for accurate artist data
    ═══════════════════════════════════════════════════════════ */
 
 import { AVAILABLE_ARTISTS, getArtistsByGenre, searchArtists, getAllArtists, getAvailableGenres } from './available-artists.js';
+import { enrichArtistData, enrichArtists, getPrimaryGenre, fetchArtistImage } from './modules/musicbrainz-enrichment.js';
 
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -104,7 +105,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // ── Build all carousels ──────────────────────────────────────
-function buildCarousels(genres) {
+async function buildCarousels(genres) {
   const section = document.getElementById("artists-section");
   section.innerHTML = "";
 
@@ -113,19 +114,100 @@ function buildCarousels(genres) {
   eyebrow.textContent = "Available Artists · Explore discography graphs";
   section.appendChild(eyebrow);
 
-  // Build carousel for each genre
-  genres.forEach(genre => {
-    const artists = getArtistsByGenre(genre);
-    if (artists.length > 0) {
-      const block = buildCarouselBlock(genre, artists);
-      section.appendChild(block);
-    }
+  // Get all artists
+  const allArtists = getAllArtists();
+  
+  // Show skeleton loaders for each genre
+  const skeletonGenres = ["Pop", "Hip-Hop", "R&B", "Rock", "K-Pop", "Alternative"];
+  skeletonGenres.forEach(genre => {
+    const skeletonBlock = createSkeletonBlock(genre);
+    section.appendChild(skeletonBlock);
   });
 
-  const creditEl = document.createElement("p");
-  creditEl.className = "api-credit";
-  creditEl.innerHTML = `Artist data from local graph database`;
-  section.appendChild(creditEl);
+  try {
+    // Enrich artists with MB data (batch processing for better performance)
+    const enrichedArtists = await enrichArtists(allArtists, 5); // Process 5 at a time
+    
+    // Remove skeleton loaders
+    section.querySelectorAll('.skeleton-block').forEach(el => el.remove());
+    
+    // Group by genre from MusicBrainz data
+    const artistsByGenre = {};
+    enrichedArtists.forEach(artist => {
+      const genre = artist._mbData ? getPrimaryGenre(artist._mbData) : "Other";
+      if (!artistsByGenre[genre]) {
+        artistsByGenre[genre] = [];
+      }
+      artistsByGenre[genre].push(artist);
+    });
+
+    // Build carousel for each genre
+    Object.entries(artistsByGenre).forEach(([genre, artists]) => {
+      if (artists.length > 0) {
+        const block = buildCarouselBlock(genre, artists);
+        section.appendChild(block);
+      }
+    });
+
+    const creditEl = document.createElement("p");
+    creditEl.className = "api-credit";
+    creditEl.innerHTML = `Artist data from <a href="https://musicbrainz.org" target="_blank" rel="noopener">MusicBrainz</a>`;
+    section.appendChild(creditEl);
+
+    // Fetch images in the background (non-blocking)
+    fetchArtistImagesInBackground(enrichedArtists);
+  } catch (error) {
+    console.error("[TrackWeave] Error building carousels:", error);
+    section.querySelectorAll('.skeleton-block').forEach(el => el.remove());
+    section.innerHTML += `<p style="text-align:center;padding:3rem;color:var(--red);">Failed to load artist data. Please refresh the page.</p>`;
+  }
+}
+
+// ── Fetch artist images in background (non-blocking) ─────────
+async function fetchArtistImagesInBackground(artists) {
+  // Fetch images one at a time to avoid rate limiting
+  for (const artist of artists) {
+    try {
+      const imageUrl = await fetchArtistImage(artist.mbid, artist._mbData);
+      if (imageUrl) {
+        // Update all cards for this artist
+        const cards = document.querySelectorAll(`[data-artist-id="${artist.id}"]`);
+        cards.forEach(card => {
+          const imgDiv = card.querySelector('.artist-img-bg');
+          if (imgDiv && !imgDiv.dataset.imageUrl) {
+            imgDiv.dataset.imageUrl = imageUrl;
+            // Trigger lazy load
+            lazyLoadImages(card);
+          }
+        });
+      }
+    } catch (e) {
+      // Silently fail - keep using placeholder
+      console.debug(`[TrackWeave] Could not load image for ${artist.name}`);
+    }
+  }
+}
+
+// ── Create skeleton loader block ──────────────────────────────
+function createSkeletonBlock(genre) {
+  const block = document.createElement("div");
+  block.className = "genre-carousel-block skeleton-block";
+  
+  block.innerHTML = `
+    <div class="genre-carousel-header">
+      <div class="sk-title-bar"></div>
+    </div>
+    <div class="carousel-skeleton">
+      ${Array(6).fill(0).map(() => `
+        <div class="sk-card">
+          <div class="sk-img"></div>
+          <div class="sk-line"></div>
+          <div class="sk-line short"></div>
+        </div>
+      `).join('')}
+    </div>`;
+  
+  return block;
 }
 
 // ── Build carousel DOM block ──────────────────────────────────────
@@ -214,7 +296,39 @@ function buildCarouselBlock(genre, artists) {
     openSeeAllOverlay(genre, artists);
   });
 
+  // Lazy load images after carousel is rendered
+  requestAnimationFrame(() => {
+    lazyLoadImages(track);
+  });
+
   return block;
+}
+
+// ── Lazy load artist images ──────────────────────────────────
+function lazyLoadImages(container) {
+  const imageDivs = container.querySelectorAll('.artist-img-bg[data-image-url]');
+  
+  imageDivs.forEach(div => {
+    const imageUrl = div.dataset.imageUrl;
+    if (!imageUrl) return;
+    
+    const img = new Image();
+    img.onload = () => {
+      // Create img element and insert it
+      const imgEl = document.createElement('img');
+      imgEl.src = imageUrl;
+      imgEl.alt = '';
+      div.innerHTML = '';
+      div.appendChild(imgEl);
+      div.classList.remove('loading');
+    };
+    img.onerror = () => {
+      // Keep the placeholder on error
+      div.classList.remove('loading');
+      div.removeAttribute('data-image-url');
+    };
+    img.src = imageUrl;
+  });
 }
 
 // ── Store artist in sessionStorage and navigate to detail page ──────
@@ -234,15 +348,24 @@ function artistCardHTML(artist, index) {
 
   const year = artist["life-span"]?.begin ?? "";
   const country = artist.country ?? "";
-  const sub = [year, country].filter(Boolean).join(" · ") || "Artist";
+  const type = artist.type ?? "";
+  const sub = [type, year, country].filter(Boolean).join(" · ") || "Artist";
 
   const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
 
-  // Use gradient placeholder for all artists (no external images)
-  const imgHtml = `
-    <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
-      ${musicNoteIconSVG()}
-    </div>`;
+  // Try to use artist image if available, otherwise use gradient placeholder
+  let imgHtml;
+  if (artist.imageUrl) {
+    imgHtml = `
+      <div class="artist-img-bg loading" style="${gradStyle}" data-image-url="${escHtml(artist.imageUrl)}">
+        ${musicNoteIconSVG()}
+      </div>`;
+  } else {
+    imgHtml = `
+      <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
+        ${musicNoteIconSVG()}
+      </div>`;
+  }
 
   return `
     <a class="artist-card" href="./artist-details.html?id=${escHtml(artist.id)}"
@@ -284,13 +407,22 @@ function openSeeAllOverlay(genre, artists) {
     const sat = 58 + (Math.abs(hashStr(artist.name + "s")) % 18);
     const year = artist["life-span"]?.begin ?? "";
     const country = artist.country ?? "";
-    const badge = [year, country].filter(Boolean).join(" · ") || "Artist";
+    const type = artist.type ?? "";
+    const badge = [type, year, country].filter(Boolean).join(" · ") || "Artist";
     const gradStyle = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
 
-    const imgHtml = `
-      <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
-        ${musicNoteIconSVG()}
-      </div>`;
+    let imgHtml;
+    if (artist.imageUrl) {
+      imgHtml = `
+        <div class="artist-img-bg loading" style="${gradStyle}" data-image-url="${escHtml(artist.imageUrl)}">
+          ${musicNoteIconSVG()}
+        </div>`;
+    } else {
+      imgHtml = `
+        <div class="artist-img-bg artist-img-placeholder" style="${gradStyle}">
+          ${musicNoteIconSVG()}
+        </div>`;
+    }
 
     const card = document.createElement("a");
     card.className = "artist-card";
@@ -306,6 +438,11 @@ function openSeeAllOverlay(genre, artists) {
       <div class="artist-name">${escHtml(artist.name)}</div>
       <div class="artist-sub">${escHtml(badge)}</div>`;
     grid.appendChild(card);
+  });
+
+  // Lazy load images in overlay
+  requestAnimationFrame(() => {
+    lazyLoadImages(grid);
   });
 
   overlay.classList.add("open");
@@ -353,7 +490,8 @@ function renderSearchResults(artists) {
     const grad = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
     const year = a["life-span"]?.begin ?? "";
     const country = a.country ?? "";
-    const meta = [a.genre, year, country].filter(Boolean).join(" · ") || "Artist";
+    const genre = a._mbData ? getPrimaryGenre(a._mbData) : "";
+    const meta = [genre, year, country].filter(Boolean).join(" · ") || "Artist";
 
     const thumb = `<span class="sr-thumb-fallback" style="${grad}">${musicNoteIconSVG()}</span>`;
 
@@ -386,7 +524,7 @@ function highlightItem() {
   });
 }
 
-function doSearch(query) {
+async function doSearch(query) {
   setSearchLoading();
   
   // Search in available artists
@@ -397,7 +535,14 @@ function doSearch(query) {
     return;
   }
 
-  renderSearchResults(artists);
+  // Enrich with MusicBrainz data
+  try {
+    const enrichedArtists = await enrichArtists(artists);
+    renderSearchResults(enrichedArtists);
+  } catch (error) {
+    console.error("[TrackWeave] Search enrichment error:", error);
+    renderSearchResults(artists); // Fall back to basic data
+  }
 }
 
 searchInput.addEventListener("input", () => {
