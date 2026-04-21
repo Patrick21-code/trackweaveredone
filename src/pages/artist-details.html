@@ -61,15 +61,64 @@
     }
     .nav-brand {
       display: flex; align-items: center; gap: 0.55rem;
-      text-decoration: none; color: var(--ink);
+      text-decoration: none;
       font-family: 'Fraunces', serif; font-weight: 500;
       font-size: 1.05rem; letter-spacing: -0.02em;
       flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .nav-brand:hover { opacity: 0.85; }
+    .nav-brand span {
+      color: var(--blue) !important;
     }
     .nav-mark {
       width: 32px; height: 32px; border-radius: 8px;
-      background: var(--ink);
+      background: var(--blue);
       display: flex; align-items: center; justify-content: center;
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1rem;
+    }
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--ink-soft) !important;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      background: transparent !important;
+      white-space: nowrap;
+    }
+    .nav-link:visited {
+      color: var(--ink-soft) !important;
+    }
+    .nav-link:hover {
+      color: var(--ink) !important;
+      background: transparent !important;
+    }
+    .nav-link.active {
+      color: var(--ink) !important;
+      font-weight: 500;
+      background: transparent !important;
+    }
+    .nav-link.active:visited {
+      color: var(--ink) !important;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
     }
     .nav-back-btn {
       display: flex; align-items: center; gap: 0.45rem;
@@ -543,11 +592,15 @@
       <span>TrackWeave</span>
     </a>
 
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link">Community</a>
+      <a href="./checkin.html" class="nav-link">Check-In</a>
+      <a href="./shop.html" class="nav-link">Shop</a>
+    </nav>
+
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
-      <a href="./dashboard.html" class="nav-back-btn" id="nav-back-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </a>
       <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
       <div class="nav-dropdown" id="nav-dropdown" role="menu">
         <div class="drop-user">
@@ -558,18 +611,33 @@
           </div>
         </div>
         <div class="drop-items">
-          <a class="drop-item" href="#">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            My Profile
-          </a>
           <a class="drop-item" href="./dashboard.html">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
               <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
             </svg>
             Dashboard
+          </a>
+          <a class="drop-item" href="./engagement.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Community
+          </a>
+          <a class="drop-item" href="./checkin.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Check-In
+          </a>
+          <a class="drop-item" href="./shop.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            Shop
           </a>
           <div class="drop-divider"></div>
           <button class="drop-item danger" id="btn-signout" type="button">

@@ -142,7 +142,13 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto; padding: 0 2rem;
 }
 
-.nav-brand { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.nav-brand { 
+  display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.nav-brand:hover { opacity: 0.85; }
 
 .nav-mark {
   width: 31px; height: 31px; background: var(--blue);
@@ -152,14 +158,56 @@ a { color: inherit; text-decoration: none; }
 .nav-brand span {
   font-family: 'Fraunces', serif;
   font-weight: 600; font-size: 1.05rem;
-  color: var(--ink); letter-spacing: -0.02em;
+  color: var(--blue) !important;
+  letter-spacing: -0.02em;
 }
 
 /* Nav links (about, support pages) */
-.nav-links { display: flex; align-items: center; gap: 1.5rem; margin-left: 1rem; }
-.nav-links a { font-size: 0.875rem; color: var(--ink-faint); transition: color .15s; }
-.nav-links a:hover, .nav-links a.active { color: var(--ink); }
-.nav-links a.active { font-weight: 500; }
+.nav-links { 
+  display: flex; align-items: center; gap: 1.5rem; margin-left: 1rem; 
+}
+.nav-links a,
+.nav-links .nav-link { 
+  font-size: 0.875rem; 
+  color: var(--ink-soft) !important;
+  transition: color .15s;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  background: transparent !important;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+}
+.nav-links a:visited,
+.nav-links .nav-link:visited {
+  color: var(--ink-soft) !important;
+}
+.nav-links a:hover,
+.nav-links .nav-link:hover { 
+  color: var(--ink) !important;
+  background: transparent !important;
+}
+.nav-links a.active,
+.nav-links .nav-link.active { 
+  color: var(--ink) !important;
+  font-weight: 500;
+  background: transparent !important;
+}
+.nav-links a.active:visited,
+.nav-links .nav-link.active:visited {
+  color: var(--ink) !important;
+}
+.nav-links a.active::after,
+.nav-links .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px;
+}
 
 /* Nav right cluster */
 .nav-end { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
