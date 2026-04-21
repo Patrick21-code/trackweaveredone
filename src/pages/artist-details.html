@@ -857,19 +857,11 @@
 
     // Action buttons
     const actionsEl = document.getElementById("hero-actions");
-    const communityUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
+    const musicGraphUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
     actionsEl.innerHTML = `
-      <a class="hero-btn primary" href="https://musicbrainz.org/artist/${escHtml(artist.id)}" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on MusicBrainz
-      </a>
-      <a class="hero-btn ghost" href="${escHtml(communityUrl)}">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Discuss in Community
-      </a>
-      <a class="hero-btn ghost" href="./engagement.html">
+      <a class="hero-btn primary" href="${escHtml(musicGraphUrl)}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 12.1-.7-.7M6.3 18.4l-.7.7"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
-        Generate Music Graph
+        View Music Graph
       </a>`;
 
   }
