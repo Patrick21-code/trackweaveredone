@@ -388,7 +388,7 @@
     .album-carousel-track {
       display: flex; gap: 1.25rem;
       width: max-content;
-      animation: scroll-left 30s linear infinite;
+      animation: scroll-left 50s linear infinite;
       will-change: transform;
     }
     .album-carousel-track:hover,
@@ -506,28 +506,35 @@
       100% { background-position:  800px 0; }
     }
     .sk-block {
-      background: linear-gradient(90deg, var(--paper-warm) 25%, var(--rule-light) 50%, var(--paper-warm) 75%);
+      background: linear-gradient(90deg, #e8e4df 0%, #f5f2ed 50%, #e8e4df 100%);
       background-size: 800px 100%;
-      animation: shimmer 1.5s infinite linear;
+      animation: shimmer 1.8s ease-in-out infinite;
       border-radius: 8px;
     }
     .sk-album-card {
-      flex: 0 0 calc(20% - 1rem);
+      flex: 0 0 200px;
+      min-width: 0;
       padding: 0.75rem 0.75rem 1rem;
     }
     .sk-cover {
-      aspect-ratio: 1; border-radius: var(--r-sm);
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--r-sm);
       margin-bottom: 0.85rem;
     }
-    .sk-line { height: 11px; border-radius: 5px; margin-bottom: 0.4rem; }
+    .sk-line {
+      height: 11px;
+      border-radius: 5px;
+      margin-bottom: 0.4rem;
+    }
     .sk-line.short { width: 50%; }
 
     /* Stagger skeleton shimmer */
     .sk-album-card:nth-child(1) .sk-block { animation-delay: 0s; }
-    .sk-album-card:nth-child(2) .sk-block { animation-delay: .07s; }
-    .sk-album-card:nth-child(3) .sk-block { animation-delay: .14s; }
-    .sk-album-card:nth-child(4) .sk-block { animation-delay: .21s; }
-    .sk-album-card:nth-child(5) .sk-block { animation-delay: .28s; }
+    .sk-album-card:nth-child(2) .sk-block { animation-delay: .1s; }
+    .sk-album-card:nth-child(3) .sk-block { animation-delay: .2s; }
+    .sk-album-card:nth-child(4) .sk-block { animation-delay: .3s; }
+    .sk-album-card:nth-child(5) .sk-block { animation-delay: .4s; }
 
     /* ── Tags section ── */
     .artist-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
@@ -639,7 +646,6 @@
             </svg>
             Shop
           </a>
-          <div class="drop-divider"></div>
           <button class="drop-item danger" id="btn-signout" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -699,12 +705,31 @@
         <div class="album-carousel-wrapper">
           <div class="album-carousel-track-outer">
             <div class="album-carousel-track" id="albums-skeleton-track">
-              ${Array(5).fill(0).map(() => `
-                <div class="sk-album-card">
-                  <div class="sk-cover sk-block"></div>
-                  <div class="sk-line sk-block" style="width:80%"></div>
-                  <div class="sk-line short sk-block"></div>
-                </div>`).join("")}
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
             </div>
           </div>
         </div>
