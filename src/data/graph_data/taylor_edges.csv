@@ -1,0 +1,655 @@
+song_a,album_a,song_b,album_b,similarity
+APlaceInThisWorld,Taylor Swift,ImOnlyMeWhenImWithYou,Taylor Swift,0.7115
+APlaceInThisWorld,Taylor Swift,Breathe,Fearless,0.6214
+APlaceInThisWorld,Taylor Swift,SoItGoes,Reputation,0.6363
+APlaceInThisWorld,Taylor Swift,Afterglow,Lover,0.6022
+ColdasYou,Taylor Swift,ShouldveSaidNo,Taylor Swift,0.6314
+ColdasYou,Taylor Swift,Breathe,Fearless,0.606
+ColdasYou,Taylor Swift,Forever Always,Fearless,0.6033
+ColdasYou,Taylor Swift,HeyStephen,Fearless,0.6477
+ColdasYou,Taylor Swift,TellMeWhy,Fearless,0.6521
+ColdasYou,Taylor Swift,TheBestDay,Fearless,0.6047
+ColdasYou,Taylor Swift,WhiteHorse,Fearless,0.6062
+ColdasYou,Taylor Swift,YoureNotSorry,Fearless,0.6419
+ColdasYou,Taylor Swift,BacktoDecember,Speak Now,0.7025
+ColdasYou,Taylor Swift,DearJohn,Speak Now,0.6121
+ColdasYou,Taylor Swift,Haunted,Speak Now,0.6543
+ColdasYou,Taylor Swift,Mean,Speak Now,0.6816
+ColdasYou,Taylor Swift,SparksFly,Speak Now,0.6213
+ColdasYou,Taylor Swift,AllTooWell,Red,0.623
+ColdasYou,Taylor Swift,HolyGround,Red,0.643
+ColdasYou,Taylor Swift,IAlmostDo,Red,0.6722
+ColdasYou,Taylor Swift,IKnewYouWereTrouble,Red,0.6128
+ColdasYou,Taylor Swift,SadBeautifulTragic,Red,0.6209
+ColdasYou,Taylor Swift,StateofGrace,Red,0.6028
+ColdasYou,Taylor Swift,StayStayStay,Red,0.6458
+ColdasYou,Taylor Swift,TheLastTime,Red,0.6171
+ColdasYou,Taylor Swift,Booklet,1989,0.6396
+ColdasYou,Taylor Swift,Clean,1989,0.6396
+ColdasYou,Taylor Swift,IWishYouWould,1989,0.6382
+ColdasYou,Taylor Swift,ThisIsWhyWeCantHaveNiceThings,Reputation,0.6137
+ColdasYou,Taylor Swift,Afterglow,Lover,0.6831
+ColdasYou,Taylor Swift,Daylight,Lover,0.6737
+ColdasYou,Taylor Swift,IForgotThatYouExisted,Lover,0.6654
+ColdasYou,Taylor Swift,SoonYoullGetBetter,Lover,0.6068
+ColdasYou,Taylor Swift,hoax,Folklore,0.6178
+ColdasYou,Taylor Swift,mytearsricochet,Folklore,0.6762
+ColdasYou,Taylor Swift,peace,Folklore,0.6796
+ColdasYou,Taylor Swift,closure,Evermore,0.6412
+ColdasYou,Taylor Swift,tisthedamnseason,Evermore,0.6881
+ColdasYou,Taylor Swift,Maroon,Midnights,0.6086
+ColdasYou,Taylor Swift,YoureOnYourOwn Kid,Midnights,0.6176
+ColdasYou,Taylor Swift,Fortnight,The Tortured Poets Department,0.619
+ImOnlyMeWhenImWithYou,Taylor Swift,Breathe,Fearless,0.6916
+ImOnlyMeWhenImWithYou,Taylor Swift,Fearless,Fearless,0.6081
+ImOnlyMeWhenImWithYou,Taylor Swift,BacktoDecember,Speak Now,0.6088
+ImOnlyMeWhenImWithYou,Taylor Swift,Haunted,Speak Now,0.6574
+ImOnlyMeWhenImWithYou,Taylor Swift,Mean,Speak Now,0.6404
+ImOnlyMeWhenImWithYou,Taylor Swift,Mine,Speak Now,0.6009
+ImOnlyMeWhenImWithYou,Taylor Swift,SparksFly,Speak Now,0.6627
+ImOnlyMeWhenImWithYou,Taylor Swift,AllTooWell,Red,0.6176
+ImOnlyMeWhenImWithYou,Taylor Swift,ComeBack   BeHere,Red,0.6014
+ImOnlyMeWhenImWithYou,Taylor Swift,HolyGround,Red,0.6386
+ImOnlyMeWhenImWithYou,Taylor Swift,Style,1989,0.6669
+ImOnlyMeWhenImWithYou,Taylor Swift,SoItGoes,Reputation,0.6713
+ImOnlyMeWhenImWithYou,Taylor Swift,Afterglow,Lover,0.6171
+ImOnlyMeWhenImWithYou,Taylor Swift,seven,Folklore,0.624
+ImOnlyMeWhenImWithYou,Taylor Swift,cowboylikeme,Evermore,0.6054
+ImOnlyMeWhenImWithYou,Taylor Swift,tisthedamnseason,Evermore,0.627
+ImOnlyMeWhenImWithYou,Taylor Swift,Bejeweled,Midnights,0.6232
+ImOnlyMeWhenImWithYou,Taylor Swift,YoureOnYourOwn Kid,Midnights,0.624
+Invisible,Taylor Swift,Breathe,Fearless,0.6067
+Invisible,Taylor Swift,HeyStephen,Fearless,0.6099
+Invisible,Taylor Swift,SparksFly,Speak Now,0.6259
+Invisible,Taylor Swift,EverythingHasChanged,Red,0.6038
+Invisible,Taylor Swift,HowYouGetTheGirl,1989,0.6014
+Invisible,Taylor Swift,DancingWithOurHandsTied,Reputation,0.6069
+Invisible,Taylor Swift,SoItGoes,Reputation,0.6278
+MarysSong OhMyMyMy,Taylor Swift,OurSong,Taylor Swift,0.6005
+MarysSong OhMyMyMy,Taylor Swift,BacktoDecember,Speak Now,0.6012
+MarysSong OhMyMyMy,Taylor Swift,NeverGrowUp,Speak Now,0.6332
+OurSong,Taylor Swift,DearJohn,Speak Now,0.6023
+OurSong,Taylor Swift,Style,1989,0.6165
+OurSong,Taylor Swift,tisthedamnseason,Evermore,0.6202
+OurSong,Taylor Swift,Maroon,Midnights,0.627
+PicturetoBurn,Taylor Swift,TellMeWhy,Fearless,0.6337
+PicturetoBurn,Taylor Swift,Mean,Speak Now,0.6081
+PicturetoBurn,Taylor Swift,BlankSpace,1989,0.6286
+PicturetoBurn,Taylor Swift,the1,Folklore,0.6012
+PicturetoBurn,Taylor Swift,tisthedamnseason,Evermore,0.6319
+ShouldveSaidNo,Taylor Swift,YoureNotSorry,Fearless,0.6458
+ShouldveSaidNo,Taylor Swift,DearJohn,Speak Now,0.6612
+ShouldveSaidNo,Taylor Swift,StayStayStay,Red,0.6041
+ShouldveSaidNo,Taylor Swift,WeAreNeverEverGettingBackTogether,Red,0.6106
+ShouldveSaidNo,Taylor Swift,ThisIsWhyWeCantHaveNiceThings,Reputation,0.6117
+ShouldveSaidNo,Taylor Swift,Bejeweled,Midnights,0.6029
+StayBeautiful,Taylor Swift,TaylorSwift LinerNotes,Taylor Swift,0.6006
+StayBeautiful,Taylor Swift,TeardropsOnMyGuitar,Taylor Swift,0.6238
+StayBeautiful,Taylor Swift,TeardropsonMyGuitar PopVersion,Taylor Swift,0.6006
+StayBeautiful,Taylor Swift,WildestDreams,1989,0.6072
+TaylorSwift LinerNotes,Taylor Swift,TeardropsOnMyGuitar,Taylor Swift,0.9697
+TaylorSwift LinerNotes,Taylor Swift,TeardropsonMyGuitar PopVersion,Taylor Swift,1.0
+TeardropsOnMyGuitar,Taylor Swift,TeardropsonMyGuitar PopVersion,Taylor Swift,0.9697
+TeardropsOnMyGuitar,Taylor Swift,BeginAgain,Red,0.6179
+Breathe,Fearless,Fearless,Fearless,0.6033
+Breathe,Fearless,HeyStephen,Fearless,0.6285
+Breathe,Fearless,YoureNotSorry,Fearless,0.6269
+Breathe,Fearless,BacktoDecember,Speak Now,0.622
+Breathe,Fearless,Haunted,Speak Now,0.681
+Breathe,Fearless,LastKiss,Speak Now,0.6029
+Breathe,Fearless,Mean,Speak Now,0.6192
+Breathe,Fearless,SparksFly,Speak Now,0.6548
+Breathe,Fearless,ComeBack   BeHere,Red,0.6069
+Breathe,Fearless,HolyGround,Red,0.6124
+Breathe,Fearless,IAlmostDo,Red,0.6197
+Breathe,Fearless,StateofGrace,Red,0.6235
+Breathe,Fearless,TheLastTime,Red,0.6627
+Breathe,Fearless,AllYouHadtoDoWasStay,1989,0.6004
+Breathe,Fearless,IWishYouWould,1989,0.6331
+Breathe,Fearless,Style,1989,0.634
+Breathe,Fearless,GetawayCar,Reputation,0.6158
+Breathe,Fearless,SoItGoes,Reputation,0.6695
+Breathe,Fearless,Afterglow,Lover,0.6284
+Breathe,Fearless,tisthedamnseason,Evermore,0.6134
+Change,Fearless,Fearless LinerNotes,Fearless,1.0
+Change,Fearless,Mean,Speak Now,0.648
+Change,Fearless,peace,Folklore,0.6115
+Fearless,Fearless,WhiteHorse,Fearless,0.6024
+Fearless,Fearless,Mine,Speak Now,0.6118
+Fearless,Fearless,SparksFly,Speak Now,0.6764
+Fearless,Fearless,AllTooWell,Red,0.6162
+Fearless,Fearless,Treacherous,Red,0.6085
+Fearless,Fearless,Style,1989,0.6457
+Fearless,Fearless,CorneliaStreet,Lover,0.6141
+Fearless LinerNotes,Fearless,Mean,Speak Now,0.648
+Fearless LinerNotes,Fearless,peace,Folklore,0.6115
+Fifteen,Fearless,TheBestDay,Fearless,0.6288
+Fifteen,Fearless,NeverGrowUp,Speak Now,0.643
+Forever Always,Fearless,HeyStephen,Fearless,0.6265
+Forever Always,Fearless,YoureNotSorry,Fearless,0.6168
+Forever Always,Fearless,BacktoDecember,Speak Now,0.614
+Forever Always,Fearless,Haunted,Speak Now,0.6919
+Forever Always,Fearless,Mine,Speak Now,0.6535
+Forever Always,Fearless,AllTooWell,Red,0.654
+Forever Always,Fearless,HolyGround,Red,0.6683
+Forever Always,Fearless,IAlmostDo,Red,0.6015
+Forever Always,Fearless,IKnewYouWereTrouble,Red,0.6234
+Forever Always,Fearless,Style,1989,0.6003
+Forever Always,Fearless,DancingWithOurHandsTied,Reputation,0.619
+Forever Always,Fearless,Daylight,Lover,0.6296
+Forever Always,Fearless,IForgotThatYouExisted,Lover,0.6047
+Forever Always,Fearless,august,Folklore,0.6538
+Forever Always,Fearless,tisthedamnseason,Evermore,0.6359
+Forever Always,Fearless,Maroon,Midnights,0.6085
+HeyStephen,Fearless,BacktoDecember,Speak Now,0.6729
+HeyStephen,Fearless,Haunted,Speak Now,0.6478
+HeyStephen,Fearless,SparksFly,Speak Now,0.6407
+HeyStephen,Fearless,AllTooWell,Red,0.6126
+HeyStephen,Fearless,ComeBack   BeHere,Red,0.6118
+HeyStephen,Fearless,EverythingHasChanged,Red,0.6067
+HeyStephen,Fearless,HolyGround,Red,0.6837
+HeyStephen,Fearless,SadBeautifulTragic,Red,0.6842
+HeyStephen,Fearless,StateofGrace,Red,0.6102
+HeyStephen,Fearless,TheLastTime,Red,0.6065
+HeyStephen,Fearless,BlankSpace,1989,0.6012
+HeyStephen,Fearless,SoItGoes,Reputation,0.6495
+HeyStephen,Fearless,Afterglow,Lover,0.6003
+HeyStephen,Fearless,Daylight,Lover,0.6005
+HeyStephen,Fearless,IForgotThatYouExisted,Lover,0.606
+HeyStephen,Fearless,Lover,Lover,0.6133
+HeyStephen,Fearless,closure,Evermore,0.6066
+HeyStephen,Fearless,tisthedamnseason,Evermore,0.6848
+HeyStephen,Fearless,Bejeweled,Midnights,0.6171
+TellMeWhy,Fearless,YoureNotSorry,Fearless,0.6221
+TellMeWhy,Fearless,BacktoDecember,Speak Now,0.6075
+TellMeWhy,Fearless,DearJohn,Speak Now,0.6018
+TellMeWhy,Fearless,Mean,Speak Now,0.6424
+TellMeWhy,Fearless,SparksFly,Speak Now,0.6304
+TellMeWhy,Fearless,AllTooWell,Red,0.6017
+TellMeWhy,Fearless,IAlmostDo,Red,0.6326
+TellMeWhy,Fearless,StayStayStay,Red,0.6192
+TellMeWhy,Fearless,Afterglow,Lover,0.6121
+TellMeWhy,Fearless,IForgotThatYouExisted,Lover,0.6091
+TellMeWhy,Fearless,thisismetrying,Folklore,0.6338
+TellMeWhy,Fearless,tisthedamnseason,Evermore,0.6231
+TheBestDay,Fearless,BacktoDecember,Speak Now,0.678
+TheBestDay,Fearless,AllTooWell,Red,0.6527
+TheBestDay,Fearless,peace,Folklore,0.6023
+TheBestDay,Fearless,tisthedamnseason,Evermore,0.6664
+TheBestDay,Fearless,YoureOnYourOwn Kid,Midnights,0.6027
+TheWayILovedYou,Fearless,StayStayStay,Red,0.6574
+WhiteHorse,Fearless,YoureNotSorry,Fearless,0.6222
+WhiteHorse,Fearless,DearJohn,Speak Now,0.6166
+WhiteHorse,Fearless,Mine,Speak Now,0.6046
+WhiteHorse,Fearless,AllTooWell,Red,0.6194
+WhiteHorse,Fearless,Afterglow,Lover,0.602
+WhiteHorse,Fearless,IForgotThatYouExisted,Lover,0.6176
+WhiteHorse,Fearless,Bejeweled,Midnights,0.6238
+YouBelongWithMe,Fearless,BetterThanRevenge,Speak Now,0.606
+YouBelongWithMe,Fearless,StayStayStay,Red,0.6056
+YouBelongWithMe,Fearless,tisthedamnseason,Evermore,0.6228
+YoureNotSorry,Fearless,BacktoDecember,Speak Now,0.6059
+YoureNotSorry,Fearless,Haunted,Speak Now,0.6332
+YoureNotSorry,Fearless,Mine,Speak Now,0.6133
+YoureNotSorry,Fearless,AllTooWell,Red,0.6143
+YoureNotSorry,Fearless,IAlmostDo,Red,0.696
+YoureNotSorry,Fearless,StayStayStay,Red,0.6209
+YoureNotSorry,Fearless,TheLastTime,Red,0.6006
+YoureNotSorry,Fearless,AllYouHadtoDoWasStay,1989,0.6229
+YoureNotSorry,Fearless,IWishYouWould,1989,0.6439
+YoureNotSorry,Fearless,Afterglow,Lover,0.6071
+YoureNotSorry,Fearless,thisismetrying,Folklore,0.6281
+YoureNotSorry,Fearless,tisthedamnseason,Evermore,0.6358
+BacktoDecember,Speak Now,Haunted,Speak Now,0.6085
+BacktoDecember,Speak Now,Mine,Speak Now,0.6373
+BacktoDecember,Speak Now,SparksFly,Speak Now,0.6301
+BacktoDecember,Speak Now,AllTooWell,Red,0.6922
+BacktoDecember,Speak Now,EverythingHasChanged,Red,0.6099
+BacktoDecember,Speak Now,HolyGround,Red,0.6591
+BacktoDecember,Speak Now,IAlmostDo,Red,0.6064
+BacktoDecember,Speak Now,IKnewYouWereTrouble,Red,0.6139
+BacktoDecember,Speak Now,StayStayStay,Red,0.6101
+BacktoDecember,Speak Now,TheLastTime,Red,0.6065
+BacktoDecember,Speak Now,Booklet,1989,0.6183
+BacktoDecember,Speak Now,Clean,1989,0.6183
+BacktoDecember,Speak Now,IWishYouWould,1989,0.6624
+BacktoDecember,Speak Now,Daylight,Lover,0.6518
+BacktoDecember,Speak Now,IForgotThatYouExisted,Lover,0.6571
+BacktoDecember,Speak Now,Lover,Lover,0.6286
+BacktoDecember,Speak Now,august,Folklore,0.6322
+BacktoDecember,Speak Now,mytearsricochet,Folklore,0.6139
+BacktoDecember,Speak Now,seven,Folklore,0.6114
+BacktoDecember,Speak Now,the1,Folklore,0.615
+BacktoDecember,Speak Now,closure,Evermore,0.6378
+BacktoDecember,Speak Now,tisthedamnseason,Evermore,0.7287
+BacktoDecember,Speak Now,Bejeweled,Midnights,0.6072
+BacktoDecember,Speak Now,Maroon,Midnights,0.6059
+BacktoDecember,Speak Now,YoureOnYourOwn Kid,Midnights,0.6617
+BacktoDecember,Speak Now,Fortnight,The Tortured Poets Department,0.616
+BetterThanRevenge,Speak Now,VigilanteShit,Midnights,0.6539
+DearJohn,Speak Now,Innocent,Speak Now,0.619
+DearJohn,Speak Now,Mine,Speak Now,0.6046
+DearJohn,Speak Now,AllTooWell,Red,0.6571
+DearJohn,Speak Now,HolyGround,Red,0.6055
+DearJohn,Speak Now,IAlmostDo,Red,0.6232
+DearJohn,Speak Now,StayStayStay,Red,0.6017
+DearJohn,Speak Now,BadBlood,1989,0.6034
+DearJohn,Speak Now,BlankSpace,1989,0.6008
+DearJohn,Speak Now,CallItWhatYouWant,Reputation,0.6005
+DearJohn,Speak Now,Daylight,Lover,0.6382
+DearJohn,Speak Now,IForgotThatYouExisted,Lover,0.6099
+DearJohn,Speak Now,MissAmericana TheHeartbreakPrince,Lover,0.6202
+DearJohn,Speak Now,peace,Folklore,0.6205
+DearJohn,Speak Now,closure,Evermore,0.6028
+DearJohn,Speak Now,tisthedamnseason,Evermore,0.675
+DearJohn,Speak Now,Bejeweled,Midnights,0.6237
+DearJohn,Speak Now,Maroon,Midnights,0.6402
+DearJohn,Speak Now,FreshOutTheSlammer,The Tortured Poets Department,0.6095
+Haunted,Speak Now,LastKiss,Speak Now,0.6031
+Haunted,Speak Now,Mean,Speak Now,0.636
+Haunted,Speak Now,Mine,Speak Now,0.6429
+Haunted,Speak Now,SparksFly,Speak Now,0.6327
+Haunted,Speak Now,AllTooWell,Red,0.6473
+Haunted,Speak Now,ComeBack   BeHere,Red,0.6269
+Haunted,Speak Now,EverythingHasChanged,Red,0.6154
+Haunted,Speak Now,HolyGround,Red,0.6794
+Haunted,Speak Now,IAlmostDo,Red,0.6033
+Haunted,Speak Now,IKnewYouWereTrouble,Red,0.6835
+Haunted,Speak Now,TheLastTime,Red,0.6451
+Haunted,Speak Now,AllYouHadtoDoWasStay,1989,0.6302
+Haunted,Speak Now,IWishYouWould,1989,0.64
+Haunted,Speak Now,Style,1989,0.6532
+Haunted,Speak Now,ThisLove,1989,0.6047
+Haunted,Speak Now,DontBlameMe,Reputation,0.6303
+Haunted,Speak Now,SoItGoes,Reputation,0.6984
+Haunted,Speak Now,Afterglow,Lover,0.6356
+Haunted,Speak Now,Daylight,Lover,0.6196
+Haunted,Speak Now,DeathbyaThousandCuts,Lover,0.6076
+Haunted,Speak Now,FalseGod,Lover,0.6321
+Haunted,Speak Now,IForgotThatYouExisted,Lover,0.6186
+Haunted,Speak Now,closure,Evermore,0.647
+Haunted,Speak Now,tisthedamnseason,Evermore,0.672
+Haunted,Speak Now,Bejeweled,Midnights,0.6377
+Innocent,Speak Now,Daylight,Lover,0.6502
+Innocent,Speak Now,TheArcher,Lover,0.6249
+Innocent,Speak Now,peace,Folklore,0.6018
+Innocent,Speak Now,thisismetrying,Folklore,0.6043
+Innocent,Speak Now,longstoryshort,Evermore,0.6015
+LastKiss,Speak Now,AllTooWell,Red,0.6102
+LastKiss,Speak Now,ComeBack   BeHere,Red,0.6473
+LastKiss,Speak Now,EverythingHasChanged,Red,0.604
+LastKiss,Speak Now,HolyGround,Red,0.6441
+LastKiss,Speak Now,IWishYouWould,1989,0.6
+LastKiss,Speak Now,DancingWithOurHandsTied,Reputation,0.6333
+LastKiss,Speak Now,SoItGoes,Reputation,0.6047
+LastKiss,Speak Now,august,Folklore,0.6063
+LastKiss,Speak Now,cardigan,Folklore,0.6439
+LastKiss,Speak Now,seven,Folklore,0.6362
+LastKiss,Speak Now,tisthedamnseason,Evermore,0.6052
+LastKiss,Speak Now,Bejeweled,Midnights,0.6174
+Mean,Speak Now,SparksFly,Speak Now,0.6428
+Mean,Speak Now,IAlmostDo,Red,0.6152
+Mean,Speak Now,IKnewYouWereTrouble,Red,0.6709
+Mean,Speak Now,Style,1989,0.6217
+Mean,Speak Now,CallItWhatYouWant,Reputation,0.6002
+Mean,Speak Now,EndGame,Reputation,0.6017
+Mean,Speak Now,SoItGoes,Reputation,0.6561
+Mean,Speak Now,Afterglow,Lover,0.7212
+Mean,Speak Now,cardigan,Folklore,0.6108
+Mean,Speak Now,peace,Folklore,0.6631
+Mean,Speak Now,closure,Evermore,0.6283
+Mean,Speak Now,willow,Evermore,0.6404
+Mean,Speak Now,Bejeweled,Midnights,0.6336
+Mean,Speak Now,DownBad,The Tortured Poets Department,0.6191
+Mean,Speak Now,Fortnight,The Tortured Poets Department,0.6374
+Mean,Speak Now,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6057
+Mine,Speak Now,SparksFly,Speak Now,0.6575
+Mine,Speak Now,AllTooWell,Red,0.6754
+Mine,Speak Now,HolyGround,Red,0.6396
+Mine,Speak Now,IKnewYouWereTrouble,Red,0.6114
+Mine,Speak Now,SadBeautifulTragic,Red,0.6046
+Mine,Speak Now,StayStayStay,Red,0.6112
+Mine,Speak Now,AllYouHadtoDoWasStay,1989,0.6091
+Mine,Speak Now,IWishYouWould,1989,0.6043
+Mine,Speak Now,Style,1989,0.6144
+Mine,Speak Now,DancingWithOurHandsTied,Reputation,0.6197
+Mine,Speak Now,DontBlameMe,Reputation,0.6497
+Mine,Speak Now,SoItGoes,Reputation,0.617
+Mine,Speak Now,Afterglow,Lover,0.6279
+Mine,Speak Now,Daylight,Lover,0.6019
+Mine,Speak Now,FalseGod,Lover,0.604
+Mine,Speak Now,IForgotThatYouExisted,Lover,0.6311
+Mine,Speak Now,august,Folklore,0.6878
+Mine,Speak Now,peace,Folklore,0.6221
+Mine,Speak Now,seven,Folklore,0.6279
+Mine,Speak Now,cowboylikeme,Evermore,0.6319
+Mine,Speak Now,tisthedamnseason,Evermore,0.6619
+Mine,Speak Now,willow,Evermore,0.6096
+Mine,Speak Now,Bejeweled,Midnights,0.7058
+Mine,Speak Now,Maroon,Midnights,0.6178
+Mine,Speak Now,YoureOnYourOwn Kid,Midnights,0.6106
+Mine,Speak Now,ButDaddyILoveHim,The Tortured Poets Department,0.6364
+Mine,Speak Now,Fortnight,The Tortured Poets Department,0.6094
+SparksFly,Speak Now,AllTooWell,Red,0.6343
+SparksFly,Speak Now,EverythingHasChanged,Red,0.6148
+SparksFly,Speak Now,HolyGround,Red,0.6377
+SparksFly,Speak Now,IAlmostDo,Red,0.6273
+SparksFly,Speak Now,SadBeautifulTragic,Red,0.6202
+SparksFly,Speak Now,StateofGrace,Red,0.6331
+SparksFly,Speak Now,TheLastTime,Red,0.6233
+SparksFly,Speak Now,Treacherous,Red,0.6079
+SparksFly,Speak Now,IWishYouWould,1989,0.6284
+SparksFly,Speak Now,Style,1989,0.625
+SparksFly,Speak Now,SoItGoes,Reputation,0.729
+SparksFly,Speak Now,Afterglow,Lover,0.6406
+SparksFly,Speak Now,IForgotThatYouExisted,Lover,0.6225
+SparksFly,Speak Now,PaperRings,Lover,0.6138
+SparksFly,Speak Now,peace,Folklore,0.638
+SparksFly,Speak Now,cowboylikeme,Evermore,0.6341
+SparksFly,Speak Now,tisthedamnseason,Evermore,0.6265
+SparksFly,Speak Now,Bejeweled,Midnights,0.6237
+SparksFly,Speak Now,YoureOnYourOwn Kid,Midnights,0.6224
+SparksFly,Speak Now,Fortnight,The Tortured Poets Department,0.6271
+TheStoryOfUs,Speak Now,Daylight,Lover,0.602
+TheStoryOfUs,Speak Now,thisismetrying,Folklore,0.6121
+22,Red,HolyGround,Red,0.6013
+AllTooWell,Red,EverythingHasChanged,Red,0.6005
+AllTooWell,Red,HolyGround,Red,0.72
+AllTooWell,Red,IAlmostDo,Red,0.6069
+AllTooWell,Red,IKnewYouWereTrouble,Red,0.6237
+AllTooWell,Red,SadBeautifulTragic,Red,0.6236
+AllTooWell,Red,Booklet,1989,0.627
+AllTooWell,Red,Clean,1989,0.627
+AllTooWell,Red,IWishYouWould,1989,0.6093
+AllTooWell,Red,Style,1989,0.6552
+AllTooWell,Red,DancingWithOurHandsTied,Reputation,0.6161
+AllTooWell,Red,SoItGoes,Reputation,0.6064
+AllTooWell,Red,Afterglow,Lover,0.6018
+AllTooWell,Red,Daylight,Lover,0.6623
+AllTooWell,Red,DeathbyaThousandCuts,Lover,0.6375
+AllTooWell,Red,IForgotThatYouExisted,Lover,0.6683
+AllTooWell,Red,PaperRings,Lover,0.6048
+AllTooWell,Red,august,Folklore,0.6365
+AllTooWell,Red,cardigan,Folklore,0.6274
+AllTooWell,Red,peace,Folklore,0.6129
+AllTooWell,Red,seven,Folklore,0.7029
+AllTooWell,Red,thisismetrying,Folklore,0.6249
+AllTooWell,Red,closure,Evermore,0.6371
+AllTooWell,Red,tisthedamnseason,Evermore,0.7553
+AllTooWell,Red,Bejeweled,Midnights,0.6909
+AllTooWell,Red,Maroon,Midnights,0.6506
+AllTooWell,Red,YoureOnYourOwn Kid,Midnights,0.6681
+AllTooWell,Red,FreshOutTheSlammer,The Tortured Poets Department,0.6344
+BeginAgain,Red,HolyGround,Red,0.6058
+BeginAgain,Red,StayStayStay,Red,0.6012
+BeginAgain,Red,Style,1989,0.6264
+ComeBack   BeHere,Red,EverythingHasChanged,Red,0.6116
+ComeBack   BeHere,Red,HolyGround,Red,0.6774
+ComeBack   BeHere,Red,IWishYouWould,1989,0.644
+ComeBack   BeHere,Red,SoItGoes,Reputation,0.6138
+ComeBack   BeHere,Red,tisthedamnseason,Evermore,0.6047
+ComeBack   BeHere,Red,Bejeweled,Midnights,0.6194
+ComeBack   BeHere,Red,Labyrinth,Midnights,0.6132
+EverythingHasChanged,Red,HolyGround,Red,0.6128
+EverythingHasChanged,Red,IAlmostDo,Red,0.6071
+EverythingHasChanged,Red,IWishYouWould,1989,0.6256
+EverythingHasChanged,Red,SoItGoes,Reputation,0.6281
+EverythingHasChanged,Red,closure,Evermore,0.6116
+EverythingHasChanged,Red,Bejeweled,Midnights,0.6168
+HolyGround,Red,IAlmostDo,Red,0.6506
+HolyGround,Red,IKnewYouWereTrouble,Red,0.6053
+HolyGround,Red,SadBeautifulTragic,Red,0.6307
+HolyGround,Red,StayStayStay,Red,0.602
+HolyGround,Red,TheMomentIKnew,Red,0.6104
+HolyGround,Red,WeAreNeverEverGettingBackTogether,Red,0.6098
+HolyGround,Red,IWishYouWould,1989,0.6217
+HolyGround,Red,Style,1989,0.6636
+HolyGround,Red,WildestDreams,1989,0.6111
+HolyGround,Red,DancingWithOurHandsTied,Reputation,0.6086
+HolyGround,Red,KingofMyHeart,Reputation,0.6016
+HolyGround,Red,NewYearsDay,Reputation,0.62
+HolyGround,Red,SoItGoes,Reputation,0.6491
+HolyGround,Red,ThisIsWhyWeCantHaveNiceThings,Reputation,0.611
+HolyGround,Red,Afterglow,Lover,0.6036
+HolyGround,Red,Daylight,Lover,0.6205
+HolyGround,Red,DeathbyaThousandCuts,Lover,0.6178
+HolyGround,Red,FalseGod,Lover,0.6286
+HolyGround,Red,IForgotThatYouExisted,Lover,0.6426
+HolyGround,Red,Lover,Lover,0.6052
+HolyGround,Red,august,Folklore,0.6164
+HolyGround,Red,seven,Folklore,0.6314
+HolyGround,Red,the1,Folklore,0.6331
+HolyGround,Red,thisismetrying,Folklore,0.6073
+HolyGround,Red,closure,Evermore,0.6195
+HolyGround,Red,tisthedamnseason,Evermore,0.7127
+HolyGround,Red,Bejeweled,Midnights,0.7057
+HolyGround,Red,LavenderHaze,Midnights,0.6349
+HolyGround,Red,Maroon,Midnights,0.6635
+HolyGround,Red,YoureOnYourOwn Kid,Midnights,0.6213
+HolyGround,Red,FreshOutTheSlammer,The Tortured Poets Department,0.6041
+IAlmostDo,Red,StayStayStay,Red,0.6791
+IAlmostDo,Red,TheLastTime,Red,0.6028
+IAlmostDo,Red,WeAreNeverEverGettingBackTogether,Red,0.6416
+IAlmostDo,Red,IWishYouWould,1989,0.6635
+IAlmostDo,Red,Style,1989,0.6119
+IAlmostDo,Red,WildestDreams,1989,0.626
+IAlmostDo,Red,Afterglow,Lover,0.6201
+IAlmostDo,Red,thisismetrying,Folklore,0.6009
+IAlmostDo,Red,tisthedamnseason,Evermore,0.6668
+IKnewYouWereTrouble,Red,Booklet,1989,0.6295
+IKnewYouWereTrouble,Red,Clean,1989,0.6295
+IKnewYouWereTrouble,Red,IWishYouWould,1989,0.6135
+IKnewYouWereTrouble,Red,DontBlameMe,Reputation,0.6354
+IKnewYouWereTrouble,Red,SoItGoes,Reputation,0.6453
+IKnewYouWereTrouble,Red,Afterglow,Lover,0.6657
+IKnewYouWereTrouble,Red,Bejeweled,Midnights,0.6072
+SadBeautifulTragic,Red,StateofGrace,Red,0.606
+SadBeautifulTragic,Red,BlankSpace,1989,0.6222
+SadBeautifulTragic,Red,IWishYouWould,1989,0.6014
+SadBeautifulTragic,Red,ThisLove,1989,0.6368
+SadBeautifulTragic,Red,DancingWithOurHandsTied,Reputation,0.6135
+SadBeautifulTragic,Red,DontBlameMe,Reputation,0.6133
+SadBeautifulTragic,Red,SoItGoes,Reputation,0.616
+SadBeautifulTragic,Red,Daylight,Lover,0.6253
+SadBeautifulTragic,Red,DeathbyaThousandCuts,Lover,0.6555
+SadBeautifulTragic,Red,Lover,Lover,0.6353
+SadBeautifulTragic,Red,peace,Folklore,0.621
+SadBeautifulTragic,Red,closure,Evermore,0.6327
+SadBeautifulTragic,Red,tisthedamnseason,Evermore,0.6408
+SadBeautifulTragic,Red,YoureOnYourOwn Kid,Midnights,0.6114
+StateofGrace,Red,TheLastTime,Red,0.6028
+StateofGrace,Red,Daylight,Lover,0.6027
+StateofGrace,Red,august,Folklore,0.6005
+StayStayStay,Red,WeAreNeverEverGettingBackTogether,Red,0.724
+StayStayStay,Red,BlankSpace,1989,0.6045
+StayStayStay,Red,HowYouGetTheGirl,1989,0.6267
+StayStayStay,Red,Afterglow,Lover,0.6153
+StayStayStay,Red,tisthedamnseason,Evermore,0.6431
+TheLastTime,Red,AllYouHadtoDoWasStay,1989,0.6298
+TheLastTime,Red,DontBlameMe,Reputation,0.6194
+TheLastTime,Red,SoItGoes,Reputation,0.6807
+TheLastTime,Red,thisismetrying,Folklore,0.6069
+TheLastTime,Red,closure,Evermore,0.6173
+TheLastTime,Red,tisthedamnseason,Evermore,0.6078
+WeAreNeverEverGettingBackTogether,Red,BlankSpace,1989,0.6406
+WeAreNeverEverGettingBackTogether,Red,HowYouGetTheGirl,1989,0.6392
+WeAreNeverEverGettingBackTogether,Red,Afterglow,Lover,0.6254
+WeAreNeverEverGettingBackTogether,Red,tisthedamnseason,Evermore,0.614
+Booklet,1989,Clean,1989,1.0
+Booklet,1989,ThisLove,1989,0.6557
+Booklet,1989,Daylight,Lover,0.6231
+Booklet,1989,Maroon,Midnights,0.6341
+AllYouHadtoDoWasStay,1989,DontBlameMe,Reputation,0.6118
+AllYouHadtoDoWasStay,1989,Afterglow,Lover,0.6366
+AllYouHadtoDoWasStay,1989,tisthedamnseason,Evermore,0.6034
+BadBlood,1989,DontBlameMe,Reputation,0.6719
+BadBlood,1989,Afterglow,Lover,0.6083
+BlankSpace,1989,Lover,Lover,0.6117
+BlankSpace,1989,peace,Folklore,0.621
+BlankSpace,1989,closure,Evermore,0.6042
+BlankSpace,1989,YoureOnYourOwn Kid,Midnights,0.6056
+Clean,1989,ThisLove,1989,0.6557
+Clean,1989,Daylight,Lover,0.6231
+Clean,1989,Maroon,Midnights,0.6341
+IKnowPlaces,1989,TheArcher,Lover,0.6187
+IKnowPlaces,1989,peace,Folklore,0.6045
+IWishYouWould,1989,SoItGoes,Reputation,0.6055
+IWishYouWould,1989,tisthedamnseason,Evermore,0.6624
+ShakeItOff,1989,DontBlameMe,Reputation,0.6534
+ShakeItOff,1989,SoItGoes,Reputation,0.6225
+Style,1989,WildestDreams,1989,0.6512
+Style,1989,NewYearsDay,Reputation,0.6134
+Style,1989,SoItGoes,Reputation,0.6994
+Style,1989,Afterglow,Lover,0.6016
+Style,1989,cardigan,Folklore,0.6113
+Style,1989,cowboylikeme,Evermore,0.632
+Style,1989,tisthedamnseason,Evermore,0.6199
+Style,1989,Maroon,Midnights,0.6091
+ThisLove,1989,DancingWithOurHandsTied,Reputation,0.6399
+ThisLove,1989,Afterglow,Lover,0.6179
+ThisLove,1989,DeathbyaThousandCuts,Lover,0.6029
+WildestDreams,1989,Bejeweled,Midnights,0.617
+CallItWhatYouWant,Reputation,peace,Folklore,0.6017
+CallItWhatYouWant,Reputation,Bejeweled,Midnights,0.6114
+CallItWhatYouWant,Reputation,YoureOnYourOwn Kid,Midnights,0.6287
+CallItWhatYouWant,Reputation,ButDaddyILoveHim,The Tortured Poets Department,0.6018
+CallItWhatYouWant,Reputation,FreshOutTheSlammer,The Tortured Poets Department,0.6493
+CallItWhatYouWant,Reputation,MyBoyOnlyBreaksHisFavoriteToys,The Tortured Poets Department,0.6138
+DancingWithOurHandsTied,Reputation,SoItGoes,Reputation,0.6181
+DancingWithOurHandsTied,Reputation,Afterglow,Lover,0.6265
+DancingWithOurHandsTied,Reputation,Daylight,Lover,0.615
+DancingWithOurHandsTied,Reputation,Lover,Lover,0.6113
+DancingWithOurHandsTied,Reputation,august,Folklore,0.6043
+DancingWithOurHandsTied,Reputation,seven,Folklore,0.6144
+DancingWithOurHandsTied,Reputation,Maroon,Midnights,0.6361
+Delicate,Reputation,Dress,Reputation,0.6288
+Delicate,Reputation,Afterglow,Lover,0.601
+DontBlameMe,Reputation,KingofMyHeart,Reputation,0.6323
+DontBlameMe,Reputation,SoItGoes,Reputation,0.7002
+DontBlameMe,Reputation,Afterglow,Lover,0.6448
+DontBlameMe,Reputation,DeathbyaThousandCuts,Lover,0.6034
+DontBlameMe,Reputation,FalseGod,Lover,0.6222
+DontBlameMe,Reputation,peace,Folklore,0.6117
+DontBlameMe,Reputation,Bejeweled,Midnights,0.652
+DontBlameMe,Reputation,Fortnight,The Tortured Poets Department,0.612
+DontBlameMe,Reputation,FreshOutTheSlammer,The Tortured Poets Department,0.6087
+Dress,Reputation,champagneproblems,Evermore,0.601
+Dress,Reputation,Maroon,Midnights,0.6143
+GetawayCar,Reputation,Daylight,Lover,0.6031
+KingofMyHeart,Reputation,SoItGoes,Reputation,0.6133
+KingofMyHeart,Reputation,Lover,Lover,0.6014
+KingofMyHeart,Reputation,Bejeweled,Midnights,0.6104
+NewYearsDay,Reputation,DeathbyaThousandCuts,Lover,0.613
+NewYearsDay,Reputation,Lover,Lover,0.6423
+NewYearsDay,Reputation,cardigan,Folklore,0.6084
+NewYearsDay,Reputation,tisthedamnseason,Evermore,0.6192
+SoItGoes,Reputation,Afterglow,Lover,0.6437
+SoItGoes,Reputation,ME,Lover,0.6336
+SoItGoes,Reputation,cardigan,Folklore,0.6176
+SoItGoes,Reputation,tisthedamnseason,Evermore,0.6086
+SoItGoes,Reputation,Bejeweled,Midnights,0.6704
+SoItGoes,Reputation,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6052
+ThisIsWhyWeCantHaveNiceThings,Reputation,peace,Folklore,0.6287
+ThisIsWhyWeCantHaveNiceThings,Reputation,tisthedamnseason,Evermore,0.6102
+Afterglow,Lover,IForgotThatYouExisted,Lover,0.6048
+Afterglow,Lover,ME,Lover,0.6038
+Afterglow,Lover,Labyrinth,Midnights,0.6231
+Afterglow,Lover,DownBad,The Tortured Poets Department,0.6101
+Afterglow,Lover,Fortnight,The Tortured Poets Department,0.635
+Afterglow,Lover,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6204
+CruelSummer,Lover,PaperRings,Lover,0.6136
+Daylight,Lover,DeathbyaThousandCuts,Lover,0.6605
+Daylight,Lover,IForgotThatYouExisted,Lover,0.6978
+Daylight,Lover,TheArcher,Lover,0.6006
+Daylight,Lover,august,Folklore,0.6053
+Daylight,Lover,hoax,Folklore,0.6169
+Daylight,Lover,mytearsricochet,Folklore,0.645
+Daylight,Lover,happiness,Evermore,0.6169
+Daylight,Lover,tisthedamnseason,Evermore,0.6326
+Daylight,Lover,Bejeweled,Midnights,0.6084
+Daylight,Lover,YoureOnYourOwn Kid,Midnights,0.6293
+DeathbyaThousandCuts,Lover,Lover,Lover,0.6215
+DeathbyaThousandCuts,Lover,mytearsricochet,Folklore,0.6301
+DeathbyaThousandCuts,Lover,peace,Folklore,0.6074
+DeathbyaThousandCuts,Lover,seven,Folklore,0.6287
+DeathbyaThousandCuts,Lover,closure,Evermore,0.6204
+DeathbyaThousandCuts,Lover,tisthedamnseason,Evermore,0.633
+DeathbyaThousandCuts,Lover,YoureOnYourOwn Kid,Midnights,0.6162
+IForgotThatYouExisted,Lover,hoax,Folklore,0.6211
+IForgotThatYouExisted,Lover,the1,Folklore,0.6034
+IForgotThatYouExisted,Lover,tisthedamnseason,Evermore,0.6451
+IForgotThatYouExisted,Lover,Bejeweled,Midnights,0.6074
+IForgotThatYouExisted,Lover,Maroon,Midnights,0.6009
+IForgotThatYouExisted,Lover,YoureOnYourOwn Kid,Midnights,0.6266
+IForgotThatYouExisted,Lover,Fortnight,The Tortured Poets Department,0.6243
+ItsNicetoHaveaFriend,Lover,tisthedamnseason,Evermore,0.6126
+LondonBoy,Lover,cardigan,Folklore,0.6094
+LondonBoy,Lover,SoLong London,The Tortured Poets Department,0.6062
+Lover,Lover,august,Folklore,0.6135
+Lover,Lover,mytearsricochet,Folklore,0.6238
+Lover,Lover,peace,Folklore,0.6562
+Lover,Lover,seven,Folklore,0.6156
+Lover,Lover,tisthedamnseason,Evermore,0.6382
+Lover,Lover,Fortnight,The Tortured Poets Department,0.6195
+ME,Lover,Bejeweled,Midnights,0.6243
+PaperRings,Lover,seven,Folklore,0.6178
+PaperRings,Lover,Bejeweled,Midnights,0.6117
+PaperRings,Lover,YoureOnYourOwn Kid,Midnights,0.6436
+PaperRings,Lover,Fortnight,The Tortured Poets Department,0.6169
+TheArcher,Lover,peace,Folklore,0.6182
+TheArcher,Lover,Anti Hero,Midnights,0.6199
+august,Folklore,peace,Folklore,0.604
+august,Folklore,seven,Folklore,0.6313
+august,Folklore,tisthedamnseason,Evermore,0.6919
+august,Folklore,Bejeweled,Midnights,0.6013
+august,Folklore,Maroon,Midnights,0.6168
+august,Folklore,YoureOnYourOwn Kid,Midnights,0.6077
+cardigan,Folklore,seven,Folklore,0.6336
+cardigan,Folklore,the1,Folklore,0.6025
+cardigan,Folklore,tisthedamnseason,Evermore,0.643
+cardigan,Folklore,Bejeweled,Midnights,0.6314
+cardigan,Folklore,Maroon,Midnights,0.6725
+cardigan,Folklore,YoureOnYourOwn Kid,Midnights,0.6141
+cardigan,Folklore,TheTorturedPoetsDepartment,The Tortured Poets Department,0.606
+hoax,Folklore,mytearsricochet,Folklore,0.608
+hoax,Folklore,peace,Folklore,0.6474
+mytearsricochet,Folklore,peace,Folklore,0.6081
+mytearsricochet,Folklore,Maroon,Midnights,0.6068
+peace,Folklore,seven,Folklore,0.6458
+peace,Folklore,willow,Evermore,0.6452
+peace,Folklore,YoureOnYourOwn Kid,Midnights,0.6537
+peace,Folklore,ButDaddyILoveHim,The Tortured Poets Department,0.6013
+seven,Folklore,cowboylikeme,Evermore,0.6144
+seven,Folklore,tisthedamnseason,Evermore,0.6516
+seven,Folklore,Bejeweled,Midnights,0.6259
+seven,Folklore,YoureOnYourOwn Kid,Midnights,0.6481
+the1,Folklore,thisismetrying,Folklore,0.6011
+the1,Folklore,tisthedamnseason,Evermore,0.6158
+the1,Folklore,Bejeweled,Midnights,0.6027
+thisismetrying,Folklore,closure,Evermore,0.607
+thisismetrying,Folklore,tisthedamnseason,Evermore,0.6186
+champagneproblems,Evermore,Maroon,Midnights,0.6185
+closure,Evermore,tisthedamnseason,Evermore,0.6937
+closure,Evermore,Bejeweled,Midnights,0.6594
+closure,Evermore,Maroon,Midnights,0.6129
+cowboylikeme,Evermore,willow,Evermore,0.6011
+cowboylikeme,Evermore,Bejeweled,Midnights,0.6074
+tisthedamnseason,Evermore,Bejeweled,Midnights,0.6703
+tisthedamnseason,Evermore,Maroon,Midnights,0.6746
+tisthedamnseason,Evermore,YoureOnYourOwn Kid,Midnights,0.6728
+tisthedamnseason,Evermore,Fortnight,The Tortured Poets Department,0.6343
+tisthedamnseason,Evermore,FreshOutTheSlammer,The Tortured Poets Department,0.6169
+Bejeweled,Midnights,YoureOnYourOwn Kid,Midnights,0.6106
+Bejeweled,Midnights,ButDaddyILoveHim,The Tortured Poets Department,0.6053
+Bejeweled,Midnights,FreshOutTheSlammer,The Tortured Poets Department,0.6192
+Bejeweled,Midnights,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6173
+Maroon,Midnights,YoureOnYourOwn Kid,Midnights,0.6063
+YoureOnYourOwn Kid,Midnights,Fortnight,The Tortured Poets Department,0.6332
+YoureOnYourOwn Kid,Midnights,FreshOutTheSlammer,The Tortured Poets Department,0.6053
+ButDaddyILoveHim,The Tortured Poets Department,FreshOutTheSlammer,The Tortured Poets Department,0.6804
+ClaraBow,The Tortured Poets Department,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6191
+DownBad,The Tortured Poets Department,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6165
+DownBad,The Tortured Poets Department,ICanFixHim NoReallyICan,The Tortured Poets Department,0.6289
+FreshOutTheSlammer,The Tortured Poets Department,ICanDoItWithABrokenHeart,The Tortured Poets Department,0.6032
+ICanDoItWithABrokenHeart,The Tortured Poets Department,loml,The Tortured Poets Department,0.6347
+TheTorturedPoetsDepartment,The Tortured Poets Department,WhosAfraidofLittleOldMe,The Tortured Poets Department,0.6219
