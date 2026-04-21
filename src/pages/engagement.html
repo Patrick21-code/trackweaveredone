@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="../styles/pages/dashboard.css" />
   <link rel="stylesheet" href="../styles/pages/engagement.css" />
   
+  <!-- D3.js and PapaParse for graph visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  
   <style>
     /* Toast animations */
     @keyframes toast-in {
@@ -44,6 +48,267 @@
     .toast-success { background: var(--ink); color: #fff; }
     .toast-error   { background: var(--red); color: #fff; }
     .toast-reward  { background: var(--gold); color: var(--ink); }
+
+    /* Music Graph Styles */
+    .music-graph-section {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .graph-header {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule-light);
+    }
+    .graph-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .graph-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .graph-title svg {
+      color: var(--blue);
+    }
+    .graph-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .graph-stat {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+    }
+    .graph-stat span {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--blue);
+      margin-right: 0.3rem;
+    }
+    .graph-subtitle {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+    }
+    .graph-container {
+      display: flex;
+      gap: 1rem;
+      height: 500px;
+    }
+    .graph-sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .graph-control-section h4 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+    .graph-search-box {
+      width: 100%;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .graph-search-box:focus {
+      border-color: var(--blue);
+    }
+    .threshold-control label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.5rem;
+    }
+    .threshold-control label span {
+      color: var(--blue);
+      font-weight: 600;
+    }
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--blue);
+      cursor: pointer;
+    }
+    .graph-album-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .graph-album-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+      user-select: none;
+      font-size: 0.72rem;
+    }
+    .graph-album-item:hover {
+      background: var(--paper-warm);
+    }
+    .graph-album-item.dimmed {
+      opacity: 0.3;
+    }
+    .graph-album-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .graph-album-name {
+      flex: 1;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .graph-album-count {
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+    }
+    .graph-canvas-area {
+      flex: 1;
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    #music-graph-svg {
+      width: 100%;
+      height: 100%;
+    }
+    .graph-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--paper);
+      z-index: 10;
+    }
+    .graph-overlay.hidden {
+      display: none;
+    }
+    .graph-spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--rule);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .graph-overlay p {
+      color: var(--ink-soft);
+      font-size: 0.85rem;
+    }
+    .node circle {
+      stroke-width: 1.5;
+      cursor: pointer;
+    }
+    .node:hover circle {
+      stroke-width: 2.5;
+    }
+    .node text {
+      font-size: 8px;
+      fill: var(--ink);
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      font-weight: 500;
+    }
+    .link {
+      stroke-opacity: 0.6;
+      transition: stroke-opacity 0.15s;
+    }
+    .graph-tooltip {
+      position: absolute;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      max-width: 220px;
+      z-index: 20;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .graph-tooltip.visible {
+      opacity: 1;
+    }
+    .graph-tooltip-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+    .graph-tooltip-album {
+      font-size: 0.72rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.6rem;
+    }
+    .graph-tooltip-connections {
+      font-size: 0.72rem;
+      color: var(--ink);
+    }
+    .graph-tooltip-connections span {
+      color: var(--blue);
+      font-weight: 600;
+    }
+    .graph-tooltip-similar {
+      margin-top: 0.6rem;
+      font-size: 0.7rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+    }
+    @media (max-width: 900px) {
+      .graph-container {
+        flex-direction: column;
+        height: auto;
+      }
+      .graph-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+      }
+      .graph-canvas-area {
+        height: 400px;
+      }
+    }
   </style>
 
   <script type="module">
@@ -120,6 +385,7 @@
   
   <script type="module" src="../scripts/engagement.js"></script>
   <script type="module" src="../scripts/cleanup-comments.js"></script>
+  <script src="../scripts/music-graph.js"></script>
 </head>
 <body>
 
@@ -285,12 +551,65 @@
         <div class="adp-avatar" id="adp-avatar"></div>
         <div class="adp-info">
           <div class="adp-artist-name" id="adp-artist-name">—</div>
-          <div class="adp-meta" id="adp-meta">Artist Community Chat</div>
+          <div class="adp-meta" id="adp-meta">Music Graph & Community Chat</div>
         </div>
         <button class="adp-back-btn" onclick="window.closeArtistPanel()">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
           Back
         </button>
+      </div>
+
+      <!-- Music Graph Section -->
+      <div class="music-graph-section" id="music-graph-section" style="display:none;">
+        <div class="graph-header">
+          <div class="graph-title-row">
+            <h3 class="graph-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 12.1-.7-.7M6.3 18.4l-.7.7"/><path d="M12 2a10 10 0 0 1 10 10"/>
+              </svg>
+              <span id="graph-artist-name">Lyrics Similarity Graph</span>
+            </h3>
+            <div class="graph-stats">
+              <div class="graph-stat"><span id="graph-node-count">—</span> Songs</div>
+              <div class="graph-stat"><span id="graph-edge-count">—</span> Connections</div>
+            </div>
+          </div>
+          <p class="graph-subtitle">Nodes are songs · Edges connect songs with similar lyrical themes</p>
+        </div>
+
+        <div class="graph-container">
+          <div class="graph-sidebar">
+            <div class="graph-control-section">
+              <h4>Search</h4>
+              <input type="text" class="graph-search-box" id="graph-search" placeholder="Song title...">
+            </div>
+            <div class="graph-control-section">
+              <h4>Similarity</h4>
+              <div class="threshold-control">
+                <label>Min score <span id="graph-thresh-val">0.60</span></label>
+                <input type="range" id="graph-threshold" min="0.60" max="0.95" step="0.01" value="0.60">
+              </div>
+            </div>
+            <div class="graph-control-section">
+              <h4>Albums</h4>
+              <div class="graph-album-legend" id="graph-album-legend"></div>
+            </div>
+          </div>
+
+          <div class="graph-canvas-area">
+            <div class="graph-overlay" id="graph-overlay">
+              <div class="graph-spinner"></div>
+              <p id="graph-overlay-msg">Loading graph data...</p>
+            </div>
+            <svg id="music-graph-svg"></svg>
+            <div class="graph-tooltip" id="graph-tooltip">
+              <div class="graph-tooltip-title" id="graph-tt-title"></div>
+              <div class="graph-tooltip-album" id="graph-tt-album"></div>
+              <div class="graph-tooltip-connections">Connections: <span id="graph-tt-connections"></span></div>
+              <div class="graph-tooltip-similar" id="graph-tt-similar"></div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <!-- Comment Filter Tabs -->
