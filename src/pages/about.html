@@ -129,23 +129,23 @@
     <!-- Right: body copy -->
     <div class="mission-body reveal">
       <p>
-        Streaming platforms are extraordinary at delivering music on demand — but they are fundamentally designed around the <strong>moment of listening</strong>, not the act of understanding. You press play, a song ends, another begins. The deeper architecture of a discography remains invisible.
+        Streaming platforms excel at delivering music on demand — but they're fundamentally designed around the <strong>moment of listening</strong>, not the act of understanding. You press play, a song ends, another begins. The deeper relational structure of a discography — the thematic evolution, the recurring motifs, the invisible threads connecting songs across decades — remains completely hidden.
       </p>
 
       <blockquote>
-        "An artist's body of work is a single, evolving argument — a conversation with themselves across time."
+        "An artist's body of work isn't a collection of isolated tracks — it's a single, evolving conversation with themselves across time."
       </blockquote>
 
       <p>
-        TrackWeave was created to make that conversation legible. By applying <strong>graph-based analysis and computational techniques</strong> to lyrics, metadata, and audio features, we construct a relational map of every artist's catalogue — revealing how themes migrate between albums, how early obsessions resurface years later, and how songs that seem unrelated are, in fact, deeply connected.
+        TrackWeave was built to make that conversation legible. By applying <strong>graph-based NLP analysis and SBERT embeddings</strong> to lyrics, metadata, and audio features, we construct a relational map of every artist's catalogue — revealing how themes migrate between albums, how early obsessions resurface years later, and how songs that seem unrelated are, in fact, deeply interconnected.
       </p>
 
       <p>
-        We pair this analytical layer with a <strong>social platform</strong> built for listeners who want to go further: log every album, write honest reviews, follow people whose ears you trust, and contribute annotations to the shared graph of human musical understanding.
+        We pair this analytical layer with a <strong>social platform</strong> built for listeners who want to go deeper: log every album, contribute annotations to the shared knowledge graph, follow people whose taste you trust, and discover patterns that streaming algorithms were never designed to surface.
       </p>
 
       <p>
-        TrackWeave is not a replacement for how you listen. It is a lens that changes what you hear.
+        TrackWeave doesn't replace how you listen. It transforms what you hear.
       </p>
     </div>
 
@@ -160,7 +160,7 @@
       <span class="sec-label">The Technology</span>
       <h2 class="sec-h">From lyrics to graph</h2>
       <p class="sec-p" style="max-width:520px;">
-        Our analysis pipeline processes a discography end-to-end — from raw text to an interactive, queryable knowledge graph — in four stages.
+        Our analysis pipeline transforms raw discography data into interactive, queryable knowledge graphs — processing lyrics through semantic extraction, constructing weighted edges based on thematic similarity, and rendering force-directed visualizations in four distinct stages.
       </p>
     </div>
 
@@ -189,7 +189,7 @@
           </svg>
         </div>
         <h4>Semantic Extraction</h4>
-        <p>Each track's lyrics are analyzed and processed using computational models. Named entities, motifs, emotional valence, and thematic clusters are identified and scored.</p>
+        <p>Lyrics are processed using SBERT (Sentence-BERT) embeddings to generate semantic vector representations. Named entities, thematic motifs, emotional valence, and narrative patterns are identified, scored, and indexed for similarity computation.</p>
         <span class="pipe-badge">Analysis Core</span>
       </div>
 
@@ -207,7 +207,7 @@
           </svg>
         </div>
         <h4>Graph Construction</h4>
-        <p>Songs become nodes; weighted edges form between tracks sharing themes, sonic fingerprints, narrative arcs, or lyrical references. Albums become colour-coded subgraphs.</p>
+        <p>Songs become nodes; weighted edges connect tracks based on cosine similarity scores between their SBERT embeddings. Edges above a configurable threshold form the network. Albums become colour-coded subgraphs, revealing both intra-album cohesion and cross-album thematic evolution.</p>
         <span class="pipe-badge">Graph Engine</span>
       </div>
 
@@ -221,7 +221,7 @@
           </svg>
         </div>
         <h4>Visualisation</h4>
-        <p>The graph is rendered as an interactive canvas. Users can zoom, filter by album, inspect edge weights, and add community annotations to any node or connection.</p>
+        <p>The graph is rendered using D3.js force-directed simulation with collision detection and dynamic node sizing. Users can zoom, pan, filter by album, adjust similarity thresholds, search for specific songs, and add community annotations to any node or edge.</p>
         <span class="pipe-badge">Frontend</span>
       </div>
     </div>
@@ -299,12 +299,12 @@
       </div>
 
       <div class="graph-explainer-text">
-        <h3>Every node tells a story,<br>every edge reveals one</h3>
+        <h3>Every node tells a story,<br>every edge reveals a connection</h3>
         <p>
-          In TrackWeave's graph model, <strong style="color:var(--ink);">songs are nodes</strong> and <strong style="color:var(--ink);">relationships are edges</strong>. The weight of each edge reflects the computed similarity between two tracks — derived from shared lyrical themes, emotional tone, sonic characteristics, and narrative structure.
+          In TrackWeave's graph model, <strong style="color:var(--ink);">songs are nodes</strong> and <strong style="color:var(--ink);">thematic relationships are edges</strong>. Edge weights reflect computed similarity scores derived from SBERT embeddings — capturing shared lyrical themes, emotional tone, narrative structure, and semantic patterns between tracks.
         </p>
         <p>
-          Albums form natural colour-coded clusters, while cross-album edges expose the thematic evolution of an artist across their career. The artist node sits apart — a root from which all creative work extends.
+          Albums form natural colour-coded clusters within the force-directed layout, while cross-album edges expose thematic evolution and recurring motifs across an artist's career. The artist node sits as a root — a conceptual anchor from which all creative work extends.
         </p>
         <div class="node-legend">
           <div class="nleg-item">
@@ -392,7 +392,7 @@
       <span class="sec-label">Under the Hood</span>
       <h2 class="sec-h">Built on solid foundations</h2>
       <p class="sec-p" style="max-width:500px;">
-        TrackWeave is built with modern web technologies chosen for reliability, performance, and simplicity.
+        TrackWeave is built with modern web technologies and computational tools chosen for performance, scalability, and semantic accuracy — from Python-based NLP pipelines to D3.js force-directed graph rendering.
       </p>
     </div>
 
@@ -483,7 +483,7 @@
       <span class="sec-label">The Team</span>
       <h2 class="sec-h">Built by people who care<br>deeply about music</h2>
       <p class="sec-p" style="max-width:500px;">
-        TrackWeave is a small, focused team of engineers, researchers, and listeners united by a belief that music deserves better tools for understanding.
+        TrackWeave is a small, focused team of engineers, data scientists, and music enthusiasts united by the belief that discographies are knowledge graphs waiting to be explored — and that listeners deserve tools built for understanding, not just consumption.
       </p>
     </div>
 
@@ -492,14 +492,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);">A</div>
         <h4>Ashley John Baguio</h4>
         <div class="role">Contributor</div>
-        <p>Former data analyst with a passion for music. Built the original analysis pipeline and graph visualization system. Listens exclusively to jazz while coding.</p>
+        <p>Data analyst and NLP enthusiast. Built the original SBERT-based similarity pipeline and designed the graph construction algorithm. Believes every discography has a hidden structure waiting to be discovered.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);">M</div>
         <h4>Michaella Francine Crema</h4>
         <div class="role">Contributor</div>
-        <p>Computer science graduate with a focus on data structures. Designed the graph construction model and the semantic similarity scoring system. Has a ranked list of every Radiohead album she updates annually.</p>
+        <p>Computer science graduate specializing in graph algorithms. Designed the force-directed simulation parameters and collision detection system. Maintains a ranked list of every album she's ever heard, updated quarterly.</p>
       </div>
 
 
@@ -507,14 +507,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#15803d,#16a34a);">S</div>
         <h4>Sid Alexis Serrano</h4>
         <div class="role">Contributor</div>
-        <p>Backend developer and database specialist. Manages the Firebase infrastructure and data ingestion pipeline. Collects vinyl records and corrects their Wikipedia pages.</p>
+        <p>Backend engineer and database architect. Manages Firebase infrastructure, data ingestion pipelines, and CSV processing workflows. Collects vinyl records and writes detailed liner note annotations for personal archives.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#b45309,#d97706);">P</div>
         <h4>Patrick Danielle Tomas</h4>
         <div class="role">Contributor</div>
-        <p>Frontend developer specializing in data visualization. Built the interactive graph canvas using D3.js. Has opinions about force-directed graph layouts that could fill a book.</p>
+        <p>Frontend developer and visualization specialist. Built the interactive graph canvas using D3.js with custom force simulation tuning. Has strong opinions about edge bundling algorithms and node collision parameters.</p>
       </div>
 
     </div>
