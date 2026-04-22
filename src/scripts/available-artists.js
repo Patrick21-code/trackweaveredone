@@ -141,6 +141,32 @@ export const AVAILABLE_ARTISTS = {
   }
 };
 
+// Artist genre mapping (manually curated based on artist styles)
+const ARTIST_GENRES = {
+  taylor: ["Pop", "Alternative"],
+  kendrick: ["Hip-Hop"],
+  arianagrande: ["Pop", "R&B"],
+  beyonce: ["Pop", "R&B"],
+  billieeilish: ["Pop", "Alternative"],
+  bts: ["K-Pop", "Pop"],
+  cardib: ["Hip-Hop"],
+  charlieputh: ["Pop"],
+  coldplay: ["Rock", "Alternative"],
+  drake: ["Hip-Hop", "R&B"],
+  dualipa: ["Pop"],
+  edsheeran: ["Pop"],
+  eminem: ["Hip-Hop"],
+  justinbieber: ["Pop", "R&B"],
+  katyperry: ["Pop"],
+  khalid: ["R&B", "Pop"],
+  ladygaga: ["Pop"],
+  maroon5: ["Pop", "Rock"],
+  nickiminaj: ["Hip-Hop"],
+  postmalone: ["Hip-Hop", "Pop"],
+  rihanna: ["Pop", "R&B"],
+  selenagomez: ["Pop"]
+};
+
 // MusicBrainz API helpers
 let _lastMbReq = 0;
 async function mbFetch(url) {
@@ -192,6 +218,7 @@ export async function fetchArtistImage(mbid, artistName) {
 // Helper function to get artists by genre (with MusicBrainz data)
 export function getArtistsByGenre(genre) {
   return Object.entries(AVAILABLE_ARTISTS)
+    .filter(([id, _]) => ARTIST_GENRES[id]?.includes(genre))
     .map(([id, artist]) => ({
       id: artist.mbid,
       localId: id,
