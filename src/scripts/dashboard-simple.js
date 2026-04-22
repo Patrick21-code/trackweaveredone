@@ -105,7 +105,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // ── Build all carousels ──────────────────────────────────────
-async function buildCarousels(genres) {
+async function buildCarousels(userGenres) {
   const section = document.getElementById("artists-section");
   section.innerHTML = "";
 
@@ -117,9 +117,8 @@ async function buildCarousels(genres) {
   // Get all artists
   const allArtists = getAllArtists();
   
-  // Show skeleton loaders for each genre
-  const skeletonGenres = ["Pop", "Hip-Hop", "R&B", "Rock", "K-Pop", "Alternative"];
-  skeletonGenres.forEach(genre => {
+  // Show skeleton loaders for user's selected genres only
+  userGenres.forEach(genre => {
     const skeletonBlock = createSkeletonBlock(genre);
     section.appendChild(skeletonBlock);
   });
@@ -133,17 +132,19 @@ async function buildCarousels(genres) {
     
     // Group by genre from MusicBrainz data
     const artistsByGenre = {};
+    
     enrichedArtists.forEach(artist => {
-      const genre = artist._mbData ? getPrimaryGenre(artist._mbData) : "Other";
+      const genre = getPrimaryGenre(artist._mbData, artist.name);
       if (!artistsByGenre[genre]) {
         artistsByGenre[genre] = [];
       }
       artistsByGenre[genre].push(artist);
     });
 
-    // Build carousel for each genre
-    Object.entries(artistsByGenre).forEach(([genre, artists]) => {
-      if (artists.length > 0) {
+    // Build carousel for each user-selected genre that has artists
+    userGenres.forEach(genre => {
+      const artists = artistsByGenre[genre];
+      if (artists && artists.length > 0) {
         const block = buildCarouselBlock(genre, artists);
         section.appendChild(block);
       }
@@ -490,7 +491,7 @@ function renderSearchResults(artists) {
     const grad = `background:linear-gradient(135deg,hsl(${hue},${sat}%,50%),hsl(${hue2},${sat - 8}%,34%))`;
     const year = a["life-span"]?.begin ?? "";
     const country = a.country ?? "";
-    const genre = a._mbData ? getPrimaryGenre(a._mbData) : "";
+    const genre = a._mbData ? getPrimaryGenre(a._mbData, a.name) : "";
     const meta = [genre, year, country].filter(Boolean).join(" · ") || "Artist";
 
     const thumb = `<span class="sr-thumb-fallback" style="${grad}">${musicNoteIconSVG()}</span>`;
