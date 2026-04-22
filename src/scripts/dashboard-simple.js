@@ -125,7 +125,7 @@ async function buildCarousels(userGenres) {
 
   try {
     // Enrich artists with MB data (batch processing for better performance)
-    const enrichedArtists = await enrichArtists(allArtists, 5); // Process 5 at a time
+    const enrichedArtists = await enrichArtists(allArtists, 8); // Process 8 at a time for faster loading
     
     // Remove skeleton loaders
     section.querySelectorAll('.skeleton-block').forEach(el => el.remove());
@@ -166,10 +166,43 @@ async function buildCarousels(userGenres) {
 
 // ── Fetch artist images in background (non-blocking) ─────────
 async function fetchArtistImagesInBackground(artists) {
-  // Fetch images one at a time to avoid rate limiting
-  for (const artist of artists) {
-    try {
-      const imageUrl = await fetchArtistImage(artist.mbid, artist._mbData);
+  // Group artists by whether they already have images
+  const artistsNeedingImages = artists.filter(a => !a.imageUrl);
+  const artistsWithImages = artists.filter(a => a.imageUrl);
+  
+  // Update cards for artists that already have images
+  artistsWithImages.forEach(artist => {
+    const cards = document.querySelectorAll(`[data-artist-id="${artist.id}"]`);
+    cards.forEach(card => {
+      const imgDiv = card.querySelector('.artist-img-bg');
+      if (imgDiv && !imgDiv.dataset.imageUrl) {
+        imgDiv.dataset.imageUrl = artist.imageUrl;
+        lazyLoadImages(card);
+      }
+    });
+  });
+  
+  if (artistsNeedingImages.length === 0) return;
+  
+  // Fetch images in smaller batches with staggered timing
+  const batchSize = 3;
+  for (let i = 0; i < artistsNeedingImages.length; i += batchSize) {
+    const batch = artistsNeedingImages.slice(i, i + batchSize);
+    
+    // Fetch all images in this batch in parallel
+    const imagePromises = batch.map(async (artist) => {
+      try {
+        const imageUrl = await fetchArtistImage(artist.mbid, artist._mbData);
+        return { artist, imageUrl };
+      } catch (e) {
+        return { artist, imageUrl: null };
+      }
+    });
+    
+    const results = await Promise.all(imagePromises);
+    
+    // Update cards immediately as results come in
+    results.forEach(({ artist, imageUrl }) => {
       if (imageUrl) {
         // Update all cards for this artist
         const cards = document.querySelectorAll(`[data-artist-id="${artist.id}"]`);
@@ -177,14 +210,15 @@ async function fetchArtistImagesInBackground(artists) {
           const imgDiv = card.querySelector('.artist-img-bg');
           if (imgDiv && !imgDiv.dataset.imageUrl) {
             imgDiv.dataset.imageUrl = imageUrl;
-            // Trigger lazy load
             lazyLoadImages(card);
           }
         });
       }
-    } catch (e) {
-      // Silently fail - keep using placeholder
-      console.debug(`[TrackWeave] Could not load image for ${artist.name}`);
+    });
+    
+    // Small delay between batches to avoid overwhelming the browser
+    if (i + batchSize < artistsNeedingImages.length) {
+      await new Promise(r => setTimeout(r, 100));
     }
   }
 }

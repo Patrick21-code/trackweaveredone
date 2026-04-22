@@ -864,14 +864,28 @@
     // Name
     document.getElementById("hero-artist-name").textContent = artist.name;
 
-    // Portrait image - use gradient placeholder (MusicBrainz doesn't provide artist images)
+    // Portrait image - try to load actual image, fallback to gradient placeholder
     const ring     = document.getElementById("hero-portrait-ring");
     const portrait = document.getElementById("hero-portrait");
     
-    ring.classList.remove("loading");
     const hue  = Math.abs(hashStr(artist.name)) % 360;
     const hue2 = (hue + 55) % 360;
-    portrait.innerHTML = `<div class="hero-portrait-placeholder" style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,hsl(${hue},60%,44%),hsl(${hue2},52%,28%));display:flex;align-items:center;justify-content:center;">${musicNoteSVG("38%","0.75")}</div>`;
+    const gradientStyle = `background:linear-gradient(135deg,hsl(${hue},60%,44%),hsl(${hue2},52%,28%))`;
+    
+    // Set placeholder initially
+    portrait.innerHTML = `<div class="hero-portrait-placeholder" style="width:100%;height:100%;border-radius:50%;${gradientStyle};display:flex;align-items:center;justify-content:center;">${musicNoteSVG("38%","0.75")}</div>`;
+    ring.classList.remove("loading");
+    
+    // Try to load artist image in background
+    if (artist.imageUrl) {
+      loadArtistImage(artist.imageUrl, portrait, gradientStyle);
+    } else if (artist.id || artist.mbid) {
+      fetchArtistImageUrl(artist.id || artist.mbid).then(imageUrl => {
+        if (imageUrl) {
+          loadArtistImage(imageUrl, portrait, gradientStyle);
+        }
+      });
+    }
 
     // Meta badges
     const metaRow  = document.getElementById("hero-meta-row");
@@ -917,6 +931,50 @@
         View Music Graph
       </a>`;
 
+  }
+
+  // ── Load artist image ──────────────────────────────────────────
+  function loadArtistImage(imageUrl, portraitEl, gradientStyle) {
+    const img = new Image();
+    img.onload = () => {
+      portraitEl.innerHTML = `<img src="${escHtml(imageUrl)}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+    };
+    img.onerror = () => {
+      // Keep the placeholder on error
+      console.debug('[TrackWeave] Failed to load artist image, using placeholder');
+    };
+    img.src = imageUrl;
+  }
+
+  // ── Fetch artist image URL ─────────────────────────────────────
+  async function fetchArtistImageUrl(mbid) {
+    try {
+      // Try Cover Art Archive for release group images
+      const releaseRes = await mbFetch(
+        `https://musicbrainz.org/ws/2/release-group?artist=${mbid}&type=album&limit=10&fmt=json`
+      );
+      
+      if (releaseRes.ok) {
+        const releaseData = await releaseRes.json();
+        const releaseGroups = releaseData['release-groups'] || [];
+        
+        // Try release groups one by one
+        for (const rg of releaseGroups.slice(0, 8)) {
+          try {
+            const coverUrl = `https://coverartarchive.org/release-group/${rg.id}/front-250`;
+            const coverRes = await fetch(coverUrl);
+            if (coverRes.ok) {
+              return coverUrl;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`[TrackWeave] Could not fetch image for ${mbid}:`, e);
+    }
+    return null;
   }
 
   // ── Load albums via MusicBrainz ────────────────────────────────

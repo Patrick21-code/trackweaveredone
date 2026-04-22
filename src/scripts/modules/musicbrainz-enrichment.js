@@ -7,7 +7,7 @@
 let _lastMbReq = 0;
 async function mbFetch(url) {
   const now = Date.now();
-  const wait = Math.max(0, 1050 - (now - _lastMbReq));
+  const wait = Math.max(0, 1000 - (now - _lastMbReq)); // Exactly 1 second between requests
   if (wait > 0) await new Promise(r => setTimeout(r, wait));
   _lastMbReq = Date.now();
   return fetch(url, { 
@@ -17,7 +17,9 @@ async function mbFetch(url) {
 
 // Cache for artist data (in-memory + localStorage)
 const artistCache = new Map();
+const imageCache = new Map(); // Separate cache for images
 const CACHE_KEY = 'tw_mb_cache';
+const IMAGE_CACHE_KEY = 'tw_img_cache';
 const CACHE_VERSION = 'v1';
 const CACHE_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -32,6 +34,18 @@ function loadCacheFromStorage() {
           artistCache.set(mbid, artistData);
         });
         console.log(`[MB] Loaded ${artistCache.size} artists from cache`);
+      }
+    }
+    
+    // Load image cache
+    const imgStored = localStorage.getItem(IMAGE_CACHE_KEY);
+    if (imgStored) {
+      const { version, timestamp, data } = JSON.parse(imgStored);
+      if (version === CACHE_VERSION && Date.now() - timestamp < CACHE_EXPIRY) {
+        Object.entries(data).forEach(([mbid, imageUrl]) => {
+          imageCache.set(mbid, imageUrl);
+        });
+        console.log(`[MB] Loaded ${imageCache.size} images from cache`);
       }
     }
   } catch (e) {
@@ -51,8 +65,38 @@ function saveCacheToStorage() {
       timestamp: Date.now(),
       data
     }));
+    
+    // Save image cache
+    const imgData = {};
+    imageCache.forEach((value, key) => {
+      imgData[key] = value;
+    });
+    localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify({
+      version: CACHE_VERSION,
+      timestamp: Date.now(),
+      data: imgData
+    }));
   } catch (e) {
     console.warn('[MB] Failed to save cache to storage:', e);
+  }
+}
+
+// Image cache helpers
+function getImageFromCache(mbid) {
+  if (!mbid) return undefined;
+  return imageCache.has(mbid) ? imageCache.get(mbid) : undefined;
+}
+
+function cacheImage(mbid, imageUrl) {
+  if (!mbid) return;
+  imageCache.set(mbid, imageUrl);
+  // Save to localStorage periodically
+  if (imageCache.size % 10 === 0) {
+    try {
+      saveCacheToStorage();
+    } catch (e) {
+      console.warn('[MB] Failed to save image cache:', e);
+    }
   }
 }
 
@@ -125,10 +169,10 @@ export async function enrichArtistData(artist) {
 /**
  * Batch enrich multiple artists with parallel processing
  * @param {Array} artists - Array of artist objects
- * @param {number} batchSize - Number of concurrent requests (default: 3)
+ * @param {number} batchSize - Number of concurrent requests (default: 5)
  * @returns {Promise<Array>} Array of enriched artists
  */
-export async function enrichArtists(artists, batchSize = 3) {
+export async function enrichArtists(artists, batchSize = 5) {
   const enriched = [];
   
   // Process in batches to respect rate limits while improving speed
@@ -335,8 +379,10 @@ function inferGenreFromName(artistName) {
  */
 export function clearCache() {
   artistCache.clear();
+  imageCache.clear();
   try {
     localStorage.removeItem(CACHE_KEY);
+    localStorage.removeItem(IMAGE_CACHE_KEY);
   } catch (e) {
     console.warn('[MB] Failed to clear cache from storage:', e);
   }
@@ -357,49 +403,65 @@ export function getCacheSize() {
  * @returns {Promise<string|null>} Image URL or null
  */
 export async function fetchArtistImage(mbid, mbData = null) {
+  if (!mbid) {
+    console.warn('[MB] fetchArtistImage called without mbid');
+    return null;
+  }
+
+  // Check image cache first (but only return if it's a valid URL, not null)
+  const cachedImage = getImageFromCache(mbid);
+  if (cachedImage !== undefined && cachedImage !== null) {
+    console.debug(`[MB] Using cached image for ${mbid}`);
+    return cachedImage; // Return cached URL
+  }
+
   try {
     // Use provided data or fetch it
     const data = mbData || await fetchArtistData(mbid);
-    if (!data) return null;
-
-    // Try to find image in relations
-    if (data.relations) {
-      // Look for official website, social media, or image links
-      const imageRels = data.relations.filter(rel => 
-        rel.type === 'image' || 
-        rel.type === 'logo' ||
-        rel.type === 'official homepage' ||
-        rel.type === 'social network'
-      );
-      
-      // For now, we'll use a placeholder approach
-      // In production, you'd integrate with services like Fanart.tv or Last.fm
+    if (!data) {
+      console.debug(`[MB] No artist data found for ${mbid}`);
+      return null;
     }
 
     // Try Cover Art Archive for release group images
-    // This requires finding the artist's release groups first
+    // Fetch multiple release groups to increase chances of finding cover art
     const releaseRes = await mbFetch(
-      `https://musicbrainz.org/ws/2/release-group?artist=${mbid}&limit=1&fmt=json`
+      `https://musicbrainz.org/ws/2/release-group?artist=${mbid}&type=album&limit=10&fmt=json`
     );
     
     if (releaseRes.ok) {
       const releaseData = await releaseRes.json();
-      if (releaseData['release-groups']?.length > 0) {
-        const rgid = releaseData['release-groups'][0].id;
-        const coverUrl = `https://coverartarchive.org/release-group/${rgid}/front-250`;
-        
-        // Check if cover exists
-        const coverRes = await fetch(coverUrl, { method: 'HEAD' });
-        if (coverRes.ok) {
-          return coverUrl;
+      const releaseGroups = releaseData['release-groups'] || [];
+      console.debug(`[MB] Found ${releaseGroups.length} release groups for ${mbid}`);
+      
+      // Try release groups one by one (to avoid CORS issues with parallel HEAD requests)
+      for (const rg of releaseGroups.slice(0, 8)) {
+        try {
+          const coverUrl = `https://coverartarchive.org/release-group/${rg.id}/front-250`;
+          // Try to fetch the image
+          const coverRes = await fetch(coverUrl);
+          if (coverRes.ok) {
+            console.log(`[MB] Found image for ${mbid}: ${coverUrl}`);
+            // Cache and return the successful URL
+            cacheImage(mbid, coverUrl);
+            return coverUrl;
+          }
+        } catch (e) {
+          // Continue to next release group
+          continue;
         }
       }
+      console.debug(`[MB] No cover art found for ${mbid}`);
+    } else {
+      console.warn(`[MB] Failed to fetch release groups for ${mbid}: ${releaseRes.status}`);
     }
+    
+    // No image found, but don't cache null to allow retries
+    return null;
   } catch (e) {
     console.warn(`[MB] Could not fetch image for ${mbid}:`, e);
+    return null;
   }
-  
-  return null;
 }
 
 /**
