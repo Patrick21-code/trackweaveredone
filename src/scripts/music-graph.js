@@ -205,6 +205,9 @@ class MusicGraphVisualizer {
 
     console.log('[MusicGraph] SVG element:', this.svg.node());
 
+    // Set initial SVG dimensions
+    this.updateSVGDimensions();
+
     const zoom = d3.zoom()
       .scaleExtent([0.1, 4])
       .on('zoom', (e) => this.container.attr('transform', e.transform));
@@ -217,7 +220,69 @@ class MusicGraphVisualizer {
       }
     });
 
+    // Add resize observer to handle container size changes
+    this.setupResizeObserver();
     this.setupEventListeners();
+  }
+
+  updateSVGDimensions() {
+    const svgElement = document.getElementById('music-graph-svg');
+    if (!svgElement) return;
+    
+    const canvasArea = svgElement.parentElement;
+    if (!canvasArea) return;
+    
+    const rect = canvasArea.getBoundingClientRect();
+    
+    if (rect.width > 0 && rect.height > 0) {
+      // Set SVG attributes for proper rendering
+      svgElement.setAttribute('width', rect.width);
+      svgElement.setAttribute('height', rect.height);
+      svgElement.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+      
+      console.log('[MusicGraph] SVG dimensions set to:', rect.width, 'x', rect.height);
+      return { width: rect.width, height: rect.height };
+    }
+    
+    return null;
+  }
+
+  setupResizeObserver() {
+    if (typeof ResizeObserver === 'undefined') {
+      console.warn('[MusicGraph] ResizeObserver not supported, using fallback');
+      return;
+    }
+
+    const canvasArea = document.querySelector('.graph-canvas-area');
+    if (!canvasArea) {
+      console.warn('[MusicGraph] Canvas area not found for ResizeObserver');
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          console.log('[MusicGraph] Container resized to:', width, 'x', height);
+          
+          // Only rebuild if we have data loaded
+          if (this.currentArtistId && this.rawNodes.length > 0) {
+            // Update dimensions
+            this.updateSVGDimensions();
+            
+            // Debounce the rebuild to avoid too many updates
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+              console.log('[MusicGraph] Rebuilding graph after resize');
+              this.buildGraph();
+            }, 300);
+          }
+        }
+      }
+    });
+
+    this.resizeObserver.observe(canvasArea);
+    console.log('[MusicGraph] ResizeObserver attached to canvas area');
   }
 
   setupEventListeners() {
@@ -358,12 +423,21 @@ class MusicGraphVisualizer {
       connMap[e.b] = (connMap[e.b] || 0) + 1;
     });
 
-    const svgElement = document.getElementById('music-graph-svg');
-    const area = svgElement.getBoundingClientRect();
-    const W = area.width || 800;
-    const H = area.height || 500;
+    // Update SVG dimensions before building
+    const dims = this.updateSVGDimensions();
+    
+    // Get dimensions - try from update, then from attributes, then fallback
+    let W, H;
+    if (dims) {
+      W = dims.width;
+      H = dims.height;
+    } else {
+      const svgElement = document.getElementById('music-graph-svg');
+      W = parseFloat(svgElement.getAttribute('width')) || 800;
+      H = parseFloat(svgElement.getAttribute('height')) || 500;
+    }
 
-    console.log('[MusicGraph] SVG dimensions:', W, 'x', H);
+    console.log('[MusicGraph] Using dimensions for simulation:', W, 'x', H);
 
     if (this.simulation) this.simulation.stop();
 
@@ -584,3 +658,66 @@ window.loadMusicGraph = function(artistId) {
     console.error('[MusicGraph] Visualizer not initialized yet!');
   }
 };
+
+// Fullscreen toggle function
+window.toggleGraphFullscreen = function() {
+  const graphSection = document.getElementById('music-graph-section');
+  const fullscreenBtn = document.getElementById('graph-fullscreen-btn');
+  const enterIcon = fullscreenBtn.querySelector('.fullscreen-enter-icon');
+  const exitIcon = fullscreenBtn.querySelector('.fullscreen-exit-icon');
+  
+  if (graphSection.classList.contains('fullscreen')) {
+    // Exit fullscreen
+    graphSection.classList.remove('fullscreen');
+    enterIcon.style.display = 'block';
+    exitIcon.style.display = 'none';
+    fullscreenBtn.title = 'Toggle fullscreen';
+  } else {
+    // Enter fullscreen
+    graphSection.classList.add('fullscreen');
+    enterIcon.style.display = 'none';
+    exitIcon.style.display = 'block';
+    fullscreenBtn.title = 'Exit fullscreen';
+  }
+  
+  // Wait for CSS transition and layout to complete, then rebuild graph
+  setTimeout(() => {
+    if (window.musicGraphVisualizer && window.musicGraphVisualizer.currentArtistId) {
+      console.log('[MusicGraph] Fullscreen toggled, updating dimensions...');
+      
+      // Update SVG dimensions to match new container size
+      window.musicGraphVisualizer.updateSVGDimensions();
+      
+      // Stop existing simulation
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.stop();
+      }
+      
+      // Clear existing nodes' fixed positions to allow repositioning
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.nodes().forEach(node => {
+          node.fx = null;
+          node.fy = null;
+        });
+      }
+      
+      // Rebuild the graph with new dimensions
+      window.musicGraphVisualizer.buildGraph();
+      
+      // Give simulation a boost to settle into new space
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.alpha(1).restart();
+      }
+    }
+  }, 250);
+};
+
+// Add keyboard shortcut for fullscreen (ESC to exit)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const graphSection = document.getElementById('music-graph-section');
+    if (graphSection && graphSection.classList.contains('fullscreen')) {
+      window.toggleGraphFullscreen();
+    }
+  }
+});
