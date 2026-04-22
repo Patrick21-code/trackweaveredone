@@ -59,7 +59,7 @@
       </div>
       <h1>Discover the hidden<br><em>connections</em> in<br>every discography</h1>
       <p>
-        TrackWeave maps the relationships between songs, albums, and artists using graph-based analysis and natural language processing — surfacing patterns in discographies that no streaming algorithm can reveal.
+        TrackWeave uses graph-based NLP analysis to map lyrical themes, sonic patterns, and narrative connections across entire discographies — revealing the hidden architecture of an artist's creative evolution that streaming platforms can't show you.
       </p>
       <div class="hero-cta">
         <a href="./register.html" class="btn btn-solid btn-lg">Start Exploring</a>
@@ -74,14 +74,14 @@
         <div class="gc-head">
           <div>
             <div class="gc-title">Discography Graph</div>
-            <div class="gc-sub">Songs as nodes · Albums as color groups</div>
+            <div class="gc-sub">Nodes are songs · Edges connect similar lyrics</div>
           </div>
           <div class="legend" id="graph-legend"></div>
         </div>
         <svg id="hero-svg" viewBox="0 0 420 290"></svg>
       </div>
       <div class="chip chip-a"><strong>Lyrical Theme</strong>Loss · Identity · Time</div>
-      <div class="chip chip-b"><strong>92% similarity</strong>Track → Track link</div>
+      <div class="chip chip-b"><strong>0.87 similarity</strong>SBERT embedding score</div>
     </div>
 
   </div>
@@ -95,7 +95,7 @@
       <span class="sec-label">The Method</span>
       <h2 class="sec-h">How TrackWeave works</h2>
       <p class="sec-p">
-        We treat every discography as a living knowledge graph. Our analysis extracts lyrical themes, sonic references, and narrative arcs from song data — then draws edges between songs to reveal a richer musical story.
+        Every discography is a knowledge graph waiting to be discovered. We process lyrics, metadata, and audio features through semantic analysis — extracting themes, emotions, and motifs — then construct weighted edges between songs to reveal the deeper narrative structure of an artist's work.
       </p>
     </div>
 
@@ -103,19 +103,19 @@
       <div class="how-step">
         <div class="step-n">01</div>
         <h3>Ingest &amp; Parse</h3>
-        <p>Lyrics, metadata, and audio features are ingested for every track. Our analysis pipeline processes and extracts semantic entities — themes, emotions, and motifs — from song data.</p>
+        <p>Lyrics, release metadata, and audio features are collected and normalized into a unified schema per track. Our pipeline processes raw text and extracts semantic entities — themes, emotions, narrative motifs, and tonal characteristics.</p>
         <span class="step-badge">Data Extraction</span>
       </div>
       <div class="how-step">
         <div class="step-n">02</div>
         <h3>Build the Graph</h3>
-        <p>Each song becomes a node. Edges form between tracks that share lyrical themes, referenced artists, sonic similarities, or narrative continuity — assembling a rich relational network per artist.</p>
+        <p>Songs become nodes; weighted edges connect tracks sharing lyrical themes, sonic fingerprints, or narrative arcs. Using SBERT embeddings and similarity scoring, we construct a relational network that captures the thematic evolution across an artist's entire catalogue.</p>
         <span class="step-badge">Graph Construction</span>
       </div>
       <div class="how-step">
         <div class="step-n">03</div>
         <h3>Explore &amp; Share</h3>
-        <p>Browse interactive graph visualizations of any artist's discography, read community-sourced annotations, and share your own insights about the patterns you uncover.</p>
+        <p>Navigate interactive force-directed graphs, filter by album, zoom into thematic clusters, and trace how motifs evolve over time. Add annotations, share discoveries, and contribute to the collective understanding of music.</p>
         <span class="step-badge">Social Layer</span>
       </div>
     </div>
@@ -149,7 +149,7 @@
             </div>
             <h3>Interactive Discography Graphs</h3>
             <p style="margin-bottom:1rem;">
-              Visualize any artist's entire body of work as an interactive knowledge graph. Zoom into thematic clusters, trace how lyrical motifs evolve across albums, and follow the threads connecting early work to later output. No other platform shows you a discography this way.
+              Explore any artist's complete discography as a living, interactive knowledge graph. Zoom into thematic clusters, trace recurring motifs across decades, and discover unexpected connections between songs. Filter by album, adjust similarity thresholds, and see the narrative architecture that streaming platforms were never designed to reveal.
             </p>
             <a href="./register.html" class="btn btn-solid" style="font-size:.84rem;padding:.58rem 1.15rem;">Explore a graph →</a>
           </div>
@@ -205,7 +205,7 @@
           </svg>
         </div>
         <h3>Lyric Analysis &amp; Insights</h3>
-        <p>Our analysis engine surfaces thematic patterns across an artist's catalogue — recurring symbols, narrative arcs, and conceptual threads — so you can appreciate music at a significantly deeper level.</p>
+        <p>Our semantic analysis engine uses SBERT embeddings to surface thematic patterns, recurring symbols, and narrative arcs across an artist's entire body of work — revealing conceptual threads and lyrical evolution that transform how you listen.</p>
       </div>
 
       <!-- Community -->

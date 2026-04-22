@@ -537,14 +537,6 @@ body.overlay-open { overflow: hidden; }
 }
 .artist-card:hover .artist-name { color: #2563eb; }
 
-.artist-sub {
-  font-size: 0.72rem;
-  color: #6b7280;
-  font-weight: 300;
-  text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  max-width: 100%;
-}
-
 /* Arrow buttons */
 .carousel-btn {
   position: absolute; top: calc(50% - 28px); transform: translateY(-50%);

@@ -412,7 +412,6 @@ function artistCardHTML(artist, index) {
         ${imgHtml}
       </div>
       <div class="artist-name">${escHtml(artist.name)}</div>
-      <div class="artist-sub">${escHtml(sub)}</div>
     </a>`;
 }
 
@@ -470,8 +469,7 @@ function openSeeAllOverlay(genre, artists) {
     });
     card.innerHTML = `
       <div class="artist-img-wrap">${imgHtml}</div>
-      <div class="artist-name">${escHtml(artist.name)}</div>
-      <div class="artist-sub">${escHtml(badge)}</div>`;
+      <div class="artist-name">${escHtml(artist.name)}</div>`;
     grid.appendChild(card);
   });
 

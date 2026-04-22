@@ -136,8 +136,8 @@ body {
 
 /* ─── RIGHT PANEL — form ─────────────────────────────────────── */
 .panel-right {
-  display: flex; align-items: center; justify-content: center;
-  padding: 3rem 2rem; background: var(--paper); position: relative;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 4rem 2rem 3rem; background: var(--paper); position: relative;
 }
 
 .panel-right::before {
