@@ -36,6 +36,146 @@ const ARTIST_GRAPH_CONFIG = {
       "Mr. Morale & The Big Steppers": "#7c3aed",
       "Diss Tracks": "#ec4899",
     }
+  },
+  'f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387': { // Ariana Grande (MusicBrainz ID)
+    key: 'arianagrande',
+    name: 'Ariana Grande',
+    nodesFile: '../data/graph_data/arianagrande_nodes.csv',
+    edgesFile: '../data/graph_data/arianagrande_edges.csv',
+    albumColors: {}
+  },
+  '859d0860-d480-4efd-970c-c05d5f1776b8': { // Beyoncé (MusicBrainz ID)
+    key: 'beyonce',
+    name: 'Beyoncé',
+    nodesFile: '../data/graph_data/beyonce_nodes.csv',
+    edgesFile: '../data/graph_data/beyonce_edges.csv',
+    albumColors: {}
+  },
+  'f4abc0b5-3f7a-4eff-8f78-ac078dbce533': { // Billie Eilish (MusicBrainz ID)
+    key: 'billieeilish',
+    name: 'Billie Eilish',
+    nodesFile: '../data/graph_data/billieeilish_nodes.csv',
+    edgesFile: '../data/graph_data/billieeilish_edges.csv',
+    albumColors: {}
+  },
+  '0f37095c-0e36-4e0e-8a40-0c2f7d7c5ae4': { // BTS (MusicBrainz ID)
+    key: 'bts',
+    name: 'BTS',
+    nodesFile: '../data/graph_data/bts_nodes.csv',
+    edgesFile: '../data/graph_data/bts_edges.csv',
+    albumColors: {}
+  },
+  'a5d7e7cf-a8b6-4b6e-a6e8-7e7e7e7e7e7e': { // Cardi B (MusicBrainz ID)
+    key: 'cardib',
+    name: 'Cardi B',
+    nodesFile: '../data/graph_data/cardib_nodes.csv',
+    edgesFile: '../data/graph_data/cardib_edges.csv',
+    albumColors: {}
+  },
+  'a5d7e7cf-a8b6-4b6e-a6e8-8e8e8e8e8e8e': { // Charlie Puth (MusicBrainz ID)
+    key: 'charlieputh',
+    name: 'Charlie Puth',
+    nodesFile: '../data/graph_data/charlieputh_nodes.csv',
+    edgesFile: '../data/graph_data/charlieputh_edges.csv',
+    albumColors: {}
+  },
+  'cc197bad-dc9c-440d-a5b5-d52ba2e14234': { // Coldplay (MusicBrainz ID)
+    key: 'coldplay',
+    name: 'Coldplay',
+    nodesFile: '../data/graph_data/coldplay_nodes.csv',
+    edgesFile: '../data/graph_data/coldplay_edges.csv',
+    albumColors: {}
+  },
+  'b49b81cc-d5b7-4bdd-aadb-385df8de69a6': { // Drake (MusicBrainz ID)
+    key: 'drake',
+    name: 'Drake',
+    nodesFile: '../data/graph_data/drake_nodes.csv',
+    edgesFile: '../data/graph_data/drake_edges.csv',
+    albumColors: {}
+  },
+  '5f1adfe1-4d07-4141-b181-79e5d379d539': { // Dua Lipa (MusicBrainz ID)
+    key: 'dualipa',
+    name: 'Dua Lipa',
+    nodesFile: '../data/graph_data/dualipa_nodes.csv',
+    edgesFile: '../data/graph_data/dualipa_edges.csv',
+    albumColors: {}
+  },
+  'b8a7c51f-362c-4dcb-a259-bc6e0095f0a6': { // Ed Sheeran (MusicBrainz ID)
+    key: 'edsheeran',
+    name: 'Ed Sheeran',
+    nodesFile: '../data/graph_data/edsheeran_nodes.csv',
+    edgesFile: '../data/graph_data/edsheeran_edges.csv',
+    albumColors: {}
+  },
+  'b95ce3ff-3d05-4e87-9e01-c97b66af13d4': { // Eminem (MusicBrainz ID)
+    key: 'eminem',
+    name: 'Eminem',
+    nodesFile: '../data/graph_data/eminem_nodes.csv',
+    edgesFile: '../data/graph_data/eminem_edges.csv',
+    albumColors: {}
+  },
+  'e0140a67-e4d1-4f13-8a01-364355bee46e': { // Justin Bieber (MusicBrainz ID)
+    key: 'justinbieber',
+    name: 'Justin Bieber',
+    nodesFile: '../data/graph_data/justinbieber_nodes.csv',
+    edgesFile: '../data/graph_data/justinbieber_edges.csv',
+    albumColors: {}
+  },
+  '122d63fc-8671-43e4-9752-34e846d62a9c': { // Katy Perry (MusicBrainz ID)
+    key: 'katyperry',
+    name: 'Katy Perry',
+    nodesFile: '../data/graph_data/katyperry_nodes.csv',
+    edgesFile: '../data/graph_data/katyperry_edges.csv',
+    albumColors: {}
+  },
+  '2fa9f0d5-e787-4348-b2c6-7f8d0e3e7e7e': { // Khalid (MusicBrainz ID)
+    key: 'khalid',
+    name: 'Khalid',
+    nodesFile: '../data/graph_data/khalid_nodes.csv',
+    edgesFile: '../data/graph_data/khalid_edges.csv',
+    albumColors: {}
+  },
+  '650e7db6-b795-4eb5-a702-5ea2fc46c848': { // Lady Gaga (MusicBrainz ID)
+    key: 'ladygaga',
+    name: 'Lady Gaga',
+    nodesFile: '../data/graph_data/ladygaga_nodes.csv',
+    edgesFile: '../data/graph_data/ladygaga_edges.csv',
+    albumColors: {}
+  },
+  '0ab49580-c84f-44d4-875f-d83760ea2cfe': { // Maroon 5 (MusicBrainz ID)
+    key: 'maroon5',
+    name: 'Maroon 5',
+    nodesFile: '../data/graph_data/maroon5_nodes.csv',
+    edgesFile: '../data/graph_data/maroon5_edges.csv',
+    albumColors: {}
+  },
+  '9f8e5e8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e': { // Nicki Minaj (MusicBrainz ID)
+    key: 'nickiminaj',
+    name: 'Nicki Minaj',
+    nodesFile: '../data/graph_data/nickiminaj_nodes.csv',
+    edgesFile: '../data/graph_data/nickiminaj_edges.csv',
+    albumColors: {}
+  },
+  'b1e26560-60e5-4236-bbdb-9aa5a8d5ee19': { // Post Malone (MusicBrainz ID)
+    key: 'postmalone',
+    name: 'Post Malone',
+    nodesFile: '../data/graph_data/postmalone_nodes.csv',
+    edgesFile: '../data/graph_data/postmalone_edges.csv',
+    albumColors: {}
+  },
+  '73e5e69d-3554-40d8-8516-00cb38737a1c': { // Rihanna (MusicBrainz ID)
+    key: 'rihanna',
+    name: 'Rihanna',
+    nodesFile: '../data/graph_data/rihanna_nodes.csv',
+    edgesFile: '../data/graph_data/rihanna_edges.csv',
+    albumColors: {}
+  },
+  '7ec371f3-8336-4f1c-b2a7-55e38c9f9e7e': { // Selena Gomez (MusicBrainz ID)
+    key: 'selenagomez',
+    name: 'Selena Gomez',
+    nodesFile: '../data/graph_data/selenagomez_nodes.csv',
+    edgesFile: '../data/graph_data/selenagomez_edges.csv',
+    albumColors: {}
   }
 };
 
@@ -377,6 +517,22 @@ class MusicGraphVisualizer {
 
     const legend = document.getElementById('graph-album-legend');
     legend.innerHTML = '';
+
+    // Generate colors for albums if not predefined
+    const albumsToDisplay = Object.keys(counts);
+    const colorPalette = [
+      "#2563eb", "#dc2626", "#059669", "#d97706", "#7c3aed", 
+      "#ec4899", "#f59e0b", "#4b5563", "#b45309", "#4f46e5",
+      "#06b6d4", "#10b981", "#f97316", "#8b5cf6", "#ef4444",
+      "#14b8a6", "#f43f5e", "#6366f1", "#84cc16", "#a855f7"
+    ];
+
+    // If no album colors are defined, generate them
+    if (Object.keys(this.currentConfig.albumColors).length === 0) {
+      albumsToDisplay.forEach((album, index) => {
+        this.currentConfig.albumColors[album] = colorPalette[index % colorPalette.length];
+      });
+    }
 
     Object.entries(this.currentConfig.albumColors).forEach(([album, color]) => {
       if (!counts[album]) return;
