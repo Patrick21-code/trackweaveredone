@@ -41,9 +41,6 @@
     },
   ];
 
-  // Artist node — top-left, separate
-  const artist = { cx: 44, cy: 40 };
-
   // Edges between song nodes (cross and intra-album)
   const edges = [
     ['a1','b1'], ['a1','c1'], ['a2','c3'], ['a2','b4'],
@@ -51,9 +48,6 @@
     ['b4','c1'], ['b1','c2'], ['a3','a4'], ['b1','b2'],
     ['a1','a2'], ['c1','c2'],
   ];
-
-  // Dashed edges: artist → one representative song per album
-  const artistEdges = ['a1', 'b1', 'c1'];
 
   // Build lookup
   const map = {};
@@ -73,14 +67,6 @@
     eg.appendChild(el('line', { x1: na.cx, y1: na.cy, x2: nb.cx, y2: nb.cy }));
   });
   svg.appendChild(eg);
-
-  // ── artist dashed edges ──
-  const ag = el('g', { stroke: '#94a3b8', 'stroke-width': '1', 'stroke-dasharray': '4 3', opacity: '0.55' });
-  artistEdges.forEach(sid => {
-    const n = map[sid]; if (!n) return;
-    ag.appendChild(el('line', { x1: artist.cx, y1: artist.cy, x2: n.cx, y2: n.cy }));
-  });
-  svg.appendChild(ag);
 
   // ── song nodes ──
   albums.forEach(al => {
@@ -104,30 +90,6 @@
     svg.appendChild(g);
   });
 
-  // ── artist node (diamond, top-left) ──
-  const artG = el('g', {});
-
-  const halo = el('circle', { cx: artist.cx, cy: artist.cy, r: '18', fill: '#f59e0b', opacity: '0.09' });
-  artG.appendChild(halo);
-
-  const d = 12;
-  const diamond = el('polygon', {
-    points: `${artist.cx},${artist.cy - d} ${artist.cx + d},${artist.cy} ${artist.cx},${artist.cy + d} ${artist.cx - d},${artist.cy}`,
-    fill: '#f59e0b', stroke: '#d97706', 'stroke-width': '1.5',
-  });
-  artG.appendChild(diamond);
-
-  const lbl = el('text', {
-    x: artist.cx, y: artist.cy + d + 14,
-    'text-anchor': 'middle', 'font-size': '9',
-    'font-family': 'Instrument Sans, sans-serif',
-    fill: '#92400e', 'font-weight': '600',
-  });
-  lbl.textContent = 'Artist';
-  artG.appendChild(lbl);
-
-  svg.appendChild(artG);
-
   // ── legend ──
   const legendEl = document.getElementById('graph-legend');
   albums.forEach(al => {
@@ -136,11 +98,6 @@
     item.innerHTML = `<span class="leg-dot" style="background:${al.fill}"></span>${al.name}`;
     legendEl.appendChild(item);
   });
-  // artist legend entry
-  const artEntry = document.createElement('div');
-  artEntry.className = 'leg-item';
-  artEntry.innerHTML = `<span class="leg-dot" style="background:#f59e0b;border-radius:2px;transform:rotate(45deg);display:inline-block;"></span>Artist`;
-  legendEl.appendChild(artEntry);
 })();
 
 
@@ -150,6 +107,3 @@ const io = new IntersectionObserver(
   { threshold: 0.1 }
 );
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-
-
