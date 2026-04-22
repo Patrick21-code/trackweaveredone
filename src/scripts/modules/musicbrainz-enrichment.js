@@ -205,6 +205,7 @@ const GENRE_MAP = {
   'k-pop': 'K-Pop',
   'kpop': 'K-Pop',
   'korean pop': 'K-Pop',
+  'k pop': 'K-Pop',
   
   // Country
   'country': 'Country',
@@ -215,16 +216,36 @@ const GENRE_MAP = {
   'alternative': 'Alternative',
   'indie': 'Alternative',
   'experimental': 'Alternative',
-  'art rock': 'Alternative'
+  'art rock': 'Alternative',
+  
+  // Jazz
+  'jazz': 'Jazz',
+  'smooth jazz': 'Jazz',
+  'jazz fusion': 'Jazz',
+  
+  // Latin
+  'latin': 'Latin',
+  'reggaeton': 'Latin',
+  'latin pop': 'Latin',
+  'salsa': 'Latin',
+  
+  // Dance
+  'dance': 'Dance',
+  'dance pop': 'Pop',
+  'eurodance': 'Dance'
 };
 
 /**
  * Get primary genre from MusicBrainz tags/genres and map to TrackWeave categories
  * @param {Object} mbData - MusicBrainz artist data
+ * @param {string} artistName - Artist name for better genre inference
  * @returns {string} Primary genre category
  */
-export function getPrimaryGenre(mbData) {
-  if (!mbData) return "Other";
+export function getPrimaryGenre(mbData, artistName = '') {
+  if (!mbData) {
+    // Fallback genre inference based on artist name if no MB data
+    return inferGenreFromName(artistName);
+  }
   
   const allTags = [];
   
@@ -259,8 +280,54 @@ export function getPrimaryGenre(mbData) {
     }
   }
   
-  // If no mapping found, return the most popular tag or "Other"
-  return allTags.length > 0 ? "Other" : "Other";
+  // If no mapping found, try to infer from artist name or return most popular tag
+  if (allTags.length > 0) {
+    const topTag = allTags[0].name;
+    // Capitalize first letter of each word
+    return topTag.split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+  
+  return inferGenreFromName(artistName);
+}
+
+/**
+ * Infer genre from artist name as fallback
+ * @param {string} artistName - Artist name
+ * @returns {string} Inferred genre
+ */
+function inferGenreFromName(artistName) {
+  const name = artistName.toLowerCase();
+  
+  // Known artist-to-genre mappings
+  const artistGenreMap = {
+    'bts': 'K-Pop',
+    'taylor swift': 'Pop',
+    'kendrick lamar': 'Hip-Hop',
+    'ariana grande': 'Pop',
+    'beyoncé': 'R&B',
+    'beyonce': 'R&B',
+    'billie eilish': 'Pop',
+    'cardi b': 'Hip-Hop',
+    'charlie puth': 'Pop',
+    'coldplay': 'Rock',
+    'drake': 'Hip-Hop',
+    'dua lipa': 'Pop',
+    'ed sheeran': 'Pop',
+    'eminem': 'Hip-Hop',
+    'justin bieber': 'Pop',
+    'katy perry': 'Pop',
+    'khalid': 'R&B',
+    'lady gaga': 'Pop',
+    'maroon 5': 'Pop',
+    'nicki minaj': 'Hip-Hop',
+    'post malone': 'Hip-Hop',
+    'rihanna': 'R&B',
+    'selena gomez': 'Pop'
+  };
+  
+  return artistGenreMap[name] || 'Pop';
 }
 
 /**
