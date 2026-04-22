@@ -97,16 +97,6 @@
         <!-- Center hub -->
         <circle cx="190" cy="140" r="14" fill="#2563eb" opacity="0.1"/>
         <circle cx="190" cy="140" r="8"  fill="#2563eb"/>
-        <!-- Artist: amber diamond, top-left -->
-        <circle cx="30" cy="35" r="16" fill="#f59e0b" opacity="0.08"/>
-        <polygon points="30,20 45,35 30,50 15,35" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
-        <text x="30" y="63" text-anchor="middle" font-size="9" font-family="Instrument Sans, sans-serif" fill="#92400e" font-weight="600">Artist</text>
-        <!-- Dashed edges: artist → albums -->
-        <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3" opacity="0.5">
-          <line x1="45" y1="35" x2="75"  y2="64"/>
-          <line x1="45" y1="35" x2="182" y2="44"/>
-          <line x1="45" y1="35" x2="290" y2="66"/>
-        </g>
       </svg>
     </div>
   </div>
@@ -280,18 +270,6 @@
           <circle cx="190" cy="130" r="13" fill="#2563eb" opacity="0.1"/>
           <circle cx="190" cy="130" r="7"  fill="#2563eb"/>
 
-          <!-- Artist node -->
-          <circle cx="35" cy="35" r="14" fill="#f59e0b" opacity="0.08"/>
-          <polygon points="35,22 47,35 35,48 23,35" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
-          <text x="35" y="60" text-anchor="middle" font-size="8" font-family="Instrument Sans" fill="#92400e" font-weight="600">Artist</text>
-
-          <!-- Dashed artist edges -->
-          <g stroke="#94a3b8" stroke-width="1" stroke-dasharray="3.5 3" opacity="0.5">
-            <line x1="47" y1="35" x2="94"  y2="118"/>
-            <line x1="47" y1="35" x2="189" y2="66"/>
-            <line x1="47" y1="35" x2="257" y2="99"/>
-          </g>
-
           <!-- Edge weight label -->
           <rect x="144" y="117" width="44" height="16" rx="4" fill="white" opacity="0.9"/>
           <text x="166" y="129" text-anchor="middle" font-size="8.5" font-family="Instrument Sans" fill="#2563eb" font-weight="600">0.87 sim</text>
@@ -304,15 +282,9 @@
           In TrackWeave's graph model, <strong style="color:var(--ink);">songs are nodes</strong> and <strong style="color:var(--ink);">thematic relationships are edges</strong>. Edge weights reflect computed similarity scores derived from SBERT embeddings — capturing shared lyrical themes, emotional tone, narrative structure, and semantic patterns between tracks.
         </p>
         <p>
-          Albums form natural colour-coded clusters within the force-directed layout, while cross-album edges expose thematic evolution and recurring motifs across an artist's career. The artist node sits as a root — a conceptual anchor from which all creative work extends.
+          Albums form natural colour-coded clusters within the force-directed layout, while cross-album edges expose thematic evolution and recurring motifs across an artist's career. The central hub nodes represent songs with the highest connectivity — thematic anchors that bridge multiple albums and narrative threads.
         </p>
         <div class="node-legend">
-          <div class="nleg-item">
-            <span class="nleg-shape">
-              <svg width="16" height="16" viewBox="0 0 16 16"><polygon points="8,1 15,8 8,15 1,8" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/></svg>
-            </span>
-            <span><strong style="color:var(--ink);">Diamond</strong> — Artist root node</span>
-          </div>
           <div class="nleg-item">
             <span class="nleg-shape"><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="#2563eb"/></svg></span>
             <span><strong style="color:var(--ink);">Circle (blue)</strong> — Song, Album I</span>
@@ -327,11 +299,11 @@
           </div>
           <div class="nleg-item">
             <span class="nleg-shape"><svg width="16" height="16"><line x1="1" y1="8" x2="15" y2="8" stroke="#c7d2fe" stroke-width="1.5"/></svg></span>
-            <span><strong style="color:var(--ink);">Solid edge</strong> — Thematic similarity</span>
+            <span><strong style="color:var(--ink);">Solid edge</strong> — Thematic similarity (SBERT)</span>
           </div>
           <div class="nleg-item">
-            <span class="nleg-shape"><svg width="16" height="16"><line x1="1" y1="8" x2="15" y2="8" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3 2.5"/></svg></span>
-            <span><strong style="color:var(--ink);">Dashed edge</strong> — Artist authorship</span>
+            <span class="nleg-shape"><svg width="16" height="16"><line x1="1" y1="8" x2="15" y2="8" stroke="#2563eb" stroke-width="2"/></svg></span>
+            <span><strong style="color:var(--ink);">Bold edge</strong> — High similarity (&gt;0.85)</span>
           </div>
         </div>
       </div>
@@ -481,9 +453,9 @@
   <div class="container">
     <div class="reveal">
       <span class="sec-label">The Team</span>
-      <h2 class="sec-h">Built by people who care<br>deeply about music</h2>
+      <h2 class="sec-h">Built by students who care<br>deeply about music</h2>
       <p class="sec-p" style="max-width:500px;">
-        TrackWeave is a small, focused team of engineers, data scientists, and music enthusiasts united by the belief that discographies are knowledge graphs waiting to be explored — and that listeners deserve tools built for understanding, not just consumption.
+        TrackWeave is a student project created by four computer science students exploring the intersection of music, data analysis, and graph visualization — learning by building something we believe in.
       </p>
     </div>
 
@@ -492,14 +464,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#1d4ed8,#2563eb);">A</div>
         <h4>Ashley John Baguio</h4>
         <div class="role">Contributor</div>
-        <p>Data analyst and NLP enthusiast. Built the original SBERT-based similarity pipeline and designed the graph construction algorithm. Believes every discography has a hidden structure waiting to be discovered.</p>
+        <p>Computer science student passionate about data analysis and NLP. Built the SBERT-based similarity pipeline and graph construction algorithm as part of a university project exploring music analysis.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);">M</div>
         <h4>Michaella Francine Crema</h4>
         <div class="role">Contributor</div>
-        <p>Computer science graduate specializing in graph algorithms. Designed the force-directed simulation parameters and collision detection system. Maintains a ranked list of every album she's ever heard, updated quarterly.</p>
+        <p>Computer science student specializing in algorithms and data structures. Designed the force-directed simulation and collision detection system while learning about graph visualization techniques.</p>
       </div>
 
 
@@ -507,14 +479,14 @@
         <div class="team-avatar" style="background:linear-gradient(135deg,#15803d,#16a34a);">S</div>
         <h4>Sid Alexis Serrano</h4>
         <div class="role">Contributor</div>
-        <p>Backend engineer and database architect. Manages Firebase infrastructure, data ingestion pipelines, and CSV processing workflows. Collects vinyl records and writes detailed liner note annotations for personal archives.</p>
+        <p>Computer science student learning backend development and database management. Manages Firebase infrastructure and data processing workflows as part of the team's academic project.</p>
       </div>
 
       <div class="team-card reveal reveal-d1">
         <div class="team-avatar" style="background:linear-gradient(135deg,#b45309,#d97706);">P</div>
         <h4>Patrick Danielle Tomas</h4>
         <div class="role">Contributor</div>
-        <p>Frontend developer and visualization specialist. Built the interactive graph canvas using D3.js with custom force simulation tuning. Has strong opinions about edge bundling algorithms and node collision parameters.</p>
+        <p>Computer science student exploring frontend development and data visualization. Built the interactive graph canvas using D3.js while learning about force simulation and interactive web graphics.</p>
       </div>
 
     </div>
