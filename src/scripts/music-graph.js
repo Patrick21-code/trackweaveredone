@@ -36,6 +36,146 @@ const ARTIST_GRAPH_CONFIG = {
       "Mr. Morale & The Big Steppers": "#7c3aed",
       "Diss Tracks": "#ec4899",
     }
+  },
+  'f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387': { // Ariana Grande (MusicBrainz ID)
+    key: 'arianagrande',
+    name: 'Ariana Grande',
+    nodesFile: '../data/graph_data/arianagrande_nodes.csv',
+    edgesFile: '../data/graph_data/arianagrande_edges.csv',
+    albumColors: {}
+  },
+  '859d0860-d480-4efd-970c-c05d5f1776b8': { // Beyoncé (MusicBrainz ID)
+    key: 'beyonce',
+    name: 'Beyoncé',
+    nodesFile: '../data/graph_data/beyonce_nodes.csv',
+    edgesFile: '../data/graph_data/beyonce_edges.csv',
+    albumColors: {}
+  },
+  'f4abc0b5-3f7a-4eff-8f78-ac078dbce533': { // Billie Eilish (MusicBrainz ID)
+    key: 'billieeilish',
+    name: 'Billie Eilish',
+    nodesFile: '../data/graph_data/billieeilish_nodes.csv',
+    edgesFile: '../data/graph_data/billieeilish_edges.csv',
+    albumColors: {}
+  },
+  '0f37095c-0e36-4e0e-8a40-0c2f7d7c5ae4': { // BTS (MusicBrainz ID)
+    key: 'bts',
+    name: 'BTS',
+    nodesFile: '../data/graph_data/bts_nodes.csv',
+    edgesFile: '../data/graph_data/bts_edges.csv',
+    albumColors: {}
+  },
+  'a5d7e7cf-a8b6-4b6e-a6e8-7e7e7e7e7e7e': { // Cardi B (MusicBrainz ID)
+    key: 'cardib',
+    name: 'Cardi B',
+    nodesFile: '../data/graph_data/cardib_nodes.csv',
+    edgesFile: '../data/graph_data/cardib_edges.csv',
+    albumColors: {}
+  },
+  'a5d7e7cf-a8b6-4b6e-a6e8-8e8e8e8e8e8e': { // Charlie Puth (MusicBrainz ID)
+    key: 'charlieputh',
+    name: 'Charlie Puth',
+    nodesFile: '../data/graph_data/charlieputh_nodes.csv',
+    edgesFile: '../data/graph_data/charlieputh_edges.csv',
+    albumColors: {}
+  },
+  'cc197bad-dc9c-440d-a5b5-d52ba2e14234': { // Coldplay (MusicBrainz ID)
+    key: 'coldplay',
+    name: 'Coldplay',
+    nodesFile: '../data/graph_data/coldplay_nodes.csv',
+    edgesFile: '../data/graph_data/coldplay_edges.csv',
+    albumColors: {}
+  },
+  'b49b81cc-d5b7-4bdd-aadb-385df8de69a6': { // Drake (MusicBrainz ID)
+    key: 'drake',
+    name: 'Drake',
+    nodesFile: '../data/graph_data/drake_nodes.csv',
+    edgesFile: '../data/graph_data/drake_edges.csv',
+    albumColors: {}
+  },
+  '5f1adfe1-4d07-4141-b181-79e5d379d539': { // Dua Lipa (MusicBrainz ID)
+    key: 'dualipa',
+    name: 'Dua Lipa',
+    nodesFile: '../data/graph_data/dualipa_nodes.csv',
+    edgesFile: '../data/graph_data/dualipa_edges.csv',
+    albumColors: {}
+  },
+  'b8a7c51f-362c-4dcb-a259-bc6e0095f0a6': { // Ed Sheeran (MusicBrainz ID)
+    key: 'edsheeran',
+    name: 'Ed Sheeran',
+    nodesFile: '../data/graph_data/edsheeran_nodes.csv',
+    edgesFile: '../data/graph_data/edsheeran_edges.csv',
+    albumColors: {}
+  },
+  'b95ce3ff-3d05-4e87-9e01-c97b66af13d4': { // Eminem (MusicBrainz ID)
+    key: 'eminem',
+    name: 'Eminem',
+    nodesFile: '../data/graph_data/eminem_nodes.csv',
+    edgesFile: '../data/graph_data/eminem_edges.csv',
+    albumColors: {}
+  },
+  'e0140a67-e4d1-4f13-8a01-364355bee46e': { // Justin Bieber (MusicBrainz ID)
+    key: 'justinbieber',
+    name: 'Justin Bieber',
+    nodesFile: '../data/graph_data/justinbieber_nodes.csv',
+    edgesFile: '../data/graph_data/justinbieber_edges.csv',
+    albumColors: {}
+  },
+  '122d63fc-8671-43e4-9752-34e846d62a9c': { // Katy Perry (MusicBrainz ID)
+    key: 'katyperry',
+    name: 'Katy Perry',
+    nodesFile: '../data/graph_data/katyperry_nodes.csv',
+    edgesFile: '../data/graph_data/katyperry_edges.csv',
+    albumColors: {}
+  },
+  '2fa9f0d5-e787-4348-b2c6-7f8d0e3e7e7e': { // Khalid (MusicBrainz ID)
+    key: 'khalid',
+    name: 'Khalid',
+    nodesFile: '../data/graph_data/khalid_nodes.csv',
+    edgesFile: '../data/graph_data/khalid_edges.csv',
+    albumColors: {}
+  },
+  '650e7db6-b795-4eb5-a702-5ea2fc46c848': { // Lady Gaga (MusicBrainz ID)
+    key: 'ladygaga',
+    name: 'Lady Gaga',
+    nodesFile: '../data/graph_data/ladygaga_nodes.csv',
+    edgesFile: '../data/graph_data/ladygaga_edges.csv',
+    albumColors: {}
+  },
+  '0ab49580-c84f-44d4-875f-d83760ea2cfe': { // Maroon 5 (MusicBrainz ID)
+    key: 'maroon5',
+    name: 'Maroon 5',
+    nodesFile: '../data/graph_data/maroon5_nodes.csv',
+    edgesFile: '../data/graph_data/maroon5_edges.csv',
+    albumColors: {}
+  },
+  '9f8e5e8e-8e8e-8e8e-8e8e-8e8e8e8e8e8e': { // Nicki Minaj (MusicBrainz ID)
+    key: 'nickiminaj',
+    name: 'Nicki Minaj',
+    nodesFile: '../data/graph_data/nickiminaj_nodes.csv',
+    edgesFile: '../data/graph_data/nickiminaj_edges.csv',
+    albumColors: {}
+  },
+  'b1e26560-60e5-4236-bbdb-9aa5a8d5ee19': { // Post Malone (MusicBrainz ID)
+    key: 'postmalone',
+    name: 'Post Malone',
+    nodesFile: '../data/graph_data/postmalone_nodes.csv',
+    edgesFile: '../data/graph_data/postmalone_edges.csv',
+    albumColors: {}
+  },
+  '73e5e69d-3554-40d8-8516-00cb38737a1c': { // Rihanna (MusicBrainz ID)
+    key: 'rihanna',
+    name: 'Rihanna',
+    nodesFile: '../data/graph_data/rihanna_nodes.csv',
+    edgesFile: '../data/graph_data/rihanna_edges.csv',
+    albumColors: {}
+  },
+  '7ec371f3-8336-4f1c-b2a7-55e38c9f9e7e': { // Selena Gomez (MusicBrainz ID)
+    key: 'selenagomez',
+    name: 'Selena Gomez',
+    nodesFile: '../data/graph_data/selenagomez_nodes.csv',
+    edgesFile: '../data/graph_data/selenagomez_edges.csv',
+    albumColors: {}
   }
 };
 
@@ -65,6 +205,9 @@ class MusicGraphVisualizer {
 
     console.log('[MusicGraph] SVG element:', this.svg.node());
 
+    // Set initial SVG dimensions
+    this.updateSVGDimensions();
+
     const zoom = d3.zoom()
       .scaleExtent([0.1, 4])
       .on('zoom', (e) => this.container.attr('transform', e.transform));
@@ -77,7 +220,69 @@ class MusicGraphVisualizer {
       }
     });
 
+    // Add resize observer to handle container size changes
+    this.setupResizeObserver();
     this.setupEventListeners();
+  }
+
+  updateSVGDimensions() {
+    const svgElement = document.getElementById('music-graph-svg');
+    if (!svgElement) return;
+    
+    const canvasArea = svgElement.parentElement;
+    if (!canvasArea) return;
+    
+    const rect = canvasArea.getBoundingClientRect();
+    
+    if (rect.width > 0 && rect.height > 0) {
+      // Set SVG attributes for proper rendering
+      svgElement.setAttribute('width', rect.width);
+      svgElement.setAttribute('height', rect.height);
+      svgElement.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
+      
+      console.log('[MusicGraph] SVG dimensions set to:', rect.width, 'x', rect.height);
+      return { width: rect.width, height: rect.height };
+    }
+    
+    return null;
+  }
+
+  setupResizeObserver() {
+    if (typeof ResizeObserver === 'undefined') {
+      console.warn('[MusicGraph] ResizeObserver not supported, using fallback');
+      return;
+    }
+
+    const canvasArea = document.querySelector('.graph-canvas-area');
+    if (!canvasArea) {
+      console.warn('[MusicGraph] Canvas area not found for ResizeObserver');
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          console.log('[MusicGraph] Container resized to:', width, 'x', height);
+          
+          // Only rebuild if we have data loaded
+          if (this.currentArtistId && this.rawNodes.length > 0) {
+            // Update dimensions
+            this.updateSVGDimensions();
+            
+            // Debounce the rebuild to avoid too many updates
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+              console.log('[MusicGraph] Rebuilding graph after resize');
+              this.buildGraph();
+            }, 300);
+          }
+        }
+      }
+    });
+
+    this.resizeObserver.observe(canvasArea);
+    console.log('[MusicGraph] ResizeObserver attached to canvas area');
   }
 
   setupEventListeners() {
@@ -218,12 +423,21 @@ class MusicGraphVisualizer {
       connMap[e.b] = (connMap[e.b] || 0) + 1;
     });
 
-    const svgElement = document.getElementById('music-graph-svg');
-    const area = svgElement.getBoundingClientRect();
-    const W = area.width || 800;
-    const H = area.height || 500;
+    // Update SVG dimensions before building
+    const dims = this.updateSVGDimensions();
+    
+    // Get dimensions - try from update, then from attributes, then fallback
+    let W, H;
+    if (dims) {
+      W = dims.width;
+      H = dims.height;
+    } else {
+      const svgElement = document.getElementById('music-graph-svg');
+      W = parseFloat(svgElement.getAttribute('width')) || 800;
+      H = parseFloat(svgElement.getAttribute('height')) || 500;
+    }
 
-    console.log('[MusicGraph] SVG dimensions:', W, 'x', H);
+    console.log('[MusicGraph] Using dimensions for simulation:', W, 'x', H);
 
     if (this.simulation) this.simulation.stop();
 
@@ -378,6 +592,22 @@ class MusicGraphVisualizer {
     const legend = document.getElementById('graph-album-legend');
     legend.innerHTML = '';
 
+    // Generate colors for albums if not predefined
+    const albumsToDisplay = Object.keys(counts);
+    const colorPalette = [
+      "#2563eb", "#dc2626", "#059669", "#d97706", "#7c3aed", 
+      "#ec4899", "#f59e0b", "#4b5563", "#b45309", "#4f46e5",
+      "#06b6d4", "#10b981", "#f97316", "#8b5cf6", "#ef4444",
+      "#14b8a6", "#f43f5e", "#6366f1", "#84cc16", "#a855f7"
+    ];
+
+    // If no album colors are defined, generate them
+    if (Object.keys(this.currentConfig.albumColors).length === 0) {
+      albumsToDisplay.forEach((album, index) => {
+        this.currentConfig.albumColors[album] = colorPalette[index % colorPalette.length];
+      });
+    }
+
     Object.entries(this.currentConfig.albumColors).forEach(([album, color]) => {
       if (!counts[album]) return;
 
@@ -428,3 +658,66 @@ window.loadMusicGraph = function(artistId) {
     console.error('[MusicGraph] Visualizer not initialized yet!');
   }
 };
+
+// Fullscreen toggle function
+window.toggleGraphFullscreen = function() {
+  const graphSection = document.getElementById('music-graph-section');
+  const fullscreenBtn = document.getElementById('graph-fullscreen-btn');
+  const enterIcon = fullscreenBtn.querySelector('.fullscreen-enter-icon');
+  const exitIcon = fullscreenBtn.querySelector('.fullscreen-exit-icon');
+  
+  if (graphSection.classList.contains('fullscreen')) {
+    // Exit fullscreen
+    graphSection.classList.remove('fullscreen');
+    enterIcon.style.display = 'block';
+    exitIcon.style.display = 'none';
+    fullscreenBtn.title = 'Toggle fullscreen';
+  } else {
+    // Enter fullscreen
+    graphSection.classList.add('fullscreen');
+    enterIcon.style.display = 'none';
+    exitIcon.style.display = 'block';
+    fullscreenBtn.title = 'Exit fullscreen';
+  }
+  
+  // Wait for CSS transition and layout to complete, then rebuild graph
+  setTimeout(() => {
+    if (window.musicGraphVisualizer && window.musicGraphVisualizer.currentArtistId) {
+      console.log('[MusicGraph] Fullscreen toggled, updating dimensions...');
+      
+      // Update SVG dimensions to match new container size
+      window.musicGraphVisualizer.updateSVGDimensions();
+      
+      // Stop existing simulation
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.stop();
+      }
+      
+      // Clear existing nodes' fixed positions to allow repositioning
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.nodes().forEach(node => {
+          node.fx = null;
+          node.fy = null;
+        });
+      }
+      
+      // Rebuild the graph with new dimensions
+      window.musicGraphVisualizer.buildGraph();
+      
+      // Give simulation a boost to settle into new space
+      if (window.musicGraphVisualizer.simulation) {
+        window.musicGraphVisualizer.simulation.alpha(1).restart();
+      }
+    }
+  }, 250);
+};
+
+// Add keyboard shortcut for fullscreen (ESC to exit)
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    const graphSection = document.getElementById('music-graph-section');
+    if (graphSection && graphSection.classList.contains('fullscreen')) {
+      window.toggleGraphFullscreen();
+    }
+  }
+});

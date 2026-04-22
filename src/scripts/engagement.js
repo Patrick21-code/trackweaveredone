@@ -43,25 +43,58 @@ function waitForFirebase() {
    1. SHOP CATALOG MIRROR
    ========================================== */
 const SHOP_CATALOG = [
-  { id: 'theme-midnight',      icon: '🌙', title: 'Midnight Mode',      category: 'themes'  },
-  { id: 'theme-vinyl',         icon: '💿', title: 'Vinyl Warmth',        category: 'themes'  },
-  { id: 'theme-neon',          icon: '🔮', title: 'Neon Pulse',          category: 'themes'  },
-  { id: 'theme-aurora',        icon: '🌌', title: 'Aurora Borealis',     category: 'themes'  },
-  { id: 'avatar-headphones',   icon: '🎧', title: 'Audiophile',          category: 'avatars' },
-  { id: 'avatar-vinyl-spinner',icon: '🎼', title: 'Vinyl Spinner',       category: 'avatars' },
-  { id: 'avatar-cosmic',       icon: '🪐', title: 'Cosmic Explorer',     category: 'avatars' },
-  { id: 'avatar-golden-ear',   icon: '👑', title: 'Golden Ear',          category: 'avatars' },
-  { id: 'boost-double-pts',    icon: '⚡', title: '2× Points Weekend',   category: 'boosts'  },
-  { id: 'boost-early-access',  icon: '🚀', title: 'Early Access Pass',   category: 'boosts'  },
-  { id: 'boost-graph-pro',     icon: '🕸️', title: 'Graph Pro Unlock',    category: 'boosts'  },
-  { id: 'boost-spotlight',     icon: '🌟', title: 'Community Spotlight', category: 'boosts'  },
-  { id: 'badge-early-adopter', icon: '🌱', title: 'Early Adopter',       category: 'badges'  },
-  { id: 'badge-crate-digger',  icon: '📦', title: 'Crate Digger',        category: 'badges'  },
-  { id: 'badge-theorist',      icon: '🧠', title: 'Music Theorist',      category: 'badges'  },
-  { id: 'badge-legend',        icon: '🎺', title: 'Living Legend',       category: 'badges'  },
+  { id: 'theme-midnight',      icon: '🌙', title: 'Midnight Mode',      category: 'themes',  cost: 300  },
+  { id: 'theme-vinyl',         icon: '💿', title: 'Vinyl Warmth',        category: 'themes',  cost: 450  },
+  { id: 'theme-neon',          icon: '🔮', title: 'Neon Pulse',          category: 'themes',  cost: 600  },
+  { id: 'theme-aurora',        icon: '🌌', title: 'Aurora Borealis',     category: 'themes',  cost: 1200 },
+  { id: 'avatar-headphones',   icon: '🎧', title: 'Audiophile',          category: 'avatars', cost: 150  },
+  { id: 'avatar-vinyl-spinner',icon: '🎼', title: 'Vinyl Spinner',       category: 'avatars', cost: 400  },
+  { id: 'avatar-cosmic',       icon: '🪐', title: 'Cosmic Explorer',     category: 'avatars', cost: 750  },
+  { id: 'avatar-golden-ear',   icon: '👑', title: 'Golden Ear',          category: 'avatars', cost: 2000 },
+  { id: 'boost-double-pts',    icon: '⚡', title: '2× Points Weekend',   category: 'boosts',  cost: 200  },
+  { id: 'boost-early-access',  icon: '🚀', title: 'Early Access Pass',   category: 'boosts',  cost: 500  },
+  { id: 'boost-graph-pro',     icon: '🕸️', title: 'Graph Pro Unlock',    category: 'boosts',  cost: 850  },
+  { id: 'boost-spotlight',     icon: '🌟', title: 'Community Spotlight', category: 'boosts',  cost: 650  },
+  { id: 'badge-early-adopter', icon: '🌱', title: 'Early Adopter',       category: 'badges',  cost: 0    },
+  { id: 'badge-crate-digger',  icon: '📦', title: 'Crate Digger',        category: 'badges',  cost: 350  },
+  { id: 'badge-theorist',      icon: '🧠', title: 'Music Theorist',      category: 'badges',  cost: 550  },
+  { id: 'badge-legend',        icon: '🎺', title: 'Living Legend',       category: 'badges',  cost: 5000 },
 ];
 
 const CATALOG_MAP = Object.fromEntries(SHOP_CATALOG.map(i => [i.id, i]));
+
+/* ==========================================
+   GIFT POINT VALUE MAPPING
+   Maps catalog costs to scaled gift point values
+   Cheapest gift = 50 pts, increases by 50 for each tier
+   ========================================== */
+const GIFT_POINT_SCALE = {
+  0: 0,       // Free items (Early Adopter)
+  150: 50,    // Cheapest paid item (Audiophile)
+  200: 100,   // Second cheapest (2× Points Weekend)
+  300: 150,   // Midnight Mode
+  350: 200,   // Crate Digger
+  400: 250,   // Vinyl Spinner
+  450: 300,   // Vinyl Warmth
+  500: 350,   // Early Access Pass
+  550: 400,   // Music Theorist
+  600: 450,   // Neon Pulse
+  650: 500,   // Community Spotlight
+  750: 550,   // Cosmic Explorer
+  850: 600,   // Graph Pro Unlock
+  1200: 650,  // Aurora Borealis
+  2000: 700,  // Golden Ear
+  5000: 750,  // Living Legend (most expensive)
+};
+
+/**
+ * getGiftPointValue - Converts catalog cost to scaled gift point value
+ * @param {number} catalogCost - The cost of the item in the catalog
+ * @returns {number} - The scaled gift point value
+ */
+function getGiftPointValue(catalogCost) {
+  return GIFT_POINT_SCALE[catalogCost] || 50; // Default to 50 if not found
+}
 
 /* ==========================================
    AVATAR UTILITIES
@@ -162,7 +195,7 @@ function loadShopRewards() {
 function loadStats() {
   const raw = localStorage.getItem(KEYS.stats);
   if (raw) return JSON.parse(raw);
-  return { posts: 0, comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0 };
+  return { posts: 0, comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0, giftPointsReceived: 0 };
 }
 
 function saveStats(stats) {
@@ -198,6 +231,7 @@ async function renderStats() {
     { n: stats.likesGiven,      l: 'Likes Given',     highlight: false },
     { n: stats.rewardsSent,     l: 'Rewards Sent',    highlight: true  },
     { n: stats.rewardsReceived, l: 'Received',        highlight: false },
+    { n: stats.giftPointsReceived || 0, l: 'Gift Points',     highlight: true  },
     { n: shopData.length,       l: 'Items Owned',     highlight: false },
   ];
 
@@ -213,7 +247,7 @@ async function renderStats() {
 
 async function getAccurateStats() {
   const cu = window._currentUser;
-  if (!cu) return { comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0 };
+  if (!cu) return { comments: 0, likesGiven: 0, rewardsSent: 0, rewardsReceived: 0, giftPointsReceived: 0 };
 
   const db = window._fbDb;
   if (!db) return loadStats();
@@ -226,6 +260,7 @@ async function getAccurateStats() {
     let totalLikesGiven = 0;
     let totalRewardsSent = 0;
     let totalRewardsReceived = 0;
+    let totalGiftPointsReceived = 0;
 
     // Query all artist comment collections for user's comments
     // Note: This is a simplified approach. In production, you'd want to maintain
@@ -253,9 +288,24 @@ async function getAccurateStats() {
         return sum + c.gifts.filter(g => g.senderId === cu.uid).length;
       }, 0);
       
-      // Count rewards received by user
+      // Count rewards received by user (count)
       totalRewardsReceived = userComments.reduce((sum, c) => {
         return sum + (c.gifts ? c.gifts.length : 0);
+      }, 0);
+      
+      // Calculate total gift points received by user (sum of scaled point values)
+      totalGiftPointsReceived = userComments.reduce((sum, c) => {
+        if (!c.gifts) return sum;
+        return sum + c.gifts.reduce((giftSum, gift) => {
+          // Use stored pointValue if available, otherwise calculate scaled value from catalog
+          if (gift.pointValue !== undefined) {
+            return giftSum + gift.pointValue;
+          }
+          // Fallback: calculate scaled point value from catalog cost
+          const catalogCost = CATALOG_MAP[gift.itemId]?.cost || 0;
+          const scaledValue = getGiftPointValue(catalogCost);
+          return giftSum + scaledValue;
+        }, 0);
       }, 0);
       
       // Update localStorage with accurate counts
@@ -263,7 +313,8 @@ async function getAccurateStats() {
         comments: totalComments,
         likesGiven: totalLikesGiven,
         rewardsSent: totalRewardsSent,
-        rewardsReceived: totalRewardsReceived
+        rewardsReceived: totalRewardsReceived,
+        giftPointsReceived: totalGiftPointsReceived
       };
       saveStats(updatedStats);
       
@@ -490,9 +541,22 @@ function filterComments(comments) {
       break;
     case 'popular':
       filtered.sort((a, b) => {
-        const aGifts = (a.gifts || []).length;
-        const bGifts = (b.gifts || []).length;
-        return bGifts - aGifts;
+        // Calculate total scaled gift point value for each comment
+        const aPoints = (a.gifts || []).reduce((sum, gift) => {
+          if (gift.pointValue !== undefined) {
+            return sum + gift.pointValue;
+          }
+          const catalogCost = CATALOG_MAP[gift.itemId]?.cost || 0;
+          return sum + getGiftPointValue(catalogCost);
+        }, 0);
+        const bPoints = (b.gifts || []).reduce((sum, gift) => {
+          if (gift.pointValue !== undefined) {
+            return sum + gift.pointValue;
+          }
+          const catalogCost = CATALOG_MAP[gift.itemId]?.cost || 0;
+          return sum + getGiftPointValue(catalogCost);
+        }, 0);
+        return bPoints - aPoints;
       });
       break;
     case 'recent':
@@ -619,17 +683,31 @@ function renderCommentGifts(gifts) {
   if (!gifts || gifts.length === 0) return '';
   
   const giftCounts = {};
+  let totalPoints = 0;
+  
   gifts.forEach(gift => {
     const itemId = gift.itemId || 'unknown';
     giftCounts[itemId] = (giftCounts[itemId] || 0) + 1;
+    
+    // Calculate scaled point value
+    if (gift.pointValue !== undefined) {
+      totalPoints += gift.pointValue;
+    } else {
+      const catalogCost = CATALOG_MAP[gift.itemId]?.cost || 0;
+      totalPoints += getGiftPointValue(catalogCost);
+    }
   });
   
-  return Object.entries(giftCounts).map(([itemId, count]) => {
+  const badges = Object.entries(giftCounts).map(([itemId, count]) => {
     const item = CATALOG_MAP[itemId];
     const icon = item ? item.icon : '🎁';
     const title = item ? item.title : 'Gift';
-    return `<span class="comment-gift-badge" title="${escapeHtml(title)}">${icon} ×${count}</span>`;
+    const catalogCost = item ? item.cost : 0;
+    const scaledPoints = getGiftPointValue(catalogCost);
+    return `<span class="comment-gift-badge" title="${escapeHtml(title)} (${scaledPoints} pts each)">${icon} ×${count}</span>`;
   }).join('');
+  
+  return `${badges} <span class="comment-gift-total" style="color: var(--gold); font-weight: 600; margin-left: 4px;">${totalPoints} pts</span>`;
 }
 
 /* ==========================================
@@ -894,17 +972,20 @@ async function confirmGift() {
       return;
     }
     
+    const item = CATALOG_MAP[itemId];
+    const catalogCost = item.cost || 0;
+    const giftPointValue = getGiftPointValue(catalogCost); // Use scaled point value
+    
     const commentRef = doc(db, 'artistComments', activeArtist.id, 'comments', commentId);
     
     await updateDoc(commentRef, {
       gifts: arrayUnion({
         itemId,
         senderId: cu.uid,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        pointValue: giftPointValue // Store the scaled point value with the gift
       })
     });
-
-    const item = CATALOG_MAP[itemId];
     
     // Decrement inventory count
     inventory[itemId] = inventoryCount - 1;
@@ -916,8 +997,8 @@ async function confirmGift() {
     
     // Stats will be recalculated when comments update via snapshot listener
     closeGiftModal();
-    showToast(`${item.icon} Gift sent!`, 'reward');
-    addActivity('🎁', '#fef3c7', `You gifted <strong>${escapeHtml(item.title)}</strong> to a comment.`);
+    showToast(`${item.icon} Gift sent! (${giftPointValue} pts)`, 'reward');
+    addActivity('🎁', '#fef3c7', `You gifted <strong>${escapeHtml(item.title)}</strong> (${giftPointValue} pts) to a comment.`);
     
     // Update stats display to reflect new inventory count
     await renderStats();
@@ -934,10 +1015,23 @@ async function renderTopGiftedComments(comments) {
   const rankingEl = document.getElementById('top-gifted-ranking');
   if (!rankingEl) return;
 
-  // Sort by gift count
+  // Sort by total gift point value (scaled)
   const topComments = [...comments]
     .filter(c => c.gifts && c.gifts.length > 0)
-    .sort((a, b) => b.gifts.length - a.gifts.length)
+    .map(c => {
+      // Calculate total scaled point value for this comment
+      const totalPoints = c.gifts.reduce((sum, gift) => {
+        if (gift.pointValue !== undefined) {
+          return sum + gift.pointValue;
+        }
+        // Fallback: calculate scaled point value from catalog cost
+        const catalogCost = CATALOG_MAP[gift.itemId]?.cost || 0;
+        const scaledValue = getGiftPointValue(catalogCost);
+        return sum + scaledValue;
+      }, 0);
+      return { ...c, totalGiftPoints: totalPoints };
+    })
+    .sort((a, b) => b.totalGiftPoints - a.totalGiftPoints)
     .slice(0, 10);
 
   if (topComments.length === 0) {
@@ -955,6 +1049,7 @@ async function renderTopGiftedComments(comments) {
     const author = await resolveAuthor(comment.authorId, window._currentUser);
     const username = author.username || 'Anonymous';
     const giftCount = comment.gifts.length;
+    const totalPoints = comment.totalGiftPoints;
     const rank = i + 1;
     
     const item = document.createElement('div');
@@ -970,7 +1065,7 @@ async function renderTopGiftedComments(comments) {
             <rect x="2" y="7" width="20" height="5"/>
             <line x1="12" y1="22" x2="12" y2="7"/>
           </svg>
-          ${giftCount} gift${giftCount !== 1 ? 's' : ''}
+          ${totalPoints} pts (${giftCount} gift${giftCount !== 1 ? 's' : ''})
         </div>
       </div>
     `;

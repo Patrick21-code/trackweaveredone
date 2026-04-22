@@ -82,9 +82,38 @@
     .graph-title svg {
       color: var(--blue);
     }
+    .graph-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
     .graph-stats {
       display: flex;
       gap: 1.5rem;
+    }
+    .graph-fullscreen-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1.5px solid var(--rule);
+      background: #fff;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .graph-fullscreen-btn:hover {
+      border-color: var(--blue);
+      background: var(--blue-ghost);
+      color: var(--blue);
+      transform: translateY(-1px);
+    }
+    .graph-fullscreen-btn:active {
+      transform: translateY(0);
     }
     .graph-stat {
       font-size: 0.75rem;
@@ -198,10 +227,31 @@
       border: 1px solid var(--rule);
       border-radius: var(--r-md);
       overflow: hidden;
+      min-width: 0;
+      min-height: 0;
+    }
+    .graph-info-bar {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      pointer-events: none;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      z-index: 10;
     }
     #music-graph-svg {
       width: 100%;
       height: 100%;
+      display: block;
+    }
     }
     .graph-overlay {
       position: absolute;
@@ -292,6 +342,51 @@
       font-size: 0.7rem;
       color: var(--ink-soft);
       line-height: 1.6;
+    }
+    /* Fullscreen mode */
+    .music-graph-section.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      margin: 0;
+      border-radius: 0;
+      border: none;
+      max-width: none;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      overflow: hidden;
+    }
+    .music-graph-section.fullscreen .graph-header {
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--rule-light);
+    }
+    .music-graph-section.fullscreen .graph-container {
+      flex: 1;
+      height: auto;
+      min-height: 0;
+      display: flex;
+    }
+    .music-graph-section.fullscreen .graph-canvas-area {
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+      min-width: 0;
+    }
+    .music-graph-section.fullscreen .graph-sidebar {
+      height: 100%;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+    .music-graph-section.fullscreen #music-graph-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
     @media (max-width: 900px) {
       .graph-container {
@@ -428,37 +523,6 @@
         </div>
 
         <div class="drop-items">
-          <a class="drop-item" href="./dashboard.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-            </svg>
-            Dashboard
-          </a>
-          <a class="drop-item active" href="./engagement.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
-            Community
-          </a>
-          <a class="drop-item" href="./checkin.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-              <polyline points="22 4 12 14.01 9 11.01"/>
-            </svg>
-            Check-In
-          </a>
-          <a class="drop-item" href="./shop.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 01-8 0"/>
-            </svg>
-            Shop
-          </a>
-
-          <div class="drop-divider"></div>
-
           <button class="drop-item danger" id="btn-signout" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -569,9 +633,19 @@
               </svg>
               <span id="graph-artist-name">Lyrics Similarity Graph</span>
             </h3>
-            <div class="graph-stats">
-              <div class="graph-stat"><span id="graph-node-count">—</span> Songs</div>
-              <div class="graph-stat"><span id="graph-edge-count">—</span> Connections</div>
+            <div class="graph-header-actions">
+              <div class="graph-stats">
+                <div class="graph-stat"><span id="graph-node-count">—</span> Songs</div>
+                <div class="graph-stat"><span id="graph-edge-count">—</span> Connections</div>
+              </div>
+              <button class="graph-fullscreen-btn" id="graph-fullscreen-btn" onclick="window.toggleGraphFullscreen()" title="Toggle fullscreen">
+                <svg class="fullscreen-enter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+                <svg class="fullscreen-exit-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                  <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+                </svg>
+              </button>
             </div>
           </div>
           <p class="graph-subtitle">Nodes are songs · Edges connect songs with similar lyrical themes</p>
@@ -607,6 +681,9 @@
               <div class="graph-tooltip-album" id="graph-tt-album"></div>
               <div class="graph-tooltip-connections">Connections: <span id="graph-tt-connections"></span></div>
               <div class="graph-tooltip-similar" id="graph-tt-similar"></div>
+            </div>
+            <div class="graph-info-bar">
+              Drag nodes · Scroll to zoom · Click to highlight · ESC to exit fullscreen
             </div>
           </div>
         </div>

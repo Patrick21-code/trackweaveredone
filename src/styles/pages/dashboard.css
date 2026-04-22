@@ -478,9 +478,10 @@ body.overlay-open { overflow: hidden; }
 .artist-img-bg img {
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
   border-radius: 50%;
+  transition: opacity 0.3s ease;
 }
 
 /* ── Shimmer while image loads ───────────────────────────── */

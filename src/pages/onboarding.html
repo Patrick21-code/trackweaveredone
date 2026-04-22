@@ -17,6 +17,7 @@
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, updateDoc, serverTimestamp }
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAvailableGenres, getArtistsByGenre } from "../scripts/available-artists.js";
 
     const firebaseConfig = {
       apiKey:            "AIzaSyBIEvBzIOtBFJpCxqM2onqFbK6Nw82AYp4",
@@ -119,17 +120,60 @@
 
       document.getElementById("btn-finish").addEventListener("click", handleFinish);
 
-      // Genre chip toggle
-      document.querySelectorAll(".genre-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          chip.classList.toggle("selected");
-          hideError();
-        });
-      });
+      // Dynamically populate genre chips from available artists
+      populateGenreChips();
 
       // Show/update step on load
       goToStep(1);
     });
+
+    // ── POPULATE GENRE CHIPS FROM AVAILABLE ARTISTS ──────────────
+    function populateGenreChips() {
+      const genreGrid = document.querySelector(".genre-grid");
+      const availableGenres = getAvailableGenres();
+      
+      // Clear existing chips
+      genreGrid.innerHTML = "";
+      
+      // Create chips for each available genre with artist count
+      availableGenres.forEach(genre => {
+        const artists = getArtistsByGenre(genre);
+        const chip = document.createElement("div");
+        chip.className = "genre-chip";
+        chip.dataset.genre = genre;
+        
+        // Add artist count badge
+        const artistCount = artists.length;
+        chip.innerHTML = `${escapeHtml(genre)} <span class="genre-count">${artistCount}</span>`;
+        
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("selected");
+          hideError();
+          updateGenreCount();
+        });
+        
+        genreGrid.appendChild(chip);
+      });
+      
+      // Update the hint text
+      updateGenreCount();
+    }
+
+    // ── UPDATE GENRE COUNT HINT ──────────────────────────────────
+    function updateGenreCount() {
+      const count = document.querySelectorAll(".genre-chip.selected").length;
+      const hint = document.querySelector(".genre-hint span");
+      if (hint) {
+        hint.textContent = count > 0 ? `${count} selected` : "one";
+      }
+    }
+
+    // ── ESCAPE HTML HELPER ───────────────────────────────────────
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
 
     // ── SAVE TO FIRESTORE ────────────────────────────────────────────
     async function handleFinish() {
@@ -384,6 +428,31 @@
       font-size: 0.75rem;
     }
 
+    /* ── Genre count badge ── */
+    .genre-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      margin-left: 5px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: var(--blue-pale);
+      color: var(--blue);
+      border-radius: 99px;
+      transition: all .16s ease;
+    }
+    .genre-chip:hover .genre-count {
+      background: var(--blue);
+      color: #fff;
+    }
+    .genre-chip.selected .genre-count {
+      background: rgba(255,255,255,.25);
+      color: #fff;
+    }
+
     /* ── Error banner ── */
     .ob-error {
       display: block;
@@ -628,24 +697,7 @@
       <p class="genre-hint">Pick as many as you like — select at least <span>one</span> to continue.</p>
 
       <div class="genre-grid">
-        <div class="genre-chip" data-genre="Alternative">Alternative</div>
-        <div class="genre-chip" data-genre="Indie">Indie</div>
-        <div class="genre-chip" data-genre="Hip-Hop">Hip-Hop</div>
-        <div class="genre-chip" data-genre="R&B">R&amp;B</div>
-        <div class="genre-chip" data-genre="Pop">Pop</div>
-        <div class="genre-chip" data-genre="Electronic">Electronic</div>
-        <div class="genre-chip" data-genre="Rock">Rock</div>
-        <div class="genre-chip" data-genre="Classical">Classical</div>
-        <div class="genre-chip" data-genre="Jazz">Jazz</div>
-        <div class="genre-chip" data-genre="Metal">Metal</div>
-        <div class="genre-chip" data-genre="Folk">Folk</div>
-        <div class="genre-chip" data-genre="Soul">Soul</div>
-        <div class="genre-chip" data-genre="Country">Country</div>
-        <div class="genre-chip" data-genre="Punk">Punk</div>
-        <div class="genre-chip" data-genre="Experimental">Experimental</div>
-        <div class="genre-chip" data-genre="Latin">Latin</div>
-        <div class="genre-chip" data-genre="K-Pop">K-Pop</div>
-        <div class="genre-chip" data-genre="OPM">OPM</div>
+        <!-- Genre chips will be dynamically populated from available artists -->
       </div>
     </div>
 
@@ -692,17 +744,7 @@
   const shell = document.getElementById("ob-shell");
   observer.observe(shell, { attributes: true, childList: true, subtree: true });
 
-  // Live genre count update
-  document.addEventListener("DOMContentLoaded", () => {
-    const chips = document.querySelectorAll(".genre-chip");
-    const hint  = document.querySelector(".genre-hint span");
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        const count = document.querySelectorAll(".genre-chip.selected").length;
-        if (hint) hint.textContent = count > 0 ? `${count} selected` : "one";
-      });
-    });
-  });
+  // Note: Genre chips are now dynamically populated in the module script above
 </script>
 
 </body>

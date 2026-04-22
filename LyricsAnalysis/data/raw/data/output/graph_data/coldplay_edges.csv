@@ -1,0 +1,625 @@
+song_a,album_a,song_b,album_b,similarity
+The Scientist,A Rush of Blood to the Head,The Scientist (Live In Buenos Aires),Live In Buenos Aires,0.9163
+The Scientist,A Rush of Blood to the Head,The Scientist (Love in Tokyo Version),Love in Tokyo,0.9998
+Viva la Vida,Viva La Vida or Death and All His Friends,Viva La Vida (Live In Buenos Aires),Live In Buenos Aires,0.7917
+Viva la Vida,Viva La Vida or Death and All His Friends,Viva La Vida (Grant’s Uplifting Mix),,0.863
+Viva la Vida,Viva La Vida or Death and All His Friends,Viva La Vida (Thin White Duke mix),,0.863
+Viva la Vida,Viva La Vida or Death and All His Friends,Viva La Vida (Grant’s Uplifting original mix),,0.863
+Fix You,X&Y,Yellow,Parachutes,0.6487
+Fix You,X&Y,Lost+ (Remix),Prospekt’s March [EP],0.6324
+Fix You,X&Y,Fix You (Live in Manchester),One Love Manchester,0.7861
+Fix You,X&Y,Everglow (Single Version),,0.6493
+Fix You,X&Y,Fix You (Live In Buenos Aires),Live In Buenos Aires,0.7748
+Fix You,X&Y,Fix You (Four Tet Remix),,0.8383
+Yellow,Parachutes,Hymn for the Weekend,A Head Full of Dreams,0.6288
+Yellow,Parachutes,Up&Up,A Head Full of Dreams,0.614
+Yellow,Parachutes,Don’t Panic,Parachutes,0.6327
+Yellow,Parachutes,Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),0.6151
+Yellow,Parachutes,BrokEn,Everyday Life,0.6101
+Yellow,Parachutes,Everglow (Single Version),,0.6458
+Yellow,Parachutes,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6246
+Yellow,Parachutes,Yellow (Live In Buenos Aires),Live In Buenos Aires,0.7643
+Yellow,Parachutes,Yellow (The Alpha Remix),Mince Spies [EP],0.8872
+Yellow,Parachutes,BrokEn (Reimagined),Coldplay: Reimagined ,0.6517
+Yellow,Parachutes,Yellow (Love in Tokyo Version),Love in Tokyo,0.9017
+Yellow,Parachutes,Cry Cry Cry (Reimagined),Coldplay: Reimagined ,0.6183
+Yellow,Parachutes,Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],0.8899
+Yellow,Parachutes,Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9017
+Yellow,Parachutes,Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.8899
+Hymn for the Weekend,A Head Full of Dreams,Up&Up,A Head Full of Dreams,0.6643
+Hymn for the Weekend,A Head Full of Dreams,Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),0.8977
+Hymn for the Weekend,A Head Full of Dreams,BrokEn,Everyday Life,0.6027
+Hymn for the Weekend,A Head Full of Dreams,Hymn for the Weekend (Alan Walker Remix),Hymn for the Weekend (Remixes),0.8122
+Hymn for the Weekend,A Head Full of Dreams,Everglow (Single Version),,0.6248
+Hymn for the Weekend,A Head Full of Dreams,Lethal Drug,,0.6054
+Hymn for the Weekend,A Head Full of Dreams,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.9398
+Hymn for the Weekend,A Head Full of Dreams,BrokEn (Reimagined),Coldplay: Reimagined ,0.6306
+Hymn for the Weekend,A Head Full of Dreams,Hymn For The Weekend Lyrics | Coolplay |,,0.7718
+A Sky Full of Stars,Ghost Stories,A Sky Full of Stars (Hardwell Remix),100 Greatest Workout Songs: Top Tracks for the Gym,0.8187
+A Sky Full of Stars,Ghost Stories,A Sky Full of Stars (Live In Buenos Aires),Live In Buenos Aires,0.934
+A Sky Full of Stars,Ghost Stories,Hymn For The Weekend Lyrics | Coolplay |,,0.6121
+Everglow,A Head Full of Dreams,Adventure of a Lifetime,A Head Full of Dreams,0.6015
+Everglow,A Head Full of Dreams,Everglow (Single Version),,0.7191
+Everglow,A Head Full of Dreams,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.8308
+Adventure of a Lifetime,A Head Full of Dreams,Every Teardrop Is a Waterfall,iTunes Festival: London 2011,0.6092
+Adventure of a Lifetime,A Head Full of Dreams,Everglow (Single Version),,0.6263
+Adventure of a Lifetime,A Head Full of Dreams,Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,0.9257
+Adventure of a Lifetime,A Head Full of Dreams,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.658
+Adventure of a Lifetime,A Head Full of Dreams,Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.9144
+Adventure of a Lifetime,A Head Full of Dreams,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.9096
+Adventure of a Lifetime,A Head Full of Dreams,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.609
+Adventure of a Lifetime,A Head Full of Dreams,Magic (Live In Buenos Aires),Live In Buenos Aires,0.6003
+Orphans,Everyday Life,Orphans (Muzi Remix),,0.8583
+Paradise,Mylo Xyloto,Paradise (Tiësto Remix),Live in Madrid,0.7454
+Paradise,Mylo Xyloto,Paradise (Live In Buenos Aires),Live In Buenos Aires,0.8271
+Paradise,Mylo Xyloto,Paradise (Fedde le Grand Remix),,0.882
+Paradise,Mylo Xyloto,Paradise - radio edit,,0.9002
+Paradise,Mylo Xyloto,Paradise - remix,,0.9009
+Paradise,Mylo Xyloto,Paradise (Love in Tokyo Version),Love in Tokyo,0.8966
+Paradise,Mylo Xyloto,Paradise - Fedde Le Grand Edit,,0.9009
+Magic,Ghost Stories,Magic (Live In Buenos Aires),Live In Buenos Aires,0.982
+Clocks,A Rush of Blood to the Head,Every Teardrop Is a Waterfall,iTunes Festival: London 2011,0.6417
+Clocks,A Rush of Blood to the Head,Birds,A Head Full of Dreams,0.601
+Clocks,A Rush of Blood to the Head,BrokEn,Everyday Life,0.625
+Clocks,A Rush of Blood to the Head,Swallowed in the Sea,X&Y,0.6033
+Clocks,A Rush of Blood to the Head,Moses,Live 2003,0.6029
+Clocks,A Rush of Blood to the Head,Pour Me,,0.6149
+Clocks,A Rush of Blood to the Head,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6062
+Clocks,A Rush of Blood to the Head,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.9498
+Clocks,A Rush of Blood to the Head,Clocks (Röyksopp Trembling Heart remix),,0.9677
+Clocks,A Rush of Blood to the Head,BrokEn (Reimagined),Coldplay: Reimagined ,0.611
+Clocks,A Rush of Blood to the Head,Poor Me,,0.6078
+Clocks,A Rush of Blood to the Head,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.6036
+Clocks,A Rush of Blood to the Head,Clocks/Relojes,Rhythms del Mundo: Revival,0.9694
+Daddy,Everyday Life,Moses,Live 2003,0.6284
+Daddy,Everyday Life,Boys That Sing,,0.633
+Sparks,Parachutes,Sparks (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9992
+Up&Up,A Head Full of Dreams,Don’t Panic,Parachutes,0.6045
+Up&Up,A Head Full of Dreams,Fun,A Head Full of Dreams,0.6372
+Up&Up,A Head Full of Dreams,Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),0.6701
+Up&Up,A Head Full of Dreams,Us Against the World,Mylo Xyloto,0.6279
+Up&Up,A Head Full of Dreams,Everglow (Single Version),,0.6111
+Up&Up,A Head Full of Dreams,Up&Up (Live in Buenos Aires),Live In Buenos Aires,0.8935
+Up&Up,A Head Full of Dreams,Up&Up (Freedo Remix),100 Greatest Workout Songs: Top Tracks for the Gym,0.8943
+Up&Up,A Head Full of Dreams,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6323
+Up&Up,A Head Full of Dreams,BrokEn (Reimagined),Coldplay: Reimagined ,0.611
+Trouble,Parachutes,Trouble (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9964
+Trouble,Parachutes,Trouble (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9964
+All I Can Think About Is You,Kaleidoscope [EP],X&Y,X&Y,0.6002
+Fly On,Ghost Stories Live 2014,O,Ghost Stories,0.7861
+Fly On,Ghost Stories Live 2014,O “Fly on” - Extended version,,0.9795
+Fly On,Ghost Stories Live 2014,"O - live at royce hall, los angeles",,0.9936
+Champion of the World,Everyday Life,Every Teardrop Is a Waterfall,iTunes Festival: London 2011,0.6042
+Champion of the World,Everyday Life,Everglow (Single Version),,0.6003
+Champion of the World,Everyday Life,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6065
+Champion of the World,Everyday Life,Champion of the World (Reimagined),Coldplay: Reimagined ,0.8834
+Violet Hill,Viva La Vida or Death and All His Friends,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6126
+In My Place,A Rush of Blood to the Head,Shiver,Parachutes,0.6149
+In My Place,A Rush of Blood to the Head,Lost+ (Remix),Prospekt’s March [EP],0.6018
+In My Place,A Rush of Blood to the Head,In My Place (Live in Buenos Aires),Live In Buenos Aires,0.7881
+In My Place,A Rush of Blood to the Head,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.6149
+In My Place,A Rush of Blood to the Head,Shiver (Live),,0.6003
+In My Place,A Rush of Blood to the Head,Shiver - live in sydney,,0.6232
+In My Place,A Rush of Blood to the Head,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.6018
+In My Place,A Rush of Blood to the Head,Everything’s Not Lost (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.603
+In My Place,A Rush of Blood to the Head,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.6149
+Ink,Ghost Stories,Every Teardrop Is a Waterfall,iTunes Festival: London 2011,0.6117
+Ink,Ghost Stories,BrokEn,Everyday Life,0.6092
+Ink,Ghost Stories,Low,X&Y,0.6011
+Ink,Ghost Stories,Fix You (Live in Manchester),One Love Manchester,0.6384
+Ink,Ghost Stories,Everglow (Single Version),,0.6119
+Ink,Ghost Stories,In the Sun,,0.6513
+Ink,Ghost Stories,Brothers & Sisters,Brothers & Sisters,0.6157
+Ink,Ghost Stories,Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,0.6022
+Ink,Ghost Stories,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6261
+Ink,Ghost Stories,Up&Up (Live in Buenos Aires),Live In Buenos Aires,0.6085
+Ink,Ghost Stories,Fix You (Live In Buenos Aires),Live In Buenos Aires,0.6332
+Ink,Ghost Stories,Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.6088
+Ink,Ghost Stories,We Found Love,,0.6038
+Ink,Ghost Stories,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6016
+Ink,Ghost Stories,Yellow (The Alpha Remix),Mince Spies [EP],0.6189
+Ink,Ghost Stories,Ring of Fire,,0.6451
+Ink,Ghost Stories,BrokEn (Reimagined),Coldplay: Reimagined ,0.6093
+Ink,Ghost Stories,Yellow (Love in Tokyo Version),Love in Tokyo,0.6029
+Ink,Ghost Stories,Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],0.602
+Ink,Ghost Stories,Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.6029
+Ink,Ghost Stories,Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.602
+Shiver,Parachutes,Til Kingdom Come,X&Y,0.65
+Shiver,Parachutes,Moses,Live 2003,0.6131
+Shiver,Parachutes,Talk (Leaked Version),Unreleased Songs,0.611
+Shiver,Parachutes,Till Kingdom Come,,0.6472
+Shiver,Parachutes,Boys That Sing,,0.6406
+Shiver,Parachutes,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,1.0
+Shiver,Parachutes,Shiver (Live),,0.9661
+Shiver,Parachutes,’til Kingdom Come (live),,0.6472
+Shiver,Parachutes,Shiver - live in sydney,,0.9847
+Shiver,Parachutes,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,1.0
+Always in My Head,Ghost Stories,Always in My Head (Live In Buenos Aires),Live In Buenos Aires,0.9214
+Midnight,Ghost Stories,Midnight (Kygo Remix),,0.9668
+Midnight,Ghost Stories,Midnight (Giorgio Moroder Remix),Midnight (Remixes),0.6716
+Midnight,Ghost Stories,"Midnight (Live at The Royal Albert Hall, London)",Ghost Stories Live 2014,1.0
+Midnight,Ghost Stories,Midnight (Phones 4AM Remix),Midnight (Remixes),0.8971
+Midnight,Ghost Stories,Midnight (Henrik Schwarz Remix),Midnight (Remixes),0.9857
+Trouble in Town,Everyday Life,Lost+ (Remix),Prospekt’s March [EP],0.6207
+O,Ghost Stories,Birds,A Head Full of Dreams,0.6061
+O,Ghost Stories,Up With the Birds,Mylo Xyloto,0.6153
+O,Ghost Stories,O “Fly on” - Extended version,,0.781
+O,Ghost Stories,Moses,Live 2003,0.6392
+O,Ghost Stories,Rainy Day,Prospekt’s March [EP],0.6018
+O,Ghost Stories,"O - live at royce hall, los angeles",,0.8017
+O,Ghost Stories,Sweet Marianne,Unreleased Songs,0.6028
+O,Ghost Stories,Boys That Sing,,0.6145
+O,Ghost Stories,Songbird,,0.6295
+True Love,Ghost Stories,True Love (Davide Rossi Remix),,1.0
+True Love,Ghost Stories,"True love - live at the enmore theatre, sydney",,0.9865
+Don’t Panic,Parachutes,Don’t Panic (Blue Room Version),The Singles 1999-2006,0.8349
+Don’t Panic,Parachutes,Don’t Panic (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.7975
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,A Head Full of Dreams,A Head Full of Dreams,0.6052
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Christmas Lights,Live From Spotify London,0.6444
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Lost!,Viva La Vida or Death and All His Friends,0.6044
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Army of One,A Head Full of Dreams,0.6082
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Lost+ (Remix),Prospekt’s March [EP],0.6172
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Birds,A Head Full of Dreams,0.6464
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,BrokEn,Everyday Life,0.6707
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Gravity,The Singles 1999-2006,0.6002
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Us Against the World,Mylo Xyloto,0.6047
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Life in Technicolor ii,Prospekt’s March [EP],0.637
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Don’t Look Back In Anger,One Love Manchester,0.6265
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Fix You (Live in Manchester),One Love Manchester,0.6117
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Everglow (Single Version),,0.6032
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Moses,Live 2003,0.6738
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Help Is Round the Corner,The Singles 1999-2006,0.6075
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,0.6275
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),0.9251
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.6364
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6124
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.8715
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.6357
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,The World Turned Upside Down (2003 Version),Unreleased Songs,0.6187
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.9089
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6646
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Boys That Sing,,0.636
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Clocks (Röyksopp Trembling Heart remix),,0.6607
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,BrokEn (Reimagined),Coldplay: Reimagined ,0.6547
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,A Head Full of Dreams (Love in Tokyo Version),Love in Tokyo,0.6052
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Clocks/Relojes,Rhythms del Mundo: Revival,0.6542
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,Hymn For The Weekend Lyrics | Coolplay |,,0.6081
+Every Teardrop Is a Waterfall,iTunes Festival: London 2011,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.6072
+Charlie Brown,Mylo Xyloto,Charlie Brown (Live in Buenos Aires),Live In Buenos Aires,0.7657
+Charlie Brown,Mylo Xyloto,Charlie Brown (David Audé Remix),,0.8366
+Charlie Brown,Mylo Xyloto,Charlie Brown (Jacques Lu Cont Remix),,0.9241
+Fun,A Head Full of Dreams,Lost+ (Remix),Prospekt’s March [EP],0.6128
+Fun,A Head Full of Dreams,Up in Flames,Mylo Xyloto,0.6005
+Fun,A Head Full of Dreams,Everglow (Single Version),,0.6067
+Fun,A Head Full of Dreams,Cry Cry Cry (Reimagined),Coldplay: Reimagined ,0.6007
+Amazing Day,A Head Full of Dreams,Up With the Birds,Mylo Xyloto,0.6236
+A Head Full of Dreams,A Head Full of Dreams,A Head Full of Dreams (Love in Tokyo Version),Love in Tokyo,1.0
+Christmas Lights,Live From Spotify London,Life in Technicolor ii,Prospekt’s March [EP],0.6321
+Christmas Lights,Live From Spotify London,2000 Miles,Sweet Tracks 2003,0.6184
+Christmas Lights,Live From Spotify London,Christmas With the Kangaroos,Unreleased Songs,0.6049
+Christmas Lights,Live From Spotify London,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6071
+Christmas Lights,Live From Spotify London,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6003
+Amsterdam,A Rush of Blood to the Head,Help Is Round the Corner,The Singles 1999-2006,0.6087
+Amsterdam,A Rush of Blood to the Head,The World Turned Upside Down (2003 Version),Unreleased Songs,0.6006
+Cry Cry Cry,Everyday Life,Cry Cry Cry (Reimagined),Coldplay: Reimagined ,0.8122
+Lost!,Viva La Vida or Death and All His Friends,Lost+ (Remix),Prospekt’s March [EP],0.8132
+Lost!,Viva La Vida or Death and All His Friends,Lost? (Acoustic Version),Violet Hill,0.9637
+Lost!,Viva La Vida or Death and All His Friends,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.9531
+A L I E N S,Kaleidoscope [EP],Moving to Mars,Every Teardrop Is a Waterfall,0.6193
+A L I E N S,Kaleidoscope [EP],A L I E N S (Markus Dravs Remix),,0.9938
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Hymn for the Weekend (Alan Walker Remix),Hymn for the Weekend (Remixes),0.906
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Miracles,Unbroken (Original Motion Picture Soundtrack),0.6401
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Everglow (Single Version),,0.6194
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Lethal Drug,,0.6044
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),0.6096
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.8917
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),BrokEn (Reimagined),Coldplay: Reimagined ,0.6151
+Hymn for the Weekend (Seeb Remix),Hymn for the Weekend (Remixes),Hymn For The Weekend Lyrics | Coolplay |,,0.8723
+Talk,X&Y,White Shadows,X&Y,0.6459
+Talk,X&Y,How You See the World,X&Y,0.646
+Talk,X&Y,Talk (Leaked Version),Unreleased Songs,0.7574
+Talk,X&Y,Talk (Pre-Release Version),Unreleased Songs,0.9295
+Talk,X&Y,Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,0.8249
+Talk,X&Y,Talk ii,,0.7719
+Talk,X&Y,Talk (Thin White Duke mix),,0.8249
+Talk,X&Y,Talk (Junkie XL Mix),Talk - The Remixes,0.8983
+Talk,X&Y,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.7356
+Talk,X&Y,Talk (Dave Audé Club Mix),Unreleased Songs,0.7067
+Talk,X&Y,White Shadows (Morgan Page Bootleg remix),,0.6589
+Talk,X&Y,Talk (François Kevorkian dub),,0.9785
+Army of One,A Head Full of Dreams,Birds,A Head Full of Dreams,0.6289
+Army of One,A Head Full of Dreams,Don’t Look Back In Anger,One Love Manchester,0.6022
+Army of One,A Head Full of Dreams,Moses,Live 2003,0.6229
+Army of One,A Head Full of Dreams,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6119
+Army of One,A Head Full of Dreams,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6422
+God Put a Smile Upon Your Face,A Rush of Blood to the Head,God Put a Smile Upon Your Face (Live In Buenos Aires),Live In Buenos Aires,0.811
+God Put a Smile Upon Your Face,A Rush of Blood to the Head,God Put a Smile Upon Your Face (Def Inc. remix),,0.9577
+Politik,A Rush of Blood to the Head,Politik - live in sydney,,0.9972
+Politik,A Rush of Blood to the Head,Politik (Live),,0.9939
+Lost+ (Remix),Prospekt’s March [EP],Til Kingdom Come,X&Y,0.6105
+Lost+ (Remix),Prospekt’s March [EP],Everglow (Single Version),,0.6535
+Lost+ (Remix),Prospekt’s March [EP],Till Kingdom Come,,0.6154
+Lost+ (Remix),Prospekt’s March [EP],In My Place (Live in Buenos Aires),Live In Buenos Aires,0.6614
+Lost+ (Remix),Prospekt’s March [EP],Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6014
+Lost+ (Remix),Prospekt’s March [EP],Lost? (Acoustic Version),Violet Hill,0.8346
+Lost+ (Remix),Prospekt’s March [EP],’til Kingdom Come (live),,0.6154
+Lost+ (Remix),Prospekt’s March [EP],"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.8301
+Birds,A Head Full of Dreams,Swallowed in the Sea,X&Y,0.6103
+Birds,A Head Full of Dreams,Us Against the World,Mylo Xyloto,0.6393
+Birds,A Head Full of Dreams,Don’t Look Back In Anger,One Love Manchester,0.6084
+Birds,A Head Full of Dreams,Up With the Birds,Mylo Xyloto,0.63
+Birds,A Head Full of Dreams,Life is Beautiful,Unreleased Songs,0.6076
+Birds,A Head Full of Dreams,Moses,Live 2003,0.6399
+Birds,A Head Full of Dreams,Lethal Drug,,0.6019
+Birds,A Head Full of Dreams,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6052
+Birds,A Head Full of Dreams,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6287
+Birds,A Head Full of Dreams,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6051
+Birds,A Head Full of Dreams,Boys That Sing,,0.6088
+Birds,A Head Full of Dreams,Clocks (Röyksopp Trembling Heart remix),,0.6022
+X&Y,X&Y,BrokEn,Everyday Life,0.624
+X&Y,X&Y,Swallowed in the Sea,X&Y,0.6012
+X&Y,X&Y,BrokEn (Reimagined),Coldplay: Reimagined ,0.6146
+BrokEn,Everyday Life,Swallowed in the Sea,X&Y,0.6172
+BrokEn,Everyday Life,Everglow (Single Version),,0.6399
+BrokEn,Everyday Life,Moses,Live 2003,0.65
+BrokEn,Everyday Life,Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),0.6221
+BrokEn,Everyday Life,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6175
+BrokEn,Everyday Life,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6532
+BrokEn,Everyday Life,Pour Me,,0.6877
+BrokEn,Everyday Life,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6241
+BrokEn,Everyday Life,Sweet Marianne,Unreleased Songs,0.6033
+BrokEn,Everyday Life,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6382
+BrokEn,Everyday Life,Boys That Sing,,0.6322
+BrokEn,Everyday Life,Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,0.6483
+BrokEn,Everyday Life,BrokEn (Reimagined),Coldplay: Reimagined ,0.9861
+BrokEn,Everyday Life,Poor Me,,0.6861
+BrokEn,Everyday Life,Clocks/Relojes,Rhythms del Mundo: Revival,0.6104
+Death and All His Friends,Viva La Vida or Death and All His Friends,School,Unreleased Songs,0.7025
+Til Kingdom Come,X&Y,Don’t Look Back In Anger,One Love Manchester,0.6162
+Til Kingdom Come,X&Y,Moses,Live 2003,0.6297
+Til Kingdom Come,X&Y,Till Kingdom Come,,0.9842
+Til Kingdom Come,X&Y,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6173
+Til Kingdom Come,X&Y,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.65
+Til Kingdom Come,X&Y,Shiver (Live),,0.6248
+Til Kingdom Come,X&Y,’til Kingdom Come (live),,0.9842
+Til Kingdom Come,X&Y,Shiver - live in sydney,,0.6429
+Til Kingdom Come,X&Y,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.6089
+Til Kingdom Come,X&Y,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.65
+Oceans,Ghost Stories,"Oceans - live at e-werk, cologne",,0.9872
+Gravity,The Singles 1999-2006,Life in Technicolor ii,Prospekt’s March [EP],0.6197
+Gravity,The Singles 1999-2006,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6065
+Kaleidoscope,A Head Full of Dreams,Colour Spectrum (Live In Buenos Aires),Live In Buenos Aires,0.7187
+What If,X&Y,Square One,X&Y,0.605
+What If,X&Y,What If (Tom Lord Alge Mix),What If,1.0
+Spies,Parachutes,Spies (Blue Room Version),Flavour of the Label,0.9728
+Spies,Parachutes,Spies (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9634
+Lovers in Japan / Reign of Love,Viva La Vida or Death and All His Friends,Lovers in Japan (Osaka Sun Mix),Prospekt’s March [EP],0.7183
+Swallowed in the Sea,X&Y,Don’t Let It Break Your Heart,Mylo Xyloto,0.6116
+Swallowed in the Sea,X&Y,Moses,Live 2003,0.6114
+Swallowed in the Sea,X&Y,Rainy Day,Prospekt’s March [EP],0.6683
+Swallowed in the Sea,X&Y,A Message 2010,Hope for Haiti Now,0.6015
+Swallowed in the Sea,X&Y,Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,0.6183
+Swallowed in the Sea,X&Y,BrokEn (Reimagined),Coldplay: Reimagined ,0.6164
+Swallowed in the Sea,X&Y,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.6006
+A Message,X&Y,A Message 2010,Hope for Haiti Now,0.8643
+The Hardest Part,X&Y,The Hardest Part / Postcards From Far Away,,0.9839
+The Hardest Part,X&Y,The Hardest Part (Tom Lord-Alge mix),,0.9839
+Us Against the World,Mylo Xyloto,Miracles,Unbroken (Original Motion Picture Soundtrack),0.6254
+Us Against the World,Mylo Xyloto,Up With the Birds,Mylo Xyloto,0.621
+Us Against the World,Mylo Xyloto,Moses,Live 2003,0.6196
+Us Against the World,Mylo Xyloto,Rainy Day,Prospekt’s March [EP],0.6308
+Us Against the World,Mylo Xyloto,Up&Up (Live in Buenos Aires),Live In Buenos Aires,0.6228
+Us Against the World,Mylo Xyloto,The Fall of Man,Unreleased Songs,0.626
+Us Against the World,Mylo Xyloto,The Man Who Swears,Unreleased Songs,0.624
+Us Against the World,Mylo Xyloto,Hymn For The Weekend Lyrics | Coolplay |,,0.6082
+Life in Technicolor ii,Prospekt’s March [EP],Now My Feet Won’t Touch the Ground,Prospekt’s March [EP],0.6048
+Life in Technicolor ii,Prospekt’s March [EP],Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6353
+Life in Technicolor ii,Prospekt’s March [EP],Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),0.6019
+Everything’s Not Lost,Parachutes,Everything’s Not Lost (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9903
+Hymn for the Weekend (Alan Walker Remix),Hymn for the Weekend (Remixes),Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.8341
+Hymn for the Weekend (Alan Walker Remix),Hymn for the Weekend (Remixes),Hymn For The Weekend Lyrics | Coolplay |,,0.8147
+See You Soon,Live 2003,I’ll See You Soon,,0.903
+See You Soon,Live 2003,See you soon - live in sydney,,0.9541
+See You Soon,Live 2003,See You Soon (EP),,0.9759
+See You Soon,Live 2003,See You Soon (Live),,0.9754
+Miracles,Unbroken (Original Motion Picture Soundtrack),Hymn For The Weekend Lyrics | Coolplay |,,0.7429
+WOTW / POTP,Everyday Life,WOTW / POTP (Live In Jordan Version),,0.764
+Glass of Water,Prospekt’s March [EP],Glass Of Water (Live),,0.9834
+Don’t Look Back In Anger,One Love Manchester,Till Kingdom Come,,0.6103
+Don’t Look Back In Anger,One Love Manchester,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6449
+Don’t Look Back In Anger,One Love Manchester,’til Kingdom Come (live),,0.6103
+Square One,X&Y,How You See the World,X&Y,0.6087
+Square One,X&Y,Talk (Leaked Version),Unreleased Songs,0.6003
+Square One,X&Y,What If (Tom Lord Alge Mix),What If,0.605
+White Shadows,X&Y,Talk (Leaked Version),Unreleased Songs,0.6194
+White Shadows,X&Y,The World Turned Upside Down (2003 Version),Unreleased Songs,0.6008
+White Shadows,X&Y,Talk (Pre-Release Version),Unreleased Songs,0.6136
+White Shadows,X&Y,Talk ii,,0.6289
+White Shadows,X&Y,Talk (Junkie XL Mix),Talk - The Remixes,0.615
+White Shadows,X&Y,White Shadows (Morgan Page Bootleg remix),,0.9692
+White Shadows,X&Y,Talk (François Kevorkian dub),,0.6441
+Up With the Birds,Mylo Xyloto,1.36,The Singles 1999-2006,0.6161
+Up With the Birds,Mylo Xyloto,Up&Up (Freedo Remix),100 Greatest Workout Songs: Top Tracks for the Gym,0.6012
+Low,X&Y,Fix You (Live in Manchester),One Love Manchester,0.6105
+Low,X&Y,We Found Love,,0.609
+Don’t Let It Break Your Heart,Mylo Xyloto,Moses,Live 2003,0.6115
+Don’t Let It Break Your Heart,Mylo Xyloto,Rainy Day,Prospekt’s March [EP],0.6251
+Don’t Let It Break Your Heart,Mylo Xyloto,Wedding Bells,Unreleased Songs,0.6184
+Can’t Get You Out of My Head,,Wedding Bells,Unreleased Songs,0.6139
+Fix You (Live in Manchester),One Love Manchester,Everglow (Single Version),,0.6003
+Fix You (Live in Manchester),One Love Manchester,In the Sun,,0.6173
+Fix You (Live in Manchester),One Love Manchester,Crests of Waves,The Singles 1999-2006,0.6024
+Fix You (Live in Manchester),One Love Manchester,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6326
+Fix You (Live in Manchester),One Love Manchester,Fix You (Live In Buenos Aires),Live In Buenos Aires,0.8047
+Fix You (Live in Manchester),One Love Manchester,Fix You (Four Tet Remix),,0.7996
+Prospekt’s March / Poppyfields,Prospekt’s March [EP],Prospekt’s March / Poppyfields [Prospekt’s March Edition],Prospekt’s March [EP],0.9151
+Everglow (Single Version),,Bitter Sweet Symphony,,0.6458
+Everglow (Single Version),,Moses,Live 2003,0.6002
+Everglow (Single Version),,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.8405
+Everglow (Single Version),,BrokEn (Reimagined),Coldplay: Reimagined ,0.6639
+Everglow (Single Version),,Cry Cry Cry (Reimagined),Coldplay: Reimagined ,0.6536
+Major Minus,Mylo Xyloto,Major minus - single version,,0.983
+We All Fall in Love Sometimes,Revamp: The Songs of Elton John & Bernie Taupin,Gold in Them Hills,,0.6062
+How You See the World,X&Y,How You See the World No. 2,Help!: A Day in the Life,0.6753
+How You See the World,X&Y,How You See the World (Live from Earls Court),The Singles 1999-2006,0.6944
+How You See the World,X&Y,Talk (Pre-Release Version),Unreleased Songs,0.6531
+How You See the World,X&Y,Talk ii,,0.6455
+How You See the World,X&Y,Talk (Junkie XL Mix),Talk - The Remixes,0.62
+How You See the World,X&Y,Talk (François Kevorkian dub),,0.6313
+O “Fly on” - Extended version,,"O - live at royce hall, los angeles",,0.9763
+Now My Feet Won’t Touch the Ground,Prospekt’s March [EP],Until The Water Flows Over,Unreleased Songs,0.617
+Moses,Live 2003,Rainy Day,Prospekt’s March [EP],0.6062
+Moses,Live 2003,Till Kingdom Come,,0.6127
+Moses,Live 2003,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6478
+Moses,Live 2003,The Fall of Man,Unreleased Songs,0.6259
+Moses,Live 2003,A Sky Full of Stars (Live In Buenos Aires),Live In Buenos Aires,0.6209
+Moses,Live 2003,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6657
+Moses,Live 2003,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6211
+Moses,Live 2003,Boys That Sing,,0.9527
+Moses,Live 2003,Clocks (Röyksopp Trembling Heart remix),,0.6079
+Moses,Live 2003,BrokEn (Reimagined),Coldplay: Reimagined ,0.6368
+Moses,Live 2003,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.6131
+Moses,Live 2003,Shiver (Live),,0.6264
+Moses,Live 2003,’til Kingdom Come (live),,0.6127
+Moses,Live 2003,Shiver - live in sydney,,0.6187
+Moses,Live 2003,Clocks/Relojes,Rhythms del Mundo: Revival,0.6092
+Moses,Live 2003,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.6131
+Rainy Day,Prospekt’s March [EP],Brothers & Sisters,Brothers & Sisters,0.6017
+Rainy Day,Prospekt’s March [EP],Pour Me,,0.6011
+Rainy Day,Prospekt’s March [EP],Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,0.607
+Rainy Day,Prospekt’s March [EP],Wedding Bells,Unreleased Songs,0.6078
+Rainy Day,Prospekt’s March [EP],Brothers and Sisters (Re-recorded),The Singles 1999-2006,0.6011
+Rainy Day,Prospekt’s March [EP],Poor Me,,0.6044
+Moving to Mars,Every Teardrop Is a Waterfall,A L I E N S (Markus Dravs Remix),,0.6092
+In the Sun,,Live Forever,,0.6035
+In the Sun,,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6395
+In the Sun,,We Found Love,,0.6086
+Midnight (Kygo Remix),,Midnight (Giorgio Moroder Remix),Midnight (Remixes),0.6339
+Midnight (Kygo Remix),,"Midnight (Live at The Royal Albert Hall, London)",Ghost Stories Live 2014,0.9668
+Midnight (Kygo Remix),,Midnight (Phones 4AM Remix),Midnight (Remixes),0.9163
+Midnight (Kygo Remix),,Midnight (Henrik Schwarz Remix),Midnight (Remixes),0.937
+Bigger Stronger,The Singles 1999-2006,Bigger Stronger (Live from Norway),Don’t Panic,1.0
+Brothers & Sisters,Brothers & Sisters,1.36,The Singles 1999-2006,0.625
+Brothers & Sisters,Brothers & Sisters,A Message 2010,Hope for Haiti Now,0.6092
+Brothers & Sisters,Brothers & Sisters,Brothers and Sisters (Re-recorded),The Singles 1999-2006,0.9738
+Brothers & Sisters,Brothers & Sisters,Brothers + Sisters (Demo),Ode to Deodorant / Brothers + Sisters,0.9653
+Talk (Leaked Version),Unreleased Songs,Talk (Pre-Release Version),Unreleased Songs,0.7328
+Talk (Leaked Version),Unreleased Songs,Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,0.6185
+Talk (Leaked Version),Unreleased Songs,Talk ii,,0.9289
+Talk (Leaked Version),Unreleased Songs,Talk (Thin White Duke mix),,0.6185
+Talk (Leaked Version),Unreleased Songs,Talk (Junkie XL Mix),Talk - The Remixes,0.7223
+Talk (Leaked Version),Unreleased Songs,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.611
+Talk (Leaked Version),Unreleased Songs,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.8956
+Talk (Leaked Version),Unreleased Songs,Shiver - live in sydney,,0.6043
+Talk (Leaked Version),Unreleased Songs,Talk (Dave Audé Club Mix),Unreleased Songs,0.6184
+Talk (Leaked Version),Unreleased Songs,White Shadows (Morgan Page Bootleg remix),,0.6374
+Talk (Leaked Version),Unreleased Songs,Talk (François Kevorkian dub),,0.7487
+Talk (Leaked Version),Unreleased Songs,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.611
+1.36,The Singles 1999-2006,Brothers and Sisters (Re-recorded),The Singles 1999-2006,0.6174
+1.36,The Singles 1999-2006,Brothers + Sisters (Demo),Ode to Deodorant / Brothers + Sisters,0.6144
+One I Love,Live 2003,Sweet Marianne,Unreleased Songs,0.6435
+One I Love,Live 2003,One I Love (Demo),Unreleased Songs,0.7261
+One I Love,Live 2003,One i love - live in sydney,,0.9845
+Amor Argentina (Live In Buenos Aires),Live In Buenos Aires,De Música Ligera (Live In Buenos Aires),Live In Buenos Aires,0.624
+Lethal Drug,,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6117
+Lethal Drug,,Ring of Fire,,0.6056
+Lethal Drug,,Wedding Bells,Unreleased Songs,0.6063
+Lethal Drug,,Hymn For The Weekend Lyrics | Coolplay |,,0.6205
+Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,Everglow (Live in Buenos Aires),Live In Buenos Aires,0.6527
+Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.9343
+Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.602
+Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.9118
+Adventure of a Lifetime (Matoma Remix),Hakuna Matoma,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6327
+Till Kingdom Come,,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6151
+Till Kingdom Come,,Lost? (Acoustic Version),Violet Hill,0.6026
+Till Kingdom Come,,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.6472
+Till Kingdom Come,,Shiver (Live),,0.6208
+Till Kingdom Come,,’til Kingdom Come (live),,1.0
+Till Kingdom Come,,Shiver - live in sydney,,0.6427
+Till Kingdom Come,,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.6105
+Till Kingdom Come,,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.6472
+Everglow (Live in Buenos Aires),Live In Buenos Aires,Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.6321
+Everglow (Live in Buenos Aires),Live In Buenos Aires,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.6113
+Everglow (Live in Buenos Aires),Live In Buenos Aires,Boys That Sing,,0.6421
+Up&Up (Live in Buenos Aires),Live In Buenos Aires,Up&Up (Freedo Remix),100 Greatest Workout Songs: Top Tracks for the Gym,0.9025
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,0.6134
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,0.6052
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.8651
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.6207
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.8664
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6213
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Clocks (Röyksopp Trembling Heart remix),,0.6092
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),BrokEn (Reimagined),Coldplay: Reimagined ,0.6075
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Clocks/Relojes,Rhythms del Mundo: Revival,0.6005
+Every Teardrop Is a Waterfall (Coldplay vs. Swedish House Mafia),Until Now (Deluxe Edition),Hymn For The Weekend Lyrics | Coolplay |,,0.6014
+A Sky Full of Stars (Hardwell Remix),100 Greatest Workout Songs: Top Tracks for the Gym,A Sky Full of Stars (Live In Buenos Aires),Live In Buenos Aires,0.7852
+How You See the World No. 2,Help!: A Day in the Life,How You See the World (Live from Earls Court),The Singles 1999-2006,0.9905
+Nothing Compares 2 U,,Songbird,,0.6091
+God Put a Smile Upon Your Face (Live In Buenos Aires),Live In Buenos Aires,God Put a Smile Upon Your Face (Def Inc. remix),,0.7841
+Fix You (Live In Buenos Aires),Live In Buenos Aires,Yellow (Live In Buenos Aires),Live In Buenos Aires,0.6105
+Fix You (Live In Buenos Aires),Live In Buenos Aires,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.6051
+Fix You (Live In Buenos Aires),Live In Buenos Aires,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6084
+Fix You (Live In Buenos Aires),Live In Buenos Aires,Fix You (Four Tet Remix),,0.7617
+Paradise (Tiësto Remix),Live in Madrid,Paradise (Live In Buenos Aires),Live In Buenos Aires,0.6562
+Paradise (Tiësto Remix),Live in Madrid,Paradise (Fedde le Grand Remix),,0.7379
+Paradise (Tiësto Remix),Live in Madrid,Paradise - radio edit,,0.7471
+Paradise (Tiësto Remix),Live in Madrid,Paradise - remix,,0.8154
+Paradise (Tiësto Remix),Live in Madrid,Paradise (Love in Tokyo Version),Love in Tokyo,0.7116
+Paradise (Tiësto Remix),Live in Madrid,Paradise - Fedde Le Grand Edit,,0.8154
+Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6019
+Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,0.9171
+Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6221
+Adventure of a Lifetime (Audien Remix),Adventure of a Lifetime - Audien Remix,Hunting High And Low,,0.6033
+Up&Up (Freedo Remix),100 Greatest Workout Songs: Top Tracks for the Gym,The Hardest Part / Postcards From Far Away,,0.6026
+Up&Up (Freedo Remix),100 Greatest Workout Songs: Top Tracks for the Gym,The Hardest Part (Tom Lord-Alge mix),,0.6026
+Midnight (Giorgio Moroder Remix),Midnight (Remixes),"Midnight (Live at The Royal Albert Hall, London)",Ghost Stories Live 2014,0.6716
+Midnight (Giorgio Moroder Remix),Midnight (Remixes),Midnight (Phones 4AM Remix),Midnight (Remixes),0.6141
+Midnight (Giorgio Moroder Remix),Midnight (Remixes),Midnight (Henrik Schwarz Remix),Midnight (Remixes),0.6732
+The Scientist (Live In Buenos Aires),Live In Buenos Aires,The Scientist (Love in Tokyo Version),Love in Tokyo,0.9185
+Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,0.6268
+Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6157
+Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,BrokEn (Reimagined),Coldplay: Reimagined ,0.6359
+Hymn for the Weekend (Live in Buenos Aires),Live In Buenos Aires,Hymn For The Weekend Lyrics | Coolplay |,,0.8105
+Viva La Vida (Live In Buenos Aires),Live In Buenos Aires,Viva La Vida (Grant’s Uplifting Mix),,0.8512
+Viva La Vida (Live In Buenos Aires),Live In Buenos Aires,Viva La Vida (Thin White Duke mix),,0.8512
+Viva La Vida (Live In Buenos Aires),Live In Buenos Aires,Viva La Vida (Grant’s Uplifting original mix),,0.8512
+Something Just Like This (Live In Buenos Aires),Live In Buenos Aires,Something Just Like That (Love in Tokyo Version),Love in Tokyo,1.0
+I’ll See You Soon,,See you soon - live in sydney,,0.9178
+I’ll See You Soon,,See You Soon (EP),,0.9052
+I’ll See You Soon,,See You Soon (Live),,0.9028
+Solid Ground,Unreleased Songs,Until The Water Flows Over,Unreleased Songs,0.7756
+Yellow (Live In Buenos Aires),Live In Buenos Aires,Yellow (The Alpha Remix),Mince Spies [EP],0.8411
+Yellow (Live In Buenos Aires),Live In Buenos Aires,Yellow (Love in Tokyo Version),Love in Tokyo,0.8386
+Yellow (Live In Buenos Aires),Live In Buenos Aires,Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],0.8368
+Yellow (Live In Buenos Aires),Live In Buenos Aires,Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.8386
+Yellow (Live In Buenos Aires),Live In Buenos Aires,Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.8368
+Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.8369
+Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,Clocks (Röyksopp Trembling Heart remix),,0.6017
+Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,BrokEn (Reimagined),Coldplay: Reimagined ,0.6309
+Every Teardrop Is a Waterfall (Avicii ‘Tour’ Mix),,Hymn For The Weekend Lyrics | Coolplay |,,0.6042
+Don’t Panic (Blue Room Version),The Singles 1999-2006,Don’t Panic (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9791
+Paradise (Live In Buenos Aires),Live In Buenos Aires,Paradise (Fedde le Grand Remix),,0.907
+Paradise (Live In Buenos Aires),Live In Buenos Aires,Paradise - radio edit,,0.9138
+Paradise (Live In Buenos Aires),Live In Buenos Aires,Paradise - remix,,0.8508
+Paradise (Live In Buenos Aires),Live In Buenos Aires,Paradise (Love in Tokyo Version),Love in Tokyo,0.9288
+Paradise (Live In Buenos Aires),Live In Buenos Aires,Paradise - Fedde Le Grand Edit,,0.8508
+Adventure of a Lifetime (Live in Buenos Aires),Live In Buenos Aires,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6552
+The Fall of Man,Unreleased Songs,Boys That Sing,,0.6003
+A Sky Full of Stars (Live In Buenos Aires),Live In Buenos Aires,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6201
+A Sky Full of Stars (Live In Buenos Aires),Live In Buenos Aires,Hymn For The Weekend Lyrics | Coolplay |,,0.606
+Pour Me,,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6155
+Pour Me,,Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,0.9078
+Pour Me,,BrokEn (Reimagined),Coldplay: Reimagined ,0.6859
+Pour Me,,Poor Me,,0.9946
+The World Turned Upside Down (2003 Version),Unreleased Songs,Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,0.6133
+Viva La Vida (Grant’s Uplifting Mix),,Viva La Vida (Thin White Duke mix),,1.0
+Viva La Vida (Grant’s Uplifting Mix),,Viva La Vida (Grant’s Uplifting original mix),,1.0
+A Message 2010,Hope for Haiti Now,Talk ii,,0.6026
+Yellow (The Alpha Remix),Mince Spies [EP],BrokEn (Reimagined),Coldplay: Reimagined ,0.6049
+Yellow (The Alpha Remix),Mince Spies [EP],Yellow (Love in Tokyo Version),Love in Tokyo,0.9838
+Yellow (The Alpha Remix),Mince Spies [EP],Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],0.9852
+Yellow (The Alpha Remix),Mince Spies [EP],Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9838
+Yellow (The Alpha Remix),Mince Spies [EP],Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9852
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,Clocks (Live in Buenos Aires),Live In Buenos Aires,0.6224
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,Boys That Sing,,0.6365
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,Clocks (Röyksopp Trembling Heart remix),,0.623
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,BrokEn (Reimagined),Coldplay: Reimagined ,0.6104
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,’til Kingdom Come (live),,0.6151
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,Clocks/Relojes,Rhythms del Mundo: Revival,0.618
+Every Teardrop Is a Waterfall (Live In Buenos Aires),Live In Buenos Aires,Hymn For The Weekend Lyrics | Coolplay |,,0.6143
+Sweet Marianne,Unreleased Songs,BrokEn (Reimagined),Coldplay: Reimagined ,0.611
+Sweet Marianne,Unreleased Songs,One i love - live in sydney,,0.6458
+Clocks (Live in Buenos Aires),Live In Buenos Aires,Clocks (Röyksopp Trembling Heart remix),,0.9595
+Clocks (Live in Buenos Aires),Live In Buenos Aires,BrokEn (Reimagined),Coldplay: Reimagined ,0.6189
+Clocks (Live in Buenos Aires),Live In Buenos Aires,Poor Me,,0.6087
+Clocks (Live in Buenos Aires),Live In Buenos Aires,Clocks/Relojes,Rhythms del Mundo: Revival,0.963
+Charlie Brown (Live in Buenos Aires),Live In Buenos Aires,Charlie Brown (David Audé Remix),,0.7242
+Charlie Brown (Live in Buenos Aires),Live In Buenos Aires,Charlie Brown (Jacques Lu Cont Remix),,0.7611
+Boys That Sing,,BrokEn (Reimagined),Coldplay: Reimagined ,0.6187
+Boys That Sing,,Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,0.6406
+Boys That Sing,,Shiver (Live),,0.6467
+Boys That Sing,,Shiver - live in sydney,,0.6407
+Boys That Sing,,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.6406
+Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,BrokEn (Reimagined),Coldplay: Reimagined ,0.6508
+Pour Me (Live at the Hollywood Bowl),The Singles 1999-2006,Poor Me,,0.9085
+What’s Going On,,What’s Going On Feat. Bono,,0.9716
+Brothers and Sisters (Re-recorded),The Singles 1999-2006,Brothers + Sisters (Demo),Ode to Deodorant / Brothers + Sisters,0.9542
+Talk (Pre-Release Version),Unreleased Songs,Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,0.7815
+Talk (Pre-Release Version),Unreleased Songs,Talk ii,,0.7483
+Talk (Pre-Release Version),Unreleased Songs,Talk (Thin White Duke mix),,0.7815
+Talk (Pre-Release Version),Unreleased Songs,Talk (Junkie XL Mix),Talk - The Remixes,0.9301
+Talk (Pre-Release Version),Unreleased Songs,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.7067
+Talk (Pre-Release Version),Unreleased Songs,Talk (Dave Audé Club Mix),Unreleased Songs,0.7562
+Talk (Pre-Release Version),Unreleased Songs,White Shadows (Morgan Page Bootleg remix),,0.6179
+Talk (Pre-Release Version),Unreleased Songs,Talk (François Kevorkian dub),,0.9144
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk ii,,0.6442
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk (Thin White Duke mix),,1.0
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk (Junkie XL Mix),Talk - The Remixes,0.7632
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.618
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk (Dave Audé Club Mix),Unreleased Songs,0.6408
+Talk (Jacques Lu Cont / Thin White Duke remix),Talk - The Remixes,Talk (François Kevorkian dub),,0.8224
+Paradise (Fedde le Grand Remix),,Paradise - radio edit,,0.9838
+Paradise (Fedde le Grand Remix),,Paradise - remix,,0.9564
+Paradise (Fedde le Grand Remix),,Paradise (Love in Tokyo Version),Love in Tokyo,0.9353
+Paradise (Fedde le Grand Remix),,Paradise - Fedde Le Grand Edit,,0.9564
+Clocks (Röyksopp Trembling Heart remix),,Clocks/Relojes,Rhythms del Mundo: Revival,0.9939
+BrokEn (Reimagined),Coldplay: Reimagined ,Yellow (Love in Tokyo Version),Love in Tokyo,0.6019
+BrokEn (Reimagined),Coldplay: Reimagined ,Poor Me,,0.6864
+BrokEn (Reimagined),Coldplay: Reimagined ,Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.6019
+The Hardest Part / Postcards From Far Away,,The Hardest Part (Tom Lord-Alge mix),,1.0
+Yellow (Love in Tokyo Version),Love in Tokyo,Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],0.9954
+Yellow (Love in Tokyo Version),Love in Tokyo,Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,1.0
+Yellow (Love in Tokyo Version),Love in Tokyo,Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9954
+Viva La Vida (Thin White Duke mix),,Viva La Vida (Grant’s Uplifting original mix),,1.0
+Paradise - radio edit,,Paradise - remix,,0.948
+Paradise - radio edit,,Paradise (Love in Tokyo Version),Love in Tokyo,0.9212
+Paradise - radio edit,,Paradise - Fedde Le Grand Edit,,0.948
+Talk ii,,Talk (Thin White Duke mix),,0.6442
+Talk ii,,Talk (Junkie XL Mix),Talk - The Remixes,0.7246
+Talk ii,,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.8151
+Talk ii,,Talk (Dave Audé Club Mix),Unreleased Songs,0.6175
+Talk ii,,White Shadows (Morgan Page Bootleg remix),,0.6569
+Talk ii,,Talk (François Kevorkian dub),,0.7798
+One I Love (Demo),Unreleased Songs,One i love - live in sydney,,0.7221
+True Love (Davide Rossi Remix),,"True love - live at the enmore theatre, sydney",,0.9865
+Lost? (Acoustic Version),Violet Hill,’til Kingdom Come (live),,0.6026
+Lost? (Acoustic Version),Violet Hill,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.9768
+Paradise - remix,,Paradise (Love in Tokyo Version),Love in Tokyo,0.9134
+Paradise - remix,,Paradise - Fedde Le Grand Edit,,1.0
+Talk (Thin White Duke mix),,Talk (Junkie XL Mix),Talk - The Remixes,0.7632
+Talk (Thin White Duke mix),,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.618
+Talk (Thin White Duke mix),,Talk (Dave Audé Club Mix),Unreleased Songs,0.6408
+Talk (Thin White Duke mix),,Talk (François Kevorkian dub),,0.8224
+"Midnight (Live at The Royal Albert Hall, London)",Ghost Stories Live 2014,Midnight (Phones 4AM Remix),Midnight (Remixes),0.8971
+"Midnight (Live at The Royal Albert Hall, London)",Ghost Stories Live 2014,Midnight (Henrik Schwarz Remix),Midnight (Remixes),0.9857
+Talk (Junkie XL Mix),Talk - The Remixes,Talk (Ulrich Schnauss Remix),Unreleased Songs,0.6868
+Talk (Junkie XL Mix),Talk - The Remixes,Talk (Dave Audé Club Mix),Unreleased Songs,0.7408
+Talk (Junkie XL Mix),Talk - The Remixes,White Shadows (Morgan Page Bootleg remix),,0.613
+Talk (Junkie XL Mix),Talk - The Remixes,Talk (François Kevorkian dub),,0.8838
+Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,Shiver (Live),,0.9661
+Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,’til Kingdom Come (live),,0.6472
+Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,Shiver - live in sydney,,0.9847
+Shiver (Acoustic from Jo Whiley Lunchtime Social),Trouble,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,1.0
+Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9954
+Yellow (Acoustic from Jo Whiley Lunchtime Social),Acoustic [EP],Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,1.0
+See you soon - live in sydney,,See You Soon (EP),,0.9517
+See you soon - live in sydney,,See You Soon (Live),,0.9495
+See You Soon (EP),,See You Soon (Live),,0.9745
+Shiver (Live),,’til Kingdom Come (live),,0.6208
+Shiver (Live),,Shiver - live in sydney,,0.978
+Shiver (Live),,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9661
+’til Kingdom Come (live),,Shiver - live in sydney,,0.6427
+’til Kingdom Come (live),,"Lost@ - Live at the United Center, Chicago, IL",Lost!,0.6105
+’til Kingdom Come (live),,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.6472
+Politik - live in sydney,,Politik (Live),,0.9924
+Talk (Ulrich Schnauss Remix),Unreleased Songs,Talk (Dave Audé Club Mix),Unreleased Songs,0.6041
+Talk (Ulrich Schnauss Remix),Unreleased Songs,Talk (François Kevorkian dub),,0.721
+Charlie Brown (David Audé Remix),,Charlie Brown (Jacques Lu Cont Remix),,0.8951
+Spies (Blue Room Version),Flavour of the Label,Spies (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,0.9686
+Midnight (Phones 4AM Remix),Midnight (Remixes),Midnight (Henrik Schwarz Remix),Midnight (Remixes),0.8719
+Shiver - live in sydney,,Shiver (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9847
+Paradise (Love in Tokyo Version),Love in Tokyo,Paradise - Fedde Le Grand Edit,,0.9134
+Talk (Dave Audé Club Mix),Unreleased Songs,Talk (François Kevorkian dub),,0.693
+Yellow (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,Yellow (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,0.9954
+Trouble (Live at KCRW),Live at KCRW’s “Morning Becomes Eclectic”,Trouble (Live @ Rockefeller Music Hall),Trouble ‒ Norwegian Live EP,1.0
+White Shadows (Morgan Page Bootleg remix),,Talk (François Kevorkian dub),,0.651

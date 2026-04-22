@@ -166,6 +166,39 @@ const RARITY_LABEL = {
 };
 
 /* ──────────────────────────────────────
+   GIFT POINT VALUE MAPPING
+   Maps catalog costs to scaled gift point values
+   Cheapest gift = 50 pts, increases by 50 for each tier
+   ────────────────────────────────────── */
+const GIFT_POINT_SCALE = {
+  0: 0,       // Free items (Early Adopter)
+  150: 50,    // Cheapest paid item (Audiophile)
+  200: 100,   // Second cheapest (2× Points Weekend)
+  300: 150,   // Midnight Mode
+  350: 200,   // Crate Digger
+  400: 250,   // Vinyl Spinner
+  450: 300,   // Vinyl Warmth
+  500: 350,   // Early Access Pass
+  550: 400,   // Music Theorist
+  600: 450,   // Neon Pulse
+  650: 500,   // Community Spotlight
+  750: 550,   // Cosmic Explorer
+  850: 600,   // Graph Pro Unlock
+  1200: 650,  // Aurora Borealis
+  2000: 700,  // Golden Ear
+  5000: 750,  // Living Legend (most expensive)
+};
+
+/**
+ * getGiftPointValue - Converts catalog cost to scaled gift point value
+ * @param {number} catalogCost - The cost of the item in the catalog
+ * @returns {number} - The scaled gift point value
+ */
+function getGiftPointValue(catalogCost) {
+  return GIFT_POINT_SCALE[catalogCost] || 50; // Default to 50 if not found
+}
+
+/* ──────────────────────────────────────
    2. STATE & PERSISTENCE
    ────────────────────────────────────── */
 const STORAGE_KEYS = {
