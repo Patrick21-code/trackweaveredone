@@ -3,6 +3,9 @@
    Handles check-ins, task completion, coin earning, and persistence
    ═══════════════════════════════════════════════════════════ */
 
+// Import coin display module
+import { updateCoinDisplay, setCoins, getCoins } from './coin-display.js';
+
 // ─── STORAGE KEYS ───────────────────────────────────────────
 const STORAGE = {
   points: 'tw_points',
@@ -110,6 +113,7 @@ function addCoins(amount, reason = 'Task completed') {
   state.earnedToday += amount;
   saveState(state);
   updateUI();
+  updateCoinDisplay(); // Update navbar coin display
   showToast(`+${amount} coins! ${reason}`, 'coin');
   celebrateCoins(amount);
 }
@@ -800,6 +804,20 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+// ─── EXPOSE FUNCTIONS GLOBALLY FOR ONCLICK HANDLERS ────────
+window.performCheckIn = performCheckIn;
+window.openTask = openTask;
+window.closeTaskModal = closeTaskModal;
+window.generateGraph = generateGraph;
+window.selectAnswer = selectAnswer;
+window.submitMood = submitMood;
+window.submitReview = submitReview;
+window.addArtist = addArtist;
+window.completeDiscovery = completeDiscovery;
+window.addSong = addSong;
+window.removeSong = removeSong;
+window.completePlaylist = completePlaylist;
 
 // ─── INITIALIZATION ─────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
