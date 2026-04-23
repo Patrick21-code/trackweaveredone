@@ -561,6 +561,5 @@ document.getElementById('search-input').addEventListener('input', e => {
 document.addEventListener('DOMContentLoaded', () => {
   const state = loadUserData();
   updateBanner(state);
+  renderShop();
 });
-
-renderShop();
