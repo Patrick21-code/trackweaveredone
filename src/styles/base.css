@@ -214,7 +214,7 @@ a { color: inherit; text-decoration: none; }
 .nav-end .lnk { font-size: 0.875rem; color: var(--ink-faint); transition: color .15s; }
 .nav-end .lnk:hover { color: var(--ink); }
 
-/* Coin display in navbar */
+/* Coin display in navbar - positioned right beside avatar with 5px gap */
 .nav-coin-display {
   display: flex;
   align-items: center;
@@ -226,6 +226,13 @@ a { color: inherit; text-decoration: none; }
   transition: all 0.2s ease;
   cursor: default;
   user-select: none;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+/* Remove margin-left from avatar wrap since coin display handles the auto margin */
+.nav-avatar-wrap {
+  margin-left: 0;
 }
 
 .nav-coin-display:hover {
