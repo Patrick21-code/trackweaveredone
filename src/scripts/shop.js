@@ -3,6 +3,9 @@
    Data → Render → Purchase → Persist
    ═══════════════════════════════════════════════════════════ */
 
+// Import coin display module
+import { updateCoinDisplay } from './coin-display.js';
+
 /* ──────────────────────────────────────
    1. CATALOG DATA
    Items: id, category, icon, title, desc, cost, rarity
@@ -326,6 +329,7 @@ function handlePurchase(itemId) {
     refreshCard(card, item, state);
   }
   updateBanner(state);
+  updateCoinDisplay(); // Update navbar coin display
   
   const count = state.inventory[itemId];
   showToast(`"${item.title}" added to inventory! (×${count}) 🎉`, 'success');
@@ -516,6 +520,7 @@ function addDemoPoints() {
   state.points += 500;
   saveUserData(state);
   updateBanner(state);
+  updateCoinDisplay(); // Update navbar coin display
   renderShop();
   showToast('Added 500 demo points! 🎉', 'success');
 }
@@ -556,6 +561,5 @@ document.getElementById('search-input').addEventListener('input', e => {
 document.addEventListener('DOMContentLoaded', () => {
   const state = loadUserData();
   updateBanner(state);
+  renderShop();
 });
-
-renderShop();
