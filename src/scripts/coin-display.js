@@ -85,11 +85,6 @@ export function initCoinDisplay() {
       updateCoinDisplay();
     }
   });
-  
-  // Listen for custom coin update events
-  window.addEventListener('coinsUpdated', () => {
-    updateCoinDisplay();
-  });
 }
 
 /**
