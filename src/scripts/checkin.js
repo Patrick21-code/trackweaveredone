@@ -3,6 +3,9 @@
    Handles check-ins, task completion, coin earning, and persistence
    ═══════════════════════════════════════════════════════════ */
 
+// Import coin display module
+import { updateCoinDisplay, setCoins, getCoins } from './coin-display.js';
+
 // ─── STORAGE KEYS ───────────────────────────────────────────
 const STORAGE = {
   points: 'tw_points',
@@ -110,6 +113,7 @@ function addCoins(amount, reason = 'Task completed') {
   state.earnedToday += amount;
   saveState(state);
   updateUI();
+  updateCoinDisplay(); // Update navbar coin display
   showToast(`+${amount} coins! ${reason}`, 'coin');
   celebrateCoins(amount);
 }

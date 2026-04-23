@@ -214,6 +214,64 @@ a { color: inherit; text-decoration: none; }
 .nav-end .lnk { font-size: 0.875rem; color: var(--ink-faint); transition: color .15s; }
 .nav-end .lnk:hover { color: var(--ink); }
 
+/* Coin display in navbar */
+.nav-coin-display {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--amber-ghost);
+  border: 1.5px solid var(--amber-pale);
+  border-radius: var(--radius-sm);
+  padding: 0.42rem 0.85rem;
+  transition: all 0.2s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.nav-coin-display:hover {
+  background: var(--amber-pale);
+  border-color: var(--amber);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+}
+
+.nav-coin-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: coin-pulse 2s ease-in-out infinite;
+}
+
+@keyframes coin-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+#nav-coin-count {
+  font-family: 'Fraunces', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--amber-dk);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* Coin update animation */
+@keyframes coin-bump {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.nav-coin-display.updated {
+  animation: coin-bump 0.4s ease;
+}
+
+.nav-coin-display.updated .nav-coin-icon {
+  animation: coin-bump 0.4s ease;
+}
+
 /* Search bar (index only) */
 .nav-search { flex: 1; max-width: 390px; position: relative; }
 .nav-search input {
