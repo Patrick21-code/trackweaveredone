@@ -772,6 +772,12 @@
       <a href="./shop.html" class="nav-link">Shop</a>
     </nav>
 
+    <!-- Coin display -->
+    <div class="nav-coin-display" id="nav-coin-display" title="Your TrackWeave Coins">
+      <div class="nav-coin-icon">🪙</div>
+      <span id="nav-coin-count">0</span>
+    </div>
+
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
       <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
       <div class="nav-dropdown" id="nav-dropdown" role="menu">
@@ -1505,6 +1511,12 @@
       songModalOverlay.classList.remove('active');
     }
   });
+</script>
+
+<script type="module">
+  // Import and initialize coin display
+  import { initCoinDisplay } from '../scripts/coin-display.js';
+  initCoinDisplay();
 </script>
 
 </body>
