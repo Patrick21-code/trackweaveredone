@@ -197,22 +197,26 @@ class MusicGraphVisualizer {
     this.simulation = null;
     this.currentArtistId = null;
     this.currentConfig = null;
+    this.resizeObserver = null;
+    this.resizeTimeout = null;
+    this.zoomBehavior = null;
+    this.eventListeners = [];
 
     this.svg = d3.select('#music-graph-svg');
-    this.container = this.svg.append('g');
-    this.linkLayer = this.container.append('g');
-    this.nodeLayer = this.container.append('g');
+    this.container = this.svg.append('g').attr('class', 'graph-container-g');
+    this.linkLayer = this.container.append('g').attr('class', 'link-layer');
+    this.nodeLayer = this.container.append('g').attr('class', 'node-layer');
 
     console.log('[MusicGraph] SVG element:', this.svg.node());
 
     // Set initial SVG dimensions
     this.updateSVGDimensions();
 
-    const zoom = d3.zoom()
+    this.zoomBehavior = d3.zoom()
       .scaleExtent([0.1, 4])
       .on('zoom', (e) => this.container.attr('transform', e.transform));
     
-    this.svg.call(zoom);
+    this.svg.call(this.zoomBehavior);
     this.svg.on('click', (e) => {
       if (e.target === this.svg.node() || e.target.tagName === 'svg') {
         this.selectedNode = null;
@@ -223,6 +227,50 @@ class MusicGraphVisualizer {
     // Add resize observer to handle container size changes
     this.setupResizeObserver();
     this.setupEventListeners();
+  }
+
+  // Clean up all resources to prevent memory leaks
+  cleanup() {
+    console.log('[MusicGraph] Cleaning up resources...');
+    
+    // Stop and clear simulation
+    if (this.simulation) {
+      this.simulation.stop();
+      this.simulation = null;
+    }
+
+    // Clear resize observer
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
+
+    // Clear resize timeout
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
+
+    // Remove all event listeners
+    this.eventListeners.forEach(({ element, event, handler }) => {
+      element.removeEventListener(event, handler);
+    });
+    this.eventListeners = [];
+
+    // Clear D3 selections and remove all elements
+    this.linkLayer.selectAll('*').remove();
+    this.nodeLayer.selectAll('*').remove();
+    
+    // Reset zoom transform
+    if (this.zoomBehavior && this.svg.node()) {
+      this.svg.call(this.zoomBehavior.transform, d3.zoomIdentity);
+    }
+
+    // Clear data
+    this.rawNodes = [];
+    this.rawEdges = [];
+    this.activeAlbums.clear();
+    this.selectedNode = null;
   }
 
   updateSVGDimensions() {
@@ -251,6 +299,12 @@ class MusicGraphVisualizer {
     if (typeof ResizeObserver === 'undefined') {
       console.warn('[MusicGraph] ResizeObserver not supported, using fallback');
       return;
+    }
+
+    // Clean up existing observer first
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
     }
 
     const canvasArea = document.querySelector('.graph-canvas-area');
@@ -286,18 +340,31 @@ class MusicGraphVisualizer {
   }
 
   setupEventListeners() {
-    document.getElementById('graph-threshold')?.addEventListener('input', (e) => {
+    const thresholdEl = document.getElementById('graph-threshold');
+    const searchEl = document.getElementById('graph-search');
+
+    const thresholdHandler = (e) => {
       this.currentThreshold = parseFloat(e.target.value);
       document.getElementById('graph-thresh-val').textContent = this.currentThreshold.toFixed(2);
       this.selectedNode = null;
       this.buildGraph();
-    });
+    };
 
-    document.getElementById('graph-search')?.addEventListener('input', (e) => {
+    const searchHandler = (e) => {
       this.searchTerm = e.target.value.trim();
       this.selectedNode = null;
       this.buildGraph();
-    });
+    };
+
+    if (thresholdEl) {
+      thresholdEl.addEventListener('input', thresholdHandler);
+      this.eventListeners.push({ element: thresholdEl, event: 'input', handler: thresholdHandler });
+    }
+
+    if (searchEl) {
+      searchEl.addEventListener('input', searchHandler);
+      this.eventListeners.push({ element: searchEl, event: 'input', handler: searchHandler });
+    }
   }
 
   async loadArtistGraph(artistId) {
@@ -312,15 +379,15 @@ class MusicGraphVisualizer {
     }
 
     console.log('[MusicGraph] Found config for:', config.name);
+    
+    // Clean up previous graph completely before loading new one
+    this.cleanup();
+    
     this.currentArtistId = artistId;
     this.currentConfig = config;
     this.showLoading(`Loading ${config.name} graph...`);
     document.getElementById('music-graph-section').style.display = 'block';
     document.getElementById('graph-artist-name').textContent = `${config.name} — Lyrics Similarity`;
-
-    if (this.simulation) this.simulation.stop();
-    this.linkLayer.selectAll('.link').remove();
-    this.nodeLayer.selectAll('.node').remove();
 
     document.getElementById('graph-node-count').textContent = '—';
     document.getElementById('graph-edge-count').textContent = '—';
@@ -439,7 +506,16 @@ class MusicGraphVisualizer {
 
     console.log('[MusicGraph] Using dimensions for simulation:', W, 'x', H);
 
-    if (this.simulation) this.simulation.stop();
+    // Stop and clean up previous simulation completely
+    if (this.simulation) {
+      this.simulation.stop();
+      this.simulation.on('tick', null); // Remove tick handler
+      this.simulation = null;
+    }
+
+    // Clear all existing elements before creating new ones
+    this.linkLayer.selectAll('*').remove();
+    this.nodeLayer.selectAll('*').remove();
 
     const nodeData = nodes.map(n => ({ ...n, connections: connMap[n.title] || 0 }));
     const edgeData = edges.map(e => ({ source: e.a, target: e.b, similarity: e.s }));
@@ -456,9 +532,12 @@ class MusicGraphVisualizer {
       .force('collision', d3.forceCollide(18))
       .alphaDecay(0.03);
 
-    const links = this.linkLayer.selectAll('.link').data(edgeData, d => d.source + '-' + d.target);
-    links.exit().remove();
-    const allLinks = links.enter().append('line').attr('class', 'link').merge(links)
+    // Create fresh links
+    const allLinks = this.linkLayer.selectAll('.link')
+      .data(edgeData, d => `${d.source}-${d.target}`)
+      .enter()
+      .append('line')
+      .attr('class', 'link')
       .attr('stroke', d => {
         const sn = nodeData.find(n => n.title === (typeof d.source === 'object' ? d.source.title : d.source));
         return sn ? (this.currentConfig.albumColors[sn.album] || '#888') : '#888';
@@ -481,19 +560,20 @@ class MusicGraphVisualizer {
         d.fy = null;
       });
 
-    const nodeGroups = this.nodeLayer.selectAll('.node').data(nodeData, d => d.title);
-    nodeGroups.exit().remove();
-    const nodeEnter = nodeGroups.enter().append('g').attr('class', 'node').call(drag);
-    nodeEnter.append('circle');
-    nodeEnter.append('text');
-    const allNodes = nodeEnter.merge(nodeGroups);
+    // Create fresh nodes
+    const allNodes = this.nodeLayer.selectAll('.node')
+      .data(nodeData, d => d.title)
+      .enter()
+      .append('g')
+      .attr('class', 'node')
+      .call(drag);
 
-    allNodes.select('circle')
+    allNodes.append('circle')
       .attr('r', d => 4 + Math.sqrt(d.connections) * 1.5)
       .attr('fill', d => (this.currentConfig.albumColors[d.album] || '#888') + 'cc')
       .attr('stroke', d => this.currentConfig.albumColors[d.album] || '#888');
 
-    allNodes.select('text')
+    allNodes.append('text')
       .text(d => d.connections >= 8 ? d.title.slice(0, 14) : '')
       .attr('dy', d => -(5 + Math.sqrt(d.connections) * 1.5));
 
@@ -683,31 +763,10 @@ window.toggleGraphFullscreen = function() {
   // Wait for CSS transition and layout to complete, then rebuild graph
   setTimeout(() => {
     if (window.musicGraphVisualizer && window.musicGraphVisualizer.currentArtistId) {
-      console.log('[MusicGraph] Fullscreen toggled, updating dimensions...');
+      console.log('[MusicGraph] Fullscreen toggled, rebuilding graph...');
       
-      // Update SVG dimensions to match new container size
-      window.musicGraphVisualizer.updateSVGDimensions();
-      
-      // Stop existing simulation
-      if (window.musicGraphVisualizer.simulation) {
-        window.musicGraphVisualizer.simulation.stop();
-      }
-      
-      // Clear existing nodes' fixed positions to allow repositioning
-      if (window.musicGraphVisualizer.simulation) {
-        window.musicGraphVisualizer.simulation.nodes().forEach(node => {
-          node.fx = null;
-          node.fy = null;
-        });
-      }
-      
-      // Rebuild the graph with new dimensions
+      // Completely rebuild the graph with proper cleanup
       window.musicGraphVisualizer.buildGraph();
-      
-      // Give simulation a boost to settle into new space
-      if (window.musicGraphVisualizer.simulation) {
-        window.musicGraphVisualizer.simulation.alpha(1).restart();
-      }
     }
   }, 250);
 };
