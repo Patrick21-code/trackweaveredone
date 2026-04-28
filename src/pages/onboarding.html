@@ -17,6 +17,7 @@
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, updateDoc, serverTimestamp }
                                from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAvailableGenres, getArtistsByGenre } from "../scripts/available-artists.js";
 
     const firebaseConfig = {
       apiKey:            "AIzaSyBIEvBzIOtBFJpCxqM2onqFbK6Nw82AYp4",
@@ -72,7 +73,6 @@
       document.getElementById("prog-bar-fill").style.width =
         `${((n - 1) / (TOTAL_STEPS - 1)) * 100}%`;
       currentStep = n;
-      hideError();
     }
 
     // ── VALIDATION PER STEP ──────────────────────────────────────────
@@ -81,26 +81,48 @@
         const first    = document.getElementById("ob-first").value.trim();
         const last     = document.getElementById("ob-last").value.trim();
         const username = document.getElementById("ob-username").value.trim();
-        if (!first)    return showError("Please enter your first name.");
-        if (!last)     return showError("Please enter your last name.");
-        if (!username || username.length < 3)
-          return showError("Username must be at least 3 characters.");
-        if (!/^[a-zA-Z0-9_]+$/.test(username))
-          return showError("Username may only contain letters, numbers, and underscores.");
+        if (!first) {
+          showToast("Please enter your first name.", 'error');
+          return false;
+        }
+        if (!last) {
+          showToast("Please enter your last name.", 'error');
+          return false;
+        }
+        if (!username || username.length < 3) {
+          showToast("Username must be at least 3 characters.", 'error');
+          return false;
+        }
+        if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+          showToast("Username may only contain letters, numbers, and underscores.", 'error');
+          return false;
+        }
         return true;
       }
       if (n === 2) {
         const dob = document.getElementById("ob-dob").value;
-        if (!dob) return showError("Please enter your date of birth.");
+        if (!dob) {
+          showToast("Please enter your date of birth.", 'error');
+          return false;
+        }
         const age = Math.floor((Date.now() - new Date(dob)) / (1000 * 60 * 60 * 24 * 365.25));
-        if (age < 13) return showError("You must be at least 13 years old to use TrackWeave.");
-        if (age > 120) return showError("Please enter a valid date of birth.");
+        if (age < 13) {
+          showToast("You must be at least 13 years old to use TrackWeave.", 'error');
+          return false;
+        }
+        if (age > 120) {
+          showToast("Please enter a valid date of birth.", 'error');
+          return false;
+        }
         return true;
       }
       if (n === 3) {
         // Genre selection — at least one required
         const checked = document.querySelectorAll(".genre-chip.selected");
-        if (checked.length === 0) return showError("Please select at least one genre.");
+        if (checked.length === 0) {
+          showToast("Please select at least one genre.", 'error');
+          return false;
+        }
         return true;
       }
       return true;
@@ -119,17 +141,59 @@
 
       document.getElementById("btn-finish").addEventListener("click", handleFinish);
 
-      // Genre chip toggle
-      document.querySelectorAll(".genre-chip").forEach(chip => {
-        chip.addEventListener("click", () => {
-          chip.classList.toggle("selected");
-          hideError();
-        });
-      });
+      // Dynamically populate genre chips from available artists
+      populateGenreChips();
 
       // Show/update step on load
       goToStep(1);
     });
+
+    // ── POPULATE GENRE CHIPS FROM AVAILABLE ARTISTS ──────────────
+    function populateGenreChips() {
+      const genreGrid = document.querySelector(".genre-grid");
+      const availableGenres = getAvailableGenres();
+      
+      // Clear existing chips
+      genreGrid.innerHTML = "";
+      
+      // Create chips for each available genre with artist count
+      availableGenres.forEach(genre => {
+        const artists = getArtistsByGenre(genre);
+        const chip = document.createElement("div");
+        chip.className = "genre-chip";
+        chip.dataset.genre = genre;
+        
+        // Add artist count badge
+        const artistCount = artists.length;
+        chip.innerHTML = `${escapeHtml(genre)} <span class="genre-count">${artistCount}</span>`;
+        
+        chip.addEventListener("click", () => {
+          chip.classList.toggle("selected");
+          updateGenreCount();
+        });
+        
+        genreGrid.appendChild(chip);
+      });
+      
+      // Update the hint text
+      updateGenreCount();
+    }
+
+    // ── UPDATE GENRE COUNT HINT ──────────────────────────────────
+    function updateGenreCount() {
+      const count = document.querySelectorAll(".genre-chip.selected").length;
+      const hint = document.querySelector(".genre-hint span");
+      if (hint) {
+        hint.textContent = count > 0 ? `${count} selected` : "one";
+      }
+    }
+
+    // ── ESCAPE HTML HELPER ───────────────────────────────────────
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
 
     // ── SAVE TO FIRESTORE ────────────────────────────────────────────
     async function handleFinish() {
@@ -149,30 +213,88 @@
           username:           document.getElementById("ob-username").value.trim(),
           displayName:        `${document.getElementById("ob-first").value.trim()} ${document.getElementById("ob-last").value.trim()}`,
           dateOfBirth:        document.getElementById("ob-dob").value,
-          bio:                document.getElementById("ob-bio").value.trim(),
           favoriteGenres:     selectedGenres,
           onboardingComplete: true,
           updatedAt:          serverTimestamp(),
         });
         window.location.href = "./dashboard.html";
       } catch (err) {
-        showError("Something went wrong saving your profile. Please try again.");
+        showToast("Something went wrong saving your profile. Please try again.", 'error');
         btn.disabled = false;
         btn.textContent = "Finish & Go to Dashboard";
         console.error("[TrackWeave] Onboarding save error:", err);
       }
     }
 
+    // ── SONNER-STYLE TOAST NOTIFICATIONS ────────────────────────────
+    function showToast(message, type = 'error', duration = 5000) {
+      // Create container if it doesn't exist
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+      }
+
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+
+      // Icon based on type
+      let iconSvg = '';
+      if (type === 'error') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>`;
+      } else if (type === 'success') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>`;
+      }
+
+      toast.innerHTML = `
+        ${iconSvg}
+        <div class="toast-content">
+          <div class="toast-description">${message}</div>
+        </div>
+        <button class="toast-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      `;
+
+      // Add close functionality
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => removeToast(toast));
+
+      // Add to container
+      container.appendChild(toast);
+
+      // Auto-remove after duration
+      if (duration > 0) {
+        setTimeout(() => removeToast(toast), duration);
+      }
+    }
+
+    function removeToast(toast) {
+      toast.classList.add('toast-exit');
+      setTimeout(() => {
+        toast.remove();
+        // Remove container if empty
+        const container = document.getElementById('toast-container');
+        if (container && container.children.length === 0) {
+          container.remove();
+        }
+      }, 200);
+    }
+
     // ── HELPERS ──────────────────────────────────────────────────────
-    function showError(msg) {
-      const box = document.getElementById("ob-error");
-      box.textContent = msg;
-      box.hidden = false;
-      box.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-    function hideError() {
-      document.getElementById("ob-error").hidden = true;
-    }
   </script>
 
   <style>
@@ -187,7 +309,7 @@
     /* ── Onboarding wrapper ── */
     .ob-page {
       flex: 1; display: flex; align-items: center; justify-content: center;
-      padding: 3rem 1.5rem;
+      padding: 2rem 1.5rem;
       position: relative; overflow: hidden;
     }
 
@@ -218,12 +340,12 @@
 
     /* ── Card ── */
     .ob-card {
-      width: 100%; max-width: 560px;
+      width: 100%; max-width: 640px;
       background: #fff;
       border: 1.5px solid var(--rule);
       border-radius: var(--r-lg);
       box-shadow: 0 4px 16px rgba(17,24,32,.06), 0 24px 64px rgba(17,24,32,.08);
-      padding: 2.8rem 2.6rem;
+      padding: 2.2rem 2.4rem;
       position: relative; z-index: 1;
       /* Subtle entry animation */
       animation: card-rise .45s cubic-bezier(.22,1,.36,1) both;
@@ -242,7 +364,7 @@
     }
 
     /* ── Progress bar ── */
-    .ob-progress { margin-bottom: 2.4rem; }
+    .ob-progress { margin-bottom: 2rem; }
     .prog-bar-track {
       height: 3px; background: var(--rule-light);
       border-radius: 99px; margin-bottom: 1rem; overflow: hidden;
@@ -287,7 +409,7 @@
     .prog-step.done .prog-dot { font-size: 0; }
 
     /* ── Step heading ── */
-    .ob-step-head { margin-bottom: 1.8rem; }
+    .ob-step-head { margin-bottom: 1.5rem; }
     .ob-eyebrow {
       font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em;
       text-transform: uppercase; color: var(--blue);
@@ -295,13 +417,13 @@
     }
     .ob-title {
       font-family: 'Fraunces', serif;
-      font-size: 1.65rem; font-weight: 400;
+      font-size: 1.5rem; font-weight: 400;
       color: var(--ink); letter-spacing: -0.025em;
       line-height: 1.12; margin-bottom: 0.4rem;
     }
     .ob-title em { font-style: italic; color: var(--blue); }
     .ob-subtitle {
-      font-size: 0.875rem; font-weight: 300;
+      font-size: 0.85rem; font-weight: 300;
       color: var(--ink-faint); line-height: 1.6;
     }
 
@@ -317,23 +439,23 @@
     }
 
     /* ── Fields ── */
-    .ob-field { display: flex; flex-direction: column; gap: 0.32rem; margin-bottom: 1rem; }
+    .ob-field { display: flex; flex-direction: column; gap: 0.32rem; margin-bottom: 0.85rem; }
     .ob-field label {
-      font-size: 0.8rem; font-weight: 500;
+      font-size: 0.78rem; font-weight: 500;
       color: var(--ink); letter-spacing: 0.01em;
     }
     .ob-field .hint {
-      font-size: 0.73rem; color: var(--ink-faint);
+      font-size: 0.72rem; color: var(--ink-faint);
       margin-top: 0.18rem;
     }
     .ob-field input,
     .ob-field select,
     .ob-field textarea {
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.9rem; color: var(--ink);
+      font-size: 0.88rem; color: var(--ink);
       background: #fff; border: 1.5px solid var(--rule);
       border-radius: var(--r-sm);
-      padding: 0.68rem 0.9rem; outline: none; width: 100%;
+      padding: 0.62rem 0.85rem; outline: none; width: 100%;
       transition: border-color .18s, box-shadow .18s, background .18s;
     }
     .ob-field input::placeholder,
@@ -345,7 +467,7 @@
       box-shadow: 0 0 0 3px rgba(37,99,235,.1);
       background: #fafcff;
     }
-    .ob-field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+    .ob-field textarea { resize: vertical; min-height: 70px; line-height: 1.55; }
 
     /* Input with icon prefix */
     .ob-field .input-wrap { position: relative; }
@@ -366,8 +488,8 @@
     }
     .genre-chip {
       font-family: 'Instrument Sans', sans-serif;
-      font-size: 0.82rem; font-weight: 500;
-      padding: 0.45rem 0.9rem; border-radius: 99px;
+      font-size: 0.8rem; font-weight: 500;
+      padding: 0.4rem 0.85rem; border-radius: 99px;
       border: 1.5px solid var(--rule);
       background: #fff; color: var(--ink-soft);
       cursor: pointer; transition: all .16s ease;
@@ -381,33 +503,38 @@
     }
     .genre-chip.selected::before {
       content: '✓ ';
-      font-size: 0.75rem;
+      font-size: 0.72rem;
     }
 
-    /* ── Error banner ── */
-    .ob-error {
-      display: block;
-      background: var(--red-ghost);
-      border: 1px solid #fecaca;
-      color: var(--red);
-      font-size: 0.8125rem;
-      border-radius: var(--r-sm);
-      padding: 10px 14px;
-      margin-bottom: 1.2rem;
-      display: flex; align-items: center; gap: 0.5rem;
+    /* ── Genre count badge ── */
+    .genre-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      margin-left: 5px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      background: var(--blue-pale);
+      color: var(--blue);
+      border-radius: 99px;
+      transition: all .16s ease;
     }
-    .ob-error::before {
-      content: '';
-      flex-shrink: 0;
-      width: 16px; height: 16px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='12'/%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'/%3E%3C/svg%3E");
-      background-size: contain; background-repeat: no-repeat;
+    .genre-chip:hover .genre-count {
+      background: var(--blue);
+      color: #fff;
+    }
+    .genre-chip.selected .genre-count {
+      background: rgba(255,255,255,.25);
+      color: #fff;
     }
 
     /* ── Nav buttons ── */
     .ob-nav {
       display: flex; gap: 0.75rem;
-      margin-top: 1.8rem; padding-top: 1.6rem;
+      margin-top: 1.5rem; padding-top: 1.4rem;
       border-top: 1px solid var(--rule);
     }
     .btn-ob-back {
@@ -492,6 +619,128 @@
       .ob-card { padding: 2rem 1.4rem; }
       .field-row-2 { grid-template-columns: 1fr; }
     }
+
+    /* Sonner-style Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px 20px;
+      min-width: 320px;
+      max-width: 420px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      pointer-events: auto;
+      animation: toast-slide-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
+      transform-origin: bottom right;
+    }
+
+    .toast.toast-exit {
+      animation: toast-slide-out 0.2s cubic-bezier(0.06, 0.71, 0.55, 1) forwards;
+    }
+
+    @keyframes toast-slide-in {
+      from {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toast-slide-out {
+      to {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+
+    .toast-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toast-description {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .toast-close {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      transition: color 0.15s;
+      margin-top: 2px;
+    }
+
+    .toast-close:hover {
+      color: #475569;
+    }
+
+    .toast.error {
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+
+    .toast.error .toast-description {
+      color: #dc2626;
+    }
+
+    .toast.success {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .toast.success .toast-description {
+      color: #16a34a;
+    }
+
+    @media (max-width: 640px) {
+      .toast-container {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      .toast {
+        min-width: unset;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -552,9 +801,6 @@
       </div>
     </div>
 
-    <!-- Error banner -->
-    <span id="ob-error" class="ob-error" hidden></span>
-
     <!-- ── STEP 1: Profile ── -->
     <div class="ob-step" data-step="1">
       <div class="ob-step-head">
@@ -586,11 +832,6 @@
           <input type="text" id="ob-username" placeholder="ashleyrivera" autocomplete="username" />
         </div>
         <span class="hint">Letters, numbers, and underscores only. Min. 3 characters.</span>
-      </div>
-
-      <div class="ob-field">
-        <label for="ob-bio">Bio <span class="optional">optional</span></label>
-        <textarea id="ob-bio" placeholder="Music lover. Graph enthusiast. Obsessed with Radiohead's discography arcs."></textarea>
       </div>
     </div>
 
@@ -628,24 +869,7 @@
       <p class="genre-hint">Pick as many as you like — select at least <span>one</span> to continue.</p>
 
       <div class="genre-grid">
-        <div class="genre-chip" data-genre="Alternative">Alternative</div>
-        <div class="genre-chip" data-genre="Indie">Indie</div>
-        <div class="genre-chip" data-genre="Hip-Hop">Hip-Hop</div>
-        <div class="genre-chip" data-genre="R&B">R&amp;B</div>
-        <div class="genre-chip" data-genre="Pop">Pop</div>
-        <div class="genre-chip" data-genre="Electronic">Electronic</div>
-        <div class="genre-chip" data-genre="Rock">Rock</div>
-        <div class="genre-chip" data-genre="Classical">Classical</div>
-        <div class="genre-chip" data-genre="Jazz">Jazz</div>
-        <div class="genre-chip" data-genre="Metal">Metal</div>
-        <div class="genre-chip" data-genre="Folk">Folk</div>
-        <div class="genre-chip" data-genre="Soul">Soul</div>
-        <div class="genre-chip" data-genre="Country">Country</div>
-        <div class="genre-chip" data-genre="Punk">Punk</div>
-        <div class="genre-chip" data-genre="Experimental">Experimental</div>
-        <div class="genre-chip" data-genre="Latin">Latin</div>
-        <div class="genre-chip" data-genre="K-Pop">K-Pop</div>
-        <div class="genre-chip" data-genre="OPM">OPM</div>
+        <!-- Genre chips will be dynamically populated from available artists -->
       </div>
     </div>
 
@@ -692,17 +916,7 @@
   const shell = document.getElementById("ob-shell");
   observer.observe(shell, { attributes: true, childList: true, subtree: true });
 
-  // Live genre count update
-  document.addEventListener("DOMContentLoaded", () => {
-    const chips = document.querySelectorAll(".genre-chip");
-    const hint  = document.querySelector(".genre-hint span");
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        const count = document.querySelectorAll(".genre-chip.selected").length;
-        if (hint) hint.textContent = count > 0 ? `${count} selected` : "one";
-      });
-    });
-  });
+  // Note: Genre chips are now dynamically populated in the module script above
 </script>
 
 </body>

@@ -1,0 +1,1605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taylor Swift — Lyrics Similarity Graph</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0d0d12;
+        --surface: #15151e;
+        --surface2: #1c1c28;
+        --border: rgba(255, 255, 255, 0.07);
+        --text: #f0eee8;
+        --muted: rgba(240, 238, 232, 0.45);
+        --accent: #c9a96e;
+        --node-r: 6;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 14px;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 2.5rem 2.5rem 1.5rem;
+        border-bottom: 0.5px solid var(--border);
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .header-left h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        line-height: 1.1;
+      }
+
+      .header-left h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .header-left p {
+        margin-top: 0.4rem;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      .stats {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .stat {
+        text-align: right;
+      }
+
+      .stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: var(--accent);
+        line-height: 1;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-top: 2px;
+      }
+
+      .layout {
+        display: flex;
+        height: calc(100vh - 120px);
+      }
+
+      .sidebar {
+        width: 240px;
+        flex-shrink: 0;
+        border-right: 0.5px solid var(--border);
+        padding: 1.5rem 1.25rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .sidebar-section h3 {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+      }
+
+      .album-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .album-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 4px 6px;
+        border-radius: 6px;
+        transition: background 0.15s;
+        user-select: none;
+      }
+
+      .album-item:hover {
+        background: var(--surface2);
+      }
+      .album-item.dimmed {
+        opacity: 0.35;
+      }
+
+      .album-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .album-name {
+        font-size: 12px;
+        color: var(--text);
+        flex: 1;
+        line-height: 1.3;
+      }
+
+      .album-count {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .threshold-control label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .threshold-control label span {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+
+      .search-box {
+        width: 100%;
+        background: var(--surface2);
+        border: 0.5px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      .search-box:focus {
+        border-color: var(--accent);
+      }
+      .search-box::placeholder {
+        color: var(--muted);
+      }
+
+      #graph-area {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+      }
+
+      svg#graph {
+        width: 100%;
+        height: 100%;
+      }
+
+      .node circle {
+        stroke-width: 1.5;
+        cursor: pointer;
+        transition: r 0.15s;
+      }
+
+      .node:hover circle {
+        stroke-width: 2.5;
+      }
+
+      .node text {
+        font-family: "DM Sans", sans-serif;
+        font-size: 9px;
+        fill: rgba(240, 238, 232, 0.8);
+        pointer-events: none;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
+      .link {
+        stroke-opacity: 0.6;
+        transition: stroke-opacity 0.15s;
+      }
+
+      .tooltip {
+        position: absolute;
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+        max-width: 220px;
+        z-index: 100;
+      }
+
+      .tooltip.visible {
+        opacity: 1;
+      }
+
+      .tooltip-title {
+        font-family: "Playfair Display", serif;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+
+      .tooltip-album {
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .tooltip-connections {
+        font-size: 11px;
+        color: var(--text);
+      }
+
+      .tooltip-connections span {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .tooltip-similar {
+        margin-top: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .info-bar {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        color: var(--muted);
+        pointer-events: none;
+      }
+
+      .controls-hint {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-left">
+        <h1>Taylor Swift — <em>Lyrics Similarity Graph</em></h1>
+        <p>
+          Nodes are songs. Edges connect songs with similar lyrical themes,
+          detected via SBERT embeddings.
+        </p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num" id="node-count">173</div>
+          <div class="stat-label">Songs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" id="edge-count">651</div>
+          <div class="stat-label">Connections</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">11</div>
+          <div class="stat-label">Albums</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <div class="sidebar">
+        <div class="sidebar-section">
+          <h3>Search</h3>
+          <input
+            type="text"
+            class="search-box"
+            id="search"
+            placeholder="Song title..."
+          />
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Similarity threshold</h3>
+          <div class="threshold-control">
+            <label>Min score <span id="thresh-val">0.60</span></label>
+            <input
+              type="range"
+              id="threshold"
+              min="0.60"
+              max="0.95"
+              step="0.01"
+              value="0.60"
+            />
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Albums</h3>
+          <div class="album-legend" id="album-legend"></div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3>Controls</h3>
+          <div class="controls-hint">
+            Scroll to zoom<br />
+            Drag to pan<br />
+            Click a node to highlight connections<br />
+            Click an album to filter<br />
+            Click background to reset
+          </div>
+        </div>
+      </div>
+
+      <div id="graph-area">
+        <svg id="graph"></svg>
+        <div class="tooltip" id="tooltip">
+          <div class="tooltip-title" id="tt-title"></div>
+          <div class="tooltip-album" id="tt-album"></div>
+          <div class="tooltip-connections">
+            Connections: <span id="tt-connections"></span>
+          </div>
+          <div class="tooltip-similar" id="tt-similar"></div>
+        </div>
+        <div class="info-bar">
+          Drag nodes · Scroll to zoom · Click to explore
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ALBUM_COLORS = {
+        "Taylor Swift": "#c9a96e",
+        Fearless: "#e8c97a",
+        "Speak Now": "#b57adc",
+        Red: "#e05c5c",
+        1989: "#7ab8e8",
+        Reputation: "#888888",
+        Lover: "#f48fb1",
+        Folklore: "#a8b8a0",
+        Evermore: "#c4a882",
+        Midnights: "#6b7fd4",
+        "The Tortured Poets Department": "#b0a8c8",
+      };
+
+      const RAW_NODES = [
+        { title: "APerfectlyGoodHeart", album: "Taylor Swift" },
+        { title: "APlaceInThisWorld", album: "Taylor Swift" },
+        { title: "ColdasYou", album: "Taylor Swift" },
+        { title: "ImOnlyMeWhenImWithYou", album: "Taylor Swift" },
+        { title: "Invisible", album: "Taylor Swift" },
+        { title: "MarysSong OhMyMyMy", album: "Taylor Swift" },
+        { title: "OurSong", album: "Taylor Swift" },
+        { title: "PicturetoBurn", album: "Taylor Swift" },
+        { title: "ShouldveSaidNo", album: "Taylor Swift" },
+        { title: "StayBeautiful", album: "Taylor Swift" },
+        { title: "TaylorSwift LinerNotes", album: "Taylor Swift" },
+        { title: "TeardropsOnMyGuitar", album: "Taylor Swift" },
+        { title: "TeardropsonMyGuitar PopVersion", album: "Taylor Swift" },
+        { title: "TheOutside", album: "Taylor Swift" },
+        { title: "TiedTogetherwithaSmile", album: "Taylor Swift" },
+        { title: "TimMcGraw", album: "Taylor Swift" },
+        { title: "Breathe", album: "Fearless" },
+        { title: "Change", album: "Fearless" },
+        { title: "Fearless", album: "Fearless" },
+        { title: "Fearless LinerNotes", album: "Fearless" },
+        { title: "Fifteen", album: "Fearless" },
+        { title: "Forever Always", album: "Fearless" },
+        { title: "HeyStephen", album: "Fearless" },
+        { title: "LoveStory", album: "Fearless" },
+        { title: "TellMeWhy", album: "Fearless" },
+        { title: "TheBestDay", album: "Fearless" },
+        { title: "TheWayILovedYou", album: "Fearless" },
+        { title: "WhiteHorse", album: "Fearless" },
+        { title: "YouBelongWithMe", album: "Fearless" },
+        { title: "YoureNotSorry", album: "Fearless" },
+        { title: "BacktoDecember", album: "Speak Now" },
+        { title: "BetterThanRevenge", album: "Speak Now" },
+        { title: "DearJohn", album: "Speak Now" },
+        { title: "Enchanted", album: "Speak Now" },
+        { title: "Haunted", album: "Speak Now" },
+        { title: "Innocent", album: "Speak Now" },
+        { title: "LastKiss", album: "Speak Now" },
+        { title: "LongLive", album: "Speak Now" },
+        { title: "Mean", album: "Speak Now" },
+        { title: "Mine", album: "Speak Now" },
+        { title: "NeverGrowUp", album: "Speak Now" },
+        { title: "SparksFly", album: "Speak Now" },
+        { title: "SpeakNow", album: "Speak Now" },
+        { title: "TheStoryOfUs", album: "Speak Now" },
+        { title: "22", album: "Red" },
+        { title: "AllTooWell", album: "Red" },
+        { title: "BeginAgain", album: "Red" },
+        { title: "ComeBack   BeHere", album: "Red" },
+        { title: "EverythingHasChanged", album: "Red" },
+        { title: "GirlatHome", album: "Red" },
+        { title: "HolyGround", album: "Red" },
+        { title: "IAlmostDo", album: "Red" },
+        { title: "IKnewYouWereTrouble", album: "Red" },
+        { title: "Red", album: "Red" },
+        { title: "SadBeautifulTragic", album: "Red" },
+        { title: "Starlight", album: "Red" },
+        { title: "StateofGrace", album: "Red" },
+        { title: "StayStayStay", album: "Red" },
+        { title: "TheLastTime", album: "Red" },
+        { title: "TheLuckyOne", album: "Red" },
+        { title: "TheMomentIKnew", album: "Red" },
+        { title: "Treacherous", album: "Red" },
+        { title: "WeAreNeverEverGettingBackTogether", album: "Red" },
+        { title: "Booklet", album: "1989" },
+        { title: "AllYouHadtoDoWasStay", album: "1989" },
+        { title: "BadBlood", album: "1989" },
+        { title: "BlankSpace", album: "1989" },
+        { title: "Clean", album: "1989" },
+        { title: "HowYouGetTheGirl", album: "1989" },
+        { title: "IKnowPlaces", album: "1989" },
+        { title: "IWishYouWould", album: "1989" },
+        { title: "OutOfTheWoods", album: "1989" },
+        { title: "ShakeItOff", album: "1989" },
+        { title: "Style", album: "1989" },
+        { title: "ThisLove", album: "1989" },
+        { title: "WelcometoNewYork", album: "1989" },
+        { title: "WildestDreams", album: "1989" },
+        { title: "CallItWhatYouWant", album: "Reputation" },
+        { title: "DancingWithOurHandsTied", album: "Reputation" },
+        { title: "Delicate", album: "Reputation" },
+        { title: "DontBlameMe", album: "Reputation" },
+        { title: "Dress", album: "Reputation" },
+        { title: "EndGame", album: "Reputation" },
+        { title: "GetawayCar", album: "Reputation" },
+        { title: "Gorgeous", album: "Reputation" },
+        { title: "IDidSomethingBad", album: "Reputation" },
+        { title: "IfYoureAnythingLikeMe Poem", album: "Reputation" },
+        { title: "KingofMyHeart", album: "Reputation" },
+        { title: "LookWhatYouMadeMeDo", album: "Reputation" },
+        { title: "NewYearsDay", album: "Reputation" },
+        { title: "Reputation Prologue", album: "Reputation" },
+        { title: "SoItGoes", album: "Reputation" },
+        { title: "ThisIsWhyWeCantHaveNiceThings", album: "Reputation" },
+        { title: "WhySheDisappeared Poem", album: "Reputation" },
+        { title: "ReadyforIt", album: "Reputation" },
+        { title: "Afterglow", album: "Lover" },
+        { title: "CorneliaStreet", album: "Lover" },
+        { title: "CruelSummer", album: "Lover" },
+        { title: "Daylight", album: "Lover" },
+        { title: "DeathbyaThousandCuts", album: "Lover" },
+        { title: "FalseGod", album: "Lover" },
+        { title: "IForgotThatYouExisted", album: "Lover" },
+        { title: "IThinkHeKnows", album: "Lover" },
+        { title: "ItsNicetoHaveaFriend", album: "Lover" },
+        { title: "LondonBoy", album: "Lover" },
+        { title: "Lover", album: "Lover" },
+        { title: "ME", album: "Lover" },
+        { title: "MissAmericana TheHeartbreakPrince", album: "Lover" },
+        { title: "PaperRings", album: "Lover" },
+        { title: "SoonYoullGetBetter", album: "Lover" },
+        { title: "TheArcher", album: "Lover" },
+        { title: "TheMan", album: "Lover" },
+        { title: "YouNeedToCalmDown", album: "Lover" },
+        { title: "august", album: "Folklore" },
+        { title: "betty", album: "Folklore" },
+        { title: "cardigan", album: "Folklore" },
+        { title: "epiphany", album: "Folklore" },
+        { title: "exile", album: "Folklore" },
+        { title: "hoax", album: "Folklore" },
+        { title: "illicitaffairs", album: "Folklore" },
+        { title: "invisiblestring", album: "Folklore" },
+        { title: "madwoman", album: "Folklore" },
+        { title: "mirrorball", album: "Folklore" },
+        { title: "mytearsricochet", album: "Folklore" },
+        { title: "peace", album: "Folklore" },
+        { title: "seven", album: "Folklore" },
+        { title: "the1", album: "Folklore" },
+        { title: "thelastgreatamericandynasty", album: "Folklore" },
+        { title: "thisismetrying", album: "Folklore" },
+        { title: "champagneproblems", album: "Evermore" },
+        { title: "closure", album: "Evermore" },
+        { title: "coneyisland", album: "Evermore" },
+        { title: "cowboylikeme", album: "Evermore" },
+        { title: "dorothea", album: "Evermore" },
+        { title: "evermore", album: "Evermore" },
+        { title: "goldrush", album: "Evermore" },
+        { title: "happiness", album: "Evermore" },
+        { title: "ivy", album: "Evermore" },
+        { title: "longstoryshort", album: "Evermore" },
+        { title: "marjorie", album: "Evermore" },
+        { title: "nobody nocrime", album: "Evermore" },
+        { title: "tisthedamnseason", album: "Evermore" },
+        { title: "tolerateit", album: "Evermore" },
+        { title: "willow", album: "Evermore" },
+        { title: "Anti Hero", album: "Midnights" },
+        { title: "Bejeweled", album: "Midnights" },
+        { title: "Karma", album: "Midnights" },
+        { title: "Labyrinth", album: "Midnights" },
+        { title: "LavenderHaze", album: "Midnights" },
+        { title: "Maroon", album: "Midnights" },
+        { title: "Mastermind", album: "Midnights" },
+        { title: "MidnightRain", album: "Midnights" },
+        { title: "Question", album: "Midnights" },
+        { title: "SnowOnTheBeach", album: "Midnights" },
+        { title: "SweetNothing", album: "Midnights" },
+        { title: "VigilanteShit", album: "Midnights" },
+        { title: "YoureOnYourOwn Kid", album: "Midnights" },
+        { title: "ButDaddyILoveHim", album: "The Tortured Poets Department" },
+        { title: "ClaraBow", album: "The Tortured Poets Department" },
+        { title: "DownBad", album: "The Tortured Poets Department" },
+        { title: "Florida", album: "The Tortured Poets Department" },
+        { title: "Fortnight", album: "The Tortured Poets Department" },
+        { title: "FreshOutTheSlammer", album: "The Tortured Poets Department" },
+        { title: "GuiltyasSin", album: "The Tortured Poets Department" },
+        {
+          title: "ICanDoItWithABrokenHeart",
+          album: "The Tortured Poets Department",
+        },
+        {
+          title: "ICanFixHim NoReallyICan",
+          album: "The Tortured Poets Department",
+        },
+        { title: "loml", album: "The Tortured Poets Department" },
+        {
+          title: "MyBoyOnlyBreaksHisFavoriteToys",
+          album: "The Tortured Poets Department",
+        },
+        { title: "SoLong London", album: "The Tortured Poets Department" },
+        { title: "TheAlchemy", album: "The Tortured Poets Department" },
+        {
+          title: "TheSmallestManWhoEverLived",
+          album: "The Tortured Poets Department",
+        },
+        {
+          title: "TheTorturedPoetsDepartment",
+          album: "The Tortured Poets Department",
+        },
+        {
+          title: "WhosAfraidofLittleOldMe",
+          album: "The Tortured Poets Department",
+        },
+      ];
+
+      const RAW_EDGES = [
+        { a: "APlaceInThisWorld", b: "ImOnlyMeWhenImWithYou", s: 0.7115 },
+        { a: "APlaceInThisWorld", b: "Breathe", s: 0.6214 },
+        { a: "APlaceInThisWorld", b: "SoItGoes", s: 0.6363 },
+        { a: "APlaceInThisWorld", b: "Afterglow", s: 0.6022 },
+        { a: "ColdasYou", b: "ShouldveSaidNo", s: 0.6314 },
+        { a: "ColdasYou", b: "Breathe", s: 0.606 },
+        { a: "ColdasYou", b: "Forever Always", s: 0.6033 },
+        { a: "ColdasYou", b: "HeyStephen", s: 0.6477 },
+        { a: "ColdasYou", b: "TellMeWhy", s: 0.6521 },
+        { a: "ColdasYou", b: "TheBestDay", s: 0.6047 },
+        { a: "ColdasYou", b: "WhiteHorse", s: 0.6062 },
+        { a: "ColdasYou", b: "YoureNotSorry", s: 0.6419 },
+        { a: "ColdasYou", b: "BacktoDecember", s: 0.7025 },
+        { a: "ColdasYou", b: "DearJohn", s: 0.6121 },
+        { a: "ColdasYou", b: "Haunted", s: 0.6543 },
+        { a: "ColdasYou", b: "Mean", s: 0.6816 },
+        { a: "ColdasYou", b: "SparksFly", s: 0.6213 },
+        { a: "ColdasYou", b: "AllTooWell", s: 0.623 },
+        { a: "ColdasYou", b: "HolyGround", s: 0.643 },
+        { a: "ColdasYou", b: "IAlmostDo", s: 0.6722 },
+        { a: "ColdasYou", b: "IKnewYouWereTrouble", s: 0.6128 },
+        { a: "ColdasYou", b: "SadBeautifulTragic", s: 0.6209 },
+        { a: "ColdasYou", b: "StateofGrace", s: 0.6028 },
+        { a: "ColdasYou", b: "StayStayStay", s: 0.6458 },
+        { a: "ColdasYou", b: "TheLastTime", s: 0.6171 },
+        { a: "ColdasYou", b: "Booklet", s: 0.6396 },
+        { a: "ColdasYou", b: "Clean", s: 0.6396 },
+        { a: "ColdasYou", b: "IWishYouWould", s: 0.6382 },
+        { a: "ColdasYou", b: "ThisIsWhyWeCantHaveNiceThings", s: 0.6137 },
+        { a: "ColdasYou", b: "Afterglow", s: 0.6831 },
+        { a: "ColdasYou", b: "Daylight", s: 0.6737 },
+        { a: "ColdasYou", b: "IForgotThatYouExisted", s: 0.6654 },
+        { a: "ColdasYou", b: "SoonYoullGetBetter", s: 0.6068 },
+        { a: "ColdasYou", b: "hoax", s: 0.6178 },
+        { a: "ColdasYou", b: "mytearsricochet", s: 0.6762 },
+        { a: "ColdasYou", b: "peace", s: 0.6796 },
+        { a: "ColdasYou", b: "closure", s: 0.6412 },
+        { a: "ColdasYou", b: "tisthedamnseason", s: 0.6881 },
+        { a: "ColdasYou", b: "Maroon", s: 0.6086 },
+        { a: "ColdasYou", b: "YoureOnYourOwn Kid", s: 0.6176 },
+        { a: "ColdasYou", b: "Fortnight", s: 0.619 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Breathe", s: 0.6916 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Fearless", s: 0.6081 },
+        { a: "ImOnlyMeWhenImWithYou", b: "BacktoDecember", s: 0.6088 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Haunted", s: 0.6574 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Mean", s: 0.6404 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Mine", s: 0.6009 },
+        { a: "ImOnlyMeWhenImWithYou", b: "SparksFly", s: 0.6627 },
+        { a: "ImOnlyMeWhenImWithYou", b: "AllTooWell", s: 0.6176 },
+        { a: "ImOnlyMeWhenImWithYou", b: "ComeBack   BeHere", s: 0.6014 },
+        { a: "ImOnlyMeWhenImWithYou", b: "HolyGround", s: 0.6386 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Style", s: 0.6669 },
+        { a: "ImOnlyMeWhenImWithYou", b: "SoItGoes", s: 0.6713 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Afterglow", s: 0.6171 },
+        { a: "ImOnlyMeWhenImWithYou", b: "seven", s: 0.624 },
+        { a: "ImOnlyMeWhenImWithYou", b: "cowboylikeme", s: 0.6054 },
+        { a: "ImOnlyMeWhenImWithYou", b: "tisthedamnseason", s: 0.627 },
+        { a: "ImOnlyMeWhenImWithYou", b: "Bejeweled", s: 0.6232 },
+        { a: "ImOnlyMeWhenImWithYou", b: "YoureOnYourOwn Kid", s: 0.624 },
+        { a: "Invisible", b: "Breathe", s: 0.6067 },
+        { a: "Invisible", b: "HeyStephen", s: 0.6099 },
+        { a: "Invisible", b: "SparksFly", s: 0.6259 },
+        { a: "Invisible", b: "EverythingHasChanged", s: 0.6038 },
+        { a: "Invisible", b: "HowYouGetTheGirl", s: 0.6014 },
+        { a: "Invisible", b: "DancingWithOurHandsTied", s: 0.6069 },
+        { a: "Invisible", b: "SoItGoes", s: 0.6278 },
+        { a: "MarysSong OhMyMyMy", b: "OurSong", s: 0.6005 },
+        { a: "MarysSong OhMyMyMy", b: "BacktoDecember", s: 0.6012 },
+        { a: "MarysSong OhMyMyMy", b: "NeverGrowUp", s: 0.6332 },
+        { a: "OurSong", b: "DearJohn", s: 0.6023 },
+        { a: "OurSong", b: "Style", s: 0.6165 },
+        { a: "OurSong", b: "tisthedamnseason", s: 0.6202 },
+        { a: "OurSong", b: "Maroon", s: 0.627 },
+        { a: "PicturetoBurn", b: "TellMeWhy", s: 0.6337 },
+        { a: "PicturetoBurn", b: "Mean", s: 0.6081 },
+        { a: "PicturetoBurn", b: "BlankSpace", s: 0.6286 },
+        { a: "PicturetoBurn", b: "the1", s: 0.6012 },
+        { a: "PicturetoBurn", b: "tisthedamnseason", s: 0.6319 },
+        { a: "ShouldveSaidNo", b: "YoureNotSorry", s: 0.6458 },
+        { a: "ShouldveSaidNo", b: "DearJohn", s: 0.6612 },
+        { a: "ShouldveSaidNo", b: "StayStayStay", s: 0.6041 },
+        {
+          a: "ShouldveSaidNo",
+          b: "WeAreNeverEverGettingBackTogether",
+          s: 0.6106,
+        },
+        { a: "ShouldveSaidNo", b: "ThisIsWhyWeCantHaveNiceThings", s: 0.6117 },
+        { a: "ShouldveSaidNo", b: "Bejeweled", s: 0.6029 },
+        { a: "StayBeautiful", b: "TaylorSwift LinerNotes", s: 0.6006 },
+        { a: "StayBeautiful", b: "TeardropsOnMyGuitar", s: 0.6238 },
+        { a: "StayBeautiful", b: "TeardropsonMyGuitar PopVersion", s: 0.6006 },
+        { a: "StayBeautiful", b: "WildestDreams", s: 0.6072 },
+        { a: "TaylorSwift LinerNotes", b: "TeardropsOnMyGuitar", s: 0.9697 },
+        {
+          a: "TeardropsOnMyGuitar",
+          b: "TeardropsonMyGuitar PopVersion",
+          s: 0.9697,
+        },
+        { a: "TeardropsOnMyGuitar", b: "BeginAgain", s: 0.6179 },
+        { a: "Breathe", b: "Fearless", s: 0.6033 },
+        { a: "Breathe", b: "HeyStephen", s: 0.6285 },
+        { a: "Breathe", b: "YoureNotSorry", s: 0.6269 },
+        { a: "Breathe", b: "BacktoDecember", s: 0.622 },
+        { a: "Breathe", b: "Haunted", s: 0.681 },
+        { a: "Breathe", b: "LastKiss", s: 0.6029 },
+        { a: "Breathe", b: "Mean", s: 0.6192 },
+        { a: "Breathe", b: "SparksFly", s: 0.6548 },
+        { a: "Breathe", b: "ComeBack   BeHere", s: 0.6069 },
+        { a: "Breathe", b: "HolyGround", s: 0.6124 },
+        { a: "Breathe", b: "IAlmostDo", s: 0.6197 },
+        { a: "Breathe", b: "StateofGrace", s: 0.6235 },
+        { a: "Breathe", b: "TheLastTime", s: 0.6627 },
+        { a: "Breathe", b: "AllYouHadtoDoWasStay", s: 0.6004 },
+        { a: "Breathe", b: "IWishYouWould", s: 0.6331 },
+        { a: "Breathe", b: "Style", s: 0.634 },
+        { a: "Breathe", b: "GetawayCar", s: 0.6158 },
+        { a: "Breathe", b: "SoItGoes", s: 0.6695 },
+        { a: "Breathe", b: "Afterglow", s: 0.6284 },
+        { a: "Breathe", b: "tisthedamnseason", s: 0.6134 },
+        { a: "Change", b: "Mean", s: 0.648 },
+        { a: "Change", b: "peace", s: 0.6115 },
+        { a: "Fearless", b: "WhiteHorse", s: 0.6024 },
+        { a: "Fearless", b: "Mine", s: 0.6118 },
+        { a: "Fearless", b: "SparksFly", s: 0.6764 },
+        { a: "Fearless", b: "AllTooWell", s: 0.6162 },
+        { a: "Fearless", b: "Treacherous", s: 0.6085 },
+        { a: "Fearless", b: "Style", s: 0.6457 },
+        { a: "Fearless", b: "CorneliaStreet", s: 0.6141 },
+        { a: "Fearless LinerNotes", b: "Mean", s: 0.648 },
+        { a: "Fearless LinerNotes", b: "peace", s: 0.6115 },
+        { a: "Fifteen", b: "TheBestDay", s: 0.6288 },
+        { a: "Fifteen", b: "NeverGrowUp", s: 0.643 },
+        { a: "Forever Always", b: "HeyStephen", s: 0.6265 },
+        { a: "Forever Always", b: "YoureNotSorry", s: 0.6168 },
+        { a: "Forever Always", b: "BacktoDecember", s: 0.614 },
+        { a: "Forever Always", b: "Haunted", s: 0.6919 },
+        { a: "Forever Always", b: "Mine", s: 0.6535 },
+        { a: "Forever Always", b: "AllTooWell", s: 0.654 },
+        { a: "Forever Always", b: "HolyGround", s: 0.6683 },
+        { a: "Forever Always", b: "IAlmostDo", s: 0.6015 },
+        { a: "Forever Always", b: "IKnewYouWereTrouble", s: 0.6234 },
+        { a: "Forever Always", b: "Style", s: 0.6003 },
+        { a: "Forever Always", b: "DancingWithOurHandsTied", s: 0.619 },
+        { a: "Forever Always", b: "Daylight", s: 0.6296 },
+        { a: "Forever Always", b: "IForgotThatYouExisted", s: 0.6047 },
+        { a: "Forever Always", b: "august", s: 0.6538 },
+        { a: "Forever Always", b: "tisthedamnseason", s: 0.6359 },
+        { a: "Forever Always", b: "Maroon", s: 0.6085 },
+        { a: "HeyStephen", b: "BacktoDecember", s: 0.6729 },
+        { a: "HeyStephen", b: "Haunted", s: 0.6478 },
+        { a: "HeyStephen", b: "SparksFly", s: 0.6407 },
+        { a: "HeyStephen", b: "AllTooWell", s: 0.6126 },
+        { a: "HeyStephen", b: "ComeBack   BeHere", s: 0.6118 },
+        { a: "HeyStephen", b: "EverythingHasChanged", s: 0.6067 },
+        { a: "HeyStephen", b: "HolyGround", s: 0.6837 },
+        { a: "HeyStephen", b: "SadBeautifulTragic", s: 0.6842 },
+        { a: "HeyStephen", b: "StateofGrace", s: 0.6102 },
+        { a: "HeyStephen", b: "TheLastTime", s: 0.6065 },
+        { a: "HeyStephen", b: "BlankSpace", s: 0.6012 },
+        { a: "HeyStephen", b: "SoItGoes", s: 0.6495 },
+        { a: "HeyStephen", b: "Afterglow", s: 0.6003 },
+        { a: "HeyStephen", b: "Daylight", s: 0.6005 },
+        { a: "HeyStephen", b: "IForgotThatYouExisted", s: 0.606 },
+        { a: "HeyStephen", b: "Lover", s: 0.6133 },
+        { a: "HeyStephen", b: "closure", s: 0.6066 },
+        { a: "HeyStephen", b: "tisthedamnseason", s: 0.6848 },
+        { a: "HeyStephen", b: "Bejeweled", s: 0.6171 },
+        { a: "TellMeWhy", b: "YoureNotSorry", s: 0.6221 },
+        { a: "TellMeWhy", b: "BacktoDecember", s: 0.6075 },
+        { a: "TellMeWhy", b: "DearJohn", s: 0.6018 },
+        { a: "TellMeWhy", b: "Mean", s: 0.6424 },
+        { a: "TellMeWhy", b: "SparksFly", s: 0.6304 },
+        { a: "TellMeWhy", b: "AllTooWell", s: 0.6017 },
+        { a: "TellMeWhy", b: "IAlmostDo", s: 0.6326 },
+        { a: "TellMeWhy", b: "StayStayStay", s: 0.6192 },
+        { a: "TellMeWhy", b: "Afterglow", s: 0.6121 },
+        { a: "TellMeWhy", b: "IForgotThatYouExisted", s: 0.6091 },
+        { a: "TellMeWhy", b: "thisismetrying", s: 0.6338 },
+        { a: "TellMeWhy", b: "tisthedamnseason", s: 0.6231 },
+        { a: "TheBestDay", b: "BacktoDecember", s: 0.678 },
+        { a: "TheBestDay", b: "AllTooWell", s: 0.6527 },
+        { a: "TheBestDay", b: "peace", s: 0.6023 },
+        { a: "TheBestDay", b: "tisthedamnseason", s: 0.6664 },
+        { a: "TheBestDay", b: "YoureOnYourOwn Kid", s: 0.6027 },
+        { a: "TheWayILovedYou", b: "StayStayStay", s: 0.6574 },
+        { a: "WhiteHorse", b: "YoureNotSorry", s: 0.6222 },
+        { a: "WhiteHorse", b: "DearJohn", s: 0.6166 },
+        { a: "WhiteHorse", b: "Mine", s: 0.6046 },
+        { a: "WhiteHorse", b: "AllTooWell", s: 0.6194 },
+        { a: "WhiteHorse", b: "Afterglow", s: 0.602 },
+        { a: "WhiteHorse", b: "IForgotThatYouExisted", s: 0.6176 },
+        { a: "WhiteHorse", b: "Bejeweled", s: 0.6238 },
+        { a: "YouBelongWithMe", b: "BetterThanRevenge", s: 0.606 },
+        { a: "YouBelongWithMe", b: "StayStayStay", s: 0.6056 },
+        { a: "YouBelongWithMe", b: "tisthedamnseason", s: 0.6228 },
+        { a: "YoureNotSorry", b: "BacktoDecember", s: 0.6059 },
+        { a: "YoureNotSorry", b: "Haunted", s: 0.6332 },
+        { a: "YoureNotSorry", b: "Mine", s: 0.6133 },
+        { a: "YoureNotSorry", b: "AllTooWell", s: 0.6143 },
+        { a: "YoureNotSorry", b: "IAlmostDo", s: 0.696 },
+        { a: "YoureNotSorry", b: "StayStayStay", s: 0.6209 },
+        { a: "YoureNotSorry", b: "TheLastTime", s: 0.6006 },
+        { a: "YoureNotSorry", b: "AllYouHadtoDoWasStay", s: 0.6229 },
+        { a: "YoureNotSorry", b: "IWishYouWould", s: 0.6439 },
+        { a: "YoureNotSorry", b: "Afterglow", s: 0.6071 },
+        { a: "YoureNotSorry", b: "thisismetrying", s: 0.6281 },
+        { a: "YoureNotSorry", b: "tisthedamnseason", s: 0.6358 },
+        { a: "BacktoDecember", b: "Haunted", s: 0.6085 },
+        { a: "BacktoDecember", b: "Mine", s: 0.6373 },
+        { a: "BacktoDecember", b: "SparksFly", s: 0.6301 },
+        { a: "BacktoDecember", b: "AllTooWell", s: 0.6922 },
+        { a: "BacktoDecember", b: "EverythingHasChanged", s: 0.6099 },
+        { a: "BacktoDecember", b: "HolyGround", s: 0.6591 },
+        { a: "BacktoDecember", b: "IAlmostDo", s: 0.6064 },
+        { a: "BacktoDecember", b: "IKnewYouWereTrouble", s: 0.6139 },
+        { a: "BacktoDecember", b: "StayStayStay", s: 0.6101 },
+        { a: "BacktoDecember", b: "TheLastTime", s: 0.6065 },
+        { a: "BacktoDecember", b: "Booklet", s: 0.6183 },
+        { a: "BacktoDecember", b: "Clean", s: 0.6183 },
+        { a: "BacktoDecember", b: "IWishYouWould", s: 0.6624 },
+        { a: "BacktoDecember", b: "Daylight", s: 0.6518 },
+        { a: "BacktoDecember", b: "IForgotThatYouExisted", s: 0.6571 },
+        { a: "BacktoDecember", b: "Lover", s: 0.6286 },
+        { a: "BacktoDecember", b: "august", s: 0.6322 },
+        { a: "BacktoDecember", b: "mytearsricochet", s: 0.6139 },
+        { a: "BacktoDecember", b: "seven", s: 0.6114 },
+        { a: "BacktoDecember", b: "the1", s: 0.615 },
+        { a: "BacktoDecember", b: "closure", s: 0.6378 },
+        { a: "BacktoDecember", b: "tisthedamnseason", s: 0.7287 },
+        { a: "BacktoDecember", b: "Bejeweled", s: 0.6072 },
+        { a: "BacktoDecember", b: "Maroon", s: 0.6059 },
+        { a: "BacktoDecember", b: "YoureOnYourOwn Kid", s: 0.6617 },
+        { a: "BacktoDecember", b: "Fortnight", s: 0.616 },
+        { a: "BetterThanRevenge", b: "VigilanteShit", s: 0.6539 },
+        { a: "DearJohn", b: "Innocent", s: 0.619 },
+        { a: "DearJohn", b: "Mine", s: 0.6046 },
+        { a: "DearJohn", b: "AllTooWell", s: 0.6571 },
+        { a: "DearJohn", b: "HolyGround", s: 0.6055 },
+        { a: "DearJohn", b: "IAlmostDo", s: 0.6232 },
+        { a: "DearJohn", b: "StayStayStay", s: 0.6017 },
+        { a: "DearJohn", b: "BadBlood", s: 0.6034 },
+        { a: "DearJohn", b: "BlankSpace", s: 0.6008 },
+        { a: "DearJohn", b: "CallItWhatYouWant", s: 0.6005 },
+        { a: "DearJohn", b: "Daylight", s: 0.6382 },
+        { a: "DearJohn", b: "IForgotThatYouExisted", s: 0.6099 },
+        { a: "DearJohn", b: "MissAmericana TheHeartbreakPrince", s: 0.6202 },
+        { a: "DearJohn", b: "peace", s: 0.6205 },
+        { a: "DearJohn", b: "closure", s: 0.6028 },
+        { a: "DearJohn", b: "tisthedamnseason", s: 0.675 },
+        { a: "DearJohn", b: "Bejeweled", s: 0.6237 },
+        { a: "DearJohn", b: "Maroon", s: 0.6402 },
+        { a: "DearJohn", b: "FreshOutTheSlammer", s: 0.6095 },
+        { a: "Haunted", b: "LastKiss", s: 0.6031 },
+        { a: "Haunted", b: "Mean", s: 0.636 },
+        { a: "Haunted", b: "Mine", s: 0.6429 },
+        { a: "Haunted", b: "SparksFly", s: 0.6327 },
+        { a: "Haunted", b: "AllTooWell", s: 0.6473 },
+        { a: "Haunted", b: "ComeBack   BeHere", s: 0.6269 },
+        { a: "Haunted", b: "EverythingHasChanged", s: 0.6154 },
+        { a: "Haunted", b: "HolyGround", s: 0.6794 },
+        { a: "Haunted", b: "IAlmostDo", s: 0.6033 },
+        { a: "Haunted", b: "IKnewYouWereTrouble", s: 0.6835 },
+        { a: "Haunted", b: "TheLastTime", s: 0.6451 },
+        { a: "Haunted", b: "AllYouHadtoDoWasStay", s: 0.6302 },
+        { a: "Haunted", b: "IWishYouWould", s: 0.64 },
+        { a: "Haunted", b: "Style", s: 0.6532 },
+        { a: "Haunted", b: "ThisLove", s: 0.6047 },
+        { a: "Haunted", b: "DontBlameMe", s: 0.6303 },
+        { a: "Haunted", b: "SoItGoes", s: 0.6984 },
+        { a: "Haunted", b: "Afterglow", s: 0.6356 },
+        { a: "Haunted", b: "Daylight", s: 0.6196 },
+        { a: "Haunted", b: "DeathbyaThousandCuts", s: 0.6076 },
+        { a: "Haunted", b: "FalseGod", s: 0.6321 },
+        { a: "Haunted", b: "IForgotThatYouExisted", s: 0.6186 },
+        { a: "Haunted", b: "closure", s: 0.647 },
+        { a: "Haunted", b: "tisthedamnseason", s: 0.672 },
+        { a: "Haunted", b: "Bejeweled", s: 0.6377 },
+        { a: "Innocent", b: "Daylight", s: 0.6502 },
+        { a: "Innocent", b: "TheArcher", s: 0.6249 },
+        { a: "Innocent", b: "peace", s: 0.6018 },
+        { a: "Innocent", b: "thisismetrying", s: 0.6043 },
+        { a: "Innocent", b: "longstoryshort", s: 0.6015 },
+        { a: "LastKiss", b: "AllTooWell", s: 0.6102 },
+        { a: "LastKiss", b: "ComeBack   BeHere", s: 0.6473 },
+        { a: "LastKiss", b: "EverythingHasChanged", s: 0.604 },
+        { a: "LastKiss", b: "HolyGround", s: 0.6441 },
+        { a: "LastKiss", b: "IWishYouWould", s: 0.6 },
+        { a: "LastKiss", b: "DancingWithOurHandsTied", s: 0.6333 },
+        { a: "LastKiss", b: "SoItGoes", s: 0.6047 },
+        { a: "LastKiss", b: "august", s: 0.6063 },
+        { a: "LastKiss", b: "cardigan", s: 0.6439 },
+        { a: "LastKiss", b: "seven", s: 0.6362 },
+        { a: "LastKiss", b: "tisthedamnseason", s: 0.6052 },
+        { a: "LastKiss", b: "Bejeweled", s: 0.6174 },
+        { a: "Mean", b: "SparksFly", s: 0.6428 },
+        { a: "Mean", b: "IAlmostDo", s: 0.6152 },
+        { a: "Mean", b: "IKnewYouWereTrouble", s: 0.6709 },
+        { a: "Mean", b: "Style", s: 0.6217 },
+        { a: "Mean", b: "CallItWhatYouWant", s: 0.6002 },
+        { a: "Mean", b: "EndGame", s: 0.6017 },
+        { a: "Mean", b: "SoItGoes", s: 0.6561 },
+        { a: "Mean", b: "Afterglow", s: 0.7212 },
+        { a: "Mean", b: "cardigan", s: 0.6108 },
+        { a: "Mean", b: "peace", s: 0.6631 },
+        { a: "Mean", b: "closure", s: 0.6283 },
+        { a: "Mean", b: "willow", s: 0.6404 },
+        { a: "Mean", b: "Bejeweled", s: 0.6336 },
+        { a: "Mean", b: "DownBad", s: 0.6191 },
+        { a: "Mean", b: "Fortnight", s: 0.6374 },
+        { a: "Mean", b: "ICanDoItWithABrokenHeart", s: 0.6057 },
+        { a: "Mine", b: "SparksFly", s: 0.6575 },
+        { a: "Mine", b: "AllTooWell", s: 0.6754 },
+        { a: "Mine", b: "HolyGround", s: 0.6396 },
+        { a: "Mine", b: "IKnewYouWereTrouble", s: 0.6114 },
+        { a: "Mine", b: "SadBeautifulTragic", s: 0.6046 },
+        { a: "Mine", b: "StayStayStay", s: 0.6112 },
+        { a: "Mine", b: "AllYouHadtoDoWasStay", s: 0.6091 },
+        { a: "Mine", b: "IWishYouWould", s: 0.6043 },
+        { a: "Mine", b: "Style", s: 0.6144 },
+        { a: "Mine", b: "DancingWithOurHandsTied", s: 0.6197 },
+        { a: "Mine", b: "DontBlameMe", s: 0.6497 },
+        { a: "Mine", b: "SoItGoes", s: 0.617 },
+        { a: "Mine", b: "Afterglow", s: 0.6279 },
+        { a: "Mine", b: "Daylight", s: 0.6019 },
+        { a: "Mine", b: "FalseGod", s: 0.604 },
+        { a: "Mine", b: "IForgotThatYouExisted", s: 0.6311 },
+        { a: "Mine", b: "august", s: 0.6878 },
+        { a: "Mine", b: "peace", s: 0.6221 },
+        { a: "Mine", b: "seven", s: 0.6279 },
+        { a: "Mine", b: "cowboylikeme", s: 0.6319 },
+        { a: "Mine", b: "tisthedamnseason", s: 0.6619 },
+        { a: "Mine", b: "willow", s: 0.6096 },
+        { a: "Mine", b: "Bejeweled", s: 0.7058 },
+        { a: "Mine", b: "Maroon", s: 0.6178 },
+        { a: "Mine", b: "YoureOnYourOwn Kid", s: 0.6106 },
+        { a: "Mine", b: "ButDaddyILoveHim", s: 0.6364 },
+        { a: "Mine", b: "Fortnight", s: 0.6094 },
+        { a: "SparksFly", b: "AllTooWell", s: 0.6343 },
+        { a: "SparksFly", b: "EverythingHasChanged", s: 0.6148 },
+        { a: "SparksFly", b: "HolyGround", s: 0.6377 },
+        { a: "SparksFly", b: "IAlmostDo", s: 0.6273 },
+        { a: "SparksFly", b: "SadBeautifulTragic", s: 0.6202 },
+        { a: "SparksFly", b: "StateofGrace", s: 0.6331 },
+        { a: "SparksFly", b: "TheLastTime", s: 0.6233 },
+        { a: "SparksFly", b: "Treacherous", s: 0.6079 },
+        { a: "SparksFly", b: "IWishYouWould", s: 0.6284 },
+        { a: "SparksFly", b: "Style", s: 0.625 },
+        { a: "SparksFly", b: "SoItGoes", s: 0.729 },
+        { a: "SparksFly", b: "Afterglow", s: 0.6406 },
+        { a: "SparksFly", b: "IForgotThatYouExisted", s: 0.6225 },
+        { a: "SparksFly", b: "PaperRings", s: 0.6138 },
+        { a: "SparksFly", b: "peace", s: 0.638 },
+        { a: "SparksFly", b: "cowboylikeme", s: 0.6341 },
+        { a: "SparksFly", b: "tisthedamnseason", s: 0.6265 },
+        { a: "SparksFly", b: "Bejeweled", s: 0.6237 },
+        { a: "SparksFly", b: "YoureOnYourOwn Kid", s: 0.6224 },
+        { a: "SparksFly", b: "Fortnight", s: 0.6271 },
+        { a: "TheStoryOfUs", b: "Daylight", s: 0.602 },
+        { a: "TheStoryOfUs", b: "thisismetrying", s: 0.6121 },
+        { a: "22", b: "HolyGround", s: 0.6013 },
+        { a: "AllTooWell", b: "EverythingHasChanged", s: 0.6005 },
+        { a: "AllTooWell", b: "HolyGround", s: 0.72 },
+        { a: "AllTooWell", b: "IAlmostDo", s: 0.6069 },
+        { a: "AllTooWell", b: "IKnewYouWereTrouble", s: 0.6237 },
+        { a: "AllTooWell", b: "SadBeautifulTragic", s: 0.6236 },
+        { a: "AllTooWell", b: "Booklet", s: 0.627 },
+        { a: "AllTooWell", b: "Clean", s: 0.627 },
+        { a: "AllTooWell", b: "IWishYouWould", s: 0.6093 },
+        { a: "AllTooWell", b: "Style", s: 0.6552 },
+        { a: "AllTooWell", b: "DancingWithOurHandsTied", s: 0.6161 },
+        { a: "AllTooWell", b: "SoItGoes", s: 0.6064 },
+        { a: "AllTooWell", b: "Afterglow", s: 0.6018 },
+        { a: "AllTooWell", b: "Daylight", s: 0.6623 },
+        { a: "AllTooWell", b: "DeathbyaThousandCuts", s: 0.6375 },
+        { a: "AllTooWell", b: "IForgotThatYouExisted", s: 0.6683 },
+        { a: "AllTooWell", b: "PaperRings", s: 0.6048 },
+        { a: "AllTooWell", b: "august", s: 0.6365 },
+        { a: "AllTooWell", b: "cardigan", s: 0.6274 },
+        { a: "AllTooWell", b: "peace", s: 0.6129 },
+        { a: "AllTooWell", b: "seven", s: 0.7029 },
+        { a: "AllTooWell", b: "thisismetrying", s: 0.6249 },
+        { a: "AllTooWell", b: "closure", s: 0.6371 },
+        { a: "AllTooWell", b: "tisthedamnseason", s: 0.7553 },
+        { a: "AllTooWell", b: "Bejeweled", s: 0.6909 },
+        { a: "AllTooWell", b: "Maroon", s: 0.6506 },
+        { a: "AllTooWell", b: "YoureOnYourOwn Kid", s: 0.6681 },
+        { a: "AllTooWell", b: "FreshOutTheSlammer", s: 0.6344 },
+        { a: "BeginAgain", b: "HolyGround", s: 0.6058 },
+        { a: "BeginAgain", b: "StayStayStay", s: 0.6012 },
+        { a: "BeginAgain", b: "Style", s: 0.6264 },
+        { a: "ComeBack   BeHere", b: "EverythingHasChanged", s: 0.6116 },
+        { a: "ComeBack   BeHere", b: "HolyGround", s: 0.6774 },
+        { a: "ComeBack   BeHere", b: "IWishYouWould", s: 0.644 },
+        { a: "ComeBack   BeHere", b: "SoItGoes", s: 0.6138 },
+        { a: "ComeBack   BeHere", b: "tisthedamnseason", s: 0.6047 },
+        { a: "ComeBack   BeHere", b: "Bejeweled", s: 0.6194 },
+        { a: "ComeBack   BeHere", b: "Labyrinth", s: 0.6132 },
+        { a: "EverythingHasChanged", b: "HolyGround", s: 0.6128 },
+        { a: "EverythingHasChanged", b: "IAlmostDo", s: 0.6071 },
+        { a: "EverythingHasChanged", b: "IWishYouWould", s: 0.6256 },
+        { a: "EverythingHasChanged", b: "SoItGoes", s: 0.6281 },
+        { a: "EverythingHasChanged", b: "closure", s: 0.6116 },
+        { a: "EverythingHasChanged", b: "Bejeweled", s: 0.6168 },
+        { a: "HolyGround", b: "IAlmostDo", s: 0.6506 },
+        { a: "HolyGround", b: "IKnewYouWereTrouble", s: 0.6053 },
+        { a: "HolyGround", b: "SadBeautifulTragic", s: 0.6307 },
+        { a: "HolyGround", b: "StayStayStay", s: 0.602 },
+        { a: "HolyGround", b: "TheMomentIKnew", s: 0.6104 },
+        { a: "HolyGround", b: "WeAreNeverEverGettingBackTogether", s: 0.6098 },
+        { a: "HolyGround", b: "IWishYouWould", s: 0.6217 },
+        { a: "HolyGround", b: "Style", s: 0.6636 },
+        { a: "HolyGround", b: "WildestDreams", s: 0.6111 },
+        { a: "HolyGround", b: "DancingWithOurHandsTied", s: 0.6086 },
+        { a: "HolyGround", b: "KingofMyHeart", s: 0.6016 },
+        { a: "HolyGround", b: "NewYearsDay", s: 0.62 },
+        { a: "HolyGround", b: "SoItGoes", s: 0.6491 },
+        { a: "HolyGround", b: "ThisIsWhyWeCantHaveNiceThings", s: 0.611 },
+        { a: "HolyGround", b: "Afterglow", s: 0.6036 },
+        { a: "HolyGround", b: "Daylight", s: 0.6205 },
+        { a: "HolyGround", b: "DeathbyaThousandCuts", s: 0.6178 },
+        { a: "HolyGround", b: "FalseGod", s: 0.6286 },
+        { a: "HolyGround", b: "IForgotThatYouExisted", s: 0.6426 },
+        { a: "HolyGround", b: "Lover", s: 0.6052 },
+        { a: "HolyGround", b: "august", s: 0.6164 },
+        { a: "HolyGround", b: "seven", s: 0.6314 },
+        { a: "HolyGround", b: "the1", s: 0.6331 },
+        { a: "HolyGround", b: "thisismetrying", s: 0.6073 },
+        { a: "HolyGround", b: "closure", s: 0.6195 },
+        { a: "HolyGround", b: "tisthedamnseason", s: 0.7127 },
+        { a: "HolyGround", b: "Bejeweled", s: 0.7057 },
+        { a: "HolyGround", b: "LavenderHaze", s: 0.6349 },
+        { a: "HolyGround", b: "Maroon", s: 0.6635 },
+        { a: "HolyGround", b: "YoureOnYourOwn Kid", s: 0.6213 },
+        { a: "HolyGround", b: "FreshOutTheSlammer", s: 0.6041 },
+        { a: "IAlmostDo", b: "StayStayStay", s: 0.6791 },
+        { a: "IAlmostDo", b: "TheLastTime", s: 0.6028 },
+        { a: "IAlmostDo", b: "WeAreNeverEverGettingBackTogether", s: 0.6416 },
+        { a: "IAlmostDo", b: "IWishYouWould", s: 0.6635 },
+        { a: "IAlmostDo", b: "Style", s: 0.6119 },
+        { a: "IAlmostDo", b: "WildestDreams", s: 0.626 },
+        { a: "IAlmostDo", b: "Afterglow", s: 0.6201 },
+        { a: "IAlmostDo", b: "thisismetrying", s: 0.6009 },
+        { a: "IAlmostDo", b: "tisthedamnseason", s: 0.6668 },
+        { a: "IKnewYouWereTrouble", b: "Booklet", s: 0.6295 },
+        { a: "IKnewYouWereTrouble", b: "Clean", s: 0.6295 },
+        { a: "IKnewYouWereTrouble", b: "IWishYouWould", s: 0.6135 },
+        { a: "IKnewYouWereTrouble", b: "DontBlameMe", s: 0.6354 },
+        { a: "IKnewYouWereTrouble", b: "SoItGoes", s: 0.6453 },
+        { a: "IKnewYouWereTrouble", b: "Afterglow", s: 0.6657 },
+        { a: "IKnewYouWereTrouble", b: "Bejeweled", s: 0.6072 },
+        { a: "SadBeautifulTragic", b: "StateofGrace", s: 0.606 },
+        { a: "SadBeautifulTragic", b: "BlankSpace", s: 0.6222 },
+        { a: "SadBeautifulTragic", b: "IWishYouWould", s: 0.6014 },
+        { a: "SadBeautifulTragic", b: "ThisLove", s: 0.6368 },
+        { a: "SadBeautifulTragic", b: "DancingWithOurHandsTied", s: 0.6135 },
+        { a: "SadBeautifulTragic", b: "DontBlameMe", s: 0.6133 },
+        { a: "SadBeautifulTragic", b: "SoItGoes", s: 0.616 },
+        { a: "SadBeautifulTragic", b: "Daylight", s: 0.6253 },
+        { a: "SadBeautifulTragic", b: "DeathbyaThousandCuts", s: 0.6555 },
+        { a: "SadBeautifulTragic", b: "Lover", s: 0.6353 },
+        { a: "SadBeautifulTragic", b: "peace", s: 0.621 },
+        { a: "SadBeautifulTragic", b: "closure", s: 0.6327 },
+        { a: "SadBeautifulTragic", b: "tisthedamnseason", s: 0.6408 },
+        { a: "SadBeautifulTragic", b: "YoureOnYourOwn Kid", s: 0.6114 },
+        { a: "StateofGrace", b: "TheLastTime", s: 0.6028 },
+        { a: "StateofGrace", b: "Daylight", s: 0.6027 },
+        { a: "StateofGrace", b: "august", s: 0.6005 },
+        { a: "StayStayStay", b: "WeAreNeverEverGettingBackTogether", s: 0.724 },
+        { a: "StayStayStay", b: "BlankSpace", s: 0.6045 },
+        { a: "StayStayStay", b: "HowYouGetTheGirl", s: 0.6267 },
+        { a: "StayStayStay", b: "Afterglow", s: 0.6153 },
+        { a: "StayStayStay", b: "tisthedamnseason", s: 0.6431 },
+        { a: "TheLastTime", b: "AllYouHadtoDoWasStay", s: 0.6298 },
+        { a: "TheLastTime", b: "DontBlameMe", s: 0.6194 },
+        { a: "TheLastTime", b: "SoItGoes", s: 0.6807 },
+        { a: "TheLastTime", b: "thisismetrying", s: 0.6069 },
+        { a: "TheLastTime", b: "closure", s: 0.6173 },
+        { a: "TheLastTime", b: "tisthedamnseason", s: 0.6078 },
+        { a: "WeAreNeverEverGettingBackTogether", b: "BlankSpace", s: 0.6406 },
+        {
+          a: "WeAreNeverEverGettingBackTogether",
+          b: "HowYouGetTheGirl",
+          s: 0.6392,
+        },
+        { a: "WeAreNeverEverGettingBackTogether", b: "Afterglow", s: 0.6254 },
+        {
+          a: "WeAreNeverEverGettingBackTogether",
+          b: "tisthedamnseason",
+          s: 0.614,
+        },
+        { a: "Booklet", b: "ThisLove", s: 0.6557 },
+        { a: "Booklet", b: "Daylight", s: 0.6231 },
+        { a: "Booklet", b: "Maroon", s: 0.6341 },
+        { a: "AllYouHadtoDoWasStay", b: "DontBlameMe", s: 0.6118 },
+        { a: "AllYouHadtoDoWasStay", b: "Afterglow", s: 0.6366 },
+        { a: "AllYouHadtoDoWasStay", b: "tisthedamnseason", s: 0.6034 },
+        { a: "BadBlood", b: "DontBlameMe", s: 0.6719 },
+        { a: "BadBlood", b: "Afterglow", s: 0.6083 },
+        { a: "BlankSpace", b: "Lover", s: 0.6117 },
+        { a: "BlankSpace", b: "peace", s: 0.621 },
+        { a: "BlankSpace", b: "closure", s: 0.6042 },
+        { a: "BlankSpace", b: "YoureOnYourOwn Kid", s: 0.6056 },
+        { a: "Clean", b: "ThisLove", s: 0.6557 },
+        { a: "Clean", b: "Daylight", s: 0.6231 },
+        { a: "Clean", b: "Maroon", s: 0.6341 },
+        { a: "IKnowPlaces", b: "TheArcher", s: 0.6187 },
+        { a: "IKnowPlaces", b: "peace", s: 0.6045 },
+        { a: "IWishYouWould", b: "SoItGoes", s: 0.6055 },
+        { a: "IWishYouWould", b: "tisthedamnseason", s: 0.6624 },
+        { a: "ShakeItOff", b: "DontBlameMe", s: 0.6534 },
+        { a: "ShakeItOff", b: "SoItGoes", s: 0.6225 },
+        { a: "Style", b: "WildestDreams", s: 0.6512 },
+        { a: "Style", b: "NewYearsDay", s: 0.6134 },
+        { a: "Style", b: "SoItGoes", s: 0.6994 },
+        { a: "Style", b: "Afterglow", s: 0.6016 },
+        { a: "Style", b: "cardigan", s: 0.6113 },
+        { a: "Style", b: "cowboylikeme", s: 0.632 },
+        { a: "Style", b: "tisthedamnseason", s: 0.6199 },
+        { a: "Style", b: "Maroon", s: 0.6091 },
+        { a: "ThisLove", b: "DancingWithOurHandsTied", s: 0.6399 },
+        { a: "ThisLove", b: "Afterglow", s: 0.6179 },
+        { a: "ThisLove", b: "DeathbyaThousandCuts", s: 0.6029 },
+        { a: "WildestDreams", b: "Bejeweled", s: 0.617 },
+        { a: "CallItWhatYouWant", b: "peace", s: 0.6017 },
+        { a: "CallItWhatYouWant", b: "Bejeweled", s: 0.6114 },
+        { a: "CallItWhatYouWant", b: "YoureOnYourOwn Kid", s: 0.6287 },
+        { a: "CallItWhatYouWant", b: "ButDaddyILoveHim", s: 0.6018 },
+        { a: "CallItWhatYouWant", b: "FreshOutTheSlammer", s: 0.6493 },
+        {
+          a: "CallItWhatYouWant",
+          b: "MyBoyOnlyBreaksHisFavoriteToys",
+          s: 0.6138,
+        },
+        { a: "DancingWithOurHandsTied", b: "SoItGoes", s: 0.6181 },
+        { a: "DancingWithOurHandsTied", b: "Afterglow", s: 0.6265 },
+        { a: "DancingWithOurHandsTied", b: "Daylight", s: 0.615 },
+        { a: "DancingWithOurHandsTied", b: "Lover", s: 0.6113 },
+        { a: "DancingWithOurHandsTied", b: "august", s: 0.6043 },
+        { a: "DancingWithOurHandsTied", b: "seven", s: 0.6144 },
+        { a: "DancingWithOurHandsTied", b: "Maroon", s: 0.6361 },
+        { a: "Delicate", b: "Dress", s: 0.6288 },
+        { a: "Delicate", b: "Afterglow", s: 0.601 },
+        { a: "DontBlameMe", b: "KingofMyHeart", s: 0.6323 },
+        { a: "DontBlameMe", b: "SoItGoes", s: 0.7002 },
+        { a: "DontBlameMe", b: "Afterglow", s: 0.6448 },
+        { a: "DontBlameMe", b: "DeathbyaThousandCuts", s: 0.6034 },
+        { a: "DontBlameMe", b: "FalseGod", s: 0.6222 },
+        { a: "DontBlameMe", b: "peace", s: 0.6117 },
+        { a: "DontBlameMe", b: "Bejeweled", s: 0.652 },
+        { a: "DontBlameMe", b: "Fortnight", s: 0.612 },
+        { a: "DontBlameMe", b: "FreshOutTheSlammer", s: 0.6087 },
+        { a: "Dress", b: "champagneproblems", s: 0.601 },
+        { a: "Dress", b: "Maroon", s: 0.6143 },
+        { a: "GetawayCar", b: "Daylight", s: 0.6031 },
+        { a: "KingofMyHeart", b: "SoItGoes", s: 0.6133 },
+        { a: "KingofMyHeart", b: "Lover", s: 0.6014 },
+        { a: "KingofMyHeart", b: "Bejeweled", s: 0.6104 },
+        { a: "NewYearsDay", b: "DeathbyaThousandCuts", s: 0.613 },
+        { a: "NewYearsDay", b: "Lover", s: 0.6423 },
+        { a: "NewYearsDay", b: "cardigan", s: 0.6084 },
+        { a: "NewYearsDay", b: "tisthedamnseason", s: 0.6192 },
+        { a: "SoItGoes", b: "Afterglow", s: 0.6437 },
+        { a: "SoItGoes", b: "ME", s: 0.6336 },
+        { a: "SoItGoes", b: "cardigan", s: 0.6176 },
+        { a: "SoItGoes", b: "tisthedamnseason", s: 0.6086 },
+        { a: "SoItGoes", b: "Bejeweled", s: 0.6704 },
+        { a: "SoItGoes", b: "ICanDoItWithABrokenHeart", s: 0.6052 },
+        { a: "ThisIsWhyWeCantHaveNiceThings", b: "peace", s: 0.6287 },
+        {
+          a: "ThisIsWhyWeCantHaveNiceThings",
+          b: "tisthedamnseason",
+          s: 0.6102,
+        },
+        { a: "Afterglow", b: "IForgotThatYouExisted", s: 0.6048 },
+        { a: "Afterglow", b: "ME", s: 0.6038 },
+        { a: "Afterglow", b: "Labyrinth", s: 0.6231 },
+        { a: "Afterglow", b: "DownBad", s: 0.6101 },
+        { a: "Afterglow", b: "Fortnight", s: 0.635 },
+        { a: "Afterglow", b: "ICanDoItWithABrokenHeart", s: 0.6204 },
+        { a: "CruelSummer", b: "PaperRings", s: 0.6136 },
+        { a: "Daylight", b: "DeathbyaThousandCuts", s: 0.6605 },
+        { a: "Daylight", b: "IForgotThatYouExisted", s: 0.6978 },
+        { a: "Daylight", b: "TheArcher", s: 0.6006 },
+        { a: "Daylight", b: "august", s: 0.6053 },
+        { a: "Daylight", b: "hoax", s: 0.6169 },
+        { a: "Daylight", b: "mytearsricochet", s: 0.645 },
+        { a: "Daylight", b: "happiness", s: 0.6169 },
+        { a: "Daylight", b: "tisthedamnseason", s: 0.6326 },
+        { a: "Daylight", b: "Bejeweled", s: 0.6084 },
+        { a: "Daylight", b: "YoureOnYourOwn Kid", s: 0.6293 },
+        { a: "DeathbyaThousandCuts", b: "Lover", s: 0.6215 },
+        { a: "DeathbyaThousandCuts", b: "mytearsricochet", s: 0.6301 },
+        { a: "DeathbyaThousandCuts", b: "peace", s: 0.6074 },
+        { a: "DeathbyaThousandCuts", b: "seven", s: 0.6287 },
+        { a: "DeathbyaThousandCuts", b: "closure", s: 0.6204 },
+        { a: "DeathbyaThousandCuts", b: "tisthedamnseason", s: 0.633 },
+        { a: "DeathbyaThousandCuts", b: "YoureOnYourOwn Kid", s: 0.6162 },
+        { a: "IForgotThatYouExisted", b: "hoax", s: 0.6211 },
+        { a: "IForgotThatYouExisted", b: "the1", s: 0.6034 },
+        { a: "IForgotThatYouExisted", b: "tisthedamnseason", s: 0.6451 },
+        { a: "IForgotThatYouExisted", b: "Bejeweled", s: 0.6074 },
+        { a: "IForgotThatYouExisted", b: "Maroon", s: 0.6009 },
+        { a: "IForgotThatYouExisted", b: "YoureOnYourOwn Kid", s: 0.6266 },
+        { a: "IForgotThatYouExisted", b: "Fortnight", s: 0.6243 },
+        { a: "ItsNicetoHaveaFriend", b: "tisthedamnseason", s: 0.6126 },
+        { a: "LondonBoy", b: "cardigan", s: 0.6094 },
+        { a: "LondonBoy", b: "SoLong London", s: 0.6062 },
+        { a: "Lover", b: "august", s: 0.6135 },
+        { a: "Lover", b: "mytearsricochet", s: 0.6238 },
+        { a: "Lover", b: "peace", s: 0.6562 },
+        { a: "Lover", b: "seven", s: 0.6156 },
+        { a: "Lover", b: "tisthedamnseason", s: 0.6382 },
+        { a: "Lover", b: "Fortnight", s: 0.6195 },
+        { a: "ME", b: "Bejeweled", s: 0.6243 },
+        { a: "PaperRings", b: "seven", s: 0.6178 },
+        { a: "PaperRings", b: "Bejeweled", s: 0.6117 },
+        { a: "PaperRings", b: "YoureOnYourOwn Kid", s: 0.6436 },
+        { a: "PaperRings", b: "Fortnight", s: 0.6169 },
+        { a: "TheArcher", b: "peace", s: 0.6182 },
+        { a: "TheArcher", b: "Anti Hero", s: 0.6199 },
+        { a: "august", b: "peace", s: 0.604 },
+        { a: "august", b: "seven", s: 0.6313 },
+        { a: "august", b: "tisthedamnseason", s: 0.6919 },
+        { a: "august", b: "Bejeweled", s: 0.6013 },
+        { a: "august", b: "Maroon", s: 0.6168 },
+        { a: "august", b: "YoureOnYourOwn Kid", s: 0.6077 },
+        { a: "cardigan", b: "seven", s: 0.6336 },
+        { a: "cardigan", b: "the1", s: 0.6025 },
+        { a: "cardigan", b: "tisthedamnseason", s: 0.643 },
+        { a: "cardigan", b: "Bejeweled", s: 0.6314 },
+        { a: "cardigan", b: "Maroon", s: 0.6725 },
+        { a: "cardigan", b: "YoureOnYourOwn Kid", s: 0.6141 },
+        { a: "cardigan", b: "TheTorturedPoetsDepartment", s: 0.606 },
+        { a: "hoax", b: "mytearsricochet", s: 0.608 },
+        { a: "hoax", b: "peace", s: 0.6474 },
+        { a: "mytearsricochet", b: "peace", s: 0.6081 },
+        { a: "mytearsricochet", b: "Maroon", s: 0.6068 },
+        { a: "peace", b: "seven", s: 0.6458 },
+        { a: "peace", b: "willow", s: 0.6452 },
+        { a: "peace", b: "YoureOnYourOwn Kid", s: 0.6537 },
+        { a: "peace", b: "ButDaddyILoveHim", s: 0.6013 },
+        { a: "seven", b: "cowboylikeme", s: 0.6144 },
+        { a: "seven", b: "tisthedamnseason", s: 0.6516 },
+        { a: "seven", b: "Bejeweled", s: 0.6259 },
+        { a: "seven", b: "YoureOnYourOwn Kid", s: 0.6481 },
+        { a: "the1", b: "thisismetrying", s: 0.6011 },
+        { a: "the1", b: "tisthedamnseason", s: 0.6158 },
+        { a: "the1", b: "Bejeweled", s: 0.6027 },
+        { a: "thisismetrying", b: "closure", s: 0.607 },
+        { a: "thisismetrying", b: "tisthedamnseason", s: 0.6186 },
+        { a: "champagneproblems", b: "Maroon", s: 0.6185 },
+        { a: "closure", b: "tisthedamnseason", s: 0.6937 },
+        { a: "closure", b: "Bejeweled", s: 0.6594 },
+        { a: "closure", b: "Maroon", s: 0.6129 },
+        { a: "cowboylikeme", b: "willow", s: 0.6011 },
+        { a: "cowboylikeme", b: "Bejeweled", s: 0.6074 },
+        { a: "tisthedamnseason", b: "Bejeweled", s: 0.6703 },
+        { a: "tisthedamnseason", b: "Maroon", s: 0.6746 },
+        { a: "tisthedamnseason", b: "YoureOnYourOwn Kid", s: 0.6728 },
+        { a: "tisthedamnseason", b: "Fortnight", s: 0.6343 },
+        { a: "tisthedamnseason", b: "FreshOutTheSlammer", s: 0.6169 },
+        { a: "Bejeweled", b: "YoureOnYourOwn Kid", s: 0.6106 },
+        { a: "Bejeweled", b: "ButDaddyILoveHim", s: 0.6053 },
+        { a: "Bejeweled", b: "FreshOutTheSlammer", s: 0.6192 },
+        { a: "Bejeweled", b: "ICanDoItWithABrokenHeart", s: 0.6173 },
+        { a: "Maroon", b: "YoureOnYourOwn Kid", s: 0.6063 },
+        { a: "YoureOnYourOwn Kid", b: "Fortnight", s: 0.6332 },
+        { a: "YoureOnYourOwn Kid", b: "FreshOutTheSlammer", s: 0.6053 },
+        { a: "ButDaddyILoveHim", b: "FreshOutTheSlammer", s: 0.6804 },
+        { a: "ClaraBow", b: "ICanDoItWithABrokenHeart", s: 0.6191 },
+        { a: "DownBad", b: "ICanDoItWithABrokenHeart", s: 0.6165 },
+        { a: "DownBad", b: "ICanFixHim NoReallyICan", s: 0.6289 },
+        { a: "FreshOutTheSlammer", b: "ICanDoItWithABrokenHeart", s: 0.6032 },
+        { a: "ICanDoItWithABrokenHeart", b: "loml", s: 0.6347 },
+        {
+          a: "TheTorturedPoetsDepartment",
+          b: "WhosAfraidofLittleOldMe",
+          s: 0.6219,
+        },
+      ];
+
+      const nodeMap = {};
+      RAW_NODES.forEach((n) => {
+        nodeMap[n.title] = n;
+      });
+
+      const albumCounts = {};
+      RAW_NODES.forEach((n) => {
+        albumCounts[n.album] = (albumCounts[n.album] || 0) + 1;
+      });
+
+      let activeAlbums = new Set(Object.keys(ALBUM_COLORS));
+      let selectedNode = null;
+      let currentThreshold = 0.6;
+      let searchTerm = "";
+
+      const svg = d3.select("#graph");
+      const container = svg.append("g").attr("class", "container");
+      const linkLayer = container.append("g").attr("class", "links");
+      const nodeLayer = container.append("g").attr("class", "nodes");
+
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.1, 4])
+        .on("zoom", (e) => {
+          container.attr("transform", e.transform);
+        });
+      svg.call(zoom);
+
+      svg.on("click", (e) => {
+        if (e.target === svg.node() || e.target.tagName === "svg") {
+          selectedNode = null;
+          updateHighlight();
+        }
+      });
+
+      function getFilteredData() {
+        const filteredNodes = RAW_NODES.filter((n) => {
+          if (!activeAlbums.has(n.album)) return false;
+          if (
+            searchTerm &&
+            !n.title.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+            return false;
+          return true;
+        });
+        const nodeSet = new Set(filteredNodes.map((n) => n.title));
+        const filteredEdges = RAW_EDGES.filter(
+          (e) =>
+            e.s >= currentThreshold && nodeSet.has(e.a) && nodeSet.has(e.b),
+        );
+        return { nodes: filteredNodes, edges: filteredEdges };
+      }
+
+      let simulation;
+
+      function buildGraph() {
+        const { nodes, edges } = getFilteredData();
+
+        document.getElementById("node-count").textContent = nodes.length;
+        document.getElementById("edge-count").textContent = edges.length;
+
+        const connMap = {};
+        nodes.forEach((n) => {
+          connMap[n.title] = 0;
+        });
+        edges.forEach((e) => {
+          connMap[e.a] = (connMap[e.a] || 0) + 1;
+          connMap[e.b] = (connMap[e.b] || 0) + 1;
+        });
+
+        const W = document.getElementById("graph-area").clientWidth;
+        const H = document.getElementById("graph-area").clientHeight;
+
+        if (simulation) simulation.stop();
+
+        const nodeData = nodes.map((n) => ({
+          ...n,
+          connections: connMap[n.title] || 0,
+        }));
+        const edgeData = edges.map((e) => ({
+          source: e.a,
+          target: e.b,
+          similarity: e.s,
+        }));
+
+        simulation = d3
+          .forceSimulation(nodeData)
+          .force(
+            "link",
+            d3
+              .forceLink(edgeData)
+              .id((d) => d.title)
+              .distance((d) => 140 - (d.similarity - 0.6) * 200)
+              .strength(0.3),
+          )
+          .force("charge", d3.forceManyBody().strength(-180))
+          .force("center", d3.forceCenter(W / 2, H / 2))
+          .force("collision", d3.forceCollide(18))
+          .alphaDecay(0.03);
+
+        const links = linkLayer
+          .selectAll(".link")
+          .data(edgeData, (d) => d.source + "-" + d.target);
+        links.exit().remove();
+        const linksEnter = links.enter().append("line").attr("class", "link");
+        const allLinks = linksEnter
+          .merge(links)
+          .attr("stroke", (d) => {
+            const sn = nodeData.find(
+              (n) =>
+                n.title ===
+                (typeof d.source === "object" ? d.source.title : d.source),
+            );
+            return sn ? ALBUM_COLORS[sn.album] : "#888";
+          })
+          .attr("stroke-width", (d) => 1.2 + (d.similarity - 0.6) * 6);
+
+        const drag = d3
+          .drag()
+          .on("start", (e, d) => {
+            if (!e.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+          })
+          .on("drag", (e, d) => {
+            d.fx = e.x;
+            d.fy = e.y;
+          })
+          .on("end", (e, d) => {
+            if (!e.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+          });
+
+        const nodeGroups = nodeLayer
+          .selectAll(".node")
+          .data(nodeData, (d) => d.title);
+        nodeGroups.exit().remove();
+
+        const nodeEnter = nodeGroups
+          .enter()
+          .append("g")
+          .attr("class", "node")
+          .call(drag);
+
+        nodeEnter.append("circle");
+        nodeEnter.append("text");
+
+        const allNodes = nodeEnter.merge(nodeGroups);
+
+        allNodes
+          .select("circle")
+          .attr("r", (d) => 4 + Math.sqrt(d.connections) * 1.5)
+          .attr("fill", (d) => ALBUM_COLORS[d.album] + "cc")
+          .attr("stroke", (d) => ALBUM_COLORS[d.album]);
+
+        allNodes
+          .select("text")
+          .text((d) => (d.connections >= 8 ? d.title.slice(0, 14) : ""))
+          .attr("dy", (d) => -(5 + Math.sqrt(d.connections) * 1.5));
+
+        allNodes
+          .on("click", (e, d) => {
+            e.stopPropagation();
+            selectedNode = selectedNode === d.title ? null : d.title;
+            updateHighlight();
+            showTooltip(e, d, edgeData);
+          })
+          .on("mouseover", (e, d) => {
+            showTooltip(e, d, edgeData);
+          })
+          .on("mouseout", () => {
+            if (!selectedNode) hideTooltip();
+          });
+
+        simulation.on("tick", () => {
+          allLinks
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+          allNodes.attr("transform", (d) => `translate(${d.x},${d.y})`);
+        });
+
+        updateHighlight();
+      }
+
+      function updateHighlight() {
+        if (!selectedNode) {
+          nodeLayer.selectAll(".node").style("opacity", 1);
+          linkLayer.selectAll(".link").style("opacity", 0.35);
+          return;
+        }
+        const connectedNodes = new Set([selectedNode]);
+        linkLayer.selectAll(".link").each(function (d) {
+          const src = typeof d.source === "object" ? d.source.title : d.source;
+          const tgt = typeof d.target === "object" ? d.target.title : d.target;
+          if (src === selectedNode) connectedNodes.add(tgt);
+          if (tgt === selectedNode) connectedNodes.add(src);
+        });
+        nodeLayer
+          .selectAll(".node")
+          .style("opacity", (d) => (connectedNodes.has(d.title) ? 1 : 0.1));
+        linkLayer.selectAll(".link").style("opacity", (d) => {
+          const src = typeof d.source === "object" ? d.source.title : d.source;
+          const tgt = typeof d.target === "object" ? d.target.title : d.target;
+          return src === selectedNode || tgt === selectedNode ? 1 : 0.05;
+        });
+      }
+
+      function showTooltip(e, d, edgeData) {
+        const tt = document.getElementById("tooltip");
+        document.getElementById("tt-title").textContent = d.title;
+        document.getElementById("tt-album").textContent = d.album;
+        document.getElementById("tt-connections").textContent = d.connections;
+
+        const neighbors = edgeData
+          .filter((edge) => {
+            const src =
+              typeof edge.source === "object" ? edge.source.title : edge.source;
+            const tgt =
+              typeof edge.target === "object" ? edge.target.title : edge.target;
+            return src === d.title || tgt === d.title;
+          })
+          .map((edge) => {
+            const src =
+              typeof edge.source === "object" ? edge.source.title : edge.source;
+            const tgt =
+              typeof edge.target === "object" ? edge.target.title : edge.target;
+            return {
+              name: src === d.title ? tgt : src,
+              score: edge.similarity,
+            };
+          })
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+
+        document.getElementById("tt-similar").textContent = neighbors.length
+          ? "Top matches: " +
+            neighbors.map((n) => `${n.name} (${n.score.toFixed(2)})`).join(", ")
+          : "";
+
+        const area = document
+          .getElementById("graph-area")
+          .getBoundingClientRect();
+        let x = e.clientX - area.left + 12;
+        let y = e.clientY - area.top - 12;
+        if (x + 230 > area.width) x = e.clientX - area.left - 230;
+        if (y + 140 > area.height) y = e.clientY - area.top - 140;
+
+        tt.style.left = x + "px";
+        tt.style.top = y + "px";
+        tt.classList.add("visible");
+      }
+
+      function hideTooltip() {
+        document.getElementById("tooltip").classList.remove("visible");
+      }
+
+      function buildLegend() {
+        const legend = document.getElementById("album-legend");
+        legend.innerHTML = "";
+        Object.entries(ALBUM_COLORS).forEach(([album, color]) => {
+          const count = albumCounts[album] || 0;
+          const item = document.createElement("div");
+          item.className = "album-item";
+          item.dataset.album = album;
+          item.innerHTML = `
+      <div class="album-dot" style="background:${color}"></div>
+      <span class="album-name">${album}</span>
+      <span class="album-count">${count}</span>
+    `;
+          item.addEventListener("click", () => {
+            if (activeAlbums.has(album)) {
+              if (activeAlbums.size > 1) {
+                activeAlbums.delete(album);
+                item.classList.add("dimmed");
+              }
+            } else {
+              activeAlbums.add(album);
+              item.classList.remove("dimmed");
+            }
+            selectedNode = null;
+            buildGraph();
+          });
+          legend.appendChild(item);
+        });
+      }
+
+      document
+        .getElementById("threshold")
+        .addEventListener("input", function () {
+          currentThreshold = parseFloat(this.value);
+          document.getElementById("thresh-val").textContent =
+            currentThreshold.toFixed(2);
+          selectedNode = null;
+          buildGraph();
+        });
+
+      document.getElementById("search").addEventListener("input", function () {
+        searchTerm = this.value.trim();
+        selectedNode = null;
+        buildGraph();
+      });
+
+      buildLegend();
+      buildGraph();
+    </script>
+  </body>
+</html>

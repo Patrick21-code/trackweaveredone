@@ -61,15 +61,64 @@
     }
     .nav-brand {
       display: flex; align-items: center; gap: 0.55rem;
-      text-decoration: none; color: var(--ink);
+      text-decoration: none;
       font-family: 'Fraunces', serif; font-weight: 500;
       font-size: 1.05rem; letter-spacing: -0.02em;
       flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .nav-brand:hover { opacity: 0.85; }
+    .nav-brand span {
+      color: var(--blue) !important;
     }
     .nav-mark {
       width: 32px; height: 32px; border-radius: 8px;
-      background: var(--ink);
+      background: var(--blue);
       display: flex; align-items: center; justify-content: center;
+    }
+    
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-left: 1rem;
+    }
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--ink-soft) !important;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.15s ease;
+      position: relative;
+      padding: 0.5rem 0;
+      background: transparent !important;
+      white-space: nowrap;
+    }
+    .nav-link:visited {
+      color: var(--ink-soft) !important;
+    }
+    .nav-link:hover {
+      color: var(--ink) !important;
+      background: transparent !important;
+    }
+    .nav-link.active {
+      color: var(--ink) !important;
+      font-weight: 500;
+      background: transparent !important;
+    }
+    .nav-link.active:visited {
+      color: var(--ink) !important;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--blue);
+      border-radius: 2px;
     }
     .nav-back-btn {
       display: flex; align-items: center; gap: 0.45rem;
@@ -313,39 +362,52 @@
 
     .album-carousel-wrapper {
       position: relative;
-      overflow: hidden;
       padding: 1rem 0 1.5rem;
     }
-    .album-carousel-fade-left, .album-carousel-fade-right {
-      position: absolute; top: 0; bottom: 0; width: 80px;
-      pointer-events: none; z-index: 5;
-    }
-    .album-carousel-fade-left {
-      left: 0;
-      background: linear-gradient(to right, var(--paper) 0%, transparent 100%);
-    }
-    .album-carousel-fade-right {
-      right: 0;
-      background: linear-gradient(to left, var(--paper) 0%, transparent 100%);
-    }
 
-    /* Continuous scroll animation */
-    @keyframes scroll-left {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+    .album-carousel-track-outer { 
+      overflow: hidden;
+      padding: 0 50px;
     }
-
-    .album-carousel-track-outer { overflow: hidden; }
     .album-carousel-track {
-      display: flex; gap: 1.25rem;
-      width: max-content;
-      animation: scroll-left 30s linear infinite;
-      will-change: transform;
+      display: flex; 
+      gap: 1.25rem;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     }
-    .album-carousel-track:hover,
-    .album-carousel-track.paused {
-      animation-play-state: paused;
+
+    /* Navigation buttons */
+    .carousel-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid var(--rule);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 2px 8px rgba(17,24,32,.08);
     }
+    .carousel-nav-btn:hover:not(:disabled) {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 4px 20px rgba(37,99,235,.32);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .carousel-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .carousel-nav-btn.prev { left: 0; }
+    .carousel-nav-btn.next { right: 0; }
 
     /* ── Album card ── */
     .album-card {
@@ -358,7 +420,7 @@
       background: transparent;
       transition: background .2s, transform .3s cubic-bezier(.22,1,.36,1);
       animation: card-in .45s cubic-bezier(.22,1,.36,1) both;
-      cursor: default;
+      cursor: pointer;
       pointer-events: auto;
     }
     .album-card:hover {
@@ -457,28 +519,35 @@
       100% { background-position:  800px 0; }
     }
     .sk-block {
-      background: linear-gradient(90deg, var(--paper-warm) 25%, var(--rule-light) 50%, var(--paper-warm) 75%);
+      background: linear-gradient(90deg, #e8e4df 0%, #f5f2ed 50%, #e8e4df 100%);
       background-size: 800px 100%;
-      animation: shimmer 1.5s infinite linear;
+      animation: shimmer 1.8s ease-in-out infinite;
       border-radius: 8px;
     }
     .sk-album-card {
-      flex: 0 0 calc(20% - 1rem);
+      flex: 0 0 200px;
+      min-width: 0;
       padding: 0.75rem 0.75rem 1rem;
     }
     .sk-cover {
-      aspect-ratio: 1; border-radius: var(--r-sm);
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--r-sm);
       margin-bottom: 0.85rem;
     }
-    .sk-line { height: 11px; border-radius: 5px; margin-bottom: 0.4rem; }
+    .sk-line {
+      height: 11px;
+      border-radius: 5px;
+      margin-bottom: 0.4rem;
+    }
     .sk-line.short { width: 50%; }
 
     /* Stagger skeleton shimmer */
     .sk-album-card:nth-child(1) .sk-block { animation-delay: 0s; }
-    .sk-album-card:nth-child(2) .sk-block { animation-delay: .07s; }
-    .sk-album-card:nth-child(3) .sk-block { animation-delay: .14s; }
-    .sk-album-card:nth-child(4) .sk-block { animation-delay: .21s; }
-    .sk-album-card:nth-child(5) .sk-block { animation-delay: .28s; }
+    .sk-album-card:nth-child(2) .sk-block { animation-delay: .1s; }
+    .sk-album-card:nth-child(3) .sk-block { animation-delay: .2s; }
+    .sk-album-card:nth-child(4) .sk-block { animation-delay: .3s; }
+    .sk-album-card:nth-child(5) .sk-block { animation-delay: .4s; }
 
     /* ── Tags section ── */
     .artist-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
@@ -493,6 +562,158 @@
     .no-albums {
       padding: 3rem; text-align: center;
       font-size: 0.9rem; color: var(--ink-faint); font-weight: 300;
+    }
+
+    /* ── Song list modal ── */
+    .song-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(17,24,32,0.75);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .song-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .song-modal {
+      background: #fff;
+      border-radius: var(--r-lg);
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 80px rgba(17,24,32,.3);
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .song-modal-overlay.active .song-modal {
+      transform: scale(1) translateY(0);
+    }
+    .song-modal-header {
+      padding: 1.8rem 2rem 1.2rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+    .song-modal-cover {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(17,24,32,.15);
+    }
+    .song-modal-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .song-modal-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .song-modal-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+    .song-modal-meta {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      font-weight: 400;
+    }
+    .song-modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1.5px solid var(--rule);
+      color: var(--ink-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .song-modal-close:hover {
+      background: var(--red-ghost);
+      border-color: var(--red);
+      color: var(--red);
+    }
+    .song-modal-body {
+      padding: 1.5rem 2rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .song-list-loading {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--ink-faint);
+      font-size: 0.9rem;
+    }
+    .song-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .song-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--r-sm);
+      transition: background 0.15s;
+      cursor: default;
+    }
+    .song-item:hover {
+      background: var(--paper-warm);
+    }
+    .song-track-number {
+      font-family: 'Fraunces', serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-faint);
+      min-width: 28px;
+      text-align: right;
+    }
+    .song-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .song-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .song-duration {
+      font-size: 0.75rem;
+      color: var(--ink-faint);
+      font-weight: 300;
+    }
+    .song-list-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--ink-faint);
+      font-size: 0.9rem;
     }
 
     /* ── Credit ── */
@@ -543,11 +764,21 @@
       <span>TrackWeave</span>
     </a>
 
+    <!-- Navigation links connecting all key pages -->
+    <nav class="nav-links">
+      <a href="./dashboard.html" class="nav-link">Dashboard</a>
+      <a href="./engagement.html" class="nav-link">Community</a>
+      <a href="./checkin.html" class="nav-link">Check-In</a>
+      <a href="./shop.html" class="nav-link">Shop</a>
+    </nav>
+
+    <!-- Coin display -->
+    <div class="nav-coin-display" id="nav-coin-display" title="Your TrackWeave Coins">
+      <div class="nav-coin-icon">🪙</div>
+      <span id="nav-coin-count">0</span>
+    </div>
+
     <div class="nav-avatar-wrap" id="nav-avatar-wrap">
-      <a href="./dashboard.html" class="nav-back-btn" id="nav-back-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </a>
       <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
       <div class="nav-dropdown" id="nav-dropdown" role="menu">
         <div class="drop-user">
@@ -558,20 +789,6 @@
           </div>
         </div>
         <div class="drop-items">
-          <a class="drop-item" href="#">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-            My Profile
-          </a>
-          <a class="drop-item" href="./dashboard.html">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-              <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
-            </svg>
-            Dashboard
-          </a>
-          <div class="drop-divider"></div>
           <button class="drop-item danger" id="btn-signout" type="button">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -631,12 +848,31 @@
         <div class="album-carousel-wrapper">
           <div class="album-carousel-track-outer">
             <div class="album-carousel-track" id="albums-skeleton-track">
-              ${Array(5).fill(0).map(() => `
-                <div class="sk-album-card">
-                  <div class="sk-cover sk-block"></div>
-                  <div class="sk-line sk-block" style="width:80%"></div>
-                  <div class="sk-line short sk-block"></div>
-                </div>`).join("")}
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
+              <div class="sk-album-card">
+                <div class="sk-cover sk-block"></div>
+                <div class="sk-line sk-block" style="width:80%"></div>
+                <div class="sk-line short sk-block"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -650,6 +886,28 @@
   </main>
 
 </div><!-- /#artist-shell -->
+
+<!-- Song list modal -->
+<div class="song-modal-overlay" id="song-modal-overlay">
+  <div class="song-modal">
+    <div class="song-modal-header">
+      <div class="song-modal-cover" id="modal-album-cover"></div>
+      <div class="song-modal-info">
+        <h3 class="song-modal-title" id="modal-album-title">—</h3>
+        <p class="song-modal-meta" id="modal-album-meta">—</p>
+      </div>
+      <button class="song-modal-close" id="close-song-modal" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="song-modal-body" id="song-modal-body">
+      <div class="song-list-loading">Loading tracks...</div>
+    </div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp }   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -799,25 +1057,27 @@
     // Name
     document.getElementById("hero-artist-name").textContent = artist.name;
 
-    // Portrait image
+    // Portrait image - try to load actual image, fallback to gradient placeholder
     const ring     = document.getElementById("hero-portrait-ring");
     const portrait = document.getElementById("hero-portrait");
-
-    if (artist._coverUrl) {
-      const img = document.createElement("img");
-      img.alt = artist.name;
-      img.src = artist._coverUrl;
-      img.onload  = () => ring.classList.remove("loading");
-      img.onerror = () => {
-        ring.classList.remove("loading");
-        portrait.innerHTML = `<div class="hero-portrait-placeholder" style="background:linear-gradient(135deg,hsl(${Math.abs(hashStr(artist.name)) % 360},60%,44%),hsl(${(Math.abs(hashStr(artist.name)) + 55) % 360},52%,28%))">${musicNoteSVG("38%","0.75")}</div>`;
-      };
-      portrait.appendChild(img);
-    } else {
-      ring.classList.remove("loading");
-      const hue  = Math.abs(hashStr(artist.name)) % 360;
-      const hue2 = (hue + 55) % 360;
-      portrait.innerHTML = `<div class="hero-portrait-placeholder" style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,hsl(${hue},60%,44%),hsl(${hue2},52%,28%));display:flex;align-items:center;justify-content:center;">${musicNoteSVG("38%","0.75")}</div>`;
+    
+    const hue  = Math.abs(hashStr(artist.name)) % 360;
+    const hue2 = (hue + 55) % 360;
+    const gradientStyle = `background:linear-gradient(135deg,hsl(${hue},60%,44%),hsl(${hue2},52%,28%))`;
+    
+    // Set placeholder initially
+    portrait.innerHTML = `<div class="hero-portrait-placeholder" style="width:100%;height:100%;border-radius:50%;${gradientStyle};display:flex;align-items:center;justify-content:center;">${musicNoteSVG("38%","0.75")}</div>`;
+    ring.classList.remove("loading");
+    
+    // Try to load artist image in background
+    if (artist.imageUrl) {
+      loadArtistImage(artist.imageUrl, portrait, gradientStyle);
+    } else if (artist.id || artist.mbid) {
+      fetchArtistImageUrl(artist.id || artist.mbid).then(imageUrl => {
+        if (imageUrl) {
+          loadArtistImage(imageUrl, portrait, gradientStyle);
+        }
+      });
     }
 
     // Meta badges
@@ -857,21 +1117,57 @@
 
     // Action buttons
     const actionsEl = document.getElementById("hero-actions");
-    const communityUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
+    const musicGraphUrl = `./engagement.html?artist=${encodeURIComponent(artist.id)}&artistName=${encodeURIComponent(artist.name)}`;
     actionsEl.innerHTML = `
-      <a class="hero-btn primary" href="https://musicbrainz.org/artist/${escHtml(artist.id)}" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        View on MusicBrainz
-      </a>
-      <a class="hero-btn ghost" href="${escHtml(communityUrl)}">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Discuss in Community
-      </a>
-      <a class="hero-btn ghost" href="./engagement.html">
+      <a class="hero-btn primary" href="${escHtml(musicGraphUrl)}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h1m8-9v1m8 8h1m-9 8v1M5.6 5.6l.7.7m12.1-.7-.7.7m.7 12.1-.7-.7M6.3 18.4l-.7.7"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
-        Generate Music Graph
+        View Music Graph
       </a>`;
 
+  }
+
+  // ── Load artist image ──────────────────────────────────────────
+  function loadArtistImage(imageUrl, portraitEl, gradientStyle) {
+    const img = new Image();
+    img.onload = () => {
+      portraitEl.innerHTML = `<img src="${escHtml(imageUrl)}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />`;
+    };
+    img.onerror = () => {
+      // Keep the placeholder on error
+      console.debug('[TrackWeave] Failed to load artist image, using placeholder');
+    };
+    img.src = imageUrl;
+  }
+
+  // ── Fetch artist image URL ─────────────────────────────────────
+  async function fetchArtistImageUrl(mbid) {
+    try {
+      // Try Cover Art Archive for release group images
+      const releaseRes = await mbFetch(
+        `https://musicbrainz.org/ws/2/release-group?artist=${mbid}&type=album&limit=10&fmt=json`
+      );
+      
+      if (releaseRes.ok) {
+        const releaseData = await releaseRes.json();
+        const releaseGroups = releaseData['release-groups'] || [];
+        
+        // Try release groups one by one
+        for (const rg of releaseGroups.slice(0, 8)) {
+          try {
+            const coverUrl = `https://coverartarchive.org/release-group/${rg.id}/front-250`;
+            const coverRes = await fetch(coverUrl);
+            if (coverRes.ok) {
+              return coverUrl;
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`[TrackWeave] Could not fetch image for ${mbid}:`, e);
+    }
+    return null;
   }
 
   // ── Load albums via MusicBrainz ────────────────────────────────
@@ -930,19 +1226,70 @@
     const wrapper = document.createElement("div");
     wrapper.className = "album-carousel-wrapper";
 
-    // Duplicate cards for seamless infinite loop
-    const allCards = [...albums, ...albums];
-
     wrapper.innerHTML = `
-      <div class="album-carousel-fade-left"></div>
-      <div class="album-carousel-fade-right"></div>
+      <button class="carousel-nav-btn prev" id="carousel-prev" aria-label="Previous albums">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <button class="carousel-nav-btn next" id="carousel-next" aria-label="Next albums">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
       <div class="album-carousel-track-outer">
         <div class="album-carousel-track" id="album-track">
-          ${allCards.map((rg, i) => albumCardHTML(rg, i % albums.length)).join("")}
+          ${albums.map((rg, i) => albumCardHTML(rg, i)).join("")}
         </div>
       </div>`;
 
+    // Initialize carousel navigation
+    setTimeout(() => initCarouselNavigation(wrapper, albums), 100);
+
     return wrapper;
+  }
+
+  // ── Initialize carousel navigation ─────────────────────────────
+  function initCarouselNavigation(wrapper, albums) {
+    const track = wrapper.querySelector('.album-carousel-track');
+    const prevBtn = wrapper.querySelector('#carousel-prev');
+    const nextBtn = wrapper.querySelector('#carousel-next');
+    
+    if (!track || !prevBtn || !nextBtn) return;
+
+    let currentIndex = 0;
+    const cardWidth = 200; // matches flex: 0 0 200px
+    const gap = 20; // matches gap: 1.25rem (20px)
+    const scrollAmount = 3; // scroll 3 cards at a time
+
+    function updateCarousel() {
+      const offset = currentIndex * (cardWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+      
+      // Update button states
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= albums.length - scrollAmount;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = Math.max(0, currentIndex - scrollAmount);
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = Math.min(albums.length - scrollAmount, currentIndex + scrollAmount);
+      updateCarousel();
+    });
+
+    // Add click handlers to album cards
+    const cards = track.querySelectorAll('.album-card');
+    cards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        showAlbumSongs(albums[index]);
+      });
+    });
+
+    updateCarousel();
   }
 
   // ── Album card HTML ─────────────────────────────────────────────
@@ -995,6 +1342,118 @@
       </div>`;
   }
 
+  // ── Show album songs in modal ──────────────────────────────────
+  async function showAlbumSongs(album) {
+    const overlay = document.getElementById('song-modal-overlay');
+    const modalTitle = document.getElementById('modal-album-title');
+    const modalMeta = document.getElementById('modal-album-meta');
+    const modalCover = document.getElementById('modal-album-cover');
+    const modalBody = document.getElementById('song-modal-body');
+
+    // Show modal
+    overlay.classList.add('active');
+
+    // Set album info
+    modalTitle.textContent = album.title ?? "Untitled";
+    const year = album["first-release-date"]?.slice(0, 4) ?? "";
+    const type = album["primary-type"] ?? "Release";
+    modalMeta.textContent = `${type}${year ? " • " + year : ""}`;
+
+    // Set cover
+    const hue = Math.abs(hashStr(album.title ?? "")) % 360;
+    const hue2 = (hue + 60) % 360;
+    const gradStyle = `background:linear-gradient(135deg,hsl(${hue},52%,44%),hsl(${hue2},48%,30%))`;
+    
+    if (album._coverUrl) {
+      modalCover.innerHTML = `<img src="${escHtml(album._coverUrl)}" alt="${escHtml(album.title ?? "")}" />`;
+    } else {
+      modalCover.innerHTML = `<div style="${gradStyle};width:100%;height:100%;display:flex;align-items:center;justify-content:center;">${musicNoteSVG("36%","0.6")}</div>`;
+    }
+
+    // Load tracks
+    modalBody.innerHTML = '<div class="song-list-loading">Loading tracks...</div>';
+
+    try {
+      // Fetch releases for this release group to get track listings
+      const relRes = await mbFetch(
+        `https://musicbrainz.org/ws/2/release?release-group=${album.id}&inc=recordings&limit=1&fmt=json`
+      );
+      
+      if (!relRes.ok) throw new Error("Failed to fetch releases");
+      
+      const relData = await relRes.json();
+      const releases = relData.releases ?? [];
+      
+      if (releases.length === 0) {
+        modalBody.innerHTML = '<div class="song-list-empty">No track information available for this release.</div>';
+        return;
+      }
+
+      // Get the first release and fetch its full details with recordings
+      const releaseId = releases[0].id;
+      const detailRes = await mbFetch(
+        `https://musicbrainz.org/ws/2/release/${releaseId}?inc=recordings&fmt=json`
+      );
+      
+      if (!detailRes.ok) throw new Error("Failed to fetch release details");
+      
+      const releaseDetail = await detailRes.json();
+      const media = releaseDetail.media ?? [];
+      
+      // Collect all tracks from all media (discs)
+      const allTracks = [];
+      media.forEach((medium, mediumIndex) => {
+        const tracks = medium.tracks ?? [];
+        tracks.forEach(track => {
+          allTracks.push({
+            position: track.position ?? allTracks.length + 1,
+            title: track.title ?? track.recording?.title ?? "Unknown Track",
+            length: track.length ?? track.recording?.length ?? null,
+            mediumIndex: mediumIndex + 1
+          });
+        });
+      });
+
+      if (allTracks.length === 0) {
+        modalBody.innerHTML = '<div class="song-list-empty">No tracks found for this release.</div>';
+        return;
+      }
+
+      // Render track list
+      const trackListHTML = `
+        <ul class="song-list">
+          ${allTracks.map(track => {
+            const duration = track.length ? formatDuration(track.length) : "—";
+            return `
+              <li class="song-item">
+                <span class="song-track-number">${track.position}</span>
+                <div class="song-info">
+                  <div class="song-name">${escHtml(track.title)}</div>
+                  <div class="song-duration">${duration}</div>
+                </div>
+              </li>
+            `;
+          }).join("")}
+        </ul>
+      `;
+      
+      modalBody.innerHTML = trackListHTML;
+
+    } catch (e) {
+      console.warn("[TrackWeave] Failed to load tracks:", e);
+      modalBody.innerHTML = '<div class="song-list-empty">Could not load track information. Please try again later.</div>';
+    }
+  }
+
+  // ── Format duration (milliseconds to mm:ss) ────────────────────
+  function formatDuration(ms) {
+    if (!ms) return "—";
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+
   // ── hashStr helper ─────────────────────────────────────────────
   function hashStr(s) {
     let h = 0;
@@ -1032,6 +1491,32 @@
       _dropMini.style.background = _avBtn.style.background;
     }
   }).observe(_avBtn, { childList: true, subtree: true, characterData: true });
+
+  // ── Song modal controls ────────────────────────────────────────
+  const songModalOverlay = document.getElementById('song-modal-overlay');
+  const closeSongModalBtn = document.getElementById('close-song-modal');
+
+  closeSongModalBtn.addEventListener('click', () => {
+    songModalOverlay.classList.remove('active');
+  });
+
+  songModalOverlay.addEventListener('click', (e) => {
+    if (e.target === songModalOverlay) {
+      songModalOverlay.classList.remove('active');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && songModalOverlay.classList.contains('active')) {
+      songModalOverlay.classList.remove('active');
+    }
+  });
+</script>
+
+<script type="module">
+  // Import and initialize coin display
+  import { initCoinDisplay } from '../scripts/coin-display.js';
+  initCoinDisplay();
 </script>
 
 </body>

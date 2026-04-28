@@ -1,0 +1,826 @@
+song_a,album_a,song_b,album_b,similarity
+WAP,,Bodak Yellow,Invasion of Privacy,0.6559
+WAP,,Bartier Cardi,Invasion of Privacy,0.6823
+WAP,,Money,,0.6635
+WAP,,Press,,0.6918
+WAP,,I Do,Invasion of Privacy,0.6565
+WAP,,Thru Your Phone,Invasion of Privacy,0.6494
+WAP,,Drip,Invasion of Privacy,0.6353
+WAP,,Ring,Invasion of Privacy,0.6394
+WAP,,Get Up 10,Invasion of Privacy,0.6432
+WAP,,Best Life,Invasion of Privacy,0.6073
+WAP,,Bickenhead,Invasion of Privacy,0.6114
+WAP,,WAP (Clean),,0.9196
+WAP,,Money Bag,Invasion of Privacy,0.7034
+WAP,,Red Barz,,0.6574
+WAP,,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6461
+WAP,,Lick,"Gangsta Bitch Music, Vol. 2",0.6954
+WAP,,Up,CB2,0.6313
+WAP,,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7001
+WAP,,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6008
+WAP,,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6299
+WAP,,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.7105
+WAP,,Bodak Yellow (Remix),,0.6538
+WAP,,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6004
+WAP,,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6748
+WAP,,Hectic,"Gangsta Bitch Music, Vol. 2",0.7074
+WAP,,Stripper Hoe,,0.6745
+WAP,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6112
+WAP,,WAP (Demo),,0.6373
+WAP,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7334
+WAP,,What A Girl Likes,,0.619
+WAP,,Styling*,CB2,0.6518
+WAP,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6269
+WAP,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6688
+WAP,,How I Do,"Gangsta Bitch Music, Vol. 2",0.7021
+WAP,,Booty*,CB2,0.6897
+WAP,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6486
+WAP,,Respect,CB2,0.6049
+WAP,,11/18/19 Freestyle,,0.7047
+WAP,,Bartier Cardi (Original),Unreleased Songs,0.7134
+WAP,,WAP (Worship and Prayer),,0.6068
+WAP,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.7175
+Bodak Yellow,Invasion of Privacy,Bartier Cardi,Invasion of Privacy,0.6077
+Bodak Yellow,Invasion of Privacy,Money,,0.7054
+Bodak Yellow,Invasion of Privacy,Press,,0.6913
+Bodak Yellow,Invasion of Privacy,I Do,Invasion of Privacy,0.7133
+Bodak Yellow,Invasion of Privacy,Drip,Invasion of Privacy,0.6004
+Bodak Yellow,Invasion of Privacy,Get Up 10,Invasion of Privacy,0.7552
+Bodak Yellow,Invasion of Privacy,Bickenhead,Invasion of Privacy,0.6756
+Bodak Yellow,Invasion of Privacy,WAP (Clean),,0.6018
+Bodak Yellow,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6759
+Bodak Yellow,Invasion of Privacy,Red Barz,,0.7015
+Bodak Yellow,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6359
+Bodak Yellow,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.7456
+Bodak Yellow,Invasion of Privacy,Up,CB2,0.6276
+Bodak Yellow,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7512
+Bodak Yellow,Invasion of Privacy,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6658
+Bodak Yellow,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6534
+Bodak Yellow,Invasion of Privacy,Cheap Ass Weave,,0.6574
+Bodak Yellow,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.659
+Bodak Yellow,Invasion of Privacy,Bodak Yellow (Remix),,0.837
+Bodak Yellow,Invasion of Privacy,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6693
+Bodak Yellow,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.7283
+Bodak Yellow,Invasion of Privacy,Stripper Hoe,,0.7285
+Bodak Yellow,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6915
+Bodak Yellow,Invasion of Privacy,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6012
+Bodak Yellow,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7132
+Bodak Yellow,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6152
+Bodak Yellow,Invasion of Privacy,What A Girl Likes,,0.6552
+Bodak Yellow,Invasion of Privacy,Styling*,CB2,0.7003
+Bodak Yellow,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6654
+Bodak Yellow,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6759
+Bodak Yellow,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.7391
+Bodak Yellow,Invasion of Privacy,Booty*,CB2,0.6925
+Bodak Yellow,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6612
+Bodak Yellow,Invasion of Privacy,Sick 16 (Freestyle),,0.6028
+Bodak Yellow,Invasion of Privacy,Respect,CB2,0.6907
+Bodak Yellow,Invasion of Privacy,11/18/19 Freestyle,,0.7479
+Bodak Yellow,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6431
+Bodak Yellow,Invasion of Privacy,Broke,,0.621
+Bodak Yellow,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6765
+Bartier Cardi,Invasion of Privacy,Press,,0.6379
+Bartier Cardi,Invasion of Privacy,Thru Your Phone,Invasion of Privacy,0.6412
+Bartier Cardi,Invasion of Privacy,Drip,Invasion of Privacy,0.6299
+Bartier Cardi,Invasion of Privacy,WAP (Clean),,0.6356
+Bartier Cardi,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6828
+Bartier Cardi,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.6255
+Bartier Cardi,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.64
+Bartier Cardi,Invasion of Privacy,Bodak Yellow (Remix),,0.61
+Bartier Cardi,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6682
+Bartier Cardi,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6799
+Bartier Cardi,Invasion of Privacy,Styling*,CB2,0.6154
+Bartier Cardi,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6009
+Bartier Cardi,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.606
+Bartier Cardi,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.6587
+Bartier Cardi,Invasion of Privacy,Booty*,CB2,0.6171
+Bartier Cardi,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.9004
+Bartier Cardi,Invasion of Privacy,Thru Your Phone (Clean),,0.619
+Bartier Cardi,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6384
+Be Careful,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6069
+Be Careful,Invasion of Privacy,Cheap Ass Weave,,0.6358
+Be Careful,Invasion of Privacy,Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6006
+Be Careful,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6326
+Be Careful,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6419
+Be Careful,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.6086
+Be Careful,Invasion of Privacy,11/18/19 Freestyle,,0.6193
+Be Careful,Invasion of Privacy,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6006
+Money,,Press,,0.6473
+Money,,I Do,Invasion of Privacy,0.6763
+Money,,Get Up 10,Invasion of Privacy,0.7139
+Money,,Best Life,Invasion of Privacy,0.6567
+Money,,Bickenhead,Invasion of Privacy,0.7013
+Money,,WAP (Clean),,0.6165
+Money,,Money Bag,Invasion of Privacy,0.7796
+Money,,Red Barz,,0.6763
+Money,,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6302
+Money,,Lick,"Gangsta Bitch Music, Vol. 2",0.7355
+Money,,Up,CB2,0.655
+Money,,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7775
+Money,,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6665
+Money,,Pull Up,"Gangsta Bitch Music, Vol. 2",0.67
+Money,,Cheap Ass Weave,,0.6173
+Money,,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.7146
+Money,,Bodak Yellow (Remix),,0.654
+Money,,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6493
+Money,,Hectic,"Gangsta Bitch Music, Vol. 2",0.7432
+Money,,Stripper Hoe,,0.7025
+Money,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6751
+Money,,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6572
+Money,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6253
+Money,,What A Girl Likes,,0.6622
+Money,,Styling*,CB2,0.6871
+Money,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.7338
+Money,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6167
+Money,,How I Do,"Gangsta Bitch Music, Vol. 2",0.6886
+Money,,Booty*,CB2,0.6596
+Money,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6986
+Money,,Respect,CB2,0.6852
+Money,,11/18/19 Freestyle,,0.7056
+Money,,Bartier Cardi (Original),Unreleased Songs,0.6587
+Money,,Up (Radio Edit),,0.6196
+Money,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6722
+Press,,I Do,Invasion of Privacy,0.6371
+Press,,Thru Your Phone,Invasion of Privacy,0.7024
+Press,,Drip,Invasion of Privacy,0.6699
+Press,,Get Up 10,Invasion of Privacy,0.7394
+Press,,Best Life,Invasion of Privacy,0.6311
+Press,,Bickenhead,Invasion of Privacy,0.6813
+Press,,WAP (Clean),,0.6548
+Press,,Money Bag,Invasion of Privacy,0.6925
+Press,,Red Barz,,0.7083
+Press,,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7133
+Press,,Lick,"Gangsta Bitch Music, Vol. 2",0.7081
+Press,,Up,CB2,0.6232
+Press,,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6801
+Press,,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6448
+Press,,Pull Up,"Gangsta Bitch Music, Vol. 2",0.7156
+Press,,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6991
+Press,,Bodak Yellow (Remix),,0.6669
+Press,,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.694
+Press,,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6553
+Press,,Hectic,"Gangsta Bitch Music, Vol. 2",0.7076
+Press,,Stripper Hoe,,0.6298
+Press,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6719
+Press,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7219
+Press,,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6273
+Press,,What A Girl Likes,,0.6118
+Press,,Styling*,CB2,0.7014
+Press,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6564
+Press,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6962
+Press,,How I Do,"Gangsta Bitch Music, Vol. 2",0.7136
+Press,,Booty*,CB2,0.6757
+Press,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6786
+Press,,Respect,CB2,0.6634
+Press,,11/18/19 Freestyle,,0.7443
+Press,,Bartier Cardi (Original),Unreleased Songs,0.7046
+Press,,Thru Your Phone (Clean),,0.6858
+Press,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6786
+I Do,Invasion of Privacy,Thru Your Phone,Invasion of Privacy,0.6223
+I Do,Invasion of Privacy,Get Up 10,Invasion of Privacy,0.6793
+I Do,Invasion of Privacy,Best Life,Invasion of Privacy,0.6223
+I Do,Invasion of Privacy,Bickenhead,Invasion of Privacy,0.6301
+I Do,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6751
+I Do,Invasion of Privacy,Red Barz,,0.6467
+I Do,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6549
+I Do,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.7761
+I Do,Invasion of Privacy,Up,CB2,0.6709
+I Do,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6992
+I Do,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6699
+I Do,Invasion of Privacy,Cheap Ass Weave,,0.7014
+I Do,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6721
+I Do,Invasion of Privacy,Bodak Yellow (Remix),,0.6986
+I Do,Invasion of Privacy,Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6474
+I Do,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6539
+I Do,Invasion of Privacy,Stripper Hoe,,0.6797
+I Do,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6509
+I Do,Invasion of Privacy,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6149
+I Do,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7
+I Do,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6051
+I Do,Invasion of Privacy,What A Girl Likes,,0.6201
+I Do,Invasion of Privacy,Styling*,CB2,0.6489
+I Do,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.7441
+I Do,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6637
+I Do,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.7354
+I Do,Invasion of Privacy,Booty*,CB2,0.6908
+I Do,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6939
+I Do,Invasion of Privacy,Respect,CB2,0.6513
+I Do,Invasion of Privacy,11/18/19 Freestyle,,0.6899
+I Do,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6038
+I Do,Invasion of Privacy,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6474
+I Do,Invasion of Privacy,Broke,,0.6567
+I Do,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6354
+Thru Your Phone,Invasion of Privacy,Drip,Invasion of Privacy,0.6371
+Thru Your Phone,Invasion of Privacy,Get Up 10,Invasion of Privacy,0.6326
+Thru Your Phone,Invasion of Privacy,Best Life,Invasion of Privacy,0.6296
+Thru Your Phone,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6535
+Thru Your Phone,Invasion of Privacy,Red Barz,,0.6375
+Thru Your Phone,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6041
+Thru Your Phone,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.6877
+Thru Your Phone,Invasion of Privacy,Bodak Yellow (Latin Trap Remix),,0.642
+Thru Your Phone,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6126
+Thru Your Phone,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6673
+Thru Your Phone,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6268
+Thru Your Phone,Invasion of Privacy,Bodak Yellow (Remix),,0.6371
+Thru Your Phone,Invasion of Privacy,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6285
+Thru Your Phone,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6241
+Thru Your Phone,Invasion of Privacy,Stripper Hoe,,0.6292
+Thru Your Phone,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7401
+Thru Your Phone,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6153
+Thru Your Phone,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6606
+Thru Your Phone,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6645
+Thru Your Phone,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.682
+Thru Your Phone,Invasion of Privacy,11/18/19 Freestyle,,0.6497
+Thru Your Phone,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.655
+Thru Your Phone,Invasion of Privacy,Song For Kulture’s 1st Birthday,,0.6333
+Thru Your Phone,Invasion of Privacy,Thru Your Phone (Clean),,0.8593
+Thru Your Phone,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6766
+Drip,Invasion of Privacy,WAP (Clean),,0.6799
+Drip,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6174
+Drip,Invasion of Privacy,Red Barz,,0.609
+Drip,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.6214
+Drip,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6788
+Drip,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6884
+Drip,Invasion of Privacy,Stripper Hoe,,0.6185
+Drip,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6322
+Drip,Invasion of Privacy,Styling*,CB2,0.6144
+Drip,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6345
+Drip,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6234
+Drip,Invasion of Privacy,Booty*,CB2,0.6389
+Drip,Invasion of Privacy,11/18/19 Freestyle,,0.611
+Drip,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6943
+Drip,Invasion of Privacy,Thru Your Phone (Clean),,0.6467
+Drip,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6554
+Ring,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6043
+Ring,Invasion of Privacy,Up,CB2,0.6037
+Ring,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.611
+Ring,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6179
+Ring,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6168
+Ring,Invasion of Privacy,Stripper Hoe,,0.6228
+Ring,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6412
+Ring,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6631
+Ring,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6505
+Ring,Invasion of Privacy,11/18/19 Freestyle,,0.6314
+Get Up 10,Invasion of Privacy,Best Life,Invasion of Privacy,0.6249
+Get Up 10,Invasion of Privacy,Bickenhead,Invasion of Privacy,0.6856
+Get Up 10,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6668
+Get Up 10,Invasion of Privacy,Red Barz,,0.7294
+Get Up 10,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7049
+Get Up 10,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.7642
+Get Up 10,Invasion of Privacy,Up,CB2,0.6374
+Get Up 10,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7447
+Get Up 10,Invasion of Privacy,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6657
+Get Up 10,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.7279
+Get Up 10,Invasion of Privacy,Cheap Ass Weave,,0.686
+Get Up 10,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6837
+Get Up 10,Invasion of Privacy,Bodak Yellow (Remix),,0.6959
+Get Up 10,Invasion of Privacy,Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6073
+Get Up 10,Invasion of Privacy,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6759
+Get Up 10,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.7218
+Get Up 10,Invasion of Privacy,Stripper Hoe,,0.697
+Get Up 10,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.7551
+Get Up 10,Invasion of Privacy,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6264
+Get Up 10,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6774
+Get Up 10,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.669
+Get Up 10,Invasion of Privacy,What A Girl Likes,,0.6088
+Get Up 10,Invasion of Privacy,Styling*,CB2,0.6707
+Get Up 10,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6476
+Get Up 10,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6661
+Get Up 10,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.7103
+Get Up 10,Invasion of Privacy,Booty*,CB2,0.6742
+Get Up 10,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6961
+Get Up 10,Invasion of Privacy,Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6443
+Get Up 10,Invasion of Privacy,Sick 16 (Freestyle),,0.6888
+Get Up 10,Invasion of Privacy,Respect,CB2,0.7035
+Get Up 10,Invasion of Privacy,11/18/19 Freestyle,,0.7716
+Get Up 10,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6386
+Get Up 10,Invasion of Privacy,Song For Kulture’s 1st Birthday,,0.6193
+Get Up 10,Invasion of Privacy,Broke,,0.6264
+Get Up 10,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6483
+Best Life,Invasion of Privacy,Bickenhead,Invasion of Privacy,0.6066
+Best Life,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6674
+Best Life,Invasion of Privacy,Red Barz,,0.617
+Best Life,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6037
+Best Life,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.6506
+Best Life,Invasion of Privacy,Up,CB2,0.62
+Best Life,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6415
+Best Life,Invasion of Privacy,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6105
+Best Life,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6382
+Best Life,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.642
+Best Life,Invasion of Privacy,Bodak Yellow (Remix),,0.6223
+Best Life,Invasion of Privacy,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6296
+Best Life,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.6695
+Best Life,Invasion of Privacy,Stripper Hoe,,0.6871
+Best Life,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6623
+Best Life,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.624
+Best Life,Invasion of Privacy,What A Girl Likes,,0.6115
+Best Life,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6648
+Best Life,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6367
+Best Life,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.6629
+Best Life,Invasion of Privacy,Booty*,CB2,0.6255
+Best Life,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6135
+Best Life,Invasion of Privacy,Respect,CB2,0.6135
+Best Life,Invasion of Privacy,11/18/19 Freestyle,,0.673
+Best Life,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6119
+Bickenhead,Invasion of Privacy,Money Bag,Invasion of Privacy,0.6944
+Bickenhead,Invasion of Privacy,Red Barz,,0.6682
+Bickenhead,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6718
+Bickenhead,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.7021
+Bickenhead,Invasion of Privacy,Up,CB2,0.6517
+Bickenhead,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6667
+Bickenhead,Invasion of Privacy,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6458
+Bickenhead,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.7164
+Bickenhead,Invasion of Privacy,Cheap Ass Weave,,0.6135
+Bickenhead,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6512
+Bickenhead,Invasion of Privacy,Bodak Yellow (Remix),,0.6251
+Bickenhead,Invasion of Privacy,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7018
+Bickenhead,Invasion of Privacy,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6372
+Bickenhead,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.7477
+Bickenhead,Invasion of Privacy,Stripper Hoe,,0.6378
+Bickenhead,Invasion of Privacy,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6484
+Bickenhead,Invasion of Privacy,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6053
+Bickenhead,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6454
+Bickenhead,Invasion of Privacy,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.611
+Bickenhead,Invasion of Privacy,What A Girl Likes,,0.6651
+Bickenhead,Invasion of Privacy,Styling*,CB2,0.6829
+Bickenhead,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6342
+Bickenhead,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6319
+Bickenhead,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.648
+Bickenhead,Invasion of Privacy,Booty*,CB2,0.6216
+Bickenhead,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6612
+Bickenhead,Invasion of Privacy,Respect,CB2,0.618
+Bickenhead,Invasion of Privacy,11/18/19 Freestyle,,0.6679
+Bickenhead,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.6547
+Bickenhead,Invasion of Privacy,Up (Radio Edit),,0.6336
+Bickenhead,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6308
+WAP (Clean),,Money Bag,Invasion of Privacy,0.6577
+WAP (Clean),,Lick,"Gangsta Bitch Music, Vol. 2",0.6093
+WAP (Clean),,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6066
+WAP (Clean),,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6629
+WAP (Clean),,Bodak Yellow (Remix),,0.6222
+WAP (Clean),,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6436
+WAP (Clean),,Hectic,"Gangsta Bitch Music, Vol. 2",0.6784
+WAP (Clean),,Stripper Hoe,,0.6395
+WAP (Clean),,WAP (Demo),,0.6359
+WAP (Clean),,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6391
+WAP (Clean),,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6
+WAP (Clean),,How I Do,"Gangsta Bitch Music, Vol. 2",0.6248
+WAP (Clean),,Booty*,CB2,0.6436
+WAP (Clean),,11/18/19 Freestyle,,0.6114
+WAP (Clean),,Bartier Cardi (Original),Unreleased Songs,0.6669
+WAP (Clean),,WAP (Worship and Prayer),,0.6208
+WAP (Clean),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6872
+Money Bag,Invasion of Privacy,Red Barz,,0.6815
+Money Bag,Invasion of Privacy,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6472
+Money Bag,Invasion of Privacy,Lick,"Gangsta Bitch Music, Vol. 2",0.7367
+Money Bag,Invasion of Privacy,Up,CB2,0.6816
+Money Bag,Invasion of Privacy,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7332
+Money Bag,Invasion of Privacy,On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6223
+Money Bag,Invasion of Privacy,Pull Up,"Gangsta Bitch Music, Vol. 2",0.6424
+Money Bag,Invasion of Privacy,Cheap Ass Weave,,0.622
+Money Bag,Invasion of Privacy,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.7341
+Money Bag,Invasion of Privacy,Bodak Yellow (Remix),,0.6674
+Money Bag,Invasion of Privacy,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6408
+Money Bag,Invasion of Privacy,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6135
+Money Bag,Invasion of Privacy,Hectic,"Gangsta Bitch Music, Vol. 2",0.7271
+Money Bag,Invasion of Privacy,Stripper Hoe,,0.6497
+Money Bag,Invasion of Privacy,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.682
+Money Bag,Invasion of Privacy,What A Girl Likes,,0.6547
+Money Bag,Invasion of Privacy,Styling*,CB2,0.6996
+Money Bag,Invasion of Privacy,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.702
+Money Bag,Invasion of Privacy,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6478
+Money Bag,Invasion of Privacy,How I Do,"Gangsta Bitch Music, Vol. 2",0.7202
+Money Bag,Invasion of Privacy,Booty*,CB2,0.6713
+Money Bag,Invasion of Privacy,Rollin,"Gangsta Bitch Music, Vol. 2",0.6811
+Money Bag,Invasion of Privacy,Respect,CB2,0.6392
+Money Bag,Invasion of Privacy,11/18/19 Freestyle,,0.6876
+Money Bag,Invasion of Privacy,Bartier Cardi (Original),Unreleased Songs,0.7212
+Money Bag,Invasion of Privacy,Up (Radio Edit),,0.6492
+Money Bag,Invasion of Privacy,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6655
+Red Barz,,Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7148
+Red Barz,,Lick,"Gangsta Bitch Music, Vol. 2",0.7661
+Red Barz,,Up,CB2,0.6501
+Red Barz,,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7019
+Red Barz,,Pull Up,"Gangsta Bitch Music, Vol. 2",0.7507
+Red Barz,,Cheap Ass Weave,,0.7012
+Red Barz,,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.7159
+Red Barz,,Bodak Yellow (Remix),,0.6316
+Red Barz,,Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6606
+Red Barz,,Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6559
+Red Barz,,Hectic,"Gangsta Bitch Music, Vol. 2",0.6702
+Red Barz,,Stripper Hoe,,0.6864
+Red Barz,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.7279
+Red Barz,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7286
+Red Barz,,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.722
+Red Barz,,Styling*,CB2,0.6746
+Red Barz,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6686
+Red Barz,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.727
+Red Barz,,How I Do,"Gangsta Bitch Music, Vol. 2",0.7652
+Red Barz,,Booty*,CB2,0.699
+Red Barz,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6825
+Red Barz,,Sick 16 (Freestyle),,0.6548
+Red Barz,,Respect,CB2,0.6749
+Red Barz,,11/18/19 Freestyle,,0.7844
+Red Barz,,Bartier Cardi (Original),Unreleased Songs,0.6364
+Red Barz,,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6606
+Red Barz,,Broke,,0.6609
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lick,"Gangsta Bitch Music, Vol. 2",0.683
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Up,CB2,0.6063
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6724
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6197
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pull Up,"Gangsta Bitch Music, Vol. 2",0.7232
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Cheap Ass Weave,,0.6294
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6428
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bodak Yellow (Remix),,0.607
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.603
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.638
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Hectic,"Gangsta Bitch Music, Vol. 2",0.6824
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Stripper Hoe,,0.663
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6725
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6852
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Styling*,CB2,0.6659
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pop Off,"Gangsta Bitch Music, Vol. 2",0.689
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.6739
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Booty*,CB2,0.6233
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Rollin,"Gangsta Bitch Music, Vol. 2",0.6948
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Respect,CB2,0.6402
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.7056
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.603
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Broke,,0.6241
+Foreva,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6423
+Lick,"Gangsta Bitch Music, Vol. 2",Up,CB2,0.6536
+Lick,"Gangsta Bitch Music, Vol. 2",Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7467
+Lick,"Gangsta Bitch Music, Vol. 2",On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6389
+Lick,"Gangsta Bitch Music, Vol. 2",Pull Up,"Gangsta Bitch Music, Vol. 2",0.7528
+Lick,"Gangsta Bitch Music, Vol. 2",Cheap Ass Weave,,0.6855
+Lick,"Gangsta Bitch Music, Vol. 2",Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.8052
+Lick,"Gangsta Bitch Music, Vol. 2",Bodak Yellow (Remix),,0.7063
+Lick,"Gangsta Bitch Music, Vol. 2",Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6874
+Lick,"Gangsta Bitch Music, Vol. 2",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.684
+Lick,"Gangsta Bitch Music, Vol. 2",Back It Up,"Gangsta Bitch Music, Vol. 2",0.6048
+Lick,"Gangsta Bitch Music, Vol. 2",Hectic,"Gangsta Bitch Music, Vol. 2",0.7442
+Lick,"Gangsta Bitch Music, Vol. 2",Stripper Hoe,,0.7299
+Lick,"Gangsta Bitch Music, Vol. 2",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6997
+Lick,"Gangsta Bitch Music, Vol. 2",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6082
+Lick,"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7297
+Lick,"Gangsta Bitch Music, Vol. 2",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6653
+Lick,"Gangsta Bitch Music, Vol. 2",What A Girl Likes,,0.6561
+Lick,"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.7296
+Lick,"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.7573
+Lick,"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.7066
+Lick,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.8028
+Lick,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6792
+Lick,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6854
+Lick,"Gangsta Bitch Music, Vol. 2",Sick 16 (Freestyle),,0.6425
+Lick,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6559
+Lick,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7718
+Lick,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.699
+Lick,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6874
+Lick,"Gangsta Bitch Music, Vol. 2",Broke,,0.6585
+Lick,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6885
+Up,CB2,Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6434
+Up,CB2,Pull Up,"Gangsta Bitch Music, Vol. 2",0.7025
+Up,CB2,Cheap Ass Weave,,0.6182
+Up,CB2,Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6049
+Up,CB2,Bodak Yellow (Remix),,0.6176
+Up,CB2,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6368
+Up,CB2,Hectic,"Gangsta Bitch Music, Vol. 2",0.6705
+Up,CB2,Stripper Hoe,,0.613
+Up,CB2,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6041
+Up,CB2,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6398
+Up,CB2,What A Girl Likes,,0.6073
+Up,CB2,Styling*,CB2,0.6355
+Up,CB2,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6213
+Up,CB2,How I Do,"Gangsta Bitch Music, Vol. 2",0.6617
+Up,CB2,Booty*,CB2,0.6713
+Up,CB2,Rollin,"Gangsta Bitch Music, Vol. 2",0.6598
+Up,CB2,Respect,CB2,0.6788
+Up,CB2,11/18/19 Freestyle,,0.6764
+Up,CB2,Bartier Cardi (Original),Unreleased Songs,0.6446
+Up,CB2,Up (Radio Edit),,0.9341
+Up,CB2,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6035
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6308
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pull Up,"Gangsta Bitch Music, Vol. 2",0.6885
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Cheap Ass Weave,,0.6721
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.719
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bodak Yellow (Remix),,0.7038
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6698
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6371
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Hectic,"Gangsta Bitch Music, Vol. 2",0.6992
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Stripper Hoe,,0.7203
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6789
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6574
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6916
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Trick,"Gangsta Bitch Music, Vol. 1",0.6449
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6296
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",What A Girl Likes,,0.7232
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Styling*,CB2,0.7068
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6506
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6748
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.7305
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Booty*,CB2,0.6926
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Rollin,"Gangsta Bitch Music, Vol. 2",0.7239
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6374
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Respect,CB2,0.6671
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.7725
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bartier Cardi (Original),Unreleased Songs,0.6324
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6698
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Ten Trick Commandments,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6449
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Broke,,0.6577
+Washpoppin,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6567
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pull Up,"Gangsta Bitch Music, Vol. 2",0.6567
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bodak Yellow (Remix),,0.6061
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6272
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Hectic,"Gangsta Bitch Music, Vol. 2",0.6636
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Stripper Hoe,,0.6715
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6196
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6237
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.6164
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Rollin,"Gangsta Bitch Music, Vol. 2",0.6622
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.6345
+On Fleek,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6613
+Selfish,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6075
+Selfish,"Gangsta Bitch Music, Vol. 1 (Promo CD)",I Gotta Hurt You,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7082
+Selfish,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Never Give Up,"Gangsta Bitch Music, Vol. 2",0.6886
+Pull Up,"Gangsta Bitch Music, Vol. 2",Cheap Ass Weave,,0.6889
+Pull Up,"Gangsta Bitch Music, Vol. 2",Lick (Remix),"Gangsta Bitch Music, Vol. 2",0.6563
+Pull Up,"Gangsta Bitch Music, Vol. 2",Bodak Yellow (Remix),,0.634
+Pull Up,"Gangsta Bitch Music, Vol. 2",Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6189
+Pull Up,"Gangsta Bitch Music, Vol. 2",Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.637
+Pull Up,"Gangsta Bitch Music, Vol. 2",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6513
+Pull Up,"Gangsta Bitch Music, Vol. 2",Back It Up,"Gangsta Bitch Music, Vol. 2",0.6507
+Pull Up,"Gangsta Bitch Music, Vol. 2",Hectic,"Gangsta Bitch Music, Vol. 2",0.6895
+Pull Up,"Gangsta Bitch Music, Vol. 2",Stripper Hoe,,0.6771
+Pull Up,"Gangsta Bitch Music, Vol. 2",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.7197
+Pull Up,"Gangsta Bitch Music, Vol. 2",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6205
+Pull Up,"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7242
+Pull Up,"Gangsta Bitch Music, Vol. 2",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6731
+Pull Up,"Gangsta Bitch Music, Vol. 2",What A Girl Likes,,0.6072
+Pull Up,"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.6594
+Pull Up,"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6425
+Pull Up,"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6825
+Pull Up,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.7106
+Pull Up,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6469
+Pull Up,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6599
+Pull Up,"Gangsta Bitch Music, Vol. 2",Sick 16 (Freestyle),,0.6542
+Pull Up,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6623
+Pull Up,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7362
+Pull Up,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6282
+Pull Up,"Gangsta Bitch Music, Vol. 2",Song For Kulture’s 1st Birthday,,0.6054
+Pull Up,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.637
+Pull Up,"Gangsta Bitch Music, Vol. 2",Broke,,0.6337
+Pull Up,"Gangsta Bitch Music, Vol. 2",Up (Radio Edit),,0.6571
+Pull Up,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6524
+Cheap Ass Weave,,Bodak Yellow (Remix),,0.6411
+Cheap Ass Weave,,Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6473
+Cheap Ass Weave,,Sauce Boyz,"Gangsta Bitch Music, Vol. 1",0.6602
+Cheap Ass Weave,,Stripper Hoe,,0.6334
+Cheap Ass Weave,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6455
+Cheap Ass Weave,,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6136
+Cheap Ass Weave,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6591
+Cheap Ass Weave,,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.653
+Cheap Ass Weave,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6543
+Cheap Ass Weave,,How I Do,"Gangsta Bitch Music, Vol. 2",0.7098
+Cheap Ass Weave,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6169
+Cheap Ass Weave,,Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6027
+Cheap Ass Weave,,Sick 16 (Freestyle),,0.6323
+Cheap Ass Weave,,11/18/19 Freestyle,,0.6833
+Cheap Ass Weave,,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6602
+Cheap Ass Weave,,Broke,,0.6421
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Bodak Yellow (Remix),,0.6644
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6118
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Back It Up,"Gangsta Bitch Music, Vol. 2",0.6062
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Hectic,"Gangsta Bitch Music, Vol. 2",0.7157
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Stripper Hoe,,0.659
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6296
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.681
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6274
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",What A Girl Likes,,0.6219
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.6649
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6808
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.655
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.7646
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.688
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6624
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7215
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6852
+Lick (Remix),"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6804
+Bodak Yellow (Remix),,Back It Up,"Gangsta Bitch Music, Vol. 2",0.6379
+Bodak Yellow (Remix),,Hectic,"Gangsta Bitch Music, Vol. 2",0.6844
+Bodak Yellow (Remix),,Stripper Hoe,,0.6703
+Bodak Yellow (Remix),,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6472
+Bodak Yellow (Remix),,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6737
+Bodak Yellow (Remix),,What A Girl Likes,,0.6841
+Bodak Yellow (Remix),,Styling*,CB2,0.6387
+Bodak Yellow (Remix),,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6329
+Bodak Yellow (Remix),,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6524
+Bodak Yellow (Remix),,How I Do,"Gangsta Bitch Music, Vol. 2",0.7193
+Bodak Yellow (Remix),,Booty*,CB2,0.6824
+Bodak Yellow (Remix),,Rollin,"Gangsta Bitch Music, Vol. 2",0.6176
+Bodak Yellow (Remix),,Respect,CB2,0.6533
+Bodak Yellow (Remix),,11/18/19 Freestyle,,0.6892
+Bodak Yellow (Remix),,Bartier Cardi (Original),Unreleased Songs,0.6485
+Bodak Yellow (Remix),,Thru Your Phone (Clean),,0.6049
+Bodak Yellow (Remix),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6642
+Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6239
+Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.6199
+Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sick 16 (Freestyle),,0.6597
+Trust Issues,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.6141
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Stripper Hoe,,0.6342
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6131
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.604
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6072
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6458
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6481
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",How I Do,"Gangsta Bitch Music, Vol. 2",0.6814
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",11/18/19 Freestyle,,0.6378
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",1.0
+Sauce Boyz,"Gangsta Bitch Music, Vol. 1",Broke,,0.6719
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Hectic,"Gangsta Bitch Music, Vol. 2",0.6523
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Stripper Hoe,,0.6623
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6523
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6185
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6422
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6654
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Styling*,CB2,0.605
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pop Off,"Gangsta Bitch Music, Vol. 2",0.669
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.6871
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Booty*,CB2,0.6025
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Rollin,"Gangsta Bitch Music, Vol. 2",0.6241
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sick 16 (Freestyle),,0.6334
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Respect,CB2,0.6342
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.6669
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Bartier Cardi (Original),Unreleased Songs,0.6209
+Lit Thot,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6083
+Back It Up,"Gangsta Bitch Music, Vol. 2",Hectic,"Gangsta Bitch Music, Vol. 2",0.6691
+Back It Up,"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6143
+Back It Up,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6004
+Back It Up,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6075
+Back It Up,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.6132
+Back It Up,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6367
+Back It Up,"Gangsta Bitch Music, Vol. 2",Thru Your Phone (Clean),,0.6254
+Back It Up,"Gangsta Bitch Music, Vol. 2",Up (Radio Edit),,0.6278
+Back It Up,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6287
+Hectic,"Gangsta Bitch Music, Vol. 2",Stripper Hoe,,0.7058
+Hectic,"Gangsta Bitch Music, Vol. 2",Bronx Season,"Gangsta Bitch Music, Vol. 2",0.6637
+Hectic,"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.683
+Hectic,"Gangsta Bitch Music, Vol. 2",What A Girl Likes,,0.6582
+Hectic,"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.7287
+Hectic,"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6982
+Hectic,"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6854
+Hectic,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.6993
+Hectic,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.7311
+Hectic,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6935
+Hectic,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6429
+Hectic,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7391
+Hectic,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.7486
+Hectic,"Gangsta Bitch Music, Vol. 2",Up (Radio Edit),,0.6593
+Hectic,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6706
+Stripper Hoe,,Bronx Season,"Gangsta Bitch Music, Vol. 2",0.7546
+Stripper Hoe,,With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6509
+Stripper Hoe,,Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.7099
+Stripper Hoe,,B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6248
+Stripper Hoe,,What A Girl Likes,,0.606
+Stripper Hoe,,Styling*,CB2,0.6139
+Stripper Hoe,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.7032
+Stripper Hoe,,Pop Off,"Gangsta Bitch Music, Vol. 2",0.698
+Stripper Hoe,,How I Do,"Gangsta Bitch Music, Vol. 2",0.7463
+Stripper Hoe,,Booty*,CB2,0.6758
+Stripper Hoe,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6568
+Stripper Hoe,,Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6147
+Stripper Hoe,,Sick 16 (Freestyle),,0.6033
+Stripper Hoe,,Respect,CB2,0.6697
+Stripper Hoe,,11/18/19 Freestyle,,0.7254
+Stripper Hoe,,Bartier Cardi (Original),Unreleased Songs,0.604
+Stripper Hoe,,Song For Kulture’s 1st Birthday,,0.6008
+Stripper Hoe,,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6342
+Stripper Hoe,,Broke,,0.6379
+Stripper Hoe,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6593
+Bronx Season,"Gangsta Bitch Music, Vol. 2",With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6422
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6481
+Bronx Season,"Gangsta Bitch Music, Vol. 2",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6601
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.6281
+Bronx Season,"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6217
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6953
+Bronx Season,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.7165
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.612
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6495
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6061
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Sick 16 (Freestyle),,0.6519
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6774
+Bronx Season,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7851
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Song For Kulture’s 1st Birthday,,0.6667
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6131
+Bronx Season,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6442
+WAP (Demo),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6321
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",0.6016
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6113
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.6549
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6359
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sick 16 (Freestyle),,0.6201
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Respect,CB2,0.6032
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.603
+With That,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.604
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6803
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",What A Girl Likes,,0.6117
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Styling*,CB2,0.6612
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6372
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Pop Off,"Gangsta Bitch Music, Vol. 2",0.7621
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.7636
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6908
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6379
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Sick 16 (Freestyle),,0.6439
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Never Give Up,"Gangsta Bitch Music, Vol. 2",0.6112
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6582
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7263
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.683
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Thru Your Phone (Clean),,0.6507
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6072
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Clean it Up,,0.6263
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Broke,,0.6336
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Hoes Mad,,0.6186
+Leave That Bitch Alone,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.7288
+Trick,"Gangsta Bitch Music, Vol. 1",Ten Trick Commandments,"Gangsta Bitch Music, Vol. 1 (Promo CD)",1.0
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Pop Off,"Gangsta Bitch Music, Vol. 2",0.6323
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",How I Do,"Gangsta Bitch Music, Vol. 2",0.7212
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.7021
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sick 16 (Freestyle),,0.7
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",11/18/19 Freestyle,,0.6983
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Song For Kulture’s 1st Birthday,,0.6026
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6458
+B.O.N,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Broke,,0.6747
+What A Girl Likes,,Styling*,CB2,0.6392
+What A Girl Likes,,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6188
+What A Girl Likes,,How I Do,"Gangsta Bitch Music, Vol. 2",0.6347
+What A Girl Likes,,Booty*,CB2,0.6166
+What A Girl Likes,,Rollin,"Gangsta Bitch Music, Vol. 2",0.6101
+What A Girl Likes,,11/18/19 Freestyle,,0.6122
+What A Girl Likes,,Bartier Cardi (Original),Unreleased Songs,0.6076
+What A Girl Likes,,Up (Radio Edit),,0.6085
+What A Girl Likes,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6399
+Styling*,CB2,I Like It (Kontra K & AK Ausserkontrolle Remix),,0.6176
+Styling*,CB2,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6037
+Styling*,CB2,How I Do,"Gangsta Bitch Music, Vol. 2",0.6326
+Styling*,CB2,Booty*,CB2,0.6435
+Styling*,CB2,Rollin,"Gangsta Bitch Music, Vol. 2",0.6998
+Styling*,CB2,Respect,CB2,0.6134
+Styling*,CB2,11/18/19 Freestyle,,0.7024
+Styling*,CB2,Bartier Cardi (Original),Unreleased Songs,0.7015
+Styling*,CB2,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6375
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Pop Off,"Gangsta Bitch Music, Vol. 2",0.6341
+I Like It (Kontra K & AK Ausserkontrolle Remix),,How I Do,"Gangsta Bitch Music, Vol. 2",0.7062
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Booty*,CB2,0.6198
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Rollin,"Gangsta Bitch Music, Vol. 2",0.6078
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Respect,CB2,0.61
+I Like It (Kontra K & AK Ausserkontrolle Remix),,11/18/19 Freestyle,,0.6596
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Bartier Cardi (Original),Unreleased Songs,0.661
+I Like It (Kontra K & AK Ausserkontrolle Remix),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6236
+I Gotta Hurt You,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Never Give Up,"Gangsta Bitch Music, Vol. 2",0.6918
+Pop Off,"Gangsta Bitch Music, Vol. 2",How I Do,"Gangsta Bitch Music, Vol. 2",0.7857
+Pop Off,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6759
+Pop Off,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6218
+Pop Off,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6319
+Pop Off,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7233
+Pop Off,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6477
+Pop Off,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6481
+Pop Off,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6293
+How I Do,"Gangsta Bitch Music, Vol. 2",Booty*,CB2,0.6972
+How I Do,"Gangsta Bitch Music, Vol. 2",Rollin,"Gangsta Bitch Music, Vol. 2",0.6456
+How I Do,"Gangsta Bitch Music, Vol. 2",Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6161
+How I Do,"Gangsta Bitch Music, Vol. 2",Sick 16 (Freestyle),,0.6938
+How I Do,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6557
+How I Do,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.7783
+How I Do,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.7083
+How I Do,"Gangsta Bitch Music, Vol. 2",Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6814
+How I Do,"Gangsta Bitch Music, Vol. 2",Broke,,0.6588
+How I Do,"Gangsta Bitch Music, Vol. 2",Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6904
+Booty*,CB2,Rollin,"Gangsta Bitch Music, Vol. 2",0.6464
+Booty*,CB2,Respect,CB2,0.715
+Booty*,CB2,11/18/19 Freestyle,,0.7379
+Booty*,CB2,Bartier Cardi (Original),Unreleased Songs,0.6774
+Booty*,CB2,Up (Radio Edit),,0.6133
+Booty*,CB2,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6235
+Rollin,"Gangsta Bitch Music, Vol. 2",Respect,CB2,0.6307
+Rollin,"Gangsta Bitch Music, Vol. 2",11/18/19 Freestyle,,0.6877
+Rollin,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6022
+Rollin,"Gangsta Bitch Music, Vol. 2",Broke,,0.6199
+Everything,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Sick 16 (Freestyle),,0.6489
+Sick 16 (Freestyle),,11/18/19 Freestyle,,0.6284
+Sick 16 (Freestyle),,Broke,,0.6479
+Never Give Up,"Gangsta Bitch Music, Vol. 2",Bartier Cardi (Original),Unreleased Songs,0.6002
+Never Give Up,"Gangsta Bitch Music, Vol. 2",Thru Your Phone (Clean),,0.6064
+Respect,CB2,11/18/19 Freestyle,,0.7025
+Respect,CB2,Bartier Cardi (Original),Unreleased Songs,0.6035
+Respect,CB2,Up (Radio Edit),,0.6308
+Respect,CB2,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6014
+11/18/19 Freestyle,,Bartier Cardi (Original),Unreleased Songs,0.663
+11/18/19 Freestyle,,Song For Kulture’s 1st Birthday,,0.6365
+11/18/19 Freestyle,,Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",0.6378
+11/18/19 Freestyle,,Broke,,0.6481
+11/18/19 Freestyle,,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6811
+Bartier Cardi (Original),Unreleased Songs,Thru Your Phone (Clean),,0.626
+Bartier Cardi (Original),Unreleased Songs,Up (Radio Edit),,0.636
+Bartier Cardi (Original),Unreleased Songs,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6742
+Thru Your Phone (Clean),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6106
+Sauce Niggaz,"Gangsta Bitch Music, Vol. 1 (Promo CD)",Broke,,0.6719
+Up (Radio Edit),,Do Me Dat Remix (Region Liberty Records / Atlantic Records),,0.6028

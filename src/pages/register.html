@@ -12,6 +12,159 @@
   <link rel="stylesheet" href="../styles/base.css" />
   <link rel="stylesheet" href="../styles/pages/auth.css" />
 
+  <style>
+    /* Sonner-style Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px 20px;
+      min-width: 320px;
+      max-width: 420px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      pointer-events: auto;
+      animation: toast-slide-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
+      transform-origin: bottom right;
+    }
+
+    .toast.toast-exit {
+      animation: toast-slide-out 0.2s cubic-bezier(0.06, 0.71, 0.55, 1) forwards;
+    }
+
+    @keyframes toast-slide-in {
+      from {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toast-slide-out {
+      to {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+
+    .toast-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toast-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.4;
+    }
+
+    .toast-description {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .toast-close {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      transition: color 0.15s;
+      margin-top: 2px;
+    }
+
+    .toast-close:hover {
+      color: #475569;
+    }
+
+    .toast.error {
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+
+    .toast.error .toast-title {
+      color: #991b1b;
+    }
+
+    .toast.error .toast-description {
+      color: #dc2626;
+    }
+
+    .toast.success {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .toast.success .toast-title {
+      color: #166534;
+    }
+
+    .toast.success .toast-description {
+      color: #16a34a;
+    }
+
+    .toast.info {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+
+    .toast.info .toast-title {
+      color: #1e40af;
+    }
+
+    .toast.info .toast-description {
+      color: #2563eb;
+    }
+
+    @media (max-width: 640px) {
+      .toast-container {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      .toast {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+  </style>
+
   <script type="module">
     import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, GoogleAuthProvider,
@@ -96,7 +249,6 @@
     async function handleSocialRegister(provider, providerName, btnId) {
       const btn = document.getElementById(btnId);
       setButtonState(btn, true);
-      hideError();
 
       // Prevent onAuthStateChanged from interfering while we work
       isRegistering = true;
@@ -130,57 +282,92 @@
           setButtonState(btn, false);
           return;
         }
-        showError(friendlyError(err.code));
+        showToast(friendlyError(err.code), 'error');
         setButtonState(btn, false);
         console.error(`[TrackWeave] ${providerName} register error:`, err.code, err.message);
       }
     }
 
-    // ── 6. EMAIL SIGN-UP HANDLER ─────────────────────────────────────
-    function handleEmailSignUp() {
-      const firstName = document.getElementById("reg-first").value.trim();
-      const lastName  = document.getElementById("reg-last").value.trim();
-      const username  = document.getElementById("reg-username").value.trim();
-      const email     = document.getElementById("reg-email").value.trim();
-      const password  = document.getElementById("reg-password").value;
-      const agreed    = document.getElementById("reg-terms").checked;
 
-      hideError();
 
-      if (!firstName)
-        return showError("Please enter your first name.");
-      if (!lastName)
-        return showError("Please enter your last name.");
-      if (!username || username.length < 3)
-        return showError("Username must be at least 3 characters.");
-      if (!/^[a-zA-Z0-9_]+$/.test(username))
-        return showError("Username can only contain letters, numbers, and underscores.");
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-        return showError("Please enter a valid email address.");
-      if (!password || password.length < 8)
-        return showError("Password must be at least 8 characters.");
-      if (!agreed)
-        return showError("You must agree to the Terms of Service to create an account.");
+    // ── 7. SONNER-STYLE TOAST NOTIFICATIONS ──────────────────────────
+    function showToast(message, type = 'error', duration = 5000) {
+      // Create container if it doesn't exist
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+      }
 
-      // TODO (Phase 3): wire up Firebase email/password auth here
-      alert("Email sign-up coming soon!\n\nFor now, please use Google or Facebook.");
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+
+      // Icon based on type
+      let iconSvg = '';
+      if (type === 'error') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>`;
+      } else if (type === 'success') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>`;
+      } else if (type === 'info') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>`;
+      }
+
+      toast.innerHTML = `
+        ${iconSvg}
+        <div class="toast-content">
+          <div class="toast-description">${message}</div>
+        </div>
+        <button class="toast-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      `;
+
+      // Add close functionality
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => removeToast(toast));
+
+      // Add to container
+      container.appendChild(toast);
+
+      // Auto-remove after duration
+      if (duration > 0) {
+        setTimeout(() => removeToast(toast), duration);
+      }
     }
 
-    // ── 7. HELPERS ───────────────────────────────────────────────────
+    function removeToast(toast) {
+      toast.classList.add('toast-exit');
+      setTimeout(() => {
+        toast.remove();
+        // Remove container if empty
+        const container = document.getElementById('toast-container');
+        if (container && container.children.length === 0) {
+          container.remove();
+        }
+      }, 200);
+    }
+
+    // ── 8. HELPERS ───────────────────────────────────────────────────
     function setButtonState(btn, loading) {
       btn.disabled = loading;
       btn.classList.toggle("loading", loading);
-    }
-
-    function showError(message) {
-      const box = document.getElementById("auth-error");
-      box.textContent = message;
-      box.hidden = false;
-      box.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    function hideError() {
-      document.getElementById("auth-error").hidden = true;
     }
 
     function friendlyError(code) {
@@ -203,14 +390,11 @@
       return map[code] ?? "An unexpected error occurred. Please try again.";
     }
 
-    // ── 8. ATTACH EVENT LISTENERS ────────────────────────────────────
+    // ── 9. ATTACH EVENT LISTENERS ────────────────────────────────────
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("btn-google")
               .addEventListener("click", () =>
                 handleSocialRegister(googleProvider, "google", "btn-google"));
-
-      document.getElementById("btn-submit")
-              .addEventListener("click", handleEmailSignUp);
     });
   </script>
 
@@ -287,13 +471,6 @@
           <circle cx="170" cy="48"  r="6.5" fill="#0891b2" opacity="0.9"/>
           <circle cx="170" cy="110" r="12"  fill="#2563eb" opacity="0.1"/>
           <circle cx="170" cy="110" r="7"   fill="#2563eb"/>
-          <circle cx="28"  cy="30"  r="13"  fill="#f59e0b" opacity="0.07"/>
-          <polygon points="28,18 39,30 28,42 17,30" fill="#f59e0b" stroke="#d97706" stroke-width="1.4"/>
-          <g stroke="#475569" stroke-width="1" stroke-dasharray="3.5 3" opacity="0.45">
-            <line x1="39" y1="30" x2="73"  y2="98"/>
-            <line x1="39" y1="30" x2="166" y2="48"/>
-            <line x1="39" y1="30" x2="232" y2="84"/>
-          </g>
           <text x="80" y="89" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#93c5fd" opacity="0.7">Album I</text>
           <text x="254" y="74" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#c4b5fd" opacity="0.7">Album II</text>
           <text x="170" y="36" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#67e8f9" opacity="0.7">Album III</text>
@@ -307,11 +484,7 @@
         </div>
         <div class="pl-feat">
           <span class="pl-feat-dot"></span>
-          <span><strong>Log, rate &amp; review</strong> albums you've listened to</span>
-        </div>
-        <div class="pl-feat">
-          <span class="pl-feat-dot"></span>
-          <span><strong>Follow listeners</strong> whose taste you trust</span>
+          <span><strong>Review</strong> albums you've listened to</span>
         </div>
         <div class="pl-feat">
           <span class="pl-feat-dot"></span>
@@ -331,9 +504,6 @@
         <p class="form-subtitle">After registering, you'll log in to set up your profile.</p>
       </div>
 
-      <!-- Error banner -->
-      <span id="auth-error" class="auth-error" hidden></span>
-
       <!-- Social sign-up -->
       <div class="social-btns">
 
@@ -350,72 +520,6 @@
         </button>
 
       </div>
-
-      <!-- Divider -->
-      <div class="divider">
-        <span class="divider-line"></span>
-        <span>or sign up with email</span>
-        <span class="divider-line"></span>
-      </div>
-
-      <!-- Name row -->
-      <div class="field-row">
-        <div class="field">
-          <label for="reg-first">First name</label>
-          <input type="text" id="reg-first" placeholder="Ashley" autocomplete="given-name" />
-        </div>
-        <div class="field">
-          <label for="reg-last">Last name</label>
-          <input type="text" id="reg-last" placeholder="Baguio" autocomplete="family-name" />
-        </div>
-      </div>
-
-      <!-- Username -->
-      <div class="field">
-        <label for="reg-username">Username</label>
-        <input type="text" id="reg-username" placeholder="ashleybaguio" autocomplete="username" />
-      </div>
-
-      <!-- Email -->
-      <div class="field">
-        <label for="reg-email">Email address</label>
-        <input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email" />
-      </div>
-
-      <!-- Password -->
-      <div class="field">
-        <label for="reg-password">Password</label>
-        <div class="input-wrap">
-          <input type="password" id="reg-password" placeholder="At least 8 characters" autocomplete="new-password" oninput="checkStrength(this.value)" />
-          <button class="pw-toggle" type="button" onclick="togglePw()" aria-label="Show password" id="pw-btn">
-            <svg id="pw-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-          </button>
-        </div>
-        <div class="strength-wrap" id="strengthWrap">
-          <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-          <span class="strength-label" id="strengthLabel"></span>
-        </div>
-      </div>
-
-      <!-- Terms -->
-      <div class="terms-row">
-        <input type="checkbox" id="reg-terms" />
-        <label for="reg-terms">
-          I agree to TrackWeave's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand the platform is completely free and no payment is required.
-        </label>
-      </div>
-
-      <!-- Submit -->
-      <button class="btn-submit" type="button" id="btn-submit">
-        Create Account
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="5" y1="12" x2="19" y2="12"/>
-          <polyline points="12 5 19 12 12 19"/>
-        </svg>
-      </button>
 
       <!-- Log in link -->
       <p class="login-row">
@@ -445,49 +549,6 @@
 
 
 <!-- ═══ SCRIPTS ═══ -->
-<script>
-  /* ── Password visibility toggle ── */
-  let pwVisible = false;
-  function togglePw() {
-    pwVisible = !pwVisible;
-    const input = document.getElementById('reg-password');
-    const icon  = document.getElementById('pw-eye');
-    input.type  = pwVisible ? 'text' : 'password';
-    icon.innerHTML = pwVisible
-      ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`
-      : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
-  }
-
-  /* ── Password strength ── */
-  function checkStrength(val) {
-    const wrap  = document.getElementById('strengthWrap');
-    const fill  = document.getElementById('strengthFill');
-    const label = document.getElementById('strengthLabel');
-
-    if (!val) { wrap.classList.remove('show'); return; }
-    wrap.classList.add('show');
-
-    let score = 0;
-    if (val.length >= 8)              score++;
-    if (/[A-Z]/.test(val))            score++;
-    if (/[0-9]/.test(val))            score++;
-    if (/[^A-Za-z0-9]/.test(val))     score++;
-
-    const levels = [
-      { pct: '20%', color: '#dc2626', text: 'Too weak'  },
-      { pct: '40%', color: '#f59e0b', text: 'Weak'      },
-      { pct: '65%', color: '#f59e0b', text: 'Fair'      },
-      { pct: '85%', color: '#16a34a', text: 'Good'      },
-      { pct: '100%',color: '#16a34a', text: 'Strong'    },
-    ];
-
-    const lvl = levels[score];
-    fill.style.width      = lvl.pct;
-    fill.style.background = lvl.color;
-    label.textContent     = lvl.text;
-    label.style.color     = lvl.color;
-  }
-</script>
 
 </body>
 </html>

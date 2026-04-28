@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — TrackWeave</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Base design system -->
+  <link rel="stylesheet" href="../styles/base.css" />
+  <!-- Dashboard-specific styles -->
+  <link rel="stylesheet" href="../styles/pages/dashboard.css" />
+</head>
+<body>
+
+<!-- ═══ NAV (always rendered first, highest z-index) ═══ -->
+<header class="nav">
+  <div class="nav-inner">
+
+    <!-- Brand -->
+    <a href="./index.html" class="nav-brand">
+      <div class="nav-mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+          <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
+          <circle cx="12" cy="12" r="2.1" fill="white"/>
+          <circle cx="19" cy="7"  r="2.1" fill="white" opacity="0.85"/>
+          <circle cx="19" cy="17" r="2.1" fill="white" opacity="0.55"/>
+          <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="11.4" x2="17.1" y2="8.3"  stroke="white" stroke-width="1.3" opacity="0.7"/>
+          <line x1="14" y1="12.7" x2="17.1" y2="15.8" stroke="white" stroke-width="1.3" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>TrackWeave</span>
+    </a>
+
+    <!-- Search -->
+    <div class="nav-search-dash" id="nav-search-wrap">
+      <span class="s-icon">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </span>
+      <input type="text" id="artist-search-input" placeholder="Search artists…" autocomplete="off" spellcheck="false" aria-label="Search artists" aria-autocomplete="list" aria-controls="artist-search-results" />
+      <button class="nav-search-clear" id="artist-search-clear" type="button" aria-label="Clear search" hidden>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="nav-search-results" id="artist-search-results" role="listbox"></div>
+    </div>
+
+    <!-- Avatar + dropdown -->
+    <div class="nav-avatar-wrap" id="nav-avatar-wrap">
+      <button class="nav-av-btn" id="nav-avatar" aria-label="Open account menu" aria-expanded="false">?</button>
+
+      <div class="nav-dropdown" id="nav-dropdown" role="menu">
+        <div class="drop-user">
+          <div class="drop-av" id="drop-av-mini">?</div>
+          <div>
+            <div class="drop-name" id="drop-display-name">—</div>
+            <div class="drop-handle" id="drop-username"></div>
+          </div>
+        </div>
+
+        <div class="drop-items">
+          <button class="drop-item danger" id="btn-signout" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ═══ SEE ALL OVERLAY (below nav in z-index, padded by nav height) ═══ -->
+<div class="see-all-overlay" id="see-all-overlay" role="dialog" aria-modal="true" aria-label="See all artists">
+  <div class="see-all-topbar">
+    <button class="see-all-back" id="see-all-back" type="button" aria-label="Close">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <span class="see-all-genre-title"></span>
+    <span class="see-all-count"></span>
+  </div>
+  <div class="see-all-body">
+    <div class="see-all-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dash-shell" hidden>
+
+  <!-- ── Hero banner ─────────────────────────────────────────── -->
+  <div class="dash-hero">
+    <div class="hero-dots"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">TrackWeave Dashboard</p>
+      <h1 id="dash-name">Welcome back.</h1>
+      <p class="hero-sub">Explore available artists and discover the connections in their discographies.</p>
+      <div class="hero-genres" id="hero-genres"></div>
+    </div>
+  </div>
+
+  <!-- ── Main content ────────────────────────────────────────── -->
+  <main>
+    <div class="dash-main">
+      <section class="artists-section" id="artists-section"></section>
+    </div>
+  </main>
+
+</div><!-- /#dash-shell -->
+
+<script type="module" src="../scripts/dashboard-simple.js"></script>
+
+</body>
+</html>

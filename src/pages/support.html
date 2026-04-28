@@ -61,17 +61,19 @@
     <h1>Show the creators<br>some <em>love</em></h1>
 
     <p>
-      TrackWeave is built by a small, passionate team and offered completely free to every listener. There are no subscriptions, no premium tiers. If it's brought you closer to music you love, a donation goes a long way in keeping us motivated to keep building — or just spread the word.
+      TrackWeave is built by a small, dedicated team of engineers and music enthusiasts — offered completely free with no subscriptions or premium tiers. If our graph-based approach has deepened your connection to music, your support through community engagement, thoughtful feedback, and sharing discoveries helps us continue building tools that reveal the hidden architecture of discographies.
     </p>
 
     <div style="display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;">
-      <a href="#give" class="btn btn-amber btn-lg">
+      <a href="#spread" class="btn btn-amber btn-lg">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+          <polyline points="16 6 12 2 8 6"/>
+          <line x1="12" y1="2" x2="12" y2="15"/>
         </svg>
         Support Us
       </a>
-      <a href="#spread" class="btn btn-ghost btn-lg">Spread the Word</a>
+      <a href="#community" class="btn btn-ghost btn-lg">Join Our Community</a>
     </div>
 
   </div>
@@ -83,9 +85,9 @@
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto 0;">
       <span class="sec-label">Why Your Support Matters</span>
-      <h2 class="sec-h">Your donation keeps<br>us going</h2>
+      <h2 class="sec-h">Your engagement keeps<br>us going</h2>
       <p class="sec-p">
-        Every contribution — big or small — reminds us that what we're building is meaningful. It encourages us to keep improving TrackWeave and inspires us to take on new projects in the future.
+        Every annotation, shared graph, and thoughtful review validates that our work matters. Your engagement fuels our motivation to refine the analysis pipeline, expand the artist catalogue, and build features that make the invisible connections in music visible to everyone.
       </p>
     </div>
 
@@ -97,7 +99,7 @@
           </svg>
         </div>
         <h3>It Fuels Our Motivation</h3>
-        <p>Knowing that people care enough to contribute means the world to us. It's the clearest signal we get that the work we pour into TrackWeave genuinely matters — and it pushes us to do even more.</p>
+        <p>When listeners share a surprising graph connection or write detailed annotations, it validates the countless hours spent refining algorithms and building infrastructure. Your engagement is the signal that tells us this work genuinely matters — and it drives us to push further.</p>
       </div>
 
       <div class="why-card reveal reveal-d1">
@@ -107,7 +109,7 @@
           </svg>
         </div>
         <h3>It Helps Us Build More</h3>
-        <p>Your support doesn't just sustain TrackWeave — it gives us the confidence and energy to dream bigger. Future projects, new ideas, and better features all start with knowing there's a community behind us.</p>
+        <p>Community support gives us the confidence to expand beyond what exists today — more sophisticated semantic analysis, deeper cross-artist connections, and tools that reveal patterns no streaming platform can surface. Every feature starts with knowing people care.</p>
       </div>
 
       <div class="why-card reveal reveal-d2">
@@ -118,7 +120,7 @@
           </svg>
         </div>
         <h3>It Means You Care</h3>
-        <p>Every donation, however small, tells us our work has touched someone. That recognition is something no metric can capture — and it makes the long nights and late commits completely worth it.</p>
+        <p>Every share, review, and interaction tells us our work has touched someone. That recognition is something no metric can capture — and it makes the long nights and late commits completely worth it.</p>
       </div>
     </div>
   </div>
@@ -130,9 +132,9 @@
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
       <span class="sec-label">Who You're Supporting</span>
-      <h2 class="sec-h">Four people who genuinely<br>love music</h2>
+      <h2 class="sec-h">Four students who genuinely<br>love music</h2>
       <p class="sec-p">
-        TrackWeave has no investors, no corporate backing, and no venture capital. It's just us — building something we believe in, on our own time and our own dime.
+        TrackWeave is a student project with no investors, no corporate backing, and no venture capital. It's just us — four computer science students building something we believe in, learning as we go.
       </p>
     </div>
 
@@ -179,79 +181,68 @@
 </section>
 
 
-<!-- ═══ GIVE: PAYMENT METHODS ═══ -->
-<section class="section alt" id="give">
-  <div class="payment-section">
-    <div class="payment-header reveal">
-      <span class="sec-label" style="display:block;margin-bottom:.55rem;">Financial Support</span>
-      <h2 class="sec-h">Choose how you'd like to give</h2>
-      <p class="sec-p" style="max-width:480px;margin:0 auto;">
-        Every contribution — big or small — is a vote of confidence that directly supports the creators and the work we put into TrackWeave. Pick an amount and a method that feels right for you.
+<!-- ═══ COMMUNITY ENGAGEMENT ═══ -->
+<section class="section alt" id="community">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto;">
+      <span class="sec-label">Join Our Community</span>
+      <h2 class="sec-h">Connect with fellow<br>music lovers</h2>
+      <p class="sec-p">
+        TrackWeave is more than just a platform — it's a community of passionate music listeners. Join us in building something meaningful together through engagement, feedback, and shared discoveries.
       </p>
     </div>
 
-    <!-- Amount picker -->
-    <div class="amount-section reveal" style="margin-bottom:3rem;">
-      <div class="amount-chips" id="amountChips">
-        <span class="amount-chip" onclick="pickAmount(this, '₱50')">₱50</span>
-        <span class="amount-chip" onclick="pickAmount(this, '₱100')">₱100</span>
-        <span class="amount-chip active" onclick="pickAmount(this, '₱200')">₱200</span>
-        <span class="amount-chip" onclick="pickAmount(this, '₱500')">₱500</span>
-        <span class="amount-chip" onclick="pickAmount(this, '$5')">$5</span>
-        <span class="amount-chip" onclick="pickAmount(this, '$10')">$10</span>
-        <span class="amount-chip" onclick="pickAmount(this, '$25')">$25</span>
-      </div>
-      <p class="amount-note">Select an amount above, then choose a payment method below. Payment processing coming soon.</p>
-    </div>
-
-    <!-- Payment cards -->
-    <div class="payment-grid reveal">
-
-      <!-- PayMaya -->
-      <div class="pay-card paymaya">
-        <div class="pay-logo-wrap" style="background:#e6faf6;">
-          <!-- PayMaya wordmark img -->
-          <img src="" alt="PayMaya Logo" style="width:100%;height:100%;object-fit:contain;">
+    <div class="community-grid">
+      <div class="community-card reveal">
+        <div class="community-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
         </div>
-        <h3>PayMaya</h3>
-        <p>Supports debit, credit, and e-wallet payments. A convenient option for Filipino listeners.</p>
-        <span class="pay-coming"><span class="dot"></span>Coming soon</span>
+        <h3>Follow & Connect</h3>
+        <p>Create an account and start following other music enthusiasts. Share your listening history and discover new connections through the community's collective musical journey.</p>
       </div>
 
-      <!-- GCash -->
-      <div class="pay-card gcash">
-        <div class="pay-logo-wrap" style="background:#e8f4ff;">
-          <!-- GCash img -->
-          <img src="" alt="Gcash Logo" style="width:100%;height:100%;object-fit:contain;">
+      <div class="community-card reveal reveal-d1">
+        <div class="community-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
         </div>
-        <h3>GCash</h3>
-        <p>The most widely used mobile wallet in the Philippines. Fast, familiar, and fee-friendly.</p>
-        <span class="pay-coming"><span class="dot"></span>Coming soon</span>
+        <h3>Provide Feedback</h3>
+        <p>Help us improve by sharing your thoughts, reporting bugs, or suggesting new features. Your input directly shapes the future of TrackWeave and makes it better for everyone.</p>
       </div>
 
-      <!-- PayPal -->
-      <div class="pay-card paypal">
-        <div class="pay-logo-wrap" style="background:#f0f4ff;">
-          <!-- PayPal img -->
-          <img src="" alt="Paypal Logo" style="width:100%;height:100%;object-fit:contain;">
+      <div class="community-card reveal reveal-d2">
+        <div class="community-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="5"  cy="14" r="2.1"/>
+            <circle cx="12" cy="12" r="2.1"/>
+            <circle cx="19" cy="7"  r="2.1"/>
+            <circle cx="19" cy="17" r="2.1"/>
+            <line x1="7"  y1="13.3" x2="10.1" y2="12.4" stroke="currentColor" stroke-width="1.3"/>
+            <line x1="14" y1="11.4" x2="17.1" y2="8.3"  stroke="currentColor" stroke-width="1.3"/>
+            <line x1="14" y1="12.7" x2="17.1" y2="15.8" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
         </div>
-        <h3>PayPal</h3>
-        <p>Accepted worldwide. The easiest way for international supporters to send their contribution.</p>
-        <span class="pay-coming"><span class="dot"></span>Coming soon</span>
+        <h3>Explore & Discover</h3>
+        <p>Use TrackWeave regularly to explore artist connections and discover new music. The more the platform is used, the richer the graph becomes for the entire community.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ═══ MORAL SUPPORT ═══ -->
+<!-- ═══ WAYS TO SUPPORT ═══ -->
 <section class="section warm" id="spread">
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
-      <span class="sec-label">Moral Support</span>
-      <h2 class="sec-h">Can't give financially?<br>There are other ways</h2>
+      <span class="sec-label">Ways to Support</span>
+      <h2 class="sec-h">Help us grow through<br>community action</h2>
       <p class="sec-p">
-        Money isn't the only currency that keeps a project like this alive. Your voice, your enthusiasm, and your time matter just as much.
+        Your voice, your enthusiasm, and your time are the most valuable currencies for a project like TrackWeave. Here's how you can make a real difference.
       </p>
     </div>
 
@@ -265,7 +256,7 @@
           </svg>
         </div>
         <h3>Share TrackWeave</h3>
-        <p>Tell a friend who loves music. Post about an artist graph you found interesting. Share a review you wrote. Word of mouth is the most powerful thing a small project has, and every share genuinely matters to us.</p>
+        <p>Tell a friend who obsesses over lyrics. Post a screenshot of an unexpected graph connection. Share a discovery that changed how you hear an album. Word of mouth is the most powerful tool a small project has — and every share genuinely matters.</p>
       </div>
 
       <div class="moral-card reveal reveal-d1">
@@ -274,8 +265,8 @@
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
           </svg>
         </div>
-        <h3>Leave a Review</h3>
-        <p>Write a thoughtful review of an album you know well. Your annotations genuinely improve the graph — they're treated as first-class data signals that help the NLP model become smarter for everyone.</p>
+        <h3>Contribute Annotations</h3>
+        <p>Add context to graph connections you understand. Explain why two songs are linked. Document thematic patterns you've noticed. Your annotations become part of the collective knowledge graph — enriching the platform for everyone who explores after you.</p>
       </div>
 
       <div class="moral-card reveal">
@@ -336,10 +327,10 @@
     <div class="letter-wrap reveal">
       <div class="letter">
         <p>
-          We started TrackWeave because we were frustrated. Frustrated that the tools we had for listening to music were incredible at the moment of play, but completely blind to everything that made a discography meaningful — the recurring themes, the callbacks, the evolution of an artist's voice across a decade of work.
+          We built TrackWeave because streaming platforms are extraordinary at delivering music, but fundamentally blind to the deeper architecture of discographies — the recurring motifs, the thematic evolution, the invisible threads connecting songs across decades. We wanted tools that reveal what algorithms miss.
         </p>
         <p style="margin-top:1rem;">
-          Whether you contribute financially or share a graph on social media — you are the reason TrackWeave exists. Thank you, sincerely, for being part of this.
+          Whether you share a graph connection, contribute annotations, or simply explore with curiosity — you validate that this work matters. Thank you for being part of a community that believes music deserves to be understood, not just consumed.
         </p>
 
         <div class="letter-sig">
@@ -362,13 +353,15 @@
     <h2>If this has meant something<br>to you, let us know.</h2>
     <p>No pressure, no tiers, no perks — just a genuine thank you and the knowledge that you've made the team's day.</p>
     <div class="cta-btns">
-      <a href="#give" class="btn btn-amber btn-lg">
+      <a href="#spread" class="btn btn-amber btn-lg">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+          <polyline points="16 6 12 2 8 6"/>
+          <line x1="12" y1="2" x2="12" y2="15"/>
         </svg>
-        Give What You Can
+        Share & Support
       </a>
-      <a href="/index.html" class="btn btn-ghost btn-lg"
+      <a href="./index.html" class="btn btn-ghost btn-lg"
         style="border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.6);"
         onmouseover="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.35)';this.style.color='rgba(255,255,255,.9)'"
         onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,.18)';this.style.color='rgba(255,255,255,.6)'">
@@ -408,27 +401,24 @@
 
     <div class="foot-col">
       <h5>Product</h5>
-      <a href="#">Features</a>
-      <a href="#">Graph Explorer</a>
-      <a href="#">NLP Insights</a>
-      <a href="#">Changelog</a>
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./engagement.html">Community</a>
+      <a href="./checkin.html">Check-In</a>
+      <a href="./shop.html">Rewards Shop</a>
     </div>
 
     <div class="foot-col">
-      <h5>Community</h5>
-      <a href="#">Discover</a>
-      <a href="#">Reviews</a>
-      <a href="#">Following</a>
-      <a href="#">Forums</a>
+      <h5>Explore</h5>
+      <a href="./dashboard.html">Discover Artists</a>
+      <a href="./engagement.html">Activity Feed</a>
+      <a href="./artist-details.html">Artist Graphs</a>
     </div>
 
     <div class="foot-col">
       <h5>Company</h5>
-      <a href="/about.html">About</a>
-      <a href="#">Blog</a>
-      <a href="#">API</a>
-      <a href="/support.html">Support Us</a>
-      <a href="#">Contact</a>
+      <a href="./about.html">About</a>
+      <a href="./support.html">Support</a>
+      <a href="./index.html">Home</a>
     </div>
   </div>
 

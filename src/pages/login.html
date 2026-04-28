@@ -12,9 +12,162 @@
   <link rel="stylesheet" href="../styles/base.css" />
   <link rel="stylesheet" href="../styles/pages/auth.css" />
 
+  <style>
+    /* Sonner-style Toast Notifications */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px 20px;
+      min-width: 320px;
+      max-width: 420px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      pointer-events: auto;
+      animation: toast-slide-in 0.3s cubic-bezier(0.21, 1.02, 0.73, 1);
+      transform-origin: bottom right;
+    }
+
+    .toast.toast-exit {
+      animation: toast-slide-out 0.2s cubic-bezier(0.06, 0.71, 0.55, 1) forwards;
+    }
+
+    @keyframes toast-slide-in {
+      from {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toast-slide-out {
+      to {
+        transform: translateX(calc(100% + 20px));
+        opacity: 0;
+      }
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+
+    .toast-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .toast-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+      line-height: 1.4;
+    }
+
+    .toast-description {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .toast-close {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      transition: color 0.15s;
+      margin-top: 2px;
+    }
+
+    .toast-close:hover {
+      color: #475569;
+    }
+
+    .toast.error {
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+
+    .toast.error .toast-title {
+      color: #991b1b;
+    }
+
+    .toast.error .toast-description {
+      color: #dc2626;
+    }
+
+    .toast.success {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .toast.success .toast-title {
+      color: #166534;
+    }
+
+    .toast.success .toast-description {
+      color: #16a34a;
+    }
+
+    .toast.info {
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+
+    .toast.info .toast-title {
+      color: #1e40af;
+    }
+
+    .toast.info .toast-description {
+      color: #2563eb;
+    }
+
+    @media (max-width: 640px) {
+      .toast-container {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      .toast {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+  </style>
+
   <script type="module">
     import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, FacebookAuthProvider,
+    import { getAuth, GoogleAuthProvider,
              signInWithPopup, signOut, onAuthStateChanged }
                                     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, serverTimestamp }
@@ -47,9 +200,9 @@
       const notice = params.get("notice");
 
       if (notice === "registered") {
-        showNotice("Account created! You can now log in below.");
+        showToast("Account created! You can now log in below.", 'success');
       } else if (notice === "already-registered") {
-        showNotice("You already have an account. Log in below to continue.");
+        showToast("You already have an account. Log in below to continue.", 'info');
       }
 
       // Clean the URL so the notice doesn't persist on refresh
@@ -90,7 +243,6 @@
     async function handleSocialSignIn(provider, providerName, btnId) {
       const btn = document.getElementById(btnId);
       setButtonState(btn, true);
-      hideMessages();
 
       try {
         const result = await signInWithPopup(auth, provider);
@@ -99,10 +251,7 @@
         if (!snap.exists() || !snap.data().registered) {
           // No registered account found — reject and explain
           await signOut(auth);
-          showError(
-            "No account found. Please register first before logging in.",
-            true // show register link
-          );
+          showToast("No account found. Please register first before logging in.", 'error', 7000);
           setButtonState(btn, false);
           return;
         }
@@ -117,51 +266,90 @@
           setButtonState(btn, false);
           return;
         }
-        showError(friendlyError(err.code));
+        showToast(friendlyError(err.code), 'error');
         setButtonState(btn, false);
         console.error(`[TrackWeave] ${providerName} sign-in error:`, err.code, err.message);
       }
     }
 
-    // ── 7. EMAIL CONTINUE HANDLER ────────────────────────────────────
-    function handleEmailContinue() {
-      const emailInput = document.getElementById("login-email");
-      const email      = emailInput.value.trim();
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        emailInput.focus();
-        showError("Please enter a valid email address.");
-        return;
+    // ── 7. SONNER-STYLE TOAST NOTIFICATIONS ──────────────────────────
+    function showToast(message, type = 'error', duration = 5000) {
+      // Create container if it doesn't exist
+      let container = document.getElementById('toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
       }
 
-      hideMessages();
-      // TODO (Phase 3): wire up email+password sign-in
-      alert(`Email auth coming soon!\n\nFor now, please use Google or Facebook.`);
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+
+      // Icon based on type
+      let iconSvg = '';
+      if (type === 'error') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="15" y1="9" x2="9" y2="15"/>
+          <line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>`;
+      } else if (type === 'success') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>`;
+      } else if (type === 'info') {
+        iconSvg = `<svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="16" x2="12" y2="12"/>
+          <line x1="12" y1="8" x2="12.01" y2="8"/>
+        </svg>`;
+      }
+
+      toast.innerHTML = `
+        ${iconSvg}
+        <div class="toast-content">
+          <div class="toast-description">${message}</div>
+        </div>
+        <button class="toast-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      `;
+
+      // Add close functionality
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => removeToast(toast));
+
+      // Add to container
+      container.appendChild(toast);
+
+      // Auto-remove after duration
+      if (duration > 0) {
+        setTimeout(() => removeToast(toast), duration);
+      }
+    }
+
+    function removeToast(toast) {
+      toast.classList.add('toast-exit');
+      setTimeout(() => {
+        toast.remove();
+        // Remove container if empty
+        const container = document.getElementById('toast-container');
+        if (container && container.children.length === 0) {
+          container.remove();
+        }
+      }, 200);
     }
 
     // ── 8. HELPERS ───────────────────────────────────────────────────
     function setButtonState(btn, loading) {
       btn.disabled = loading;
       btn.classList.toggle("loading", loading);
-    }
-
-    function showError(message, showRegisterLink = false) {
-      const box  = document.getElementById("auth-error");
-      const link = document.getElementById("auth-error-link");
-      box.childNodes[0].textContent = message + " ";
-      link.hidden = !showRegisterLink;
-      box.hidden  = false;
-    }
-
-    function showNotice(message) {
-      const box = document.getElementById("auth-notice");
-      box.textContent = message;
-      box.hidden = false;
-    }
-
-    function hideMessages() {
-      document.getElementById("auth-error").hidden  = true;
-      document.getElementById("auth-notice").hidden = true;
     }
 
     function friendlyError(code) {
@@ -189,34 +377,8 @@
       document.getElementById("btn-google")
               .addEventListener("click", () =>
                 handleSocialSignIn(googleProvider, "google", "btn-google"));
-
-      document.getElementById("btn-facebook")
-              .addEventListener("click", () =>
-                handleSocialSignIn(facebookProvider, "facebook", "btn-facebook"));
-
-      document.getElementById("btn-continue")
-              .addEventListener("click", handleEmailContinue);
-
-      document.getElementById("login-email")
-              .addEventListener("keydown", (e) => {
-                if (e.key === "Enter") handleEmailContinue();
-              });
     });
   </script>
-
-  <style>
-    /* Success notice banner */
-    .auth-notice {
-      display: block;
-      background: var(--green-ghost);
-      border: 1px solid var(--green-pale);
-      color: var(--green);
-      font-size: 0.8125rem;
-      border-radius: var(--r-sm);
-      padding: 10px 14px;
-      margin-bottom: 16px;
-    }
-  </style>
 
 </head>
 <body>
@@ -292,13 +454,6 @@
           <circle cx="170" cy="48"  r="6.5" fill="#0891b2" opacity="0.9"/>
           <circle cx="170" cy="110" r="12"  fill="#2563eb" opacity="0.1"/>
           <circle cx="170" cy="110" r="7"   fill="#2563eb"/>
-          <circle cx="28"  cy="30"  r="13"  fill="#f59e0b" opacity="0.07"/>
-          <polygon points="28,18 39,30 28,42 17,30" fill="#f59e0b" stroke="#d97706" stroke-width="1.4"/>
-          <g stroke="#475569" stroke-width="1" stroke-dasharray="3.5 3" opacity="0.45">
-            <line x1="39" y1="30" x2="73"  y2="98"/>
-            <line x1="39" y1="30" x2="166" y2="48"/>
-            <line x1="39" y1="30" x2="232" y2="84"/>
-          </g>
           <text x="80"  y="89" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#93c5fd" opacity="0.7">Album I</text>
           <text x="254" y="74" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#c4b5fd" opacity="0.7">Album II</text>
           <text x="170" y="36" text-anchor="middle" font-size="7.5" font-family="Instrument Sans, sans-serif" fill="#67e8f9" opacity="0.7">Album III</text>
@@ -317,45 +472,6 @@
         <span class="form-eyebrow">Welcome back</span>
         <h1 class="form-title">Log in to<br><em>TrackWeave</em></h1>
         <p class="form-subtitle">Use the same method you registered with.</p>
-      </div>
-
-      <!-- Notice banner (shown after successful registration) -->
-      <span id="auth-notice" class="auth-notice" hidden></span>
-
-      <!-- Error banner -->
-      <span id="auth-error" class="auth-error" hidden>
-        <!-- message text node filled by JS -->
-        <a id="auth-error-link" href="./register.html" hidden
-           style="color:inherit;font-weight:600;text-decoration:underline;">
-          Register here →
-        </a>
-      </span>
-
-      <!-- Email + Continue -->
-      <div class="email-block">
-        <div class="field">
-          <label for="login-email">Email</label>
-          <input
-            type="email"
-            id="login-email"
-            placeholder="you@example.com"
-            autocomplete="email"
-          />
-        </div>
-        <button class="btn-continue" type="button" id="btn-continue">
-          Continue
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Divider -->
-      <div class="divider">
-        <span class="divider-line"></span>
-        <span>or</span>
-        <span class="divider-line"></span>
       </div>
 
       <!-- Social buttons -->

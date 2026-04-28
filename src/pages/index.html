@@ -19,7 +19,7 @@
 <!-- ═══ NAV ═══ -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="/" class="nav-brand">
+    <a href="./index.html" class="nav-brand">
       <div class="nav-mark">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
           <circle cx="5"  cy="14" r="2.1" fill="white" opacity="0.9"/>
@@ -34,20 +34,14 @@
       <span>TrackWeave</span>
     </a>
 
-    <div class="nav-search">
-      <span class="s-icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </span>
-      <input type="text" id="searchInput" placeholder="Search artists, albums…" autocomplete="off" />
-      <div id="searchResults" class="s-drop hidden"></div>
-    </div>
+    <nav class="nav-links">
+      <a href="./index.html" class="active">Home</a>
+      <a href="./about.html">About</a>
+      <a href="./support.html">Support</a>
+    </nav>
 
     <div class="nav-end">
-      <a href="./support.html" class="lnk">Support</a>
-      <a href="./about.html"   class="lnk">About</a>
-      <a href="./login.html"    class="btn btn-ghost" style="padding:.48rem 1rem;font-size:.85rem;">Log In</a>
+      <a href="./login.html" class="btn btn-ghost" style="padding:.48rem 1rem;font-size:.85rem;">Log In</a>
       <a href="./register.html" class="btn btn-solid" style="padding:.48rem 1rem;font-size:.85rem;">Get Started</a>
     </div>
   </div>
@@ -65,21 +59,13 @@
       </div>
       <h1>Discover the hidden<br><em>connections</em> in<br>every discography</h1>
       <p>
-        TrackWeave maps the relationships between songs, albums, and artists using graph-based natural language processing — surfacing patterns in discographies that no streaming algorithm can reveal.
+        TrackWeave uses graph-based NLP analysis to map lyrical themes, sonic patterns, and narrative connections across entire discographies — revealing the hidden architecture of an artist's creative evolution that streaming platforms can't show you.
       </p>
       <div class="hero-cta">
-        <a href="/register.html" class="btn btn-solid btn-lg">Start Exploring</a>
-        <a href="#how-it-works"  class="btn btn-ghost btn-lg">How It Works</a>
+        <a href="./register.html" class="btn btn-solid btn-lg">Start Exploring</a>
+        <a href="#how-it-works" class="btn btn-ghost btn-lg">How It Works</a>
       </div>
-      <div class="hero-proof">
-        <div class="av-stack">
-          <div class="av" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
-          <div class="av" style="background:linear-gradient(135deg,#93c5fd,#60a5fa)"></div>
-          <div class="av" style="background:linear-gradient(135deg,#60a5fa,#3b82f6)"></div>
-          <div class="av" style="background:linear-gradient(135deg,#3b82f6,#2563eb)"></div>
-        </div>
-        <span>Joined by thousands of curious music listeners</span>
-      </div>
+
     </div>
 
     <!-- Graph card -->
@@ -88,29 +74,18 @@
         <div class="gc-head">
           <div>
             <div class="gc-title">Discography Graph</div>
-            <div class="gc-sub">Songs as nodes · Albums as color groups</div>
+            <div class="gc-sub">Nodes are songs · Edges connect similar lyrics</div>
           </div>
           <div class="legend" id="graph-legend"></div>
         </div>
         <svg id="hero-svg" viewBox="0 0 420 290"></svg>
       </div>
       <div class="chip chip-a"><strong>Lyrical Theme</strong>Loss · Identity · Time</div>
-      <div class="chip chip-b"><strong>92% similarity</strong>Track → Track link</div>
+      <div class="chip chip-b"><strong>0.87 similarity</strong>SBERT embedding score</div>
     </div>
 
   </div>
 </section>
-
-
-<!-- ═══ STATS ═══ -->
-<div class="stats-row reveal">
-  <div class="stats-inner">
-    <div><span class="sv">2.4 M</span><span class="sl">Songs Analyzed</span></div>
-    <div><span class="sv">180 K</span><span class="sl">Artists Mapped</span></div>
-    <div><span class="sv">9.1 M</span><span class="sl">Graph Edges</span></div>
-    <div><span class="sv">42 K</span><span class="sl">Active Users</span></div>
-  </div>
-</div>
 
 
 <!-- ═══ HOW IT WORKS ═══ -->
@@ -120,7 +95,7 @@
       <span class="sec-label">The Method</span>
       <h2 class="sec-h">How TrackWeave works</h2>
       <p class="sec-p">
-        We treat every discography as a living knowledge graph. Natural language processing extracts lyrical themes, sonic references, and narrative arcs — then draws edges between songs to reveal a richer musical story.
+        Every discography is a knowledge graph waiting to be discovered. We process lyrics, metadata, and audio features through semantic analysis — extracting themes, emotions, and motifs — then construct weighted edges between songs to reveal the deeper narrative structure of an artist's work.
       </p>
     </div>
 
@@ -128,48 +103,24 @@
       <div class="how-step">
         <div class="step-n">01</div>
         <h3>Ingest &amp; Parse</h3>
-        <p>Lyrics, metadata, and audio features are ingested for every track. Our NLP pipeline tokenizes, embeds, and extracts semantic entities — themes, emotions, and motifs — from raw text.</p>
-        <span class="step-badge">NLP Extraction</span>
+        <p>Lyrics, release metadata, and audio features are collected and normalized into a unified schema per track. Our pipeline processes raw text and extracts semantic entities — themes, emotions, narrative motifs, and tonal characteristics.</p>
+        <span class="step-badge">Data Extraction</span>
       </div>
       <div class="how-step">
         <div class="step-n">02</div>
         <h3>Build the Graph</h3>
-        <p>Each song becomes a node. Edges form between tracks that share lyrical themes, referenced artists, sonic similarities, or narrative continuity — assembling a rich relational network per artist.</p>
+        <p>Songs become nodes; weighted edges connect tracks sharing lyrical themes, sonic fingerprints, or narrative arcs. Using SBERT embeddings and similarity scoring, we construct a relational network that captures the thematic evolution across an artist's entire catalogue.</p>
         <span class="step-badge">Graph Construction</span>
       </div>
       <div class="how-step">
         <div class="step-n">03</div>
         <h3>Explore &amp; Share</h3>
-        <p>Browse interactive graph visualizations of any artist's discography, read community-sourced annotations, and share your own insights about the patterns you uncover.</p>
+        <p>Navigate interactive force-directed graphs, filter by album, zoom into thematic clusters, and trace how motifs evolve over time. Add annotations, share discoveries, and contribute to the collective understanding of music.</p>
         <span class="step-badge">Social Layer</span>
       </div>
     </div>
   </div>
 </section>
-
-
-<!-- ═══ CAROUSEL ═══ -->
-<div class="car-wrap">
-  <div class="car-track">
-    <div class="c-tile" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#0f2744,#1d4ed8)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#93c5fd)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)"></div>
-    <!-- dupe for seamless loop -->
-    <div class="c-tile" style="background:linear-gradient(135deg,#bfdbfe,#93c5fd)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#1e3a5f,#2563eb)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#0f2744,#1d4ed8)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#dbeafe,#93c5fd)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#1e293b,#334155)"></div>
-    <div class="c-tile" style="background:linear-gradient(135deg,#eff6ff,#bfdbfe)"></div>
-  </div>
-</div>
 
 
 <!-- ═══ FEATURES ═══ -->
@@ -198,9 +149,9 @@
             </div>
             <h3>Interactive Discography Graphs</h3>
             <p style="margin-bottom:1rem;">
-              Visualize any artist's entire body of work as an interactive knowledge graph. Zoom into thematic clusters, trace how lyrical motifs evolve across albums, and follow the threads connecting early work to later output. No other platform shows you a discography this way.
+              Explore any artist's complete discography as a living, interactive knowledge graph. Zoom into thematic clusters, trace recurring motifs across decades, and discover unexpected connections between songs. Filter by album, adjust similarity thresholds, and see the narrative architecture that streaming platforms were never designed to reveal.
             </p>
-            <a href="/register.html" class="btn btn-solid" style="font-size:.84rem;padding:.58rem 1.15rem;">Explore a graph →</a>
+            <a href="./register.html" class="btn btn-solid" style="font-size:.84rem;padding:.58rem 1.15rem;">Explore a graph →</a>
           </div>
           <div class="f-graph-box">
             <svg viewBox="0 0 280 170" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -253,8 +204,8 @@
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
         </div>
-        <h3>NLP-Powered Lyric Insights</h3>
-        <p>Our language models surface thematic patterns across an artist's catalogue — recurring symbols, narrative arcs, and conceptual threads — so you can appreciate music at a significantly deeper level.</p>
+        <h3>Lyric Analysis &amp; Insights</h3>
+        <p>Our semantic analysis engine uses SBERT embeddings to surface thematic patterns, recurring symbols, and narrative arcs across an artist's entire body of work — revealing conceptual threads and lyrical evolution that transform how you listen.</p>
       </div>
 
       <!-- Community -->
@@ -291,7 +242,7 @@
     <span class="sec-label" style="color:rgba(255,255,255,.42);display:block;margin-bottom:.55rem;">Ready to begin?</span>
     <h2>Your music has a story.<br>We help you read it.</h2>
     <p>Sign up for free and start mapping your listening history into something meaningful.</p>
-    <a href="/register.html" class="btn btn-solid btn-lg" style="font-size:.98rem;padding:.85rem 1.9rem;">Create your free account</a>
+    <a href="./register.html" class="btn btn-solid btn-lg" style="font-size:.98rem;padding:.85rem 1.9rem;">Create your free account</a>
   </div>
 </section>
 
@@ -333,25 +284,25 @@
 
     <div class="foot-col">
       <h5>Product</h5>
-      <a href="#">Features</a>
-      <a href="#">Graph Explorer</a>
-      <a href="#">NLP Insights</a>
-      <a href="#">Pricing</a>
-      <a href="#">Changelog</a>
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./engagement.html">Community</a>
+      <a href="./checkin.html">Check-In</a>
+      <a href="./shop.html">Rewards Shop</a>
     </div>
 
     <div class="foot-col">
-      <h5>Community</h5>
-      <a href="#">Discover</a>
-      <a href="#">Reviews</a>
-      <a href="#">Following</a>
-      <a href="#">Forums</a>
+      <h5>Explore</h5>
+      <a href="./dashboard.html">Discover Artists</a>
+      <a href="./engagement.html">Activity Feed</a>
+      <a href="./artist-details.html">Artist Graphs</a>
     </div>
 
     <div class="foot-col">
       <h5>Company</h5>
-      <a href="#">About</a>
-      <a href="#">Blog</a>
+      <a href="./about.html">About</a>
+      <a href="./support.html">Support</a>
+      <a href="./index.html">Home</a>
+    </div>ref="#">Blog</a>
       <a href="#">API</a>
       <a href="/support.html">Support</a>
       <a href="#">Contact</a>
