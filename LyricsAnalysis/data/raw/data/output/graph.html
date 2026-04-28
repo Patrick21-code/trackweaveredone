@@ -372,6 +372,369 @@
         background: var(--border);
         border-radius: 3px;
       }
+
+      /* ─── Connection strength badge ─── */
+      .conn-strength {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 2px 7px;
+        border-radius: 20px;
+        margin-top: 5px;
+        margin-bottom: 2px;
+      }
+      .strength-identical {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .strength-strong {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .strength-related {
+        background: #fef3c7;
+        color: #b45309;
+      }
+
+      /* ─── Summary panel below graph ─── */
+      .summary-panel {
+        border-top: 0.5px solid var(--border);
+        background: var(--surface);
+        flex-shrink: 0;
+        position: relative;
+        min-height: 36px;
+        overflow: hidden;
+        transition: height 0.2s ease;
+      }
+      .summary-panel.hidden {
+        display: none !important;
+      }
+      .summary-panel.collapsed .summary-body-wrap {
+        display: none;
+      }
+      .summary-resize-handle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        cursor: ns-resize;
+        background: transparent;
+        z-index: 10;
+        transition: background 0.15s;
+      }
+      .summary-resize-handle:hover,
+      .summary-resize-handle.dragging {
+        background: var(--accent);
+        opacity: 0.35;
+      }
+      .summary-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.25rem;
+        height: 36px;
+        flex-shrink: 0;
+        gap: 1rem;
+        cursor: default;
+        user-select: none;
+      }
+      .summary-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .summary-toggle {
+        background: var(--surface2);
+        border: 0.5px solid var(--border);
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--muted);
+        font-size: 16px;
+        padding: 4px 10px;
+        line-height: 1;
+        transition:
+          color 0.15s,
+          background 0.15s,
+          transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        min-height: 28px;
+      }
+      .summary-toggle:hover {
+        color: var(--text);
+        background: var(--rule-light);
+      }
+      .summary-panel.collapsed .summary-toggle {
+        transform: rotate(-90deg);
+      }
+      .summary-title {
+        font-size: 11px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+      }
+      .summary-tabs {
+        display: flex;
+        gap: 4px;
+      }
+      .summary-panel.collapsed .summary-tabs {
+        display: none;
+      }
+      .summary-tab {
+        font-size: 10px;
+        padding: 2px 9px;
+        border-radius: 20px;
+        border: 0.5px solid var(--border);
+        background: var(--surface2);
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .summary-tab.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        font-weight: 500;
+      }
+      .summary-body-wrap {
+        overflow-y: auto;
+        padding: 0 1.25rem 0.75rem;
+        height: calc(100% - 36px);
+      }
+      .summary-group {
+        margin-bottom: 0.6rem;
+      }
+      .summary-group-label {
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .summary-group-label .badge {
+        font-size: 9px;
+        padding: 1px 6px;
+        border-radius: 10px;
+        font-weight: 400;
+      }
+      .identical-label {
+        color: #15803d;
+      }
+      .identical-badge {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .strong-label {
+        color: #1d4ed8;
+      }
+      .strong-badge {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .related-label {
+        color: #b45309;
+      }
+      .related-badge {
+        background: #fef3c7;
+        color: #b45309;
+      }
+      .summary-rows {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .summary-row {
+        font-size: 11px;
+        background: var(--surface2);
+        border: 0.5px solid var(--border);
+        border-radius: 6px;
+        padding: 3px 8px;
+        color: var(--text);
+        white-space: nowrap;
+        cursor: pointer;
+        transition: border-color 0.15s;
+      }
+      .summary-row:hover {
+        border-color: var(--accent);
+      }
+      .summary-row .score {
+        color: var(--muted);
+        font-size: 10px;
+        margin-left: 4px;
+      }
+      .summary-empty {
+        font-size: 11px;
+        color: var(--muted);
+        font-style: italic;
+        padding-top: 4px;
+      }
+
+      /* ─── Tutorial overlay ─── */
+      .tutorial-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(17, 24, 32, 0.55);
+        backdrop-filter: blur(2px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      .tutorial-backdrop.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .tutorial-card {
+        background: var(--surface);
+        border: 0.5px solid var(--border);
+        border-radius: 16px;
+        width: 420px;
+        max-width: calc(100vw - 2rem);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+        transform: translateY(12px);
+        transition: transform 0.3s ease;
+      }
+      .tutorial-backdrop.visible .tutorial-card {
+        transform: translateY(0);
+      }
+      .tutorial-progress {
+        display: flex;
+        gap: 5px;
+        padding: 1.25rem 1.5rem 0;
+      }
+      .tutorial-pip {
+        flex: 1;
+        height: 3px;
+        border-radius: 2px;
+        background: var(--rule);
+        transition: background 0.3s;
+      }
+      .tutorial-pip.done {
+        background: var(--accent);
+      }
+      .tutorial-pip.active {
+        background: var(--accent);
+        opacity: 0.5;
+      }
+      .tutorial-body {
+        padding: 1.5rem;
+      }
+      .tutorial-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+        line-height: 1;
+      }
+      .tutorial-step-label {
+        font-size: 10px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .tutorial-heading {
+        font-family: "Playfair Display", serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.25;
+        margin-bottom: 0.6rem;
+      }
+      .tutorial-desc {
+        font-size: 13px;
+        color: var(--ink-soft);
+        line-height: 1.65;
+      }
+      .tutorial-highlight {
+        display: inline-block;
+        background: var(--blue-ghost);
+        color: var(--accent);
+        border-radius: 4px;
+        padding: 0 5px;
+        font-weight: 500;
+        font-size: 12px;
+      }
+      .tutorial-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1.5rem;
+        border-top: 0.5px solid var(--border);
+        gap: 0.75rem;
+      }
+      .tutorial-skip {
+        background: none;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 0;
+        transition: color 0.15s;
+      }
+      .tutorial-skip:hover {
+        color: var(--text);
+      }
+      .tutorial-nav {
+        display: flex;
+        gap: 8px;
+        margin-left: auto;
+      }
+      .tutorial-btn {
+        font-family: "DM Sans", sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 7px 18px;
+        border-radius: 8px;
+        border: 0.5px solid var(--border);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .tutorial-btn.secondary {
+        background: var(--surface2);
+        color: var(--text);
+      }
+      .tutorial-btn.secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .tutorial-btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .tutorial-btn.primary:hover {
+        background: var(--blue-mid);
+      }
+      .tutorial-img-hint {
+        margin-top: 1rem;
+        background: var(--surface2);
+        border: 0.5px solid var(--border);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-size: 11.5px;
+        color: var(--ink-soft);
+        line-height: 1.6;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .tutorial-img-hint .hint-icon {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
     </style>
   </head>
   <body>
@@ -461,6 +824,56 @@
         <div class="info-bar">
           Drag · Scroll to zoom · Click node to explore
         </div>
+      </div>
+    </div>
+
+    <div class="summary-panel hidden" id="summary-panel" style="height: 220px">
+      <div class="summary-resize-handle" id="summary-resize-handle"></div>
+      <div class="summary-header">
+        <div class="summary-header-left">
+          <button
+            class="summary-toggle"
+            id="summary-toggle"
+            title="Collapse / expand"
+            onclick="toggleSummary()"
+          >
+            ▾
+          </button>
+          <span class="summary-title">Connection Summary</span>
+        </div>
+        <div class="summary-tabs">
+          <button
+            class="summary-tab active"
+            data-tier="all"
+            onclick="filterSummary('all', this)"
+          >
+            All
+          </button>
+          <button
+            class="summary-tab"
+            data-tier="identical"
+            onclick="filterSummary('identical', this)"
+          >
+            🟢 Identical
+          </button>
+          <button
+            class="summary-tab"
+            data-tier="strong"
+            onclick="filterSummary('strong', this)"
+          >
+            🔵 Strong
+          </button>
+          <button
+            class="summary-tab"
+            data-tier="related"
+            onclick="filterSummary('related', this)"
+          >
+            🟡 Related
+          </button>
+        </div>
+      </div>
+      <div class="summary-body-wrap">
+        <div id="summary-body"></div>
       </div>
     </div>
 
@@ -876,10 +1289,20 @@
           })
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
-        document.getElementById("tt-similar").textContent = neighbors.length
-          ? "Top: " +
-            neighbors.map((n) => `${n.name} (${n.score.toFixed(2)})`).join(", ")
-          : "";
+        const ttSim = document.getElementById("tt-similar");
+        if (neighbors.length) {
+          const topScore = neighbors[0].score;
+          const info = strengthLabel(topScore);
+          ttSim.innerHTML =
+            `<span class="conn-strength ${info.cls}">${info.label}</span><br>` +
+            "Top: " +
+            neighbors
+              .map((n) => `${n.name} (${n.score.toFixed(2)})`)
+              .join(", ");
+        } else {
+          ttSim.innerHTML =
+            '<span style="color:var(--muted);font-size:10px;font-style:italic">No connections at current threshold</span>';
+        }
         moveTooltip(e);
         document.getElementById("tooltip").classList.add("visible");
       }
@@ -997,6 +1420,7 @@
         }));
 
         startSimulation(nodeData, edgeData);
+        renderSummary();
       }
 
       // ── Legend ────────────────────────────────────────────────────────────
@@ -1163,6 +1587,407 @@
       resizeCanvas();
       const params = new URLSearchParams(window.location.search);
       loadArtist(params.get("artist") || Object.keys(ARTISTS)[0]);
+
+      // ── Connection strength helpers ───────────────────────────────────────
+      function strengthLabel(score) {
+        if (score >= 0.9)
+          return {
+            label: "Identical Themes",
+            cls: "strength-identical",
+            tier: "identical",
+          };
+        if (score >= 0.75)
+          return {
+            label: "Strongly Connected",
+            cls: "strength-strong",
+            tier: "strong",
+          };
+        return {
+          label: "Thematically Related",
+          cls: "strength-related",
+          tier: "related",
+        };
+      }
+
+      // ── Build / refresh summary panel ─────────────────────────────────────
+      let summaryTierFilter = "all";
+
+      function filterSummary(tier, btn) {
+        summaryTierFilter = tier;
+        document
+          .querySelectorAll(".summary-tab")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderSummary();
+      }
+
+      // ── Summary panel: unified collapse + resize ─────────────────────────
+      const COLLAPSE_THRESHOLD = 60; // px — drag below this snaps to collapsed
+      const EXPAND_THRESHOLD = 80; // px — drag above this snaps to expanded
+      const DEFAULT_HEIGHT = 220;
+
+      let summaryCollapsed = false;
+      let summaryHeight = DEFAULT_HEIGHT;
+
+      function setSummaryCollapsed(collapsed, animate) {
+        const panel = document.getElementById("summary-panel");
+        summaryCollapsed = collapsed;
+        if (animate) {
+          panel.style.transition = "height 0.22s cubic-bezier(0.4,0,0.2,1)";
+          setTimeout(() => {
+            panel.style.transition = "";
+          }, 240);
+        } else {
+          panel.style.transition = "";
+        }
+        if (collapsed) {
+          panel.style.height = "36px";
+          panel.classList.add("collapsed");
+        } else {
+          panel.style.height = summaryHeight + "px";
+          panel.classList.remove("collapsed");
+        }
+      }
+
+      function toggleSummary() {
+        if (summaryCollapsed) {
+          setSummaryCollapsed(false, true);
+        } else {
+          summaryHeight = Math.max(
+            DEFAULT_HEIGHT,
+            document.getElementById("summary-panel").offsetHeight,
+          );
+          setSummaryCollapsed(true, true);
+        }
+      }
+
+      // ── Resize / drag-to-collapse handle ──────────────────────────────────
+      (function () {
+        const handle = document.getElementById("summary-resize-handle");
+        const panel = document.getElementById("summary-panel");
+        let startY = 0,
+          startH = 0,
+          resizing = false,
+          didMove = false;
+
+        handle.addEventListener("mousedown", (e) => {
+          resizing = true;
+          didMove = false;
+          startY = e.clientY;
+          startH = summaryCollapsed ? 36 : panel.offsetHeight;
+          handle.classList.add("dragging");
+          document.body.style.userSelect = "none";
+          document.body.style.cursor = "ns-resize";
+          e.preventDefault();
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!resizing) return;
+          didMove = true;
+          const delta = startY - e.clientY; // drag up → taller
+          const rawH = startH + delta;
+
+          if (rawH < COLLAPSE_THRESHOLD) {
+            // Snap preview — show almost-header-only while still dragging
+            panel.style.transition = "";
+            panel.style.height = "36px";
+            panel.classList.add("collapsed");
+          } else {
+            const newH = Math.min(
+              window.innerHeight * 0.65,
+              Math.max(EXPAND_THRESHOLD, rawH),
+            );
+            panel.style.transition = "";
+            panel.style.height = newH + "px";
+            panel.classList.remove("collapsed");
+            summaryHeight = newH;
+          }
+        });
+
+        window.addEventListener("mouseup", (e) => {
+          if (!resizing) return;
+          resizing = false;
+          handle.classList.remove("dragging");
+          document.body.style.userSelect = "";
+          document.body.style.cursor = "";
+
+          const currentH = panel.offsetHeight;
+          if (currentH <= COLLAPSE_THRESHOLD + 4) {
+            // Snap to fully collapsed with animation
+            summaryCollapsed = true;
+            panel.style.transition = "height 0.18s cubic-bezier(0.4,0,0.2,1)";
+            panel.style.height = "36px";
+            panel.classList.add("collapsed");
+            setTimeout(() => {
+              panel.style.transition = "";
+            }, 200);
+          } else {
+            summaryCollapsed = false;
+            panel.classList.remove("collapsed");
+            panel.style.transition = "height 0.12s ease";
+            panel.style.height = summaryHeight + "px";
+            setTimeout(() => {
+              panel.style.transition = "";
+            }, 140);
+          }
+        });
+      })();
+
+      function renderSummary() {
+        const panel = document.getElementById("summary-panel");
+        const body = document.getElementById("summary-body");
+        if (!edgeData || edgeData.length === 0) {
+          panel.classList.add("hidden");
+          panel.style.display = "none";
+          return;
+        }
+        panel.classList.remove("hidden");
+        panel.style.display = "";
+
+        const groups = { identical: [], strong: [], related: [] };
+        edgeData.forEach((e) => {
+          const s = typeof e.source === "object" ? e.source.title : e.source;
+          const t = typeof e.target === "object" ? e.target.title : e.target;
+          const score = e.similarity;
+          const info = strengthLabel(score);
+          groups[info.tier].push({ a: s, b: t, score });
+        });
+
+        Object.values(groups).forEach((g) =>
+          g.sort((a, b) => b.score - a.score),
+        );
+
+        const tiers = [
+          {
+            key: "identical",
+            label: "Identical Themes",
+            range: "0.90 – 1.0",
+            labelCls: "identical-label",
+            badgeCls: "identical-badge",
+          },
+          {
+            key: "strong",
+            label: "Strongly Connected",
+            range: "0.75 – 0.89",
+            labelCls: "strong-label",
+            badgeCls: "strong-badge",
+          },
+          {
+            key: "related",
+            label: "Thematically Related",
+            range: "0.60 – 0.74",
+            labelCls: "related-label",
+            badgeCls: "related-badge",
+          },
+        ];
+
+        let html = "";
+        tiers.forEach((tier) => {
+          if (summaryTierFilter !== "all" && summaryTierFilter !== tier.key)
+            return;
+          const rows = groups[tier.key];
+          if (rows.length === 0) return;
+          html += `<div class="summary-group">
+            <div class="summary-group-label ${tier.labelCls}">
+              ${tier.label}
+              <span class="badge ${tier.badgeCls}">${tier.range}</span>
+              <span style="color:var(--muted);font-weight:400;font-size:10px">${rows.length} pair${rows.length !== 1 ? "s" : ""}</span>
+            </div>
+            <div class="summary-rows">
+              ${rows
+                .map(
+                  (r) =>
+                    `<div class="summary-row" title="Similarity score: ${r.score.toFixed(4)}">${r.a} ↔ ${r.b}<span class="score">${r.score.toFixed(2)}</span></div>`,
+                )
+                .join("")}
+            </div>
+          </div>`;
+        });
+
+        if (!html)
+          html = `<div class="summary-empty">No connections found in this range for the current view.</div>`;
+        body.innerHTML = html;
+      }
+
+      // ── Tutorial ──────────────────────────────────────────────────────────
+      const TUTORIAL_KEY = "trackweave_tutorial_done";
+
+      const TUTORIAL_STEPS = [
+        {
+          icon: "🎵",
+          label: "Welcome",
+          heading: "Welcome to TrackWeave",
+          desc: "TrackWeave maps the hidden lyrical connections across an artist's entire discography — visualized as an interactive graph. This quick tour will get you up to speed in under a minute.",
+          hint: null,
+        },
+        {
+          icon: "🎤",
+          label: "Pick an Artist",
+          heading: "Choose an Artist",
+          desc: "Use the artist buttons at the top of the page to switch between artists. Each artist has their own pre-computed similarity graph built from their lyrics.",
+          hint: {
+            icon: "👆",
+            text: "Click any artist name in the header to load their song network.",
+          },
+        },
+        {
+          icon: "🔵",
+          label: "The Graph",
+          heading: "Songs as Nodes",
+          desc: "Every circle is a song. The color tells you which album it belongs to. Bigger circles are more connected — they share themes with more songs in the discography.",
+          hint: {
+            icon: "🎨",
+            text: "Check the Albums legend on the left to see which color belongs to which album.",
+          },
+        },
+        {
+          icon: "〰️",
+          label: "Connections",
+          heading: "Edges = Lyrical Similarity",
+          desc: "Lines between songs mean their lyrics are thematically related. The strength is scored from 0 to 1 — the closer to 1, the more alike the songs are.",
+          hint: {
+            icon: "💡",
+            text: "🟢 Identical Themes (0.90+)  ·  🔵 Strongly Connected (0.75–0.89)  ·  🟡 Thematically Related (0.60–0.74)",
+          },
+        },
+        {
+          icon: "🖱️",
+          label: "Explore",
+          heading: "Click to Explore",
+          desc: "Click any song node to highlight its connections and see its most similar songs. Use the similarity slider on the left to filter edges by strength, or search for a song by name.",
+          hint: {
+            icon: "🔍",
+            text: "Drag to pan  ·  Scroll to zoom  ·  Click background to deselect.",
+          },
+        },
+        {
+          icon: "📋",
+          label: "Summary",
+          heading: "Connection Summary Panel",
+          desc: "The panel at the bottom lists every connection grouped by strength. Filter by tier, minimize it with the ▾ button, or drag its top edge to resize it.",
+          hint: {
+            icon: "📌",
+            text: "The panel updates automatically when you switch artists or adjust the threshold.",
+          },
+        },
+      ];
+
+      let tutorialCurrent = 0;
+
+      function renderTutorialStep(idx) {
+        const step = TUTORIAL_STEPS[idx];
+        const total = TUTORIAL_STEPS.length;
+        const pips = document.getElementById("tutorial-progress");
+        pips.innerHTML = TUTORIAL_STEPS.map((_, i) => {
+          const cls = i < idx ? "done" : i === idx ? "active" : "";
+          return '<div class="tutorial-pip ' + cls + '"></div>';
+        }).join("");
+        document.getElementById("tutorial-body").innerHTML =
+          '<div class="tutorial-icon">' +
+          step.icon +
+          "</div>" +
+          '<div class="tutorial-step-label">Step ' +
+          (idx + 1) +
+          " of " +
+          total +
+          " — " +
+          step.label +
+          "</div>" +
+          '<div class="tutorial-heading">' +
+          step.heading +
+          "</div>" +
+          '<div class="tutorial-desc">' +
+          step.desc +
+          "</div>" +
+          (step.hint
+            ? '<div class="tutorial-img-hint"><span class="hint-icon">' +
+              step.hint.icon +
+              "</span><span>" +
+              step.hint.text +
+              "</span></div>"
+            : "");
+        document.getElementById("tutorial-prev").style.display =
+          idx === 0 ? "none" : "";
+        document.getElementById("tutorial-next").textContent =
+          idx === total - 1 ? "Get Started" : "Next";
+      }
+
+      function tutorialStep(dir) {
+        tutorialCurrent += dir;
+        if (tutorialCurrent >= TUTORIAL_STEPS.length) {
+          closeTutorial();
+          return;
+        }
+        if (tutorialCurrent < 0) tutorialCurrent = 0;
+        renderTutorialStep(tutorialCurrent);
+      }
+
+      function closeTutorial() {
+        const backdrop = document.getElementById("tutorial-backdrop");
+        backdrop.classList.remove("visible");
+        setTimeout(function () {
+          backdrop.style.display = "none";
+        }, 300);
+        try {
+          localStorage.setItem(TUTORIAL_KEY, "1");
+        } catch (e) {}
+      }
+
+      function maybeShowTutorial() {
+        var seen = false;
+        try {
+          seen = !!localStorage.getItem(TUTORIAL_KEY);
+        } catch (e) {}
+        if (seen) return;
+        var backdrop = document.getElementById("tutorial-backdrop");
+        backdrop.style.display = "flex";
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            backdrop.classList.add("visible");
+          });
+        });
+        tutorialCurrent = 0;
+        renderTutorialStep(0);
+      }
+
+      var _origHideOverlay = hideOverlay;
+      var _tutorialShown = false;
+      hideOverlay = function () {
+        _origHideOverlay();
+        if (!_tutorialShown) {
+          _tutorialShown = true;
+          setTimeout(maybeShowTutorial, 400);
+        }
+      };
     </script>
+
+    <!-- ── Tutorial overlay ── -->
+    <div class="tutorial-backdrop" id="tutorial-backdrop">
+      <div class="tutorial-card">
+        <div class="tutorial-progress" id="tutorial-progress"></div>
+        <div class="tutorial-body" id="tutorial-body"></div>
+        <div class="tutorial-footer">
+          <button class="tutorial-skip" onclick="closeTutorial()">
+            Skip tutorial
+          </button>
+          <div class="tutorial-nav">
+            <button
+              class="tutorial-btn secondary"
+              id="tutorial-prev"
+              onclick="tutorialStep(-1)"
+            >
+              Back
+            </button>
+            <button
+              class="tutorial-btn primary"
+              id="tutorial-next"
+              onclick="tutorialStep(1)"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
